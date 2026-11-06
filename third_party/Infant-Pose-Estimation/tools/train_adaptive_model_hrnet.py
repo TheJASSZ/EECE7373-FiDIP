@@ -119,7 +119,7 @@ def main():
                              3,
                              cfg.MODEL.IMAGE_SIZE[1],
                              cfg.MODEL.IMAGE_SIZE[0]))
-    writer_dict['writer'].add_graph(model_p, (dump_input, ), verbose=False)
+    # [EECE7373 patch P7] add_graph dropped: a slow CPU trace of HRNet-W48 that only feeds TensorBoard.
     
     logger.info(get_model_summary(model_p, dump_input))
     
@@ -341,10 +341,11 @@ def main():
     torch.save(model_p.module.state_dict(), final_model_state_file)
     writer_dict['writer'].close()
 
-    np.save('./losses_D.npy', np.array(losses_D_list))  # Adversarial-D
-    np.save('./losses_P.npy', np.array(losses_P_list))   # P
-    np.save('./acces_P.npy', np.array(acces_P_list))   # P   
-    np.save('./acces_D.npy', np.array(acces_D_list))   # D
+    # [EECE7373 patch P7] save per-iteration curves in the run's output dir instead of the CWD
+    np.save(os.path.join(final_output_dir, 'losses_D.npy'), np.array(losses_D_list))  # Adversarial-D
+    np.save(os.path.join(final_output_dir, 'losses_P.npy'), np.array(losses_P_list))   # P
+    np.save(os.path.join(final_output_dir, 'acces_P.npy'), np.array(acces_P_list))   # P
+    np.save(os.path.join(final_output_dir, 'acces_D.npy'), np.array(acces_D_list))   # D
     
    
 class AverageMeter(object):
