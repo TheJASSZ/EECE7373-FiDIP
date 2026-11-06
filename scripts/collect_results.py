@@ -67,13 +67,10 @@ def read_registry(path):
 
 
 def read_prereg(path):
-    """RUN_IDs registered for Test100 (any RUN_ID mentioned in a table row of PREREGISTRATION.md)."""
-    ids = set()
-    if os.path.exists(path):
-        for line in open(path):
-            if line.strip().startswith("|") and not set(line.strip()) <= set("|-: "):
-                ids.update(m.group(0).rstrip(".,;") for m in RUN_RE.finditer(line))
-    return ids
+    """RUN_ID prefixes registered for Test100 (shared parser: ranges expanded, 'no Test100' rows skipped)."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import prereg
+    return prereg.allowed_prefixes(path)
 
 
 def load_metrics(run_id, split, eval_root, runs_root):
@@ -188,7 +185,8 @@ class Collector:
 
     def test_allowed(self, rid, group=None):
         g = group or next((g for g in self.groups.values() if rid in g["run_ids"]), {})
-        return rid in self.prereg or g.get("role") in ("released", "retrain") or bool(g.get("test_allowed"))
+        return (rid in self.prereg or rid[:4] in self.prereg or g.get("role") in ("released", "retrain")
+                or bool(g.get("test_allowed")))
 
     def value(self, rid, split, metric, protocol="paper"):
         x = self.metrics.get((rid, split))

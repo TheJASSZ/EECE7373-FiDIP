@@ -42,3 +42,19 @@ def test_split_and_tag_parsing():
 def test_validate_infant_alias_is_gated_and_scored_on_test100():
     assert apl.SPLIT_RE.match("preds_validate_infant.json").group(1) == "validate_infant"
     assert apl.SPLIT_ALIAS_GT["validate_infant"] == "test100" and "validate_infant" in apl.TEST_LIKE
+
+
+def test_prereg_parser_ranges_and_forbidden_rows(tmp_path):
+    import prereg
+    p = tmp_path / "PREREG.md"
+    p.write_text("| # | at | runs | evidence | rule | result |\n|---|---|---|---|---|---|\n"
+                 "| repro-1 | x | R010-R012 `a_s{1,2,3}` and R013–R015 `b` | reproduction | best | |\n"
+                 "| repro-2 | x | R016-R018 sweep; R019 paper recipe; R020 labels | exploratory | **Val400 only, no Test100** | n/a |\n"
+                 "| imp-1 | x | R102_mmp-vitpose-l256_base_s1, R105 | Val400 95 | best | |\n")
+    pre = prereg.allowed_prefixes(str(p))
+    assert {"R010", "R011", "R012", "R013", "R014", "R015", "R102", "R105"} <= pre
+    assert not ({"R016", "R017", "R018", "R019", "R020"} & pre)
+    assert prereg.is_registered("R011_fidip-w48_lambda5e-4_s2", pre)
+    assert not prereg.is_registered("R017_fidip-w48_lam2e-3_s1", pre)
+    assert apl.test_allowed("R014_fidip-w48_lambda0_s2", {}, pre, roles={})[0]
+    assert not apl.test_allowed("R019_fidip-w48_paper_s1", {}, pre, roles={})[0]

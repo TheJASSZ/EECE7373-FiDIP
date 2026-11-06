@@ -27,6 +27,7 @@ import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, "eval"))
+sys.path.insert(0, os.path.join(REPO, "scripts"))
 import eval_coco as ev  # noqa: E402
 
 R = os.environ.get("R", "/scratch/purohitham.v/fidip")
@@ -47,13 +48,9 @@ def sha(p):
 
 
 def prereg_ids():
-    ids = set()
-    p = os.path.join(REPO, "results", "PREREGISTRATION.md")
-    if os.path.exists(p):
-        for line in open(p):
-            if line.strip().startswith("|"):
-                ids.update(m.group(0).rstrip(".,;") for m in RUN_RE.finditer(line))
-    return ids
+    """RUN_ID prefixes registered for Test100 (ranges expanded; 'Val400 only / no Test100' rows skipped)."""
+    import prereg
+    return prereg.allowed_prefixes(os.path.join(REPO, "results", "PREREGISTRATION.md"))
 
 
 def registry():
@@ -78,7 +75,7 @@ def config_roles():
 def test_allowed(run_id, reg, pre, roles=None):
     """Reproduction targets (released checkpoints, official-recipe retrains) or pre-registered.
     Explicit roles in results/configs.json win over the run-name heuristics."""
-    if run_id in pre:
+    if run_id in pre or run_id[:4] in pre:
         return True, "pre-registered"
     roles = config_roles() if roles is None else roles
     if run_id in roles:
