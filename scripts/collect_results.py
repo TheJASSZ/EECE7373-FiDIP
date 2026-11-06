@@ -166,6 +166,20 @@ class Collector:
                 d, src, p = load_metrics(rid, sp, a.eval_root, a.runs_root)
                 if d:
                     self.metrics[(rid, sp)] = (d, src, p)
+        # test-time ablations: metrics_val400<tag>.json (Val400 only; tagged Test100 files are never read)
+        self.tag_metrics = {}
+        for root in (a.eval_root, a.runs_root):
+            for p in glob.glob(os.path.join(root, "R*", "metrics_val400?*.json")):
+                rid = os.path.basename(os.path.dirname(p))
+                tag = os.path.basename(p)[len("metrics_val400"):-len(".json")]
+                if (rid, tag) in self.tag_metrics:
+                    continue
+                try:
+                    d = json.load(open(p))
+                except (OSError, json.JSONDecodeError):
+                    continue
+                if "metrics" in d and "metrics_fixed" in d:
+                    self.tag_metrics[(rid, tag)] = (d, p)
 
     def test_allowed(self, rid, group=None):
         g = group or next((g for g in self.groups.values() if rid in g["run_ids"]), {})
@@ -262,6 +276,21 @@ def build(c, a):
             test100_rule="released/retrain (reproduction target)" if g.get("role") in ("released", "retrain") else
             ("pre-registered" if t["n_runs"] else "withheld: selection on Val400 only"),
             status=";".join(sorted({c.run_meta.get(r, {}).get("status", "") or "" for r in g["run_ids"]}))))
+    # test-time ablation rows (Val400 only)
+    n = len(attempts)
+    for k, g in c.groups.items():
+        tags = sorted({t for (r, t) in c.tag_metrics if r in g["run_ids"]})
+        for tag in tags:
+            rids = [r for r in g["run_ids"] if (r, tag) in c.tag_metrics]
+            mu, sd, _ = mean_std([c.tag_metrics[(r, tag)][0]["metrics"]["AP"] for r in rids])
+            st, _, _ = mean_std([c.tag_metrics[(r, tag)][0]["metrics"]["AP_80_95"] for r in rids])
+            n += 1
+            attempts.append(OrderedDict(
+                attempt=n, config=f"{k}{tag}", label=f"{g.get('label')} [{tag.strip('_')}]", role="test-time ablation",
+                what_changed=f"test-time: {tag.strip('_')}", hypothesis=g.get("hypothesis", ""), n_runs=len(rids),
+                run_ids=rids, val400_AP=pct(mu), val400_AP_std=pct(sd), val400_AP_80_95=pct(st), test100_AP=None,
+                test100_AP_std=None, test100_AP_fixed=None, test100_reported=False,
+                test100_rule="withheld: test-time ablation (Val400 only)", status="done"))
     tables["attempts"] = attempts
 
     # ---- reproduction: paper vs released vs retrains (Test100 + Val400)

@@ -55,3 +55,16 @@ def test_collect_withholds_unregistered_test100(tmp_path):
     names = [ln.split("}")[0] for ln in s.splitlines() if ln.startswith("\\newcommand")]
     assert len(names) == len(set(names))                       # no duplicate macros
     assert (t / "gen" / "MACROS.md").exists()
+
+
+def test_collect_includes_tagged_val400_ablations(tmp_path):
+    t = _setup(tmp_path)
+    src = t / "eval" / "R020_mmpose-hrnet-w48_s1" / "metrics_val400.json"
+    (t / "eval" / "R020_mmpose-hrnet-w48_s1" / "metrics_val400_noflip.json").write_text(src.read_text())
+    (t / "eval" / "R020_mmpose-hrnet-w48_s1" / "metrics_test100_noflip.json").write_text(src.read_text())
+    args = ["--registry", str(t / "registry.csv"), "--prereg", str(t / "prereg.md"), "--configs",
+            str(t / "configs.json"), "--eval-root", str(t / "eval"), "--runs-root", str(t / "none"),
+            "--tables", str(t / "tables"), "--tex", str(t / "gen" / "x.tex")]
+    assert cr.main(args) == 0
+    rows = [a for a in json.load(open(t / "tables" / "attempts.json")) if a["role"] == "test-time ablation"]
+    assert len(rows) == 1 and rows[0]["config"].endswith("_noflip") and rows[0]["test100_AP"] is None
