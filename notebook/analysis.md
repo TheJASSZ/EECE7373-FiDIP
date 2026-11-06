@@ -155,3 +155,15 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
   - This is exactly (r + 0.99(100−r))/101.
 - Size of the artefact at realistic accuracy: at noise 0.02·sqrt(area), paper AP is 93.56 vs fixed 94.53 (Δ 0.97). Across score orders Δ ranges from 0.76 to 2.06 AP, depending on where test0's detection ranks. That is the same order as the gaps people report between FiDIP-style models, so a cross-framework comparison that mixes protocols would be meaningless.
 - Output: `$R/analysis/tables/crosscheck_cocoeval_impls.json`.
+
+### 2026-11-05 20:56 EST: D13 (id-0 sensitivity everywhere) and D14 (CPU only, an_ job names) implemented (cfc16c7)
+- **Metrics JSON** gains `id0_artifact`: test0's score rank among the model's Test100 detections (1 = most confident; COCOeval breaks ties by image order and image 0 is first, so rank = 1 + #(strictly higher scores)), its percentile, its OKS, and paper−fixed for AP/AP50/AP75/AP_80_95/AR. Unit test: constructed rank 37 gives 37/100, ΔAR = −0.01, and the ΔAP matches.
+- **bootstrap_ci.py:**
+  - Every comparison also runs the other protocol on the same resamples (`sensitivity`), with Holm applied per protocol.
+  - `a_gt_b_robust_both_protocols` is true when the CI excludes 0 under both.
+  - `robust_claim` also requires Holm rejection under both.
+  - Tests: a planted improvement on a GT with id 0 is robust; the reversed contrast is not.
+- **analyze.py id0rank:** a figure and table of the paper and fixed AP for one *fixed* prediction set as test0's detection moves through ranks 1..100. On a mock with AP about 89, the paper-AP swing is 1.09 (88.51–89.60) while fixed AP stays flat (90.60–90.73). This is the clearest picture of the artefact for the report. It is wired into `run_released.sh`.
+- **collect_results.py:** adds per-run test0 rank/percentile and paper−fixed gap, plus fixed-protocol Δ/CI, a robust column and macros (`\Boot...FixedDelta`, `...Robust`) in the bootstrap table.
+- **D14:** all analysis jobs are CPU (`short`) and renamed `an_build_env`, `an_eval_tests`, `an_analysis`, `an_crosscheck`. No GPU use.
+- json_tricks-encoded arrays (`{"__ndarray__": ...}`) in prediction files are decoded (upstream writes with json_tricks). 64 tests pass.
