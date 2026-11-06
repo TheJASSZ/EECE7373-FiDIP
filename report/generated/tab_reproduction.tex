@@ -1,0 +1,19 @@
+% report/generated/tab_reproduction.tex -- PLACEHOLDER (overwritten by scripts/collect_results.py)
+% One `tabular` only (no float/caption: report.tex owns those). Test100 = paper protocol unless noted.
+% Columns: model | ckpt/run | published AP | AP | AP50 | AP75 | AP80-95 | AR | AP(fixed) | Val400 AP
+% Retrain rows: mean $\pm$ sd over seeds (e.g. 93.1\,{\scriptsize$\pm$0.3}). Published values are
+% typed from the official README/paper (cite in caption); everything else from metrics_*.json.
+\begin{tabular}{@{}llcccccccc@{}}
+\toprule
+& & \multicolumn{7}{c}{SyRIP Test100} & Val400\\
+\cmidrule(lr){3-9}\cmidrule(l){10-10}
+Model & Weights / runs & Publ.\ AP & AP & AP$_{50}$ & AP$_{75}$ & AP$_{80:95}$ & AR & AP$^{\text{fixed}}$ & AP\\
+\midrule
+DarkPose W48 (COCO only) & \texttt{w48\_384x288.pth} & 88.5 & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd\\
+DarkPose + FiDIP & \texttt{hrnet\_fidip.pth} & 93.6 & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd\\
+Pose-MobileNet + FiDIP & \texttt{mobile\_fidip.pth} & 79.2 & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd\\
+\midrule
+DarkPose + Finetune ($\lambda{=}0$) & retrain, \tbd{} seeds & 92.7 & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd\\
+DarkPose + FiDIP ($\lambda{=}5{\cdot}10^{-4}$) & retrain, \tbd{} seeds & 93.6 & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd\\
+\bottomrule
+\end{tabular}

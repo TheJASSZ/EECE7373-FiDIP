@@ -1,0 +1,26 @@
+% report/generated/tab_sensitivity.tex -- PLACEHOLDER (overwritten by scripts/collect_results.py)
+% Evaluation-condition sensitivity: same predictions, one evaluation choice changed per row pair.
+% Columns: condition | variant | split | released FiDIP AP | best-config AP (--- if not applicable)
+\begin{tabular}{@{}lllcc@{}}
+\toprule
+Condition & Variant & Split & Released FiDIP & Best config.\\
+\midrule
+Matching protocol (D10, D13) & \texttt{paper}: ids as shipped (headline) & Test100 & \tbd & \tbd\\
+ & \texttt{fixed}: ids shifted off 0 & Test100 & \tbd & \tbd\\
+\midrule
+Train/test overlap (D16) & Test100 as shipped (100) & Test100 & \tbd & \tbd\\
+ & Test100-clean (95; copies of training images removed) & Test100-clean & \tbd & \tbd\\
+\midrule
+Test images (D17) & \texttt{SyRIP.zip} (ours) & Test100 & \tbd & \tbd\\
+ & \texttt{syrip\_for\_train.zip} (test11 = copy of test24) & Test100 & \tbd & ---\\
+\midrule
+GT boxes of the same 100 images & validate100 (as shipped) & Test100 & \tbd & \tbd\\
+ & validate500 ($\text{area}=w h$) & Test100 & \tbd & \tbd\\
+\midrule
+OKS area on Val400 (D8) & shipped constant 2443298.48 & Val400 & \tbd & \tbd\\
+ & $\text{area} = w h$ (ours) & Val400 & \tbd & \tbd\\
+\midrule
+Metric code & \texttt{eval\_coco.py} (pycocotools 2.0.8) & Test100 & \tbd & \tbd\\
+ & MMPose \texttt{CocoMetric} (xtcocotools) & Test100 & \tbd & \tbd\\
+\bottomrule
+\end{tabular}

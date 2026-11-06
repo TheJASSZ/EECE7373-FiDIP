@@ -1,0 +1,40 @@
+% Split and selection protocol: train on 200R+1000S, select on Val400, report once on Test100.
+\begin{tikzpicture}[
+  font=\sffamily\scriptsize,
+  >={Stealth[length=4pt]},
+  seg/.style={draw, line width=0.5pt, minimum height=8mm, align=center, inner sep=2pt},
+  pstep/.style={draw, rounded corners=2pt, align=center, inner sep=3pt, line width=0.5pt, minimum height=11mm, fill=white},
+  flow/.style={->, line width=0.6pt, draw=black!75},
+  lab/.style={font=\sffamily\tiny, text=black!75, align=center},
+]
+% ---- the data bar (widths proportional to image counts: 1200 | 400 | 100) ----------------------
+\def\u{0.0068}  % cm per image
+\node[seg, fill=realC!25, draw=realC!80!black, minimum width=200*\u cm, anchor=west] (tr) at (0,0) {200\\real};
+\node[seg, fill=synC!20, draw=synC!80!black, minimum width=1000*\u cm, anchor=west] (ts) at (tr.east) {1000 synthetic (SMIL renders)};
+\node[seg, fill=poseC!15, draw=poseC!80!black, minimum width=397*\u cm, anchor=west, xshift=3mm] (val) at (ts.east)
+  {\textbf{Val400}\\{\tiny 397 images: ids 100--499 minus}\\[-2pt]{\tiny 3 duplicates of Test100}};
+\node[seg, fill=lossC!15, draw=lossC!85!black, minimum width=100*\u cm+6mm, anchor=west] (test) at (val.east)
+  {\textbf{Test100}\\{\tiny ids 0--99}};
+\draw[decorate, decoration={brace, amplitude=4pt}, line width=0.5pt] (tr.north west) -- node[lab, above=4pt] {SyRIP train (official \texttt{200R\_1000S} annotations)} (ts.north east);
+\draw[decorate, decoration={brace, amplitude=4pt}, line width=0.5pt] (val.north west) -- node[lab, above=4pt] {validate500 = Test500 (500 real); validate100 $\subset$ validate500} (test.north east);
+\node[lab, below=1mm of test.south, anchor=north, text=lossC!85!black] {incl.\ 5 copies of training images};
+% ---- the procedure ----------------------------------------------------------------------------
+\node[pstep, below=9mm of ts.south west, anchor=north west, xshift=-14mm] (s1)
+  {\textbf{1 train}\\candidate configs\\$\times$ seeds};
+\node[pstep, right=6mm of s1] (s2) {\textbf{2 select on Val400}\\epoch, hyper-params,\\backbone, recipe};
+\node[pstep, right=6mm of s2] (s3) {\textbf{3 pre-register}\\config + ckpt rule\\committed in\\\texttt{PREREGISTRATION.md}};
+\node[pstep, right=6mm of s3] (s4) {\textbf{4 one Test100 eval}\\script refuses\\unregistered or\\repeated runs};
+\node[pstep, right=6mm of s4, fill=black!4] (s5) {\textbf{5 report}\\\texttt{eval\_coco.py}\\+ paired bootstrap\\vs.\ released FiDIP};
+\draw[flow] (s1) -- (s2);
+\draw[flow] (s2) -- (s3);
+\draw[flow] (s3) -- (s4);
+\draw[flow] (s4) -- (s5);
+\draw[flow, black!55] ($(tr.south west)!0.5!(ts.south east)$) -- ++(0,-3mm) -| (s1.north);
+\draw[flow, poseC!80!black] (val.south) -- ++(0,-3mm) -| ([xshift=4mm]s2.north);
+\draw[flow, lossC!85!black] (test.south) -- ++(0,-3mm) -| (s4.north);
+% ---- the forbidden edge ----------------------------------------------------------------------------
+\draw[->, line width=0.6pt, lossC!85!black, densely dashed] (s4.south) -- ++(0,-5mm) -| node[pos=0.25, below, lab, text=lossC!85!black]
+  {no Test100 feedback into steps 1--3 (CLAUDE.md rule; \texttt{final\_test\_eval} checks the registry)} (s1.south);
+\node[lab, anchor=north west, align=left] at ([yshift=-11mm]s1.south west)
+  {Exception (stated in \texttt{PREREGISTRATION.md}): the released checkpoints and the official-recipe retrains are reproduction targets, not tuned candidates,\\so they are evaluated on Test100 directly. Their epoch is still chosen on Val400.};
+\end{tikzpicture}

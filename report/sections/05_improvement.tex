@@ -1,0 +1,114 @@
+\section{Improving on FiDIP}\label{sec:improve}
+
+\subsection{Hypothesis and method}\label{sec:method}
+
+\paragraph{Hypothesis.} The published model is already essentially perfect at OKS 0.50--0.75 on the 99 matchable images (\cref{sec:published,sec:eval}). Any gain must therefore come from more precise localisation, which \APstrict{} measures.
+Two standard levers act on precision: backbone capacity with stronger pre-training, and higher input resolution, which gives finer heatmaps.
+We test both with ViTPose~\citep{xu2022vitpose}. In the MMPose model zoo~\citep{mmpose2020}, its COCO checkpoints score 78.2~AP (L) and 78.8~AP (H), against 77.2~AP for HRNet-W48 + DARK at $384{\times}288$ (COCO val2017, detected boxes).
+
+\paragraph{Arms.} All improvement runs use MMPose~1.3.2.
+\begin{itemize}[leftmargin=*]
+  \item The \emph{control} is HRNet-W48 + DARK at $384{\times}288$, the MMPose counterpart of FiDIP's network.
+  \item The \emph{resolution arm} is ViTPose-L at $256{\times}192$ and $384{\times}288$.
+  \item The \emph{capacity arm} is ViTPose-H at $384{\times}288$.
+\end{itemize}
+
+\paragraph{What is held fixed.} Every arm uses the same training data (200 real + 1000 synthetic, official labels) and FiDIP's 1:1 real:synthetic mix, in which each real image appears five times per 2000-sample epoch. Every arm also shares the epoch budget, warm-up and LR decay, MMPose's COCO augmentation, GT boxes, flip test, and per-epoch Val400 checkpoint selection.
+
+\paragraph{What varies.} Only what each family needs: HRNet uses Adam, while ViT uses AdamW with layer-wise LR decay and drop-path. Batch size and codec (DARK versus UDP) also differ.
+We therefore compare backbone families, each with its standard optimiser, rather than doing a pure weight swap.
+
+Starting from FiDIP's nominal LR of $10^{-4}$, we explored recipe knobs (LR, rotation range, schedule, EMA) on Val400 only (\cref{tab:attempts}); the resolved settings are in \cref{tab:hparams}.
+Besides SyRIP, the only pose data are the COCO checkpoints. We excluded models whose pre-training adds other pose datasets.
+
+\subsection{Controlled comparison and ablations}\label{sec:backbone}\label{sec:ablations}
+
+\Cref{tab:backbone} gives Val400 AP (mean $\pm$ s.d.\ over seeds) and \APstrict{} per arm. The MMPose control reaches \resms{imp.control.val.ap}~AP, and the configuration finally pre-registered, \res{best.name}, reaches \resms{best.val.ap}~AP.
+
+\Cref{tab:ablations} changes one factor at a time against a stated default, on Val400 only:
+\begin{itemize}[leftmargin=*]
+  \item real-only versus real + synthetic training data;
+  \item the rotation range;
+  \item flip testing;
+  \item the FiDIP weight $\lambda$.
+\end{itemize}
+
+\begin{table}[t]
+  \centering\small
+  \caption{Controlled comparison under one MMPose recipe (Val400, mean $\pm$ s.d.\ over seeds). Test100 is shown only for pre-registered runs (otherwise ---). GPU-hours are per training run.}
+  \label{tab:backbone}
+  \GenTable{tab_backbone}{backbone $\times$ input-size comparison on Val400}
+\end{table}
+
+\begin{table}[t]
+  \centering\small
+  \caption{Ablations, one factor at a time, on Val400. $\Delta$ is relative to the default row.}
+  \label{tab:ablations}
+  \GenTable{tab_ablations}{one-factor ablations on Val400}
+\end{table}
+
+\interp{Name the Val400 winner. Which matters more, resolution (L at $256{\times}192$ vs.\ $384{\times}288$) or capacity (L vs.\ H)? Does the gain appear in \APstrict{} as hypothesised? Is synthetic data still useful for a strong backbone, and what do rotation, flip-TTA and $\lambda$ contribute?}
+
+\subsection{All attempts}\label{sec:attempts}
+
+The course asks for the accuracy of \emph{every} attempt. \Cref{tab:attempts} lists all \res{att.n} in chronological order, including those that did not help:
+\begin{itemize}[leftmargin=*]
+  \item the reproduction variants;
+  \item the domain-adaptation tweaks (the $\lambda$ sweep and the paper recipe);
+  \item every backbone, resolution, augmentation and recipe change.
+\end{itemize}
+\res{att.nbetter} attempts beat the control's mean Val400 AP. Test100 values appear only for pre-registered runs.
+
+\begin{table}[t]
+  \centering\footnotesize
+  \caption[Every attempt with its accuracy]{Every attempt with its Val400 accuracy and outcome, generated from \code{results/registry.csv}. Run IDs resolve to \code{runs/<RUN_ID>/} and to \code{MANIFEST.md}.}
+  \label{tab:attempts}
+  \GenTable{tab_attempts}{every attempt with its accuracy}
+\end{table}
+
+\subsection{Final evaluation: repeats and confidence intervals}\label{sec:final}
+
+After the Val400 study, \res{best.name} was pre-registered at commit \res{best.prereg.commit}, with the checkpoint rule ``\res{best.ckptrule}''. It was then evaluated once on Test100 for each of its \res{best.seeds} seeds (\cref{tab:final}).
+Differences are paired with the released FiDIP checkpoint on the same 100 images. The published 93.6 has no per-image predictions, so it cannot be paired.
+The paired image bootstrap of the seed-averaged AP (\cref{sec:eval}) covers both test-sampling and seed variation. Following D13, the claim requires the CI to exclude 0 under both the \texttt{paper} and the \texttt{fixed} protocol (\cref{tab:boot}).
+
+\begin{table}[t]
+  \centering\small
+  \caption{Final Test100 comparison (\texttt{paper} protocol). $\Delta$AP is paired with the released checkpoint on the same images (95\% percentile bootstrap CI, $B=\res{boot.n}$); $p$ is one-sided and Holm-adjusted. The published row is copied from~\citep{fidipcode}.}
+  \label{tab:final}
+  \GenTable{tab_final}{final Test100 comparison with bootstrap CIs}
+\end{table}
+
+\begin{table}[t]
+  \centering\small
+  \caption{Paired image-level bootstrap contrasts on Test100 under both protocols. ``Robust'' means the 95\% CI excludes 0 under both \texttt{paper} and \texttt{fixed} (D13); W/T/L counts per-image OKS wins, ties and losses.}
+  \label{tab:boot}
+  \GenTable{tab_boot}{bootstrap contrasts under both protocols}
+\end{table}
+
+\begin{keybox}{Published baseline vs.\ our result, and the exact evaluation conditions}
+\textbf{Published baseline.} DarkPose + FiDIP, HRNet-W48, $384{\times}288$: \textbf{93.6~AP} on SyRIP Test100 (AP$_{50}$ 98.5, AP$_{75}$ 98.5, AR 94.6)~\citep{huang2021fidip,fidipcode}.
+
+\textbf{The same model under our evaluator.} Released \code{hrnet_fidip.pth}: \res{rel.fidip.test.ap}~AP (\texttt{paper}), \res{rel.fidip.test.ap.fixed}~AP (\texttt{fixed}).
+
+\textbf{Our result.} \res{best.name}: \textbf{\resms{best.test.ap}~AP} on Test100, mean $\pm$ s.d.\ over \res{best.seeds} seeds, \texttt{paper} protocol.
+\begin{itemize}[leftmargin=12pt]
+  \item Against the released checkpoint on the same images: $\Delta$AP $=$ \res{best.delta.ap}, 95\% CI [\res{best.delta.ci.lo}, \res{best.delta.ci.hi}], one-sided $p=\res{best.delta.p}$.
+  \item Against the published 93.6: \res{best.vs.published}.
+  \item Same contrast under the \texttt{fixed} protocol: \res{best.delta.fixed}, 95\% CI [\res{best.delta.fixed.ci.lo}, \res{best.delta.fixed.ci.hi}]. Robust under both protocols (D13): \textbf{\res{best.robust}}.
+  \item \APstrict{}: \res{best.test.apstrict} (\res{best.delta.apstrict} against the released checkpoint). On Test100-clean: \res{best.test.clean.ap}~AP.
+\end{itemize}
+
+\textbf{Evaluation conditions}, identical for every compared row:
+\begin{itemize}[leftmargin=12pt]
+  \item \emph{Test set:} SyRIP \code{validate100} (= Test100), 100 real images exactly as distributed. Boxes, areas and annotation ids are unchanged, and the five images that duplicate training images are kept, as in the published evaluation; Test100-clean (95 images) is a sensitivity check.
+  \item \emph{Training data:} 200 real + 1000 synthetic images, with the official \code{200R_1000S} labels. No Val400 or Test100 image was added to training.
+  \item \emph{Inference:} GT person boxes, flip test \res{best.flip}, input \res{best.input}, one model per seed. Ensembles are reported separately.
+  \item \emph{Metric:} \code{eval/eval_coco.py} v1.0, i.e.\ pycocotools 2.0.8 \code{COCOeval} (keypoints, COCO-17 sigmas, GT area, maxDets 20) after shared rescoring and OKS-NMS, with annotation id~0 kept as in the published numbers (\cref{sec:eval}). Claims must also hold under the \texttt{fixed} protocol. The test0 score rank is \res{best.test0rank} for our model and \res{rel.fidip.test0rank} for the released one.
+  \item \emph{Selection:} epochs, hyperparameters and the configuration were chosen on Val400 only. The configuration was pre-registered at commit \res{best.prereg.commit} before its single Test100 evaluation, and no Test100 result fed back into any choice.
+\end{itemize}
+\end{keybox}
+
+\interp{Two-sentence conclusion: is the improvement over the released checkpoint supported by the CI, and where does it come from (\APstrict{}, per-keypoint results in \cref{sec:analysis})? If the CI includes 0, say plainly that no improvement was established.}
+
+\paragraph{Ensemble (secondary claim).} A coordinate ensemble across seeds (\code{eval/ensemble_preds.py}) was registered separately and is never mixed with single-model numbers. Its status is \res{ens.name}. When run, it scores \res{ens.test.ap}~AP, with a paired 95\% CI against the released checkpoint of [\res{ens.delta.ci.lo}, \res{ens.delta.ci.hi}].

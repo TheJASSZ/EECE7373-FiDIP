@@ -1,0 +1,45 @@
+\section{Introduction}\label{sec:intro}
+
+\paragraph{The problem.} Long-term observation of infant posture and movement can support early developmental risk assessment. Automating it starts with 2D keypoint estimation from ordinary RGB images~\citep{huang2021fidip}.
+Infants make this a small-data problem in two ways. Privacy limits the number of labelled real images. And infants differ from the adults in COCO~\citep{lin2014coco} in limb proportions, pose repertoire and context, so adult-trained estimators degrade on infant-specific poses~\citep{huang2021fidip}.
+
+\paragraph{FiDIP.} FiDIP (Fine-tuned Domain-adapted Infant Pose)~\citep{huang2021fidip} addresses both. It fine-tunes a COCO-pretrained pose network on SyRIP~\citep{syripdata}, a mix of 200 real web images and 1000 synthetic renders, while a domain classifier pushes the features of real and synthetic images together.
+Its strongest variant, DarkPose~\citep{zhang2020darkpose} with an HRNet-W48 backbone~\citep{sun2019hrnet}, reports 93.6~AP on SyRIP Test100~\citep{fidipcode}. As far as we could establish (\cref{sec:related}), this is still the best published number under that protocol.
+
+\paragraph{Goals.} This report documents a hands-on reproduction of FiDIP and an attempt to improve on it, carried out with an AI coding agent on Northeastern's Explorer cluster. We had four goals:
+\begin{enumerate}[label=\textbf{(G\arabic*)}, leftmargin=*]
+  \item Reproduce the published baseline, from the released checkpoints and by retraining.
+  \item Make the evaluation conditions explicit, and identical for every number we compare.
+  \item Improve Test100 AP on the same split, without using Test100 for any decision.
+  \item Keep the work reproducible and the agentic process auditable.
+\end{enumerate}
+
+\paragraph{Findings.}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Reproduction} (\cref{sec:repro}). The released FiDIP checkpoint scores \res{rel.fidip.test.ap}~AP on Test100 with our evaluator, against the published 93.6.
+  Retraining with the released recipe gives \resms{rt.fidip.test.ap}~AP with domain adaptation and \resms{rt.ft.test.ap}~AP without it (\res{rt.seeds} seeds each).
+  \item \textbf{Protocol} (\cref{sec:fidip,sec:data}). Run literally, the README training command fine-tunes from random weights with the adaptation weight $\lambda=0$, and the training loop keeps the epoch that is best on Test100.
+  We select every model on Val400, the 397 validate500 images that neither belong to nor duplicate Test100, and pre-register each configuration before its single Test100 evaluation.
+  \item \textbf{Data and evaluation conditions} (\cref{sec:data,sec:eval}). Hashing, near-duplicate search and label/image consistency checks found six issues that would silently bias results:
+  \begin{itemize}[leftmargin=*]
+    \item a constant placeholder object area in validate500;
+    \item an annotation with id~0 in Test100 that pycocotools never matches, which caps AR at 0.99 and moves AP by \res{sens.id0.delta} for the released model;
+    \item five Test100 images that duplicate training images;
+    \item three Val400 candidates that duplicate Test100 images;
+    \item MINI-RGBD labels on the synthetic images in the README's training file;
+    \item unannotated real images that duplicate validation images.
+  \end{itemize}
+  MMPose's evaluator lacks the id-0 artifact, so we accept a claim only if it holds under both matching protocols.
+  \item \textbf{Improvement} (\cref{sec:improve}). We ran a controlled backbone and input-resolution comparison under one MMPose recipe, plus ablations, all selected on Val400.
+  The pre-registered winner, \res{best.name}, scores \resms{best.test.ap}~AP on Test100. That is \res{best.delta.ap}~AP from the released checkpoint, with a paired-bootstrap 95\% CI of [\res{best.delta.ci.lo}, \res{best.delta.ci.hi}].
+  \item \textbf{Process} (\cref{sec:lessons,sec:aiuse}). The agent kept \code{SKILL.md}, \code{AGENT.md} and \code{MANIFEST.md} current during the work, not after it, and every reported number traces to a run and a commit.
+\end{itemize}
+
+\paragraph{Roadmap.}
+\begin{itemize}[leftmargin=*]
+  \item \Cref{sec:background}: FiDIP and SyRIP, including where the released code differs from the paper.
+  \item \Cref{sec:impl}: the cluster workflow, data preparation, split protocol and evaluator.
+  \item \Cref{sec:repro,sec:improve,sec:analysis}: reproduction, improvement and analysis.
+  \item \Cref{sec:limits,sec:lessons,sec:aiuse}: limitations, lessons learned and AI-tool use.
+  \item The appendix: commands, hyperparameters, compute, provenance and a rubric map.
+\end{itemize}

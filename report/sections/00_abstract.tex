@@ -1,0 +1,18 @@
+Infant pose estimation is a small-data problem: privacy limits the number of labelled real images, and adult-trained models transfer poorly to infant bodies and poses.
+FiDIP~\citep{huang2021fidip} fine-tunes a COCO-pretrained DarkPose HRNet-W48 on SyRIP (200 real and 1000 synthetic training images), with a domain classifier that pushes real and synthetic features together. It reports 93.6~AP on SyRIP Test100.
+We reproduce this result and try to improve on it with an AI coding agent on Northeastern's Explorer cluster. Every evaluation condition is stated, and every model is scored by one audited evaluator.
+
+The released FiDIP checkpoint scores \res{rel.fidip.test.ap}~AP on Test100.
+The released training loop selects its checkpoint on Test100. We instead select all models on Val400, the 397 real validate500 images that neither belong to nor duplicate Test100, and evaluate Test100 only for pre-registered configurations.
+Retraining FiDIP gives \resms{rt.fidip.test.ap}~AP over \res{rt.seeds} seeds, against \resms{rt.ft.test.ap}~AP without domain adaptation.
+
+Checking the data surfaced issues that change the numbers:
+\begin{itemize}
+  \item validate500 ships a constant placeholder object area, which makes OKS meaningless;
+  \item an annotation with id~0 in Test100 is never matched by pycocotools, which caps recall at 0.99 in our numbers and the published ones alike;
+  \item five Test100 images duplicate training images;
+  \item the training file that the README points to carries another dataset's labels for every synthetic image.
+\end{itemize}
+
+A controlled backbone and resolution study in MMPose leads to our pre-registered configuration, \res{best.name}. It scores \resms{best.test.ap}~AP on Test100, \res{best.delta.ap}~AP from the released checkpoint (95\% CI [\res{best.delta.ci.lo}, \res{best.delta.ci.hi}]).
+Every run, decision and failure is logged in the repository.

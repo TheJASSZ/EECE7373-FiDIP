@@ -1,0 +1,154 @@
+% =====================================================================================
+% Reproducing and Improving FiDIP for Infant Pose Estimation on SyRIP
+% EECE 7373 Machine Learning with Small Data (Northeastern University), Fall 2026
+%
+% Build:  bash report/build.sh            (tectonic; writes report/FiDIP_Report.pdf)
+% Overleaf: upload the report/ folder; set the compiler to pdfLaTeX (or XeLaTeX) and main
+%           document to report.tex. Source is ASCII-only, so either engine works.
+%
+% Every experimental number is read from report/generated/*.tex (written by
+% scripts/collect_results.py from eval/eval_coco.py outputs). Never type one by hand.
+% Published baseline numbers are typed, always with a citation.
+% =====================================================================================
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[margin=0.95in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{booktabs,array,multirow}
+\usepackage{adjustbox}
+\usepackage{enumitem}
+\usepackage[font=small,labelfont=bf,skip=4pt]{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds,calc,shapes.geometric,decorations.pathreplacing,patterns}
+\usepackage[most]{tcolorbox}
+\usepackage{environ}
+\usepackage{listings}
+\usepackage[numbers,sort&compress]{natbib}
+\PassOptionsToPackage{obeyspaces,spaces}{url}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{doi}
+\usepackage[capitalise,noabbrev]{cleveref}
+
+\setlist{itemsep=1pt,topsep=3pt,parsep=0pt}
+\setlength{\parskip}{2pt}
+\setlength{\emergencystretch}{2em}
+\urlstyle{same}
+\DeclareUrlCommand\code{\urlstyle{tt}}   % \code{eval/eval_coco.py}: tt, breaks at / . _
+\hypersetup{colorlinks=true, linkcolor=poseC!70!black, citecolor=poseC!70!black, urlcolor=poseC!70!black}
+
+% ---- colours (Okabe-Ito based; colour-blind safe) -------------------------------------------
+\definecolor{poseC}{HTML}{0072B2}   % pose network / our pipeline
+\definecolor{domC}{HTML}{009E73}    % domain classifier / cluster
+\definecolor{lossC}{HTML}{D55E00}   % losses / Test100
+\definecolor{realC}{HTML}{E69F00}   % real images / human
+\definecolor{synC}{HTML}{CC79A7}    % synthetic images
+\definecolor{tbdred}{HTML}{C0392B}
+\definecolor{interpbg}{gray}{0.93}
+
+% ---- result store: \setres{key}{value} (generated) / \res{key} (prose and tables) -------------
+\makeatletter
+\newcounter{tbdcount}
+\newcounter{interpcount}
+\newcounter{pendingcount}
+\newcommand{\tbd}{\stepcounter{tbdcount}\textcolor{tbdred}{\textbf{TBD}}}
+\newcommand{\setres}[2]{\@namedef{res@#1}{#2}}
+\DeclareRobustCommand{\res}[1]{%
+  \@ifundefined{res@#1}%
+    {\textcolor{tbdred}{\textbf{??}}\PackageWarning{report}{Result key `#1' is not defined}}%
+    {\@nameuse{res@#1}}}
+\newcommand{\pm@sd}[2]{\res{#1}\,{\footnotesize$\pm$\,\res{#2}}}
+\newcommand{\resms}[1]{\pm@sd{#1.mean}{#1.sd}}  % \resms{best.test.ap} -> mean +- sd
+% ---- generated tables and figures (compile even before they exist) ----------------------------
+\newcommand{\pendingbox}[1]{\stepcounter{pendingcount}\fbox{\parbox{0.9\linewidth}{\centering\small\color{tbdred}\textbf{Pending:} #1}}}
+\newcommand{\GenTable}[2]{% #1 basename in generated/, #2 what it will contain
+  \IfFileExists{generated/#1.tex}%
+    {\begin{adjustbox}{max width=\linewidth}\input{generated/#1.tex}\end{adjustbox}}%
+    {\pendingbox{\texttt{\detokenize{generated/#1.tex}} --- #2}}}
+\newcommand{\figsearchdirs}{figures/generated/,../results/figures/,../results/figures/demo/}
+\newcommand{\GenFigure}[3][width=\linewidth]{% #2 basename (no extension), #3 what it will show
+  \gdef\gf@found{}%
+  \@for\gf@dir:=\figsearchdirs\do{%
+    \ifx\gf@found\@empty\IfFileExists{\gf@dir#2.pdf}{\xdef\gf@found{\gf@dir#2.pdf}}{}\fi
+    \ifx\gf@found\@empty\IfFileExists{\gf@dir#2.png}{\xdef\gf@found{\gf@dir#2.png}}{}\fi
+    \ifx\gf@found\@empty\IfFileExists{\gf@dir#2.jpg}{\xdef\gf@found{\gf@dir#2.jpg}}{}\fi}%
+  \ifx\gf@found\@empty
+    \pendingbox{figure \texttt{\detokenize{#2}}.\{pdf,png\} --- #3}%
+  \else\includegraphics[#1]{\gf@found}\fi}
+% ---- interpretation that can only be written once results exist --------------------------------
+\newcommand{\interp}[1]{\stepcounter{interpcount}\par\smallskip\noindent
+  \colorbox{interpbg}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\small\itshape
+  \textbf{Interpretation pending final results:} #1}}\par\smallskip}
+\AtEndDocument{%
+  \ifnum\value{tbdcount}>0 \PackageWarningNoLine{report}{\arabic{tbdcount} TBD placeholder value(s) typeset}\fi
+  \ifnum\value{interpcount}>0 \PackageWarningNoLine{report}{\arabic{interpcount} interpretation placeholder(s) remain}\fi
+  \ifnum\value{pendingcount}>0 \PackageWarningNoLine{report}{\arabic{pendingcount} pending generated file(s)}\fi}
+\makeatother
+
+% ---- misc -------------------------------------------------------------------------------------
+\newcommand{\eg}{e.g.,\ }
+\newcommand{\ie}{i.e.,\ }
+\newcommand{\APstrict}{AP$_{80:95}$}
+\newcommand{\lam}{\lambda}
+\lstset{basicstyle=\ttfamily\footnotesize, columns=fullflexible, breaklines=true,
+        frame=single, rulecolor=\color{black!25}, backgroundcolor=\color{black!3},
+        xleftmargin=3pt, xrightmargin=3pt, aboveskip=4pt, belowskip=4pt, showstringspaces=false}
+\newtcolorbox{keybox}[1]{enhanced, breakable, colback=poseC!4, colframe=poseC!75!black,
+  fonttitle=\bfseries\sffamily, title={#1}, boxrule=0.7pt, arc=2pt, left=5pt, right=5pt, top=3pt, bottom=3pt}
+
+% ---- generated values -------------------------------------------------------------------------
+% 1. generated/results_tables.tex (scripts/collect_results.py): \newcommand macros, plus float tables.
+%    Only its macros are taken here; its floats are discarded (the report places its own tables
+%    from generated/tab_*.tex, so labels never clash).
+\makeatletter
+\IfFileExists{generated/results_tables.tex}{%
+  \let\rt@table\table \let\rt@endtable\endtable
+  \RenewEnviron{table}[1][]{}%
+  \input{generated/results_tables.tex}%
+  \let\table\rt@table \let\endtable\rt@endtable}{}
+\makeatother
+% 2. generated/numbers.tex: the report's canonical keys, \setres{<key>}{<value or generated macro>}.
+% 3. keymap.tex (optional, hand-maintained, no numbers): \setres{<key>}{\SomeGeneratedMacro}.
+\IfFileExists{generated/numbers.tex}{\input{generated/numbers.tex}}{}
+\IfFileExists{keymap.tex}{\input{keymap.tex}}{}
+\IfFileExists{generated/build_info.tex}{\input{generated/build_info.tex}}{}
+
+\title{\vspace{-8mm}Reproducing and Improving FiDIP for Infant Pose Estimation on SyRIP}
+\author{Vishnu Purohitham\\[2pt]
+  {\small EECE 7373 Machine Learning with Small Data, Northeastern University, Fall 2026}}
+\makeatletter
+\date{{\small\@ifundefined{res@build.date}{\today}{Build: \res{build.date}, commit \res{build.commit}}}}
+\makeatother
+
+\begin{document}
+\maketitle
+\vspace{-4mm}
+\begin{abstract}
+\input{sections/00_abstract}
+\end{abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_background}
+\input{sections/03_implementation}
+\input{sections/04_reproduction}
+\input{sections/05_improvement}
+\input{sections/06_analysis}
+\input{sections/07_limitations}
+\input{sections/08_lessons}
+\input{sections/09_ai_use}
+
+{\small\setlength{\bibsep}{2pt plus 1pt}
+\bibliographystyle{abbrvnat}
+\bibliography{refs}}
+
+\clearpage
+\appendix
+\input{sections/A_appendix}
+
+\end{document}

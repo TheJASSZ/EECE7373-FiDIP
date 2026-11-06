@@ -1,0 +1,102 @@
+\section{Analysis}\label{sec:analysis}
+
+\subsection{Where AP is lost, and how Val400 relates to Test100}\label{sec:thresholds}
+
+\paragraph{Per-threshold AP.} \Cref{fig:thresholds} (left) plots Test100 AP at each OKS threshold for the released checkpoint, our FiDIP retrain and the best configuration, together with the \texttt{paper}-protocol ceiling of a perfect model (\cref{sec:eval}). Curves that stay on the ceiling up to $t=0.75$ and separate only above it confirm that localisation precision, not gross failure, decides AP on Test100.
+
+\paragraph{Val400 versus Test100.} \Cref{fig:thresholds} (right) compares Val400 and Test100 AP for every run evaluated on both. Across these \res{vt.n} runs, the Spearman rank correlation is \res{vt.spearman}, and Test100 differs from Val400 by \res{vt.gap.mean}~AP on average.
+The two sets differ in three ways: Test100 was chosen for complex poses, it is a quarter of the size, and its boxes are looser (\cref{sec:data}). If the ranking transfers anyway, that is evidence that the selection set worked without touching the test set.
+
+\begin{figure}[t]
+  \centering
+  \begin{minipage}[b]{0.53\linewidth}\centering
+    \GenFigure[width=\linewidth]{oks_thresholds}{AP at OKS 0.50--0.95: released FiDIP, retrain, best config; paper-protocol ceiling band}
+  \end{minipage}\hfill
+  \begin{minipage}[b]{0.43\linewidth}\centering
+    \GenFigure[width=\linewidth]{val_vs_test}{Val400 AP vs Test100 AP, one point per run that has both}
+  \end{minipage}
+  \caption{Left: Test100 AP at each OKS threshold (\texttt{paper} protocol); the band is the ceiling of a perfect model under the id-0 artifact. Right: Val400 against Test100 AP for every run evaluated on both sets.}
+  \label{fig:thresholds}\label{fig:valtest}
+\end{figure}
+
+\paragraph{Evaluation choices.} \Cref{tab:sensitivity} keeps the predictions fixed and changes one evaluation choice at a time:
+\begin{itemize}[leftmargin=*]
+  \item the matching protocol, which moves the released model by \res{sens.id0.delta}~AP;
+  \item Test100 versus Test100-clean, which differ by \res{sens.clean.delta}~AP;
+  \item the GT boxes for the same images, validate100 versus validate500 (\res{sens.box.v100.ap} versus \res{sens.box.v500.ap}~AP);
+  \item the shipped placeholder area versus $\text{area}=wh$ on Val400;
+  \item pycocotools versus xtcocotools.
+\end{itemize}
+Each effect is comparable to FiDIP's published gain over fine-tuning (0.9~AP), which is why all of them are held fixed.
+
+\begin{table}[t]
+  \centering\small
+  \caption{Sensitivity of AP to evaluation choices, with predictions held fixed. Headline numbers use the first row of each pair.}
+  \label{tab:sensitivity}
+  \GenTable{tab_sensitivity}{AP under each evaluation-condition variant}
+\end{table}
+
+\subsection{Per-keypoint accuracy}\label{sec:perkp}
+
+\Cref{fig:perkp} compares the released FiDIP model with the best configuration joint by joint, using median error as a fraction of $\sqrt{wh}$ and PCK@0.05. \Cref{tab:perkp} in the appendix gives the numbers.
+
+\begin{figure}[t]
+  \centering
+  \GenFigure[width=0.9\linewidth]{per_keypoint}{per-keypoint normalised error and PCK@0.05, released FiDIP vs best config (Test100)}
+  \caption{Per-keypoint error on Test100, normalised by $\sqrt{wh}$ of the GT box (the OKS scale), for the released FiDIP model and the best configuration.}
+  \label{fig:perkp}
+\end{figure}
+
+\interp{Which joints dominate the error: the distal joints (wrists, ankles), or the hips, which are ambiguous under clothing and in prone poses? Where does the best configuration gain? Compare with the paper's observation that the lower body is hardest for adult models.}
+
+\subsection{Successes, failures and a failure taxonomy}\label{sec:failures}
+
+\paragraph{Qualitative cases.} \Cref{fig:qual} overlays the GT and both models' predictions on Test100 images ranked by per-image OKS: the best cases, the worst cases, and those where the two models disagree most.
+
+\paragraph{Automatic taxonomy.} \code{eval/taxonomy.py} assigns failure modes with unit-tested rules rather than by eye:
+\begin{itemize}[leftmargin=*]
+  \item \emph{left/right swap}: swapping a pair of predicted joints to the opposite GT joints more than halves their summed error and raises OKS by more than 0.02, for well-separated pairs only;
+  \item \emph{whole-body mirror}: mirroring every left/right label raises OKS, which indicates front/back confusion;
+  \item \emph{occlusion}: the number of joints labelled but not visible ($v=1$);
+  \item \emph{orientation}: the in-plane torso angle (upright, sideways, inverted), and a front/back/profile cue from the shoulder--hip cross product;
+  \item \emph{scale}: the infant's size in the image.
+\end{itemize}
+\Cref{tab:failures} counts each mode for both models, and its ``Rule'' column gives the exact thresholds.
+
+\begin{figure}[t]
+  \centering
+  \GenFigure[width=\linewidth,height=0.28\textheight,keepaspectratio]{qual_success}{overlay grid: best Test100 cases (GT vs released FiDIP vs best)}\\[2pt]
+  \GenFigure[width=\linewidth,height=0.28\textheight,keepaspectratio]{qual_failure}{overlay grid: worst Test100 cases and largest disagreements}
+  \caption{Qualitative Test100 results. Top: the highest per-image OKS. Bottom: the lowest OKS, and the largest disagreements between the two models. Colours are given in the legend.}
+  \label{fig:qual}
+\end{figure}
+
+\begin{table}[t]
+  \centering\small
+  \caption[Failure taxonomy on Test100]{Automatic failure taxonomy on Test100 (\code{eval/taxonomy.py}). Counts are images, and mean OKS is taken within each group.}
+  \label{tab:failures}
+  \GenTable{tab_failures}{failure-mode counts for released FiDIP vs best}
+\end{table}
+
+\interp{Which failure mode is most common and which is most costly (left/right confusion in prone or side-lying poses, inverted torsos, self-occluded limbs)? Does the better model fix one mode, or improve uniformly?}
+
+\subsection{Inference demo}\label{sec:demo}
+
+Part~6 of the course guide asks for two demos:
+\begin{itemize}[leftmargin=*]
+  \item a command-line demo, \code{tools/demo.py}, with the guide's interface: \code{--cfg}, \code{--image}, \code{--model} and \code{--output}, and optionally \code{--conf-threshold} and \code{--output-size};
+  \item a Streamlit app, \code{tools/streamlit_demo.py}, which uploads an image, sets the confidence threshold with a slider, and shows the predicted keypoints with their confidences.
+\end{itemize}
+\Cref{fig:demo} shows both; the images are in \code{results/figures/demo/}. The demos run on images without ground truth, so they illustrate behaviour and are not used for any metric.
+
+\begin{figure}[t]
+  \centering
+  \begin{minipage}[b]{0.48\linewidth}\centering
+    \GenFigure[width=\linewidth]{demo_cli}{output image of the command-line demo}
+  \end{minipage}\hfill
+  \begin{minipage}[b]{0.48\linewidth}\centering
+    \GenFigure[width=\linewidth]{demo_streamlit}{screenshot of the Streamlit demo app}
+  \end{minipage}
+  \caption{Inference demos. Left: the command-line demo's output with keypoint confidences. Right: the Streamlit app.}
+  \label{fig:demo}
+\end{figure}

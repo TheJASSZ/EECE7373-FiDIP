@@ -1,0 +1,139 @@
+\section{Reproduction commands}\label{app:commands}
+
+All commands run from the repository root. Cluster commands run in \code{/scratch/purohitham.v/fidip/repo}, which is kept in sync with \code{scripts/sync_to_cluster.sh}.
+\code{README.md} has the full, current sequence, and each run's exact command is recorded in its \code{run.json} and in \code{MANIFEST.md}.
+
+\begin{lstlisting}[language=bash]
+# 0. access (SKILL.md): passwordless key, host alias "explorer"; never compute on the login node
+ssh -o BatchMode=yes -o ConnectTimeout=15 explorer 'hostname'
+bash scripts/sync_to_cluster.sh                      # tar-over-ssh push of code (never deletes)
+# 1. environments (CPU jobs)
+sbatch scripts/slurm/build_env_fidip.sbatch          # pip-only py3.12 / torch 2.3.1 cu121
+sbatch scripts/slurm/build_env_mmpose.sbatch         # py3.10 / torch 2.1.2 / mmpose 1.3.2
+sbatch scripts/slurm/build_env_analysis.sbatch       # numpy 1.26.4 + pycocotools 2.0.8
+# 2. data: download, SHA256 verify, unzip on a compute node, upstream layout, split files
+sbatch scripts/slurm/get_data.sbatch
+# 3. checkpoints (SHA256 in MANIFEST.md section 4)
+sbatch scripts/slurm/get_ckpts_mmpose.sbatch; sbatch scripts/slurm/prep_ckpts_mmpose.sbatch
+# 4. FiDIP retrain = the README command plus the two overrides it needs (one seed shown)
+python tools/train_adaptive_model_hrnet.py \
+  --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml \
+  TRAIN.CHECKPOINT models/coco/w48_384x288.pth TRAIN.LAMBDA 0.0005   # 0.0 = fine-tune ablation
+# 5. MMPose run (Val400 selection inside; never touches Test100)
+sbatch --export=ALL,RUN_ID=<RUN_ID>,CONFIG=mmpose_exps/configs/<config>.py,SEED=1 \
+  scripts/slurm/train_mmpose.sbatch
+# 6. final Test100 evaluation of a pre-registered run (refuses otherwise)
+sbatch --export=ALL,RUN_ID=<RUN_ID> scripts/slurm/final_test_eval_mmpose.sbatch
+# 7. metrics, CIs, tables, figures, report
+python eval/eval_coco.py --gt <split>.json --pred runs/<RUN_ID>/preds_test100.json \
+  --out runs/<RUN_ID>/metrics_test100.json --per-image runs/<RUN_ID>/per_image_test100.json
+python eval/bootstrap_ci.py multiseed --gt <test100>.json --a <A_s1> <A_s2> <A_s3> --b <B> --out ci.json
+bash scripts/sync_results.sh && python scripts/collect_results.py   # -> report/generated/*.tex
+bash report/build.sh                                                # -> report/FiDIP_Report.pdf
+\end{lstlisting}
+
+\section{Upstream traps and patches}\label{app:patches}
+
+Six details of the upstream code matter for anyone reproducing it:
+\begin{enumerate}[label=(\roman*), leftmargin=*]
+  \item The literal README command is plain fine-tuning from random weights (\cref{sec:fidip}). We pass \code{TRAIN.CHECKPOINT} and \code{TRAIN.LAMBDA} on the command line rather than editing code.
+  \item The loader always builds the adult \code{train_pre_infant} set, even when \code{PRE_EPOCH} is 0.
+  \item \code{lib/dataset/syrip.py} skips evaluation for any split whose name contains ``test''.
+  \item \code{tools/test_adaptive_model.py} loads weights with \code{strict=False}, so a key-prefix mismatch would silently leave the network at its initialisation. We added a strict-load check.
+  \item The compiled NMS extensions are never used, so \code{make} can be skipped.
+  \item For ViTPose at $384{\times}288$, MMPretrain infers a \emph{square} grid from the 192 position embeddings of the $16{\times}12$ COCO checkpoint and fails. We resized them offline (bicubic, $16{\times}12\to24{\times}18$, \code{mmpose_exps/tools/resize_vit_pos_embed.py}).
+\end{enumerate}
+
+\begin{table}[h]
+  \centering\small
+  \caption[Patches to the vendored upstream code]{Patches to the vendored upstream code (\code{third_party/Infant-Pose-Estimation}), one commit each, generated from \code{MANIFEST.md}~\S6.}
+  \label{tab:patches}
+  \GenTable{tab_patches}{list of upstream patches}
+\end{table}
+
+\section{Evaluator tests}\label{app:tests}
+
+\code{python -m pytest eval/tests} runs the evaluator's unit tests on mock data; no SyRIP files are needed. They check:
+\begin{itemize}[leftmargin=*]
+  \item that the GT used as the prediction gives AP = AR = 1;
+  \item the id-0 artifact (\texttt{paper} versus \texttt{fixed}) and the exact \texttt{paper}-protocol ceiling formula;
+  \item monotone degradation of AP, OKS and PCK under increasing keypoint noise;
+  \item bit-identical metrics across twelve prediction encodings;
+  \item that unknown images are dropped and missing predictions count as misses;
+  \item the rescoring invariances: identical results for files already scored by the rule, and indifference to random file scores, monotone score transforms and confidence scaling;
+  \item that the rescoring rule equals upstream's loop;
+  \item the constant-area guard;
+  \item that per-image OKS equals \code{COCOeval}'s internal values;
+  \item exact per-keypoint errors and PCK on constructed shifts;
+  \item that per-threshold AP averages back to AP, AP$_{50}$ and AP$_{75}$;
+  \item that OKS-NMS keep-lists equal upstream \code{nms.py} on random instance sets;
+  \item the command line end to end.
+\end{itemize}
+The bootstrap, ensemble, taxonomy and analysis tools have their own tests in the same folder.
+
+\section{Hyperparameters}\label{app:hparams}
+
+\begin{table}[h]
+  \centering\small
+  \caption{Resolved training and inference settings. Upstream values come from the released yaml and code at \texttt{a76b4f4}, plus the two command-line overrides. MMPose values come from the dumped configs of the selected runs.}
+  \label{tab:hparams}
+  \GenTable{tab_hparams}{resolved hyperparameters of every arm}
+\end{table}
+
+\section{Per-keypoint results}\label{app:perkp}
+
+\begin{table}[h]
+  \centering\small
+  \caption{Per-keypoint accuracy on Test100: median error as a percentage of $\sqrt{wh}$ of the GT box, and PCK with the same normaliser, over labelled joints only.}
+  \label{tab:perkp}
+  \GenTable{tab_perkeypoint}{per-keypoint error and PCK}
+\end{table}
+
+\section{Compute used}\label{app:compute}
+
+The project used \res{comp.jobs} Slurm jobs and \res{comp.gpuh} GPU-hours in total, including \res{comp.runs} training runs (\cref{tab:compute}; accounting from \code{sacct}).
+GPU jobs ran on H200 and A100 nodes of the \code{gpu} and \code{sharing} partitions. Data preparation, environment builds and analysis ran as CPU jobs.
+
+\begin{table}[h]
+  \centering\small
+  \caption[Compute by work stream]{Compute by work stream, from \code{sacct}.}
+  \label{tab:compute}
+  \GenTable{tab_compute}{jobs and GPU-hours per stream}
+\end{table}
+
+\section{Provenance: from a number to its run}\label{app:provenance}
+
+To trace any number in this report:
+\begin{enumerate}[leftmargin=*]
+  \item \code{MANIFEST.md}~\S8 maps each reported number to a run ID and a metrics file.
+  \item The run's row in \code{results/registry.csv} gives the Slurm job ID, config, seed, GPU, git SHA and checkpoint SHA256.
+  \item The run directory \code{runs/<RUN_ID>/} on \code{/scratch} (with persistent copies in \code{~/fidip_artifacts/}) holds \code{run.json}, the logs, the predictions and the \code{eval_coco.py} output. Its \code{gt.sha256} and \code{pred.sha256} fields pin the exact files.
+  \item \code{report/generated/*.tex} is regenerated from those metrics by \code{scripts/collect_results.py}; the report only reads it with \code{\input}.
+\end{enumerate}
+Decisions (D1, D2, \dots) are dated and explained in \code{AGENT.md}, and command-level detail is in \code{notebook/<stream>.md}.
+
+\section{Rubric traceability}\label{app:rubric}
+
+\begin{table}[h]
+\centering\small
+\caption{Where each grading item is addressed.}
+\label{tab:rubric}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{@{}p{0.34\linewidth}p{0.30\linewidth}p{0.32\linewidth}@{}}
+\toprule
+Rubric item & Report & Repository\\
+\midrule
+Environment setup, data preparation & \cref{sec:env,sec:data} & \code{envs/}, \code{scripts/get_data.sh}, \code{scripts/make_splits.py}\\
+Working inference and evaluation pipeline & \cref{sec:released,sec:eval,sec:demo} & \code{eval/eval_coco.py}, \code{eval/tests/}, \code{tools/demo.py}\\
+Reproducible instructions, code, configs & \cref{app:commands,app:hparams,app:provenance} & \code{README.md}, \code{MANIFEST.md}, \code{scripts/slurm/}, \code{mmpose_exps/configs/}\\
+Correct quantitative evaluation & \cref{sec:eval,sec:thresholds} & \code{eval/}, \code{results/PREREGISTRATION.md}\\
+Comparison with the published baseline & \cref{tab:published,tab:repro,tab:final}; box in \cref{sec:final} & \code{results/registry.csv}\\
+Visualisations, success/failure analysis & \cref{sec:analysis} & \code{eval/visualize.py}, \code{eval/analyze.py}, \code{eval/taxonomy.py}\\
+Organisation; methods and choices & \cref{sec:intro,sec:background,sec:impl,sec:method} & \code{README.md}\\
+Limitations, lessons, references, AI use & \cref{sec:limits,sec:lessons,sec:aiuse}; references & \code{AGENT.md}, \code{report/refs.bib}\\
+Bonus: improvement, ablation, repeats, conditions & \cref{sec:improve}; \cref{tab:backbone,tab:ablations,tab:attempts,tab:final} & \code{results/PREREGISTRATION.md}, \code{MANIFEST.md}\\
+Live \code{SKILL.md} / \code{AGENT.md} / \code{MANIFEST.md} & \cref{sec:workflow,sec:aiuse} & repository root\\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

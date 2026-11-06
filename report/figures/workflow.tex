@@ -1,0 +1,42 @@
+% Agentic workflow: human <-> orchestrator <-> worker agents, and the agent <-> Explorer/Slurm loop.
+\begin{tikzpicture}[
+  font=\sffamily\scriptsize,
+  >={Stealth[length=4pt]},
+  box/.style={draw, rounded corners=2pt, align=center, inner sep=3pt, line width=0.5pt},
+  human/.style={box, fill=realC!18, draw=realC!80!black, minimum width=27mm, minimum height=10mm},
+  agent/.style={box, fill=poseC!12, draw=poseC!80!black, minimum width=40mm, minimum height=10mm},
+  worker/.style={box, fill=poseC!5, draw=poseC!70!black, minimum width=13.5mm, minimum height=7mm},
+  doc/.style={box, fill=white, draw=black!55, minimum width=21mm, font=\ttfamily\tiny, inner sep=2pt},
+  clus/.style={box, fill=domC!10, draw=domC!80!black, minimum width=44mm, minimum height=10mm},
+  flow/.style={->, line width=0.6pt, draw=black!75},
+  lab/.style={font=\sffamily\tiny, text=black!80, align=center},
+]
+% ---- top row: human -- orchestrator -- cluster login ---------------------------------------
+\node[human] (human) at (0,0) {\textbf{student (human)}\\{\tiny sets goals, approves, reviews}};
+\node[agent] (orch) at (5.6,0) {\textbf{orchestrator}: Claude Code\\{\tiny (Claude Opus 5.5) on the MacBook}};
+\node[clus] (login) at (12.3,0) {\textbf{Explorer login node}\\{\tiny \texttt{ssh -o BatchMode=yes}, \texttt{timeout}; no compute}};
+\draw[flow] ([yshift=2mm]human.east) -- node[lab, above] {asks, course guide,\\plan approval, steering} ([yshift=2mm]orch.west);
+\draw[flow] ([yshift=-2mm]orch.west) -- node[lab, below] {plan, questions,\\progress, results} ([yshift=-2mm]human.east);
+\draw[flow, poseC!80!black] ([yshift=2mm]orch.east) -- node[lab, above] {code: tar over ssh\\jobs: \texttt{sbatch}} ([yshift=2mm]login.west);
+\draw[flow, domC!80!black] ([yshift=-2mm]login.west) -- node[lab, below] {\texttt{squeue}, \texttt{sacct}, logs;\\small result files only} ([yshift=-2mm]orch.east);
+% ---- second row: workers, Slurm ---------------------------------------------------------------
+\node[worker] (w1) at (3.2,-2.1) {repro};
+\node[worker] (w2) at (4.8,-2.1) {improve};
+\node[worker] (w3) at (6.4,-2.1) {analysis};
+\node[worker] (w4) at (8.0,-2.1) {report};
+\foreach \w in {w1,w2,w3,w4} \draw[flow] (orch.south) -- (\w.north);
+\node[worker, dashed, minimum width=46mm] (rev) at (5.6,-3.25) {fresh-context reviewer (final check)};
+\node[clus] (slurm) at (12.3,-2.1) {\textbf{Slurm}\\{\tiny \texttt{gpu}: H200/A100, 8 h \quad \texttt{sharing}: 1 h \quad \texttt{short}: CPU}};
+\node[clus] (scratch) at (12.3,-3.85) {\textbf{\texttt{/scratch/.../fidip}}\\{\tiny data, envs, checkpoints, \texttt{runs/<RUN\_ID>/}}};
+\draw[flow] (login) -- node[lab, right] {\texttt{sbatch} (smoke test on \texttt{sharing})} (slurm);
+\draw[flow] (slurm) -- node[lab, right] {\texttt{run.json}, logs, preds, metrics} (scratch);
+% ---- left column: the live files -------------------------------------------------------------
+\node[doc] (skill) at (0,-1.55) {SKILL.md};
+\node[doc, below=0.8mm of skill] (agentmd) {AGENT.md};
+\node[doc, below=0.8mm of agentmd] (manifest) {MANIFEST.md};
+\node[doc, below=3.5mm of manifest] (nb) {notebook/<stream>.md};
+\node[doc, below=0.8mm of nb] (reg) {results/registry.csv};
+\node[lab, anchor=south] at (skill.north) {kept live by the agent};
+\draw[flow, black!55] (orch.south west) -- (agentmd.east);
+\draw[flow, black!55] (w1.south) |- node[lab, pos=0.75, below] {per-stream detail} (nb.east);
+\end{tikzpicture}

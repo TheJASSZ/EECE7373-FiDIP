@@ -1,0 +1,61 @@
+% FiDIP as released (upstream @ a76b4f4): pose network + domain classifier, alternating updates.
+% Facts encoded here were read from lib/models/adaptive_pose_hrnet.py, lib/core/function.py
+% (train_adaptive), tools/train_adaptive_model_hrnet.py and lib/utils/sampler.py.
+\begin{tikzpicture}[
+  font=\sffamily\scriptsize,
+  >={Stealth[length=4pt]},
+  blk/.style={draw, rounded corners=2pt, align=center, minimum height=10mm, inner sep=3pt, line width=0.5pt},
+  pose/.style={blk, fill=poseC!12, draw=poseC!80!black},
+  froz/.style={blk, fill=black!8, draw=black!45, pattern color=black!18},
+  dom/.style={blk, fill=domC!12, draw=domC!80!black},
+  loss/.style={blk, fill=lossC!10, draw=lossC!85!black, minimum height=8mm},
+  data/.style={blk, minimum height=7mm, minimum width=13mm},
+  note/.style={align=left, text=black!75, font=\sffamily\tiny},
+  flow/.style={->, line width=0.6pt, draw=black!75},
+  grad/.style={->, line width=0.9pt, densely dashed},
+]
+% ---- inputs ---------------------------------------------------------------------------------
+\node[data, fill=realC!20, draw=realC!80!black] (real) at (0,0.45) {real\\[-1pt]{\tiny 200, oversampled}};
+\node[data, fill=synC!18, draw=synC!80!black, below=1.2mm of real] (syn) {synthetic\\[-1pt]{\tiny 1000 renders}};
+\node[note, above=0.6mm of real, align=center] (inlab) {balanced batch (20)\\384$\times$288 crops};
+% ---- pose network -----------------------------------------------------------------------------
+\node[froz, right=7mm of real.south east, anchor=south west, yshift=-6.5mm, minimum width=16mm] (frozen)
+  {stem, layer1,\\stage 2\\{\tiny frozen (109 tensors)}};
+\node[pose, right=3mm of frozen, minimum width=15mm] (trainable) {stages 3--4\\{\tiny fine-tuned}};
+\node[pose, right=5mm of trainable, minimum width=15mm, minimum height=8mm] (feat)
+  {$F$\\{\tiny 48$\times$96$\times$72}};
+\node[pose, right=5mm of feat, minimum width=10mm, minimum height=8mm] (head) {1$\times$1\\conv};
+\node[pose, right=4mm of head, minimum width=15mm, minimum height=8mm] (hm) {$\hat H$\\{\tiny 17$\times$96$\times$72}};
+\node[loss, right=5mm of hm, minimum width=19mm] (lp) {$\mathcal{L}_P=\mathrm{MSE}(\hat H, H)$\\{\tiny target-weighted}};
+\begin{scope}[on background layer]
+  \node[draw=poseC!70!black, dashed, rounded corners=3pt, fit=(frozen)(trainable)(feat)(head)(hm), inner sep=2.6mm,
+        label={[font=\sffamily\scriptsize\bfseries, text=poseC!80!black, anchor=south west]north west:pose network $f$ (DarkPose HRNet-W48, COCO-pretrained)}] (posebox) {};
+\end{scope}
+\draw[flow] (real.east) -- ++(3mm,0) |- (frozen.west);
+\draw[flow] (syn.east) -- ++(3mm,0) |- (frozen.west);
+\draw[flow] (frozen) -- (trainable);
+\draw[flow] (trainable) -- (feat);
+\draw[flow] (feat) -- (head);
+\draw[flow] (head) -- (hm);
+\draw[flow] (hm) -- (lp);
+% ---- domain classifier -------------------------------------------------------------------------
+\node[dom, below=12mm of feat.south, anchor=north, xshift=12mm, minimum width=34mm] (dc)
+  {domain classifier $D$ (training only)\\{\tiny 2$\times$[conv 3$\times$3, BN, ReLU, max-pool] $\to$ FC 256 $\to$ 64 $\to$ 1}};
+\node[loss, right=5mm of dc, minimum width=27mm] (ld)
+  {$\mathcal{L}_D=\mathrm{BCE}\big(D(F), d\big)$\\{\tiny $d=1$ synthetic, $d=0$ real}};
+\draw[flow] (feat.south) -- node[left, font=\sffamily\tiny, align=right] {$F$\\(detached\\in step 1)} (feat.south |- dc.north);
+\draw[flow] (dc) -- (ld);
+% ---- the two alternating updates -------------------------------------------------------------
+\node[draw=domC!80!black, fill=white, rounded corners=2pt, align=left, inner sep=2.5pt, font=\sffamily\tiny,
+      below=4mm of dc.south west, anchor=north west] (s1)
+  {\textbf{step 1} (every iteration): update $D$ only,\\ $\min_{\theta_D}\ \mathcal{L}_D\big(D(\mathrm{sg}[F]), d\big)$ \quad (Adam)};
+\node[draw=lossC!85!black, fill=white, rounded corners=2pt, align=left, inner sep=2.5pt, font=\sffamily\tiny,
+      right=3mm of s1] (s2)
+  {\textbf{step 2}: update $f$ (non-frozen layers), $D$ fixed,\\ $\min_{\theta_f}\ \mathcal{L}_P-\lambda\,\mathcal{L}_D$, \ $\lambda=5{\cdot}10^{-4}$ \ (negative weight, no GRL)};
+% ---- pre-stage and test-time notes -------------------------------------------------------------
+\node[note, draw=black!40, dashed, rounded corners=2pt, inner sep=2.5pt, anchor=north west]
+  at ([yshift=-3mm]syn.south west) (pre)
+  {\textbf{optional pre-stage} (\texttt{PRE\_EPOCH}):\\train $D$ on adult real (COCO)\\vs.\ synthetic (SURREAL)\\images, $f$ frozen};
+\node[note, anchor=north east, align=right] at ([yshift=-3mm]lp.south east)
+  {\textbf{test time:} $f$ only, GT boxes,\\flip test, DARK decoding};
+\end{tikzpicture}

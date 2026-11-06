@@ -1,0 +1,120 @@
+\section{Background}\label{sec:background}
+
+\subsection{Top-down pose estimation and its metric}\label{sec:metric}
+
+\paragraph{Models.} A top-down estimator crops each person box to a fixed input size (\eg $384{\times}288$) and predicts one heatmap per keypoint at $1/4$ resolution, from which it decodes coordinates. The models used here:
+\begin{itemize}[leftmargin=*]
+  \item SimpleBaseline~\citep{xiao2018simple} adds deconvolutions to a ResNet.
+  \item HRNet~\citep{sun2019hrnet} keeps a high-resolution branch throughout, fused with lower-resolution branches. W48 is that branch's width.
+  \item DARK~\citep{zhang2020darkpose} decodes sub-pixel maxima with a Taylor expansion of the smoothed log-heatmap, and encodes targets without quantisation.
+  \item UDP~\citep{huang2020udp} removes systematic errors from the resizing and flipping transforms and from keypoint encoding.
+  \item ViTPose~\citep{xu2022vitpose} uses a plain Vision Transformer with a light decoder.
+\end{itemize}
+Flip testing averages the heatmaps of the image and of its mirror, with left and right channels swapped.
+
+\paragraph{Metric.} COCO evaluation~\citep{lin2014coco,cocoapi} scores a prediction against a ground-truth (GT) instance by the object keypoint similarity
+\begin{equation}
+  \mathrm{OKS}=\frac{\sum_i \exp\!\big(-d_i^2/(2\,s^2\kappa_i^2)\big)\,\delta(v_i>0)}{\sum_i \delta(v_i>0)},\qquad \kappa_i=2\sigma_i ,
+  \label{eq:oks}
+\end{equation}
+where $d_i$ is the pixel error of keypoint $i$, $s^2$ is the GT object \emph{area}, $\sigma_i$ are the 17 COCO constants, and $v_i$ is the visibility flag.
+AP averages, over OKS thresholds $t\in\{0.50,\dots,0.95\}$, the area under the precision--recall curve of detections ranked by score. AP$_{50}$ and AP$_{75}$ are single thresholds, and AR is the corresponding mean recall.
+SyRIP is evaluated with GT person boxes and one infant per image, so AP depends only on the per-image OKS and on how the instance scores rank the images.
+
+\subsection{The SyRIP dataset}\label{sec:syrip}
+
+\paragraph{Images.} SyRIP~\citep{huang2021fidip,syripdata} has 700 real images from YouTube and Google Images; the README says the 200 real training images show more than 100 infants.
+It also has 1000 synthetic images, rendered from the SMIL infant body model~\citep{hesse2018smil}. To make each one, SMIL is fitted to a real infant's 2D pose, the pose is perturbed, and the body is rendered with random textures (more than 12), lighting, camera and background~\citep{huang2021fidip}.
+
+\paragraph{Splits.} Training uses all 200 real and 1000 synthetic images. validate500 (the paper's \emph{Test500}) holds 500 real images, and its 100 most complex poses form validate100 (\emph{Test100}). Annotations use COCO's 17 keypoints. \Cref{sec:data} describes the overlaps we found between these splits.
+
+\paragraph{Other infant data.} MINI-RGBD~\citep{hesse2018minirgbd}, the only earlier public infant dataset, has 12 synthetic sequences of simple poses. A password-protected \emph{expanded} SyRIP adds 400 real training images; \cref{sec:limits} explains why we do not use it.
+
+\subsection{FiDIP, as published and as released}\label{sec:fidip}
+
+\paragraph{As published.} FiDIP~\citep{huang2021fidip} attaches a binary real/synthetic domain classifier $D$ to the feature extractor of a COCO-pretrained pose network $f$. Training has two phases:
+\begin{enumerate}[leftmargin=*]
+  \item \emph{Initialisation:} $D$ learns to separate adult real images (1904 from COCO val2017) from adult synthetic ones (2000 from SURREAL~\citep{varol2017surreal}), with $f$ frozen.
+  \item \emph{Alternating training:} each iteration has two stages. Stage~I updates $D$ with the binary cross-entropy $\mathcal{L}_D$. Stage~II updates $f$, with $D$ fixed, to minimise
+\begin{equation}
+  \mathcal{L}(\theta_f,\theta_y,\theta_d)=\mathcal{L}_P(\theta_f,\theta_y)-\lambda\,\mathcal{L}_D(\theta_f,\theta_d),
+  \label{eq:fidip}
+\end{equation}
+where $\mathcal{L}_P$ is the heatmap MSE.
+\end{enumerate}
+The $-\lambda\mathcal{L}_D$ term rewards features that $D$ cannot separate by domain. This is the domain-adversarial idea of \citet{ganin2015unsupervised,ganin2016dann}, which the paper describes as a gradient reversal layer (GRL).
+
+\paragraph{As released.} We audited the official code~\citep{fidipcode} at commit \texttt{a76b4f4}. \Cref{fig:fidip} shows the released HRNet variant, and \cref{tab:paper-vs-code} compares the paper, the released code and our runs. Three differences decide what a reproduction measures:
+\begin{enumerate}[label=(\roman*), leftmargin=*]
+  \item The infant config sets $\lambda=0$, so running it literally is plain fine-tuning.
+  \item The config loads no checkpoint: \code{MODEL.PRETRAINED} is empty, so without a \code{TRAIN.CHECKPOINT} override training starts from random weights.
+  \item After every epoch the training loop evaluates on \code{validate_infant} (Test100) and keeps the best epoch as \code{model_best}, which is selection on the test set.
+\end{enumerate}
+
+\begin{figure}[t]
+  \centering
+  \resizebox{\linewidth}{!}{\input{figures/fidip_arch}}
+  \caption[FiDIP as released]{FiDIP as released (DarkPose HRNet-W48), from \code{lib/models/adaptive_pose_hrnet.py} and \code{lib/core/function.py}. Step~1 of each iteration updates $D$ on detached stage-4 features. Step~2 updates the pose network with $\mathcal{L}_P-\lambda\mathcal{L}_D$, implemented as a negative loss weight. Only the pose network runs at test time.}
+  \label{fig:fidip}
+\end{figure}
+
+\begin{table}[t]
+\centering\small
+\caption[FiDIP: paper vs.\ released code vs.\ our reproduction]{FiDIP as described in the paper (arXiv v5), as released (code and \code{w48_384x288_adam_lr1e-3_infant.yaml} at \texttt{a76b4f4}), and as we ran it.}
+\label{tab:paper-vs-code}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{@{}p{0.16\linewidth}p{0.22\linewidth}p{0.35\linewidth}p{0.25\linewidth}@{}}
+\toprule
+Aspect & Paper~\citep{huang2021fidip} & Released code / config~\citep{fidipcode} & Our reproduction\\
+\midrule
+Initialisation of $f$ & COCO-pretrained DarkPose & none unless \code{TRAIN.CHECKPOINT} is passed (random init) & COCO DarkPose \code{w48_384x288.pth}\\
+$\lambda$ & $5{\cdot}10^{-4}$ & $0$ (infant yaml); $5{\cdot}10^{-4}$ only in \code{_custom.yaml} & $5{\cdot}10^{-4}$; $0$ as the fine-tune ablation\\
+Optimiser, LR & Adam, $10^{-3}$ & Adam, $10^{-4}$, constant (LR steps at epochs 40 and 200 are never reached); $10^{-3}$ in \code{_custom.yaml} & released yaml; paper recipe as one extra attempt\\
+Epochs / batch & 100 / 64 & 20 / 20 & released yaml\\
+Adversarial update & gradient reversal layer & alternating updates with a negative loss weight; no GRL module & as released\\
+Domain classifier & three FC layers & 2$\times$[conv3$\times$3, BN, ReLU, max-pool] + FC 256--64--1 on the 48-channel stage-4 high-resolution branch & as released\\
+Classifier pre-stage & 1 epoch, batch 128; 1904 COCO vs.\ 2000 SURREAL adults & \code{PRE_EPOCH} 0 (infant yaml), 10 (\code{_custom.yaml}); the adult set (2029 real + 2028 synthetic) is said to be ``on request'' but ships in \code{syrip_for_train.zip} & \code{PRE_EPOCH} 10 on the shipped adult set\\
+Frozen layers & Res1--3 (ResNet ablation) & first 109 parameter tensors (stem, \code{layer1}, stage 2) & as released\\
+Real/synthetic balance & domain-dependent loss scale $S(I_i)$ & balanced sampler (200 real oversampled to 1000, interleaved, no reshuffle between epochs); unweighted loss & as released\\
+Checkpoint selection & not stated & best Test100 AP, checked every epoch & best Val400 AP epoch\\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\subsection{Published results and where the headroom is}\label{sec:published}
+
+\Cref{tab:published} copies the published Test100 numbers.
+With one infant and one detection per image, the true positives at a stricter OKS threshold are a subset of those at a looser one, so AP$_t$ cannot increase with $t$.
+DarkPose + FiDIP reports AP$_{50}$ = AP$_{75}$ = 98.5, so all six thresholds from 0.50 to 0.75 score 98.5. The four strict thresholds then average
+\[
+\text{\APstrict}=(10\times93.6-6\times98.5)/4\approx86.3 .
+\]
+The same calculation gives 84.0 for DarkPose + Finetune (92.7 AP, also 98.5/98.5).
+FiDIP's 0.9-point gain therefore lies entirely at strict thresholds, and so must any further gain. \Cref{sec:eval} shows that 98.5 is essentially a perfect score at loose thresholds on this test set.
+
+\begin{table}[t]
+\centering\small
+\caption{Published SyRIP Test100 results~\citep{huang2021fidip,fidipcode}: COCO-pretrained (``Base''), fine-tuned on SyRIP, and FiDIP. The published baseline of this report is DarkPose + FiDIP, which also reports AP$_{50}$ = AP$_{75}$ = 98.5.}
+\label{tab:published}
+\begin{tabular}{@{}llcccc c@{}}
+\toprule
+Method & Backbone & Input & Base AP & + Finetune AP & + FiDIP AP & AR (FiDIP)\\
+\midrule
+SimpleBaseline & ResNet-50 & 384$\times$288 & 82.4 & 90.1 & 91.1 & 92.6\\
+DarkPose & HRNet-W48 & 384$\times$288 & 88.5 & 92.7 & \textbf{93.6} & 94.6\\
+Pose-MobileNet & MobileNetV2~\citep{sandler2018mobilenetv2} & 224$\times$224 & 46.5 & 78.9 & 79.2 & 84.1\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Related work on SyRIP}\label{sec:related}
+
+We found no later paper that beats 93.6 on Test100 with GT boxes. Later work on SyRIP uses other protocols:
+\begin{itemize}[leftmargin=*]
+  \item \citet{gama2025seven} benchmark seven adult models zero-shot on the 500 real test images with \emph{detected} boxes; ViTPose is best, at 41.9~AP.
+  \item SHIFT~\citep{bose2025shift} adapts from SURREAL adults without infant labels and reports PCK@0.05.
+  \item \citet{huang2023symmetry} and \citet{zhou2024zedoi} evaluate 3D pose on Test100.
+  \item \citet{grafton2025neonatal} and \citet{jahn2025comparison} use SyRIP only for cross-dataset checks.
+  \item AggPose~\citep{cao2022aggpose} and the InfantNet preprint~\citep{hui2026infantnet} evaluate on their own, larger infant datasets.
+\end{itemize}

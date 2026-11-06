@@ -1,0 +1,22 @@
+% report/generated/tab_hparams.tex -- PLACEHOLDER (regenerate from the resolved configs: the upstream
+% yaml + command-line overrides in run.json, and MMPose's dumped config of the selected runs).
+% Upstream column pre-filled by the report stream from experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml,
+% lib/utils/utils.py (Adam gets no weight decay), lib/dataset/JointsDataset.py (aug. rules) at a76b4f4.
+% MMPose columns pre-filled from notebook/improve.md (20:28 EST); values marked \tbd are not final.
+\begin{tabular}{@{}lp{0.30\linewidth}p{0.25\linewidth}p{0.25\linewidth}@{}}
+\toprule
+Setting & FiDIP retrain (upstream code) & MMPose control (HRNet-W48) & ViTPose-L / H\\
+\midrule
+Initial weights & COCO DarkPose \texttt{w48\_384x288.pth} & MMPose HRNet-W48 DARK COCO (\texttt{39c3c381}) & MMPose ViTPose COCO $256{\times}192$ (\texttt{53609f55} / \texttt{e32adcd4}); pos.\ embeddings resized for $384{\times}288$\\
+Input / heatmap & $384{\times}288$ / $96{\times}72$, $\sigma=3$ & $384{\times}288$ / $96{\times}72$ (DARK) & $256{\times}192$ or $384{\times}288$ (UDP)\\
+Optimiser & Adam, LR $10^{-4}$ constant, no weight decay & Adam, LR \tbd & AdamW, LR \tbd, wd 0.1, layer decay 0.8 / 0.85, clip 1.0, drop-path 0.5 / 0.55\\
+Batch / epochs & 20 / 20 & 32 / \tbd & 64 / \tbd\\
+Schedule & constant (steps at 40, 200 never reached) & warm-up 1 epoch, $\times0.1$ late (\tbd) & same as control\\
+Domain adaptation & $\lambda=5{\cdot}10^{-4}$ (FiDIP) or 0; $D$: Adam $10^{-4}$ & none & none\\
+Frozen layers & first 109 parameter tensors & \tbd & \tbd\\
+Augmentation & flip 0.5; rotation $\mathcal{N}(0,45^\circ)$ clipped to $\pm90^\circ$ w.p.\ 0.6; scale $\pm35\%$; half-body 0.3 & MMPose COCO default (\tbd) & same as control\\
+Real : synthetic & balanced sampler, 1:1 (real oversampled $\times5$) & 1:1 (\texttt{CombinedDataset}, real $\times5$) & same\\
+Test time & GT boxes, flip, DARK (blur kernel 11) & GT boxes, flip, DARK & GT boxes, flip, UDP\\
+Selection & best Val400 AP epoch & best Val400 AP epoch & best Val400 AP epoch\\
+\bottomrule
+\end{tabular}
