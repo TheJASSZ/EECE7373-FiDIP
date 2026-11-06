@@ -269,12 +269,29 @@ def fig_per_keypoint(models, focus, out):
     return ps.save(fig, out), rows
 
 
-def taxonomy_table(models):
+POSTURES = ["supine", "prone", "sitting", "standing"]
+
+
+def load_posture(path):
+    """image_id -> posture label from a COCO json with images[].posture (SyRIP syrip_for_train
+    validate_infant.json carries it for the 100 Test100 images)."""
+    if not path:
+        return {}
+    p = _p(path)
+    if not os.path.exists(p):
+        print(f"WARNING: posture file {p} not found")
+        return {}
+    d = json.load(open(p))
+    return {int(im["id"]): im.get("posture") for im in d.get("images", []) if im.get("posture")}
+
+
+def taxonomy_table(models, posture=None):
     """Image-level taxonomy annotations (GT-derived, model-independent) + per-model OKS/swaps."""
     base = models[0]
     ann = {}
     for k in base.keys:
         ann[k] = tx.annotate(base.rec(k))
+        ann[k]["posture"] = (posture or {}).get(k[0], "unknown")
     s = np.array([ann[k]["sqrt_area"] for k in base.keys])
     q1, q2 = np.percentile(s, [100 / 3, 200 / 3])
     for k in base.keys:
@@ -300,6 +317,14 @@ FACTORS = [("inplane", "in-plane rotation", ["upright", "sideways", "inverted"])
            ("view", "view (front≈supine)", ["front", "back", "profile"]),
            ("occ_bin", "occluded joints (v=1)", ["0", "1", "≥2"]),
            ("scale_bin", "scale tertile", ["small", "medium", "large"])]
+POSTURE_FACTOR = ("posture", "posture (GT label)", POSTURES)
+
+
+def factors_for(ann):
+    """Use the GT posture labels instead of the geometric view proxy when every image has one."""
+    if ann and all(v.get("posture") in POSTURES for v in ann.values()):
+        return [FACTORS[0], POSTURE_FACTOR, FACTORS[2], FACTORS[3]], True
+    return list(FACTORS), False
 
 
 def fig_taxonomy(models, focus, ann, per_model, out):
@@ -309,7 +334,7 @@ def fig_taxonomy(models, focus, ann, per_model, out):
     leg_ax = grid.ravel()[5]
     rows = []
     w = 0.8 / max(1, len(show))
-    for ax, (fk, title, cats) in zip(axes, FACTORS):
+    for ax, (fk, title, cats) in zip(axes, factors_for(ann)[0]):
         for i, m in enumerate(show):
             for c, cat in enumerate(cats):
                 ks = [k for k in m.keys if ann.get(k, {}).get(fk) == cat]
@@ -347,7 +372,7 @@ def fig_taxonomy(models, focus, ann, per_model, out):
     n_sw = [sum(1 for k in show[0].keys if (per_model[show[0].key][k]["swap_any"] > 0) == f) for f in (False, True)]
     ax.set_xticks([0, 1])
     ax.set_xticklabels([f"no\nn={n_sw[0]}", f"yes\nn={n_sw[1]}"], fontsize=6.5)
-    ax.set_title(f"L/R swap (flagged on {show[0].label})", loc="left", fontsize=7.5)
+    ax.set_title(f"L/R swap, flagged on {show[0].label}", loc="left", fontsize=7.5)
     ax.grid(axis="x", visible=False)
     for ax in (grid[0][0], grid[1][0]):
         ax.set_ylabel("mean 1 − OKS (%)")
@@ -390,20 +415,22 @@ def fig_error_vs_orientation(models, focus, ann, per_model, out):
     axes[0].set_xticks(edges)
     axes[0].legend(loc="upper left", fontsize=6)
     w = 0.8 / max(1, len(show))
-    cats = ["front", "back", "profile"]
+    use_post = factors_for(ann)[1]
+    fkey = "posture" if use_post else "view"
+    cats = POSTURES if use_post else ["front", "back", "profile"]
     for i, m in enumerate(show):
         for c, cat in enumerate(cats):
-            ks = [k for k in m.keys if ann[k]["view"] == cat]
+            ks = [k for k in m.keys if ann[k][fkey] == cat]
             u, l, h = boot_mean_ci([per_model[m.key][k]["err"] for k in ks])
             if ks:
                 xx = c + (i - (len(show) - 1) / 2) * w
                 axes[1].bar(xx, u, width=w * 0.9, color=m.color)
                 axes[1].errorbar(xx, u, yerr=[[u - l], [h - u]], fmt="none", ecolor=ps.INK2, elinewidth=0.6)
-    ns = [sum(1 for k in base.keys if ann[k]["view"] == c) for c in cats]
-    axes[1].set_xticks(range(3))
-    axes[1].set_xticklabels([f"{c}\nn={n}" for c, n in zip(["front\n(≈supine)", "back\n(≈prone)", "profile\n(≈side)"],
-                                                            ns)], fontsize=6)
-    axes[1].set_title("by view", loc="left")
+    ns = [sum(1 for k in base.keys if ann[k][fkey] == c) for c in cats]
+    names = cats if use_post else ["front\n(≈supine)", "back\n(≈prone)", "profile\n(≈side)"]
+    axes[1].set_xticks(range(len(cats)))
+    axes[1].set_xticklabels([f"{c}\nn={n}" for c, n in zip(names, ns)], fontsize=6)
+    axes[1].set_title("by posture (GT label)" if use_post else "by view (proxy)", loc="left")
     axes[1].grid(axis="x", visible=False)
     fig.tight_layout()
     return ps.save(fig, out), rows
@@ -549,7 +576,15 @@ def cmd_models(a):
     p, rows = fig_per_keypoint(models, focus, os.path.join(out, f"per_keypoint_error_{split}"))
     written += p
     write_csv(os.path.join(tabs, f"per_keypoint_{split}.csv"), rows)
-    ann, per_model, (q1, q2) = taxonomy_table(models)
+    posture = load_posture(man.get("posture"))
+    ann, per_model, (q1, q2) = taxonomy_table(models, posture)
+    if posture:
+        cross = defaultdict(lambda: defaultdict(int))
+        for k in models[0].keys:
+            cross[ann[k]["posture"]][ann[k]["view"]] += 1
+        write_csv(os.path.join(tabs, f"view_proxy_vs_posture_{split}.csv"),
+                  [{"posture": p, **{f"proxy_{v}": cross[p][v] for v in ("front", "back", "profile", "unknown")}}
+                   for p in POSTURES + ["unknown"] if p in cross])
     p, rows = fig_taxonomy(models, focus, ann, per_model, os.path.join(out, f"failure_taxonomy_{split}"))
     written += p
     write_csv(os.path.join(tabs, f"failure_taxonomy_{split}.csv"), rows)
@@ -563,8 +598,8 @@ def cmd_models(a):
     img_rows = []
     for k in models[0].keys:
         r = dict(image_id=k[0], file_name=models[0].rec(k)["file_name"],
-                 **{f: ann[k][f] for f in ("inplane", "view", "angle_deg", "view_r", "n_v1", "sqrt_area", "rel_scale",
-                                           "scale_bin", "occ_bin")})
+                 **{f: ann[k][f] for f in ("posture", "inplane", "view", "angle_deg", "view_r", "n_v1", "sqrt_area",
+                                           "rel_scale", "scale_bin", "occ_bin")})
         for m in models:
             if k in per_model[m.key]:
                 r[f"oks_{m.key}"] = per_model[m.key][k]["oks"]
@@ -579,7 +614,7 @@ def cmd_models(a):
         write_csv(os.path.join(tabs, f"oks_pairs_{pa}_vs_{pb}_{split}.csv"), rows)
         # where does the improvement come from? mean ΔOKS by taxonomy category
         drows = []
-        for fk, _, cats in FACTORS:
+        for fk, _, cats in factors_for(ann)[0] + ([FACTORS[1]] if factors_for(ann)[1] else []):
             for cat in cats:
                 ks = [k for k in ma.keys if k in set(mb.keys) and ann[k][fk] == cat]
                 d = [mb.oks(k) - ma.oks(k) for k in ks]
