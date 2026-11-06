@@ -61,10 +61,27 @@ def registry():
         return {r["run_id"]: r for r in csv.DictReader(f) if r.get("run_id")}
 
 
-def test_allowed(run_id, reg, pre):
-    """Reproduction targets (released checkpoints, official-recipe retrains) or pre-registered."""
+def config_roles():
+    """run_id -> role from results/configs.json (authoritative when present)."""
+    p = os.path.join(REPO, "results", "configs.json")
+    roles = {}
+    if os.path.exists(p):
+        for c in json.load(open(p)).get("configs", {}).values():
+            for rid in c.get("run_ids", []):
+                roles[rid] = c.get("role")
+    return roles
+
+
+def test_allowed(run_id, reg, pre, roles=None):
+    """Reproduction targets (released checkpoints, official-recipe retrains) or pre-registered.
+    Explicit roles in results/configs.json win over the run-name heuristics."""
     if run_id in pre:
         return True, "pre-registered"
+    roles = config_roles() if roles is None else roles
+    if run_id in roles:
+        if roles[run_id] in ("released", "retrain"):
+            return True, f"configs.json role '{roles[run_id]}' (reproduction target)"
+        return False, f"configs.json role '{roles[run_id]}', not pre-registered -> withheld"
     row = reg.get(run_id, {})
     variant = (row.get("variant") or "").lower()
     if "released" in run_id or "released" in variant:

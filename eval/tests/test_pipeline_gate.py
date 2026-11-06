@@ -11,12 +11,19 @@ import analysis_pipeline as apl  # noqa: E402
 def test_gate():
     reg = {"R016_fidip-w48_lam0.001_s1": {"variant": "lambda sweep"}, "R010_fidip-w48_retrain_s1": {"variant": "retrain"}}
     pre = {"R030_vitpose-h_s1"}
-    assert apl.test_allowed("R001_fidip-w48_released", reg, pre)[0]
-    assert apl.test_allowed("R010_fidip-w48_retrain_s1", reg, pre)[0]
-    assert apl.test_allowed("R030_vitpose-h_s1", reg, pre)[0]
-    assert not apl.test_allowed("R016_fidip-w48_lam0.001_s1", reg, pre)[0]
-    assert not apl.test_allowed("R031_vitpose-h_s1", reg, pre)[0]
-    assert not apl.test_allowed("R040_mmpose-hrnet-w48_retrainlike_s1", {}, set())[0]
+    kw = {"roles": {}}
+    assert apl.test_allowed("R001_fidip-w48_released", reg, pre, **kw)[0]
+    assert apl.test_allowed("R010_fidip-w48_retrain_s1", reg, pre, **kw)[0]
+    assert apl.test_allowed("R030_vitpose-h_s1", reg, pre, **kw)[0]
+    assert not apl.test_allowed("R016_fidip-w48_lam0.001_s1", reg, pre, **kw)[0]
+    assert not apl.test_allowed("R031_vitpose-h_s1", reg, pre, **kw)[0]
+    assert not apl.test_allowed("R040_mmpose-hrnet-w48_retrainlike_s1", {}, set(), **kw)[0]
+
+
+def test_gate_configs_roles_are_authoritative():
+    roles = {"R012_fidip-w48_retrain-lam0_s1": "retrain", "R017_fidip-w48_retrain_sweep_s1": "ablation"}
+    assert apl.test_allowed("R012_fidip-w48_retrain-lam0_s1", {}, set(), roles=roles)[0]
+    assert not apl.test_allowed("R017_fidip-w48_retrain_sweep_s1", {}, set(), roles=roles)[0]   # name says retrain
 
 
 def test_validate500_is_gated_like_test100():
