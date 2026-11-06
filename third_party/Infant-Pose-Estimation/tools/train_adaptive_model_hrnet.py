@@ -143,16 +143,20 @@ def main():
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
 
-    train_pre_dataset = eval('dataset.'+cfg.DATASET.DATASET)(
-        cfg,
-        cfg.DATASET.ROOT,
-        cfg.DATASET.TRAIN_PRE_SET,
-        True,
-        transforms.Compose([
-            transforms.ToTensor(),
-            normalize,
-        ])
-    )
+    # [EECE7373 patch P4] the domain-classifier pre-training set is only needed when PRE_EPOCH > 0
+    # (upstream always built it, so PRE_EPOCH 0 runs crashed without train_pre_infant annotations).
+    train_pre_dataset = None
+    if cfg.TRAIN.PRE_EPOCH > 0:
+        train_pre_dataset = eval('dataset.'+cfg.DATASET.DATASET)(
+            cfg,
+            cfg.DATASET.ROOT,
+            cfg.DATASET.TRAIN_PRE_SET,
+            True,
+            transforms.Compose([
+                transforms.ToTensor(),
+                normalize,
+            ])
+        )
 
     train_dataset = eval('dataset.'+cfg.DATASET.DATASET)(
         cfg,
@@ -176,13 +180,15 @@ def main():
         ])
     )
 
-    train_pre_loader = torch.utils.data.DataLoader(
-        train_pre_dataset,
-        batch_size=cfg.TRAIN.PRE_BATCH_SIZE_PER_GPU*len(cfg.GPUS),
-        shuffle=cfg.TRAIN.SHUFFLE,
-        num_workers=cfg.WORKERS,
-        pin_memory=cfg.PIN_MEMORY
-    )
+    train_pre_loader = None
+    if train_pre_dataset is not None:  # [EECE7373 patch P4]
+        train_pre_loader = torch.utils.data.DataLoader(
+            train_pre_dataset,
+            batch_size=cfg.TRAIN.PRE_BATCH_SIZE_PER_GPU*len(cfg.GPUS),
+            shuffle=cfg.TRAIN.SHUFFLE,
+            num_workers=cfg.WORKERS,
+            pin_memory=cfg.PIN_MEMORY
+        )
     
     syn_labels = train_dataset._load_syrip_syn_annotations()
     train_loader = torch.utils.data.DataLoader(   
