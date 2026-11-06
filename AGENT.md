@@ -19,6 +19,8 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 | D8 | 11-05 20:12 | **Recompute `area = w×h` for val400/validate500** (and the neutral train JSON). Keep Test100 = validate100 as shipped. | validate500 ships a constant placeholder area (2443298.48), which makes OKS meaningless. validate100 uses w×h. |
 | D9 | 11-05 20:18 | **Add a single-seed λ sweep {1e-4, 2e-3, 1e-2}** (Val400 only), plus the guide's demo CLI/Streamlit/gpu_test and per-epoch loss/AP CSVs. | STUDENT_GUIDE lists DA tweaks, demos and over/underfitting monitoring, and asks for the accuracy of every attempt. |
 | D10 | 11-05 20:30 | **Keep annotation ids as shipped.** Headline = `paper` protocol; also report a `fixed` protocol (ids shifted off 0) as a sensitivity check. | Test100 has annotation id 0. pycocotools' accumulate treats matched GT id 0 as unmatched, so AR ≤ 0.99 and AP drops ~1 pt. The published numbers carry this (AR50 = 99.0 across the table). |
+| D11 | 11-05 20:40 | **Improvement strategy:** ViTPose-L/H tested at 384×288 as well as 256×192 (resolution arm). HRNet-W48+DARK 384×288 in MMPose as the control. 1:1 real:synthetic mixing as in FiDIP. Recipe knobs (rotation ±180°, cosine/EMA) chosen on Val400. 5 seeds for the finalists if runs are short. A seed/cross-architecture coordinate ensemble as a secondary, pre-registered claim, always shown next to single-model numbers. | Literature: no published result beats 93.6 under this protocol. AP50 = AP75 = 98.5, so the headroom is at strict OKS (0.80–0.95), i.e. precise localization. Resolution and backbone are the levers. ViT-B lost to HRNet on another infant set (NeoPose), so B is skipped. RTMPose/Sapiens are excluded because of their extra pretraining data. |
+| D12 | 11-05 20:40 | **Add one paper-recipe attempt** (Adam 1e-3, 100 epochs, batch 64, λ = 5e-4) next to the yaml recipe. | The paper (arXiv v5) and the released yaml disagree: lr 1e-3/100 ep/batch 64/λ 5e-4 vs 1e-4/20 ep/batch 20/λ 0. |
 
 ---
 
@@ -146,3 +148,20 @@ The literature-scan Explore agent is still running. Its findings will be forward
 - **Fingerprint in the paper:** AR50 = 99.0 for essentially every published model.
 - **Decision D10:** don't renumber ids. Headline metrics use the `paper` protocol, comparable with 93.6. `fixed` (ids shifted) is reported as a sensitivity check. The two are identical on Val400, which has no id 0.
 - Relayed to the repro worker (no id renumbering, plus an assertion) and to the report worker (evaluator section + comparable-conditions box).
+
+### 2026-11-05 20:40 EST — Literature scan lands (D11, D12)
+- **No 2021–2026 paper beats 93.6** on SyRIP Test100 with GT boxes (61 citing papers screened, 4 unreadable).
+  - Gama et al. 2025 benchmark zero-shot models on the 500-image set with detector boxes (ViTPose-H AP 41.9). Not comparable.
+  - AggPose and InfantNet use their own datasets.
+- **Headroom analysis:** published AP50 = AP75 = 98.5, so the mean AP at OKS 0.80–0.95 is ≈ 86.3 for FiDIP vs ≈ 84.0 for plain fine-tuning. FiDIP's gain was precise localization, and ours must be too. This motivated the resolution arm and the strict-threshold breakdown in the evaluator.
+- **Paper vs released config:** the paper says Adam lr 1e-3, 100 epochs, batch 64, λ = 5e-4. The yaml has lr 1e-4, 20 epochs, batch 20, λ = 0. Added an attempt to test this (D12).
+- **MMPose facts:**
+  - Exact checkpoint URLs (ViTPose-L 53609f55, ViTPose-H e32adcd4, HRNet-W48 DARK 384×288 39c3c381).
+  - Install stack: py3.10, torch 2.1.2 cu121, mmcv 2.1.0, mmengine 0.10, mmpose 1.3.2, mmpretrain, numpy < 2; `chumpy` needs `--no-build-isolation`.
+  - ViTPose at 384×288 via codec/backbone sizes, with automatic pos-embed resize.
+- **Forwarded:**
+  - improve: URLs, install, recipe, resolution, 5 seeds, ensemble;
+  - repro: paper-recipe attempt R019;
+  - analysis: per-OKS-threshold AP, `ensemble_preds.py`, Holm correction, never report Test500 as clean;
+  - report: related work with sources, the recipe discrepancy, Expanded SyRIP ≈ our Val400, so out of scope.
+- **Disagreement with the scan:** it suggested 5-fold CV on the 200 real training images for selection. We keep Val400 (validate500 \ validate100; disjoint from Test100, training data unchanged). It gives a 400-image real selection set without shrinking training data. The cost is that Test500 can't be reported as clean, which we note.
