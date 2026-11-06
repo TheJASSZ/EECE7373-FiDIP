@@ -1,0 +1,15 @@
+{"_doc": "PREREGISTRATION repro-1: FiDIP (lambda 5e-4) vs fine-tune (lambda 0), 3 seeds each, best-Val400 checkpoints; paired image bootstrap of the seed-averaged AP, both protocols (D13). Run: sbatch scripts/slurm/analysis.sbatch script scripts/analysis/run_contrasts.sh results/contrasts/retrain_fidip_vs_ft.json",
+ "B": 10000, "seed": 0, "protocol": "paper", "metric": "AP", "alpha": 0.05,
+ "contrasts": [
+  {"name": "FiDIP retrain vs fine-tune", "label_a": "FiDIP lambda 5e-4", "label_b": "fine-tune lambda 0",
+   "hypothesis": "domain adaptation (lambda 5e-4) improves over plain fine-tuning (paper: 93.6 vs 92.7)",
+   "a": ["$R/runs/R010_fidip-w48_lambda5e-4_s1/preds_test100_best.json", "$R/runs/R011_fidip-w48_lambda5e-4_s2/preds_test100_best.json",
+         "$R/runs/R012_fidip-w48_lambda5e-4_s3/preds_test100_best.json"],
+   "b": ["$R/runs/R013_fidip-w48_lambda0_s1/preds_test100_best.json", "$R/runs/R014_fidip-w48_lambda0_s2/preds_test100_best.json",
+         "$R/runs/R015_fidip-w48_lambda0_s3/preds_test100_best.json"]},
+  {"name": "FiDIP retrain vs released", "label_a": "FiDIP lambda 5e-4 retrain", "label_b": "FiDIP released",
+   "hypothesis": "our Val400-selected retrain is not worse than the released checkpoint",
+   "a": ["$R/runs/R010_fidip-w48_lambda5e-4_s1/preds_test100_best.json", "$R/runs/R011_fidip-w48_lambda5e-4_s2/preds_test100_best.json",
+         "$R/runs/R012_fidip-w48_lambda5e-4_s3/preds_test100_best.json"],
+   "b": ["$R/runs/R001_fidip-w48_released/preds_test100.json"]}
+ ]}
