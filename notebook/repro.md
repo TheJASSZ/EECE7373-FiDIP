@@ -189,7 +189,7 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
   - `--test-only` probes: H200 with a smaller CPU/mem request → 02:07; A100-80GB (`--constraint=a100@80g`) → 02:42; sharing H100 → 03:43; sharing A100 → 02:46.
   - Kept as submitted.
 
-### 2026-11-06 06:37–07:05 EST — R010–R012 results; R013–R015 failure and resubmission
+### 2026-11-06 06:37–06:58 EST — R010–R012 results; R013–R015 failure and resubmission
 - **R010–R012** (λ 5e-4, s1–s3; job 11665025, H200 d4054, 05:27 start, 18 min for the 3-run pack).
   - Peak GPU memory **19.8 GB per process** when packed (vs 11.8 GB in the 1-epoch single smoke).
   - Best Val400 epochs 20 / 19 / 18. Val400 AP and val loss still improve at epoch 20 (R010 val loss 4.14e-4 → 3.79e-4 by epoch 8, train MSE 4.5e-4 → 3.3e-4): **no overfitting within 20 epochs**.
@@ -211,7 +211,7 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
   - Lesson: pass floats as `0.0`, and smoke-test every distinct command line.
 - R016–R018 (11665029) and R019–R020 (11665030) started on H200 d4053 at ~06:40. R020 uses `DATASET.TRAIN_SET train_infant_readme`, and R019 floats are written as `0.001`.
 
-### 2026-11-06 07:05 EST — λ sweep outcome (R016–R018, s1, Val400 only; job 11665029, H200 d4053, 17 min 49 s, 19.7 GB/process)
+### 2026-11-06 06:58 EST — λ sweep outcome (R016–R018, s1, Val400 only; job 11665029, H200 d4053, 17 min 49 s, 19.7 GB/process)
 | λ | run | best Val400 AP (epoch) | final-epoch Val400 AP | final train MSE | final val loss |
 |---|---|---|---|---|---|
 | 1e-4 | R016 | **91.02** (16; tie with epoch 20) | 91.02 | 2.56e-4 | 3.74e-4 |
@@ -224,3 +224,4 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
   - R001: Test100 paper **93.60** / fixed 94.99; Val400 90.36; validate500 90.92 / 91.15; validate_infant 92.15 / 93.64.
   - R002: Test100 79.14 / 79.84; Val400 68.18; validate_infant 77.74 / 78.62.
   - Our λ = 5e-4 retrains match the released model on Val400 (90.51 ± 0.13 vs 90.36).
+- 07:01 EST: R013–R015 resubmission (11670943) started on H200 d4053 (same GPU type as R010–R012).
