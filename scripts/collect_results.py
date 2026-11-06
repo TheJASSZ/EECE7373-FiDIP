@@ -73,10 +73,16 @@ def read_prereg(path):
     return prereg.allowed_prefixes(path)
 
 
-def load_metrics(run_id, split, eval_root, runs_root):
+CKPT_TAGS = ("_best", "_final")     # repro retrains: best-Val400 epoch (primary) and final epoch (PREREGISTRATION repro-1)
+
+
+def load_metrics(run_id, split, eval_root, runs_root, tag=""):
     for root, src in ((eval_root, "analysis_eval"), (runs_root, "run_dir")):
-        p = os.path.join(root, run_id, f"metrics_{split}.json")
-        if os.path.exists(p):
+        cands = [os.path.join(root, run_id, f"metrics_{split}{tag}.json")]
+        if not tag:                                   # no untagged file: the best-Val400 checkpoint is primary
+            cands.append(os.path.join(root, run_id, f"metrics_{split}_best.json"))
+        p = next((x for x in cands if os.path.exists(x)), None)
+        if p:
             with open(p) as f:
                 d = json.load(f)
             if "metrics" in d and "metrics_fixed" in d:     # an eval_coco.py output
@@ -168,13 +174,19 @@ class Collector:
                 d, src, p = load_metrics(rid, sp, a.eval_root, a.runs_root)
                 if d:
                     self.metrics[(rid, sp)] = (d, src, p)
+        self.final_metrics = {}       # (rid, split) -> metrics of the final-epoch checkpoint (retrains)
+        for rid in self.run_meta:
+            for sp in SPLITS:
+                d, src, p = load_metrics(rid, sp, a.eval_root, a.runs_root, tag="_final")
+                if d:
+                    self.final_metrics[(rid, sp)] = (d, src, p)
         # test-time ablations: metrics_val400<tag>.json (Val400 only; tagged Test100 files are never read)
         self.tag_metrics = {}
         for root in (a.eval_root, a.runs_root):
             for p in glob.glob(os.path.join(root, "R*", "metrics_val400?*.json")):
                 rid = os.path.basename(os.path.dirname(p))
                 tag = os.path.basename(p)[len("metrics_val400"):-len(".json")]
-                if (rid, tag) in self.tag_metrics:
+                if (rid, tag) in self.tag_metrics or tag in CKPT_TAGS:
                     continue
                 try:
                     d = json.load(open(p))

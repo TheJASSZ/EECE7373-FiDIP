@@ -172,6 +172,15 @@ class ReportInterface:
                 if s["n_runs"]:
                     self.set(f"{prefix}.{tag}.ap.mean", num1(s["AP"]), s["run_ids"], "", "paper", split)
                     self.set(f"{prefix}.{tag}.ap.sd", num1(s["AP_std"]), s["run_ids"], "", "paper", split)
+            fin = [self.c.final_metrics[(r, "test100")][0]["metrics"]["AP"] for r in g["run_ids"]
+                   if (r, "test100") in self.c.final_metrics and self.c.test_allowed(r)]
+            if fin:                                    # (b) final-epoch checkpoint, also pre-registered
+                mu = sum(fin) / len(fin)
+                sd = (sum((x - mu) ** 2 for x in fin) / (len(fin) - 1)) ** 0.5 if len(fin) > 1 else None
+                ids = [r for r in g["run_ids"] if (r, "test100") in self.c.final_metrics]
+                self.set(f"{prefix}.test.ap.final.mean", pct1(mu), ids, "metrics_test100_final.json", "paper", "test100")
+                self.set(f"{prefix}.test.ap.final.sd", pct1(sd) if sd is not None else "---", ids,
+                         "metrics_test100_final.json", "paper", "test100")
             if g.get("run_ids"):
                 self.set("rt.seeds", str(len(g["run_ids"])), g["run_ids"], "results/configs.json", "", "")
             if g.get("epochs"):

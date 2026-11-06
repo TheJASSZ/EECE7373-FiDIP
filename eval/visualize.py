@@ -173,7 +173,7 @@ def cmd_gallery(a):
         axes[r][0].set_ylabel(name, fontsize=8, color=ps.INK, rotation=90, labelpad=4)
         axes[r][0].yaxis.set_visible(True)
     _legend(fig, col, a.label)
-    fig.tight_layout(rect=(0, 0.035, 1, 1), h_pad=0.6, w_pad=0.4)
+    fig.tight_layout(rect=(0, 0.035, 1, 1), h_pad=1.6, w_pad=0.4)
     paths = ps.save(fig, a.out)
     print("\n".join(paths) + f"\n({n_real} panels with real images)")
 
@@ -207,7 +207,7 @@ def cmd_failures(a):
         axes[r][0].set_ylabel(f"{name}\n(n={len(allsel)})", fontsize=7, color=ps.INK)
         axes[r][0].yaxis.set_visible(True)
     _legend(fig, col, a.label)
-    fig.tight_layout(rect=(0, 0.03, 1, 1), h_pad=0.6, w_pad=0.4)
+    fig.tight_layout(rect=(0, 0.03, 1, 1), h_pad=1.6, w_pad=0.4)
     paths = ps.save(fig, a.out)
     with open(a.out + ".json", "w") as f:
         json.dump(summary, f, indent=2)
@@ -251,7 +251,7 @@ def cmd_compare(a):
          Line2D([], [], color="none", marker="o", mfc="#666", mec="black", label="left"),
          Line2D([], [], color="none", marker="s", mfc="#666", mec="black", label="right")]
     fig.legend(handles=h, loc="lower center", ncol=5, fontsize=6.3)
-    fig.tight_layout(rect=(0, 0.04, 1, 1), h_pad=0.5, w_pad=0.3)
+    fig.tight_layout(rect=(0, 0.04, 1, 1), h_pad=1.6, w_pad=0.3)
     print("\n".join(ps.save(fig, a.out)))
 
 

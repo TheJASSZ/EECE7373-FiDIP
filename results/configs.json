@@ -48,24 +48,30 @@
   "mmp_hrnet_lr2e4": {
    "label": "HRNet-W48 DARK 384, LR 2e-4",
    "role": "hparam",
-   "slot": 6,
+   "slot": 0,
    "macro": "MmpHRNetLrTwo",
    "run_ids": [
     "R106_mmp-hrnetw48_lr2e-4_s1"
    ],
    "what_changed": "control with LR 1e-4 -> 2e-4",
-   "hypothesis": "the 1e-4 FiDIP LR is too low for the 30-epoch MMPose schedule"
+   "hypothesis": "the 1e-4 FiDIP LR is too low for the 30-epoch MMPose schedule",
+   "factor": "Learning rate",
+   "setting": "2e-4 (default 1e-4)",
+   "baseline": "mmp_hrnet_base"
   },
   "mmp_vitl256_lr2e4": {
    "label": "ViTPose-L 256, LR 2e-4",
    "role": "hparam",
-   "slot": 7,
+   "slot": 0,
    "macro": "MmpVitLLrTwo",
    "run_ids": [
     "R108_mmp-vitpose-l256_lr2e-4_s1"
    ],
    "what_changed": "ViTPose-L 256 with LR 1e-4 -> 2e-4",
-   "hypothesis": "ViT fine-tuning benefits from a higher LR"
+   "hypothesis": "ViT fine-tuning benefits from a higher LR",
+   "factor": "Learning rate",
+   "setting": "2e-4 (default 1e-4)",
+   "baseline": "mmp_vitl256_base"
   },
   "zs_hrnet": {
    "label": "HRNet-W48 COCO, zero-shot",
@@ -159,6 +165,53 @@
    ],
    "what_changed": "same recipe with lambda = 0 (no domain adaptation)",
    "hypothesis": "reproduces DarkPose+Finetune 92.7; FiDIP > fine-tune"
+  },
+  "mmp_vitl256_lr5e5": {
+   "label": "ViTPose-L 256, LR 5e-5",
+   "role": "hparam",
+   "slot": 0,
+   "macro": "MmpVitLLrFive",
+   "run_ids": [
+    "R109_mmp-vitpose-l256_lr5e-5_s1"
+   ],
+   "what_changed": "ViTPose-L 256 with LR 1e-4 -> 5e-5",
+   "hypothesis": "ViT fine-tuning prefers a lower LR",
+   "factor": "Learning rate",
+   "setting": "5e-5 (default 1e-4)",
+   "baseline": "mmp_vitl256_base"
+  },
+  "mmp_vith256_base": {
+   "label": "ViTPose-H 256 (MMPose)",
+   "role": "candidate",
+   "slot": 6,
+   "macro": "MmpVitHTwo",
+   "run_ids": [
+    "R105_mmp-vitpose-h256_base_s1"
+   ],
+   "what_changed": "backbone -> ViTPose-H (UDP, 256x192), same recipe",
+   "hypothesis": "a larger ViT prior helps further"
+  },
+  "mmp_vith384_base": {
+   "label": "ViTPose-H 384 (MMPose)",
+   "role": "candidate",
+   "slot": 7,
+   "macro": "MmpVitHThree",
+   "run_ids": [
+    "R104_mmp-vitpose-h384_base_s1"
+   ],
+   "what_changed": "backbone -> ViTPose-H (UDP, 384x288), same recipe",
+   "hypothesis": "higher input resolution helps the strict OKS thresholds"
+  },
+  "repro_smoke": {
+   "label": "FiDIP retrain smoke (repro)",
+   "role": "smoke",
+   "slot": 0,
+   "macro": "ReproSmoke",
+   "run_ids": [
+    "R009_fidip-w48_smoke_s1"
+   ],
+   "what_changed": "pipeline check only",
+   "hypothesis": "none"
   }
  }
 }
