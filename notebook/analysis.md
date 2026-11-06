@@ -145,7 +145,7 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
   - I will report which checkpoint R001 is, by file name and SHA from `run.json`, next to any Val400 number for it.
 - Improve notes that `make_splits.py` currently fails an assert on Val400×Test100 md5 overlap, i.e. duplicate images. Repro is checking (`fidip_neardup`). Until `SPLITS_READY` appears, every Val400 number is provisional.
 
-### 2026-11-05 20:55 EST: id-0 claim verified empirically on the real Test100 GT (job 11659551)
+### 2026-11-05 20:52 EST: id-0 claim verified empirically on the real Test100 GT (job 11659551)
 - `scripts/analysis/crosscheck_cocoeval_impls.py` ran in `$R/envs/mmpose` (pycocotools 2.0.11, xtcocotools 1.14.3, numpy 1.26.4). It scores noisy GT-derived predictions on `$R/data/splits/test100.json` with three implementations: my `eval_coco.py`, raw pycocotools COCOeval, and raw xtcocotools COCOeval (MMPose 1.3.2's CocoMetric backend).
 - Settings: 4 noise levels × 3 score orders (by confidence, test0 first, test0 last), 12 cases.
 - **In all 12 cases pycocotools equals our `paper` protocol and xtcocotools equals our `fixed` protocol, bit-identical** (max |Δ| = 0.0 over AP, AP50, AP75, AR, AR50, AR75).
