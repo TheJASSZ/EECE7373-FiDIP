@@ -506,3 +506,24 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - **R003**, the COCO-only DarkPose released checkpoint (paper row 88.5), evaluated on Test100 under the exception clause, to complete the DarkPose block.
   - **R021–R023 numbers filled:** Test100 93.7 ± 0.2, Val400 90.9 ± 0.2.
   - Paired bootstrap, FiDIP vs plain fine-tune: ΔAP −0.15 [−0.43, +0.15]. FiDIP vs λ = 0: −0.04 [−0.34, +0.20].
+
+### 2026-11-06 08:39 EST — Fresh-context review; fixes split between the report worker and the orchestrator
+- **Read-only reviewer** (spawned 08:20): about 30 numbers checked against their source files, **no mismatches**. Estimated base score 46–48/50.
+- **Gaps it found:**
+  - non-bonus TBDs (the λ = 0 rows) because `numbers.tex` had been generated before the R013–R015 pull;
+  - the selected ViT-H 256 missing from the backbone table;
+  - the attempts table missing R019, R020, R021–R023, R122 and R003;
+  - an **Appendix A training command that, as written, would select on Test100** (missing `PRE_EPOCH 10 DATASET.TEST_SET val400 SEED`);
+  - MANIFEST §8/§10 incomplete, and registry rows missing;
+  - stale SKILL/README GPU notes;
+  - a few caption and wording inaccuracies, and an overstated "no hand-typed numbers" claim;
+  - the repro-3 timing (registered after the repro-1 Test100 results were known) not stated.
+- **Fixed by the orchestrator:**
+  - regenerated numbers with the matplotlib venv (λ = 0 now 93.6 ± 0.1; FiDIP − FT −0.04 [−0.34, +0.20]);
+  - PREREGISTRATION repro-1/repro-3 results filled, R003 row added, repro-3 timing stated; gate re-verified;
+  - MANIFEST §8 wording and full §10 commands;
+  - checklist statuses;
+  - `scripts/registry_backfill.py` (rows from run.json, run at finalization);
+  - `scratchpad/finalize.sh`.
+- **Report worker:** tables, captions, appendix command, README and AI-use wording, by 09:05.
+- **Timing:** R133/R134 and R138 are slower than estimated (they share node d4047). R136/R137 should finish around 09:10, the final pipeline around 09:30, then review, push and zip.
