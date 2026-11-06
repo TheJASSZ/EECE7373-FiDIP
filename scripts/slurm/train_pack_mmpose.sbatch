@@ -3,6 +3,7 @@
 # Each run is an independent process (scripts/run_one_mmpose.sh) with its own seed, run dir and log
 # ($R/runs/<RUN_ID>/job_stdout_<jobid>.log). Per-process GPU memory and GPU utilisation are sampled every
 # 60 s into $R/logs/pack/<jobid>_gpu.csv; each run dir gets pack_info_<jobid>.json naming its co-runners.
+# Optional env: SEQUENTIAL=1 runs the specs back-to-back on the GPU instead of concurrently.
 # Required env: RUNS="RUN_ID|CONFIG|SEED|CFG_OPTS;RUN_ID|CONFIG|SEED|CFG_OPTS;..." (CFG_OPTS may be
 # empty and may contain spaces, but no ';' or '|').
 # Memory per process (batch 32, measured): HRNet-W48 384x288 ~14.5 GB, ViT-L 256x192 ~12 GB,
@@ -41,7 +42,7 @@ MONPID=$!
 IFS=';' read -ra SPECS <<< "$RUNS"
 NAMES=()
 for spec in "${SPECS[@]}"; do IFS='|' read -r rid _ <<< "$spec"; NAMES+=("$rid"); done
-PIDS=()
+PIDS=(); RCS=()
 for spec in "${SPECS[@]}"; do
   IFS='|' read -r RUN_ID CONFIG SEED CFG_OPTS <<< "$spec"
   mkdir -p $R/runs/$RUN_ID
@@ -50,12 +51,13 @@ for spec in "${SPECS[@]}"; do
   bash $REPO/scripts/run_one_mmpose.sh "$RUN_ID" "$CONFIG" "${SEED:-1}" "${CFG_OPTS:-}" \
     > $R/runs/$RUN_ID/job_stdout_${SLURM_JOB_ID}.log 2>&1 &
   PIDS+=($!)
+  if [ -n "${SEQUENTIAL:-}" ]; then wait $!; RCS+=($?); fi   # SEQUENTIAL=1: back-to-back, not concurrent
   echo "started $RUN_ID pid=$! ($(date -Is))"
   sleep 20   # stagger start-up (checkpoint loading, dataset init)
 done
 RC=0
 for i in "${!PIDS[@]}"; do
-  wait ${PIDS[$i]}; rc=$?
+  if [ -n "${SEQUENTIAL:-}" ]; then rc=${RCS[$i]}; else wait ${PIDS[$i]}; rc=$?; fi
   echo "finished ${NAMES[$i]} rc=$rc ($(date -Is))"; tail -2 $R/runs/${NAMES[$i]}/job_stdout_${SLURM_JOB_ID}.log
   [ $rc -ne 0 ] && RC=$rc
 done

@@ -29,11 +29,15 @@ PREREG = '/scratch/purohitham.v/fidip/repo/results/PREREGISTRATION.md'
 
 
 def preregistered(run_id, path=PREREG):
-    if not osp.isfile(path):
+    """Shared Test100 gate (scripts/prereg.py, also used by the analysis worker): table rows only,
+    ranges expanded, 'no Test100' rows skipped, 4-char RUN_ID prefix match. Also requires the
+    post-72f9449 Erratum section (72f9449 wrongly made R102-R104 eligible)."""
+    import sys
+    sys.path.insert(0, osp.join(osp.dirname(osp.abspath(__file__)), '..', '..', 'scripts'))
+    import prereg
+    if not osp.isfile(path) or '### Erratum' not in open(path).read():
         return False
-    with open(path) as f:
-        rows = [ln for ln in f if ln.lstrip().startswith('|')]
-    return any(run_id in ln for ln in rows[2:])  # skip header + separator rows
+    return prereg.is_registered(run_id, prereg.allowed_prefixes(path))
 
 
 def main():

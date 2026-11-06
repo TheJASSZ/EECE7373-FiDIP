@@ -6,4 +6,4 @@
 set -euo pipefail
 NAME=$1; RUNS=$2; shift 2
 ssh -o BatchMode=yes -o ConnectTimeout=15 explorer \
-  "cd /scratch/purohitham.v/fidip/repo && RUNS='$RUNS' sbatch --parsable -J 'im_pack_$NAME' --export=ALL $* scripts/slurm/train_pack_mmpose.sbatch"
+  "cd /scratch/purohitham.v/fidip/repo && RUNS='$RUNS' SEQUENTIAL='${SEQUENTIAL:-}' sbatch --parsable -J 'im_pack_$NAME' --export=ALL $* scripts/slurm/train_pack_mmpose.sbatch"

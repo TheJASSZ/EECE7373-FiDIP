@@ -271,3 +271,14 @@ Newest entries at the bottom. Timestamps in EST.
   - ViT-H beats ViT-L by +0.4-0.5 AP. Resolution 384 vs 256: H +0.10, L −0.04 (AP.80-.95: H +0.55).
   - On ViT-L-256: real-only −0.57, so the synthetic data helps. Rotation ±180 gives −0.23, which is noise-level. Flip-TTA adds +0.55 (ViT) and +0.58 (HRNet).
 - **Launched for ablations on the ViT-H family:** `im_eval_noflip2` 11671160 (flip-off for R103/R104/R105) and R122 ViT-H-256 real-only, job 11671163 (sharing). R123 ViT-H-256 rot180 follows.
+
+### 2026-11-06 07:13 EST — Go-ahead: confirmatory set registered (72f9449 + erratum 3957509); gates switched to the shared parser
+- The registration uses **5 fresh seeds per arm**, so the selection-winning s1 cannot bias the estimate (winner's curse).
+  - Arm A = R131-R135 (HRNet-W48, R101 recipe, seeds 2-6). Arm B = R136-R140 (ViTPose-H 256, R105 recipe, seeds 2-6).
+  - R141 = ensemble of R136-R140. R101/R105 are supplementary (imp-4).
+- Flip-off Val400 for the ViT-H/L-384 runs (job 11671160): R103 92.33, R104 93.03, R105 92.48. So flip-TTA adds +0.44 / +0.24 / +0.69.
+- **Gate fix before any Test100 eval.** My own gates did substring matching of the full RUN_ID against table rows: bash `grep "^\|.*RUN_ID"` and the python `preregistered()`. They would have **refused** R136-R140, which are registered as the range "R136-R140".
+  - Both now use the shared `scripts/prereg.py` (ranges expanded, 4-char prefix, "no Test100" rows skipped) and also require the `### Erratum` section.
+  - On the local copy, `allowed_prefixes()` = {R001, R010-R015, R101, R105, R131-R141}. R102/R103/R104/R120/R190 → False.
+  - `final_test_eval_mmpose.sbatch` now loops over `RUN_IDS`, prints the allowed set, verifies each checkpoint's SHA256, and keeps the one-shot rule per run.
+- `train_pack_mmpose.sbatch` has `SEQUENTIAL=1` (back-to-back) for runs that cannot share a 40 GB card.
