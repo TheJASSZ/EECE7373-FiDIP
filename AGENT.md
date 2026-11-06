@@ -481,3 +481,15 @@ The literature-scan Explore agent is still running. Its findings will be forward
 - **Analysis refresh 11672198 → contrasts 11672199** (CPU).
 - **Report worker resumed, time-boxed:** all sections plus the README by 09:10. Final bonus numbers enter as generated macros at about 09:15–09:30.
 - **Bonus fallback:** if any confirmatory seed can't finish in time, report the completed seeds and state the deviation from the pre-registration explicitly. No other change to the decision rule.
+
+### 2026-11-06 08:00 EST — Submission prep: private GitHub repo; Test100 evals streamed as runs finish
+- **Human chose "Private GitHub repo + zip".** Created **PRIVATE** https://github.com/TheJASSZ/EECE7373-FiDIP and pushed the full history. Pre-checks: no secrets, no `.env`; the largest tracked file is the 5 MB report PDF.
+- **Confirmatory progress:**
+  - R140 finalized.
+  - R136 and R137 are training on V100s (d1013, d1027).
+  - R138 was retargeted to sharing/L40S by the helper (07:53).
+  - Pairs R131+R132 and R135+R139 are on L40S; R133+R134 are queued.
+- **Test100 batch 1:** job **11672291** (R101, R105, R140) on `gpu`/V100, so it doesn't queue behind training on sharing.
+  - A helper submits the remaining runs' one-shot evals as each finalizes, keeping a submitted list.
+  - The sbatch still enforces the gate, the checkpoint SHA256 and once-only per run, so streaming doesn't change the protocol.
+- **Analysis:** refresh 11672198 done; reproduction contrasts 11672199 running.
