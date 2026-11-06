@@ -1,0 +1,22 @@
+# secrets
+.env
+# data / weights / run outputs live on the cluster
+data/
+runs/
+*.pth
+*.pt
+*.ckpt
+*.zip
+# python / os
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
+# latex build
+report/*.aux
+report/*.log
+report/*.out
+report/*.bbl
+report/*.blg
+report/*.toc
+report/*.synctex.gz

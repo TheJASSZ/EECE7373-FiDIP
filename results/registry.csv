@@ -1,0 +1,1 @@
+run_id,job_id,stream,model,variant,seed,config,git_sha,partition,gpu,status,val400_AP,test100_AP,ckpt_path,ckpt_sha256,notes
