@@ -16,11 +16,11 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 | D5 | 11-05 20:00 | **Reproduce FiDIP with `TRAIN.CHECKPOINT` = COCO DarkPose weights and `TRAIN.LAMBDA 0.0005`.** Also run the same recipe with λ = 0 (the paper's "DarkPose + Finetune" row) as the domain-adaptation ablation. 3 seeds each; per-epoch validation on Val400. | Code audit: the README command trains from **random init** with **λ = 0**. Only the `_custom.yaml` turns adaptation on (λ = 5e-4, PRE_EPOCH 10). Running the README literally would not be FiDIP. |
 | D6 | 11-05 20:00 | **Build the FiDIP env pip-only** (py3.12, torch 2.3.1 cu121, numpy 1.26.4…) instead of `conda env create -f fidip_env.yml`. | The yml's pip stage pins `grpcio==1.48.2` (no cp312 wheel) and `mkl-*` packages that have no wheels. The packages the code actually imports are pinned to the yml's versions. |
 | D7 | 11-05 20:00 | **Domain-classifier pre-stage:** if `train_pre_infant` (1904 COCO + 2000 SURREAL adults) isn't in `syrip_for_train.zip`, pre-train the classifier on SyRIP train (infant real vs synthetic) instead, and document the deviation. | The adult set is "available on request" and nothing in the repo builds it. The SURREAL license blocks rebuilding it quickly. |
-| D8 | 11-05 20:12 | **Recompute `area = w×h` for val400/validate500** (and the neutral train JSON). Keep Test100 = validate100 as shipped. | validate500 ships a constant placeholder area (2443298.48), which makes OKS meaningless. validate100 uses w×h. |
-| D9 | 11-05 20:18 | **Add a single-seed λ sweep {1e-4, 2e-3, 1e-2}** (Val400 only), plus the guide's demo CLI/Streamlit/gpu_test and per-epoch loss/AP CSVs. | STUDENT_GUIDE lists DA tweaks, demos and over/underfitting monitoring, and asks for the accuracy of every attempt. |
-| D10 | 11-05 20:30 | **Keep annotation ids as shipped.** Headline = `paper` protocol; also report a `fixed` protocol (ids shifted off 0) as a sensitivity check. | Test100 has annotation id 0. pycocotools' accumulate treats matched GT id 0 as unmatched, so AR ≤ 0.99 and AP drops ~1 pt. The published numbers carry this (AR50 = 99.0 across the table). |
-| D11 | 11-05 20:40 | **Improvement strategy:** ViTPose-L/H tested at 384×288 as well as 256×192 (resolution arm). HRNet-W48+DARK 384×288 in MMPose as the control. 1:1 real:synthetic mixing as in FiDIP. Recipe knobs (rotation ±180°, cosine/EMA) chosen on Val400. 5 seeds for the finalists if runs are short. A seed/cross-architecture coordinate ensemble as a secondary, pre-registered claim, always shown next to single-model numbers. | Literature: no published result beats 93.6 under this protocol. AP50 = AP75 = 98.5, so the headroom is at strict OKS (0.80–0.95), i.e. precise localization. Resolution and backbone are the levers. ViT-B lost to HRNet on another infant set (NeoPose), so B is skipped. RTMPose/Sapiens are excluded because of their extra pretraining data. |
-| D12 | 11-05 20:40 | **Add one paper-recipe attempt** (Adam 1e-3, 100 epochs, batch 64, λ = 5e-4) next to the yaml recipe. | The paper (arXiv v5) and the released yaml disagree: lr 1e-3/100 ep/batch 64/λ 5e-4 vs 1e-4/20 ep/batch 20/λ 0. |
+| D8 | 11-05 20:06 | **Recompute `area = w×h` for val400/validate500** (and the neutral train JSON). Keep Test100 = validate100 as shipped. | validate500 ships a constant placeholder area (2443298.48), which makes OKS meaningless. validate100 uses w×h. |
+| D9 | 11-05 20:08 | **Add a single-seed λ sweep {1e-4, 2e-3, 1e-2}** (Val400 only), plus the guide's demo CLI/Streamlit/gpu_test and per-epoch loss/AP CSVs. | STUDENT_GUIDE lists DA tweaks, demos and over/underfitting monitoring, and asks for the accuracy of every attempt. |
+| D10 | 11-05 20:11 | **Keep annotation ids as shipped.** Headline = `paper` protocol; also report a `fixed` protocol (ids shifted off 0) as a sensitivity check. | Test100 has annotation id 0. pycocotools' accumulate treats matched GT id 0 as unmatched, so AR ≤ 0.99 and AP drops ~1 pt. The published numbers carry this (AR50 = 99.0 across the table). |
+| D11 | 11-05 20:12 | **Improvement strategy:** ViTPose-L/H tested at 384×288 as well as 256×192 (resolution arm). HRNet-W48+DARK 384×288 in MMPose as the control. 1:1 real:synthetic mixing as in FiDIP. Recipe knobs (rotation ±180°, cosine/EMA) chosen on Val400. 5 seeds for the finalists if runs are short. A seed/cross-architecture coordinate ensemble as a secondary, pre-registered claim, always shown next to single-model numbers. | Literature: no published result beats 93.6 under this protocol. AP50 = AP75 = 98.5, so the headroom is at strict OKS (0.80–0.95), i.e. precise localization. Resolution and backbone are the levers. ViT-B lost to HRNet on another infant set (NeoPose), so B is skipped. RTMPose/Sapiens are excluded because of their extra pretraining data. |
+| D12 | 11-05 20:12 | **Add one paper-recipe attempt** (Adam 1e-3, 100 epochs, batch 64, λ = 5e-4) next to the yaml recipe. | The paper (arXiv v5) and the released yaml disagree: lr 1e-3/100 ep/batch 64/λ 5e-4 vs 1e-4/20 ep/batch 20/λ 0. |
 
 ---
 
@@ -107,7 +107,7 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 
 The literature-scan Explore agent is still running. Its findings will be forwarded to the improve worker.
 
-### 2026-11-05 20:10–20:20 EST — Data bug in official GT; STUDENT_GUIDE.md arrives
+### 2026-11-05 20:05–20:08 EST — Data bug in official GT; STUDENT_GUIDE.md arrives
 **Analysis worker found a GT defect (D8):**
 - In `validate500`, every annotation has the same placeholder `area` (2443298.48, i.e. √area ≈ 1563 px). OKS normalizes by area, so Val400 AP would be ~100 for any model and useless for selection.
 - `validate100` (Test100) uses `area = bbox_w × bbox_h` exactly.
@@ -133,7 +133,7 @@ The literature-scan Explore agent is still running. Its findings will be forward
 - A GitHub code search for them only surfaced classmates' public forks, whose notes say the files exist nowhere public.
 - We **did not open or use any other student's repository**. We implement these files ourselves from the guide's documented interface.
 
-### 2026-11-05 20:25 EST — Global secrets rule
+### 2026-11-05 20:09 EST — Global secrets rule
 - **Human asked:** "Yes please add it globally", i.e. the STUDENT_GUIDE Part 0.2 recommendation.
 - Created `~/.claude/CLAUDE.md` with the course's Secrets rule. The file didn't exist before. The rule says:
   - read credentials from `.env`;
@@ -142,14 +142,14 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - pass secrets via stdin/env vars, not CLI args.
 - This applies to every Claude Code project on this machine. The project-level `CLAUDE.md` already has the same rule.
 
-### 2026-11-05 20:30 EST — pycocotools id-0 artifact on Test100 (D10)
+### 2026-11-05 20:11 EST — pycocotools id-0 artifact on Test100 (D10)
 - **Analysis worker:** validate100 annotation ids equal image ids, so `test0.jpg` has annotation id 0. COCOeval's `evaluateImg` stores matched GT ids in `dtMatches`, and `accumulate` treats 0 as "unmatched". So the image-0 infant is never a TP, and its detection counts as an FP.
 - **Toy check** (pycocotools 2.0.8, 10 perfect predictions): AP 0.811 / AR 0.900 with ids starting at 0, vs 1.000 / 1.000 with ids starting at 1.
 - **Fingerprint in the paper:** AR50 = 99.0 for essentially every published model.
 - **Decision D10:** don't renumber ids. Headline metrics use the `paper` protocol, comparable with 93.6. `fixed` (ids shifted) is reported as a sensitivity check. The two are identical on Val400, which has no id 0.
 - Relayed to the repro worker (no id renumbering, plus an assertion) and to the report worker (evaluator section + comparable-conditions box).
 
-### 2026-11-05 20:40 EST — Literature scan lands (D11, D12)
+### 2026-11-05 20:12 EST — Literature scan lands (D11, D12)
 - **No 2021–2026 paper beats 93.6** on SyRIP Test100 with GT boxes (61 citing papers screened, 4 unreadable).
   - Gama et al. 2025 benchmark zero-shot models on the 500-image set with detector boxes (ViTPose-H AP 41.9). Not comparable.
   - AggPose and InfantNet use their own datasets.
@@ -165,3 +165,23 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - analysis: per-OKS-threshold AP, `ensemble_preds.py`, Holm correction, never report Test500 as clean;
   - report: related work with sources, the recipe discrepancy, Expanded SyRIP ≈ our Val400, so out of scope.
 - **Disagreement with the scan:** it suggested 5-fold CV on the 200 real training images for selection. We keep Val400 (validate500 \ validate100; disjoint from Test100, training data unchanged). It gives a 400-image real selection set without shrinking training data. The cost is that Test500 can't be reported as clean, which we note.
+
+### 2026-11-05 20:15 EST — Human: "Don't mention Co-Authored by Claude"
+- **Human asked:** no Claude co-author mentions.
+- **Action:**
+  - Told all 4 workers to stop adding the `Co-Authored-By` trailer. The report worker was also told the report/README author is the student only.
+  - Rewrote the 10 local, unpushed commits to drop the trailer, using `git commit-tree` + a compare-and-swap `update-ref`. That approach doesn't touch the working tree or index, so workers' uncommitted files were safe. Trees, authors and dates are unchanged; only the SHAs changed.
+  - Added the rule to project `CLAUDE.md`.
+- **Old → new SHAs:**
+  - 91a40f8 → cf33818 (upstream import)
+  - 2739f4d → da804a0
+  - 4f20279 → fdaaa82
+  - 18ab6c5 → c4cf349
+  - 8842520 → 27aba42
+  - 8871e1f → 9d18530
+  - ddfedab → 724b106
+  - f14baa0 → d15feac
+  - 10d33a7 → 414a911
+  - 87f5689 → e8373c4
+- Workers now also record the tree SHA (`HEAD^{tree}`) in `run.json`, because tree SHAs survive message rewrites.
+- **Self-correction:** the preserved commit times showed that four of my AGENT.md headers and decision rows (and the SKILL.md snapshot) had **estimated** times (20:25/20:30/20:40) where the real times were 20:08–20:13. I corrected them to match the git commit times and added a rule to `CLAUDE.md`: always take timestamps from `date`, never estimate.

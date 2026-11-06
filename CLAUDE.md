@@ -11,3 +11,5 @@
   - Register runs in `results/registry.csv`.
 - Edit vendored upstream code (`third_party/Infant-Pose-Estimation`) only in small, separately described patches.
 - Secrets live in `.env` (gitignored). Never print or commit them.
+- Commit messages: **no `Co-Authored-By` trailer and no mention of Claude as co-author** (the human's instruction, 2026-11-05). The report/README author is the student only. The AI-tool-use section describes the agent as a tool.
+- Timestamps in notebooks: always take them from `date "+%Y-%m-%d %H:%M %Z"`. Never estimate.

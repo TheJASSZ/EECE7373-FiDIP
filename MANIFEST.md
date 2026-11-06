@@ -7,7 +7,7 @@ Cluster root: `R=/scratch/purohitham.v/fidip`. Persistent copies: `explorer:~/fi
 | Item | Location | Version / commit |
 |---|---|---|
 | This project repo | `~/Documents/EECE7373-FiDIP` (git), mirrored to `$R/repo` | see `git log` |
-| Upstream FiDIP code | `third_party/Infant-Pose-Estimation` (vendored from the GitHub tarball API; git commit `91a40f8` = unmodified import) | github.com/ostadabbas/Infant-Pose-Estimation @ `a76b4f418107b8d3548d9779e94702e2508fbef1` (2024-07-05) |
+| Upstream FiDIP code | `third_party/Infant-Pose-Estimation` (vendored from the GitHub tarball API; git commit `cf33818` = unmodified import) | github.com/ostadabbas/Infant-Pose-Estimation @ `a76b4f418107b8d3548d9779e94702e2508fbef1` (2024-07-05) |
 | Our patches to upstream | separate commits touching `third_party/` | listed in §6 |
 
 ## 2. Environments
