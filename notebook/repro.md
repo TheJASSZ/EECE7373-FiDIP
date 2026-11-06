@@ -225,3 +225,9 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
   - R002: Test100 79.14 / 79.84; Val400 68.18; validate_infant 77.74 / 78.62.
   - Our λ = 5e-4 retrains match the released model on Val400 (90.51 ± 0.13 vs 90.36).
 - 07:01 EST: R013–R015 resubmission (11670943) started on H200 d4053 (same GPU type as R010–R012).
+
+### 2026-11-06 07:05 EST — R020 outcome (README-literal training labels; job 11665030 packed with R019, H200 d4053)
+- Same as R010 s1, except `DATASET.TRAIN_SET train_infant_readme`: syrip_for_train.zip's train json, whose 1000 synthetic entries carry MINI-RGBD labels.
+- Val400 AP per epoch 85.1 → 89.3 (best, epoch 12) → 89.2 (final); upstream-printed best 89.3 / final 89.2.
+- **vs R010 s1 (official labels, same seed): −1.3 AP; vs the 3-seed mean: −1.2 AP (about 9 sd).**
+- Hypothesis confirmed: following the README literally costs about 1.2 AP on Val400. The damage is bounded because the 200 real images (oversampled to half of every batch) keep correct labels. Val400 only, as preregistered.
