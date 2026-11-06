@@ -522,6 +522,8 @@ def main(argv=None):
     ap.add_argument("--runs-root", default=os.path.join(REPO, "results", "cluster_runs"))
     ap.add_argument("--tables", default=os.path.join(REPO, "results", "tables"))
     ap.add_argument("--tex", default=os.path.join(REPO, "report", "generated", "results_tables.tex"))
+    ap.add_argument("--fig-root", default=os.path.join(REPO, "results", "figures"))
+    ap.add_argument("--fig-dest", default=os.path.join(REPO, "report", "figures", "generated"))
     a = ap.parse_args(argv)
     c = Collector(a)
     tables = build(c, a)
@@ -541,9 +543,7 @@ def main(argv=None):
     try:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         import report_interface
-        info = report_interface.run(c, tables, REPO, a.tables, os.path.dirname(a.tex),
-                                    os.path.join(REPO, "results", "figures"),
-                                    os.path.join(REPO, "report", "figures", "generated"))
+        info = report_interface.run(c, tables, REPO, a.tables, os.path.dirname(a.tex), a.fig_root, a.fig_dest)
         print(f"[collect] report interface: {info['numbers_set']} values for {info['numbers_keys']} documented keys; "
               f"tables {info['tables']}; figures {sorted(info['figures'])}")
     except FileNotFoundError as e:

@@ -189,7 +189,7 @@ class ReportInterface:
             self.set("imp.control.name", tex(g.get("label", g["key"])), g["run_ids"], "results/configs.json", "", "")
             if s["n_runs"]:
                 self.set("imp.control.val.ap.mean", num1(s["AP"]), s["run_ids"], "", "paper", "val400")
-                self.set("imp.control.val.ap.sd", num1(s["AP_std"]) if s["AP_std"] is not None else "0.0",
+                self.set("imp.control.val.ap.sd", num1(s["AP_std"]) if s["AP_std"] is not None else "---",
                          s["run_ids"], "", "paper", "val400")
         self._fill_best()
         # bootstrap resamples
@@ -466,8 +466,8 @@ class ReportInterface:
                        "zeroshot": "zero-shot reference"}.get(r["role"])
             if outcome is None:
                 outcome = TBD if d is None else ("better than control" if d > 0 else "not better")
-            ids = r["run_ids"]
-            idtxt = ids[0][:4] if len(ids) == 1 else f"{ids[0][:4]}--{ids[-1][:4]}"
+            nums = sorted({x[:4] for x in r["run_ids"]})
+            idtxt = (nums[0] if len(nums) == 1 else f"{nums[0]}--{nums[-1]}") if nums else "---"
             rows.append([idtxt, stream, tex(r["what_changed"] or ""), str(r["n_runs"]), pm(r["val400_AP"], r["val400_AP_std"]),
                          v(signed(d)) if d is not None else "---", pm(r["test100_AP"], r["test100_AP_std"])
                          if r["test100_reported"] else "---", outcome])
@@ -542,6 +542,9 @@ class ReportInterface:
         def ap_of(r, split, proto="paper"):
             if not r:
                 return TBD
+            if best and r == brid:                       # best config: mean over its seeds
+                s_ = c.config_summary(best, split, proto)
+                return v(num1(s_["AP"])) if s_["n_runs"] else TBD
             val, _ = self.metric(r, split, "AP", proto)
             return v(pct1(val))
         sv = self.values
