@@ -103,3 +103,49 @@ The published AP50 = AP75 = 98.5 sits inside this band, so on the 99 matchable i
 - Per-threshold AP averages back to AP/AP50/AP75.
 - OKS-NMS keep lists equal upstream `nms.py` on random instance sets.
 - CLI end to end (JSON + CSV).
+
+## Statistics: `bootstrap_ci.py`
+Modes: `paired` (one file per arm), `multiseed` (lists of seed runs), `contrasts` (a declared JSON spec with Holm adjustment), and `single` (CI of one model's AP).
+- **Resampling.** The statistic is the COCO AP of a resampled multiset of images, with B = 10000 resamples by default and fixed seed 0. Both arms use the *same* resamples (paired).
+- **Multi-seed.** The output gives:
+  - mean ± std across seeds (seed variance);
+  - a bootstrap over images of the *seed-averaged* AP (sampling variance);
+  - `seed_pairs_a_gt_b`, the fraction of (a, b) seed pairs with AP_a > AP_b;
+  - optionally `--hierarchical`, which resamples seeds and images jointly.
+- **Inference.** A 95% percentile CI of Δ. The one-sided p for H1: A > B is (1 + #{Δ* ≤ 0})/(B + 1). The Holm step-down adjustment runs across the declared contrasts.
+- **Consistency.** Per-image OKS win/tie/loss counts, with an exact sign test and a Wilcoxon signed-rank test.
+- **Exact fast path.** Per-image matches are read verbatim from `COCOeval.evalImgs`, and only `accumulate()` is re-implemented. Every run asserts that the full-set fast AP equals COCOeval to ≤ 1e-12 (`self_check` in the output). Tests also compare against COCOeval on explicitly duplicated datasets.
+
+The spec for `contrasts` mode:
+```json
+{"B": 10000, "seed": 0, "protocol": "paper", "metric": "AP", "alpha": 0.05,
+ "contrasts": [{"name": "ViTPose-H vs FiDIP", "a": ["$R/runs/R030_..._s1/preds_test100.json", "..."],
+                "b": ["$R/runs/R001_fidip-w48_released/preds_test100.json"], "label_a": "ViTPose-H",
+                "label_b": "FiDIP released", "hypothesis": "..."}]}
+```
+
+## Ensembling: `ensemble_preds.py`
+Averages coordinates across N prediction files, either a plain mean or `--weighting conf`; the confidence is the mean confidence.
+- Instances are matched per image. Multi-person images are matched by GT box or by keypoint centroid, never by GT keypoints.
+- An ensemble of identical files is bit-identical to its input (unit-tested).
+- A `.meta.json` sidecar records the input sha256 hashes.
+
+## Analysis and figures
+- `taxonomy.py`: the failure taxonomy (pure, unit-tested).
+  - **L/R swap per pair.** Swapping the two predicted joints must more than halve their error and raise OKS by > 0.02, and the GT joints must be > 0.05·sqrt(area) apart. A whole-body mirror gain is also reported.
+  - **In-plane torso angle**, from mid-hip to mid-shoulder: upright < 45°, sideways 45–135°, inverted > 135°.
+  - **View proxy.** The sign of cross(torso, l_sho − r_sho) is rotation invariant: front ≈ supine, back ≈ prone, profile ≈ side-lying.
+  - Occlusion (number of v=1 joints) and scale.
+- `analyze.py models --manifest M.json`:
+  - figures: AP vs OKS threshold (paper/fixed protocols, published points, ceiling band), OKS histogram and survival curve, per-keypoint error/PCK with CIs, failure-taxonomy bars, error vs orientation, score vs OKS (ranking quality), and pairwise per-image OKS scatter;
+  - tables: per-threshold AP, per-keypoint, taxonomy, L/R swaps, occlusion, ranking quality (oracle AP), per-image taxonomy, and ΔOKS by category.
+- `analyze.py splits` compares Test100 and Val400 difficulty. `analyze.py curves` plots per-epoch train/val loss and Val400 AP/AR. `analyze.py gtbox` builds the v100-vs-v500 GT-box 2×2.
+- `visualize.py gallery|failures|compare`: skeleton overlays on square crops. GT is white with hollow markers, the prediction is in the model colour, and marker shape encodes body side.
+- `plot_style.py`: one palette, validated for colour-vision deficiency. Vector PDF and 300-dpi PNG.
+
+## Cluster pipeline
+- `sbatch scripts/slurm/analysis.sbatch eval-all` evaluates every `$R/runs/*/preds_<split>.json` into `$R/analysis/eval/<RUN_ID>/` and writes `index.csv`.
+  - Files whose sha256 hashes are unchanged are skipped.
+  - **Test100 files are evaluated only for released/retrain reproduction targets and pre-registered RUN_IDs.** Everything else is withheld and never computed (`analysis_pipeline.test_allowed`, unit-tested).
+- `bash scripts/pull_analysis.sh` pulls metrics, figures, and tables to the Mac.
+- `python scripts/collect_results.py` writes `results/tables/*.csv|json` and `report/generated/results_tables.tex`, the booktabs tables and `\newcommand` macros. Every number carries its RUN_IDs. `report/generated/MACROS.md` lists every macro.

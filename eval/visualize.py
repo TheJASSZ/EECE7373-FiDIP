@@ -36,7 +36,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 LEFT = {1, 3, 5, 7, 9, 11, 13, 15}
 RIGHT = {2, 4, 6, 8, 10, 12, 14, 16}
 PAD = 0.12
-MAX_SIDE = 700
+MAX_SIDE = 450
 
 
 def _load_records(path):
