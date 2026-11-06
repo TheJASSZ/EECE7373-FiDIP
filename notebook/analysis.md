@@ -167,3 +167,13 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
 - **collect_results.py:** adds per-run test0 rank/percentile and paper−fixed gap, plus fixed-protocol Δ/CI, a robust column and macros (`\Boot...FixedDelta`, `...Robust`) in the bootstrap table.
 - **D14:** all analysis jobs are CPU (`short`) and renamed `an_build_env`, `an_eval_tests`, `an_analysis`, `an_crosscheck`. No GPU use.
 - json_tricks-encoded arrays (`{"__ndarray__": ...}`) in prediction files are decoded (upstream writes with json_tricks). 64 tests pass.
+
+### 2026-11-05 21:02 EST: first real predictions (improve's 2-epoch smoke runs) and an exact match with MMPose's CocoMetric
+- `sbatch scripts/slurm/analysis.sbatch eval-all` (job 11659659, an_analysis, CPU) found `R190_mmp-hrnetw48_smoke_s1/preds_val400.json` and `R191_mmp-vitpose-l384_smoke_s1/preds_val400.json` and evaluated both into `$R/analysis/eval/`.
+  - Val400 AP: R190 89.85 (AP_80_95 77.58); R191 91.19 (81.02).
+  - These are 2-epoch pipeline checks. No conclusions or selection come from them.
+- **Cross-check against MMPose's own CocoMetric** (xtcocotools; improve's `metrics_val400_mmpose.json`): eval_coco gives R190 AP = 0.8984904949374577, coco/AP = 0.8984904949374577, the same to every printed digit. AP50, AP75 and AR match as well (0.989106…, 0.957836…, 0.91175).
+  - This is as expected, since Val400 has no annotation id 0, so paper == fixed == xtcocotools.
+- **Rescoring rule = MMPose's `score_mode='bbox_keypoint'`:** `max_abs_diff_file_score_vs_rule` = 0.0 exactly on all 400 instances. 0 score ties, 0 dropped, 0 missing images.
+- MMPose `keypoints.json` carries a `bbox` field. My loader passes only image_id, category_id, keypoints and score to `loadRes`, so every framework takes the same keypoint code path (det area = keypoint extent).
+- Training curves from MMPose logs (job 11659701): `analyze.py curves` reads `vis_data/scalars.json`. Train lines are keyed by `epoch`; val lines use `step`, which equals the epoch. MMPose logs no validation loss, so for MMPose runs the over/underfitting evidence is train loss + Val400 AP/AR per epoch. Model colours can now be pinned (`label@slot`).
