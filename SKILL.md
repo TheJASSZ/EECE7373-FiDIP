@@ -45,6 +45,26 @@ Exact package lists are exported to `envs/*.yml` / `envs/*-pip-freeze.txt` in th
 
 Request a GPU with `--gres=gpu:h200:1` (or `a100:1`, `v100-sxm2:1`). Templates: `scripts/slurm/*.sbatch`.
 
+**Per-user QOS caps** (`sacctmgr show qos`, 2026-11-05). All of the project's streams share user `purohitham.v`.
+
+| Partition | Max running | Max submitted | Max GPUs | Wall time |
+|---|---|---|---|---|
+| `gpu` | 4 | 8 | 4 | 8 h |
+| `sharing` | 2 | 4 | 2 | 1 h |
+
+Over the limit, jobs sit in `PENDING (QOSMaxJobsPerUserLimit)`.
+
+**Slot policy (D14):**
+- Repro (`rp_` job prefix): gpu ≤ 2 running / ≤ 4 submitted; sharing ≤ 1 / ≤ 2.
+- Improve (`im_`): same as repro.
+- Analysis (`an_`): CPU partitions only.
+
+**Making the most of the slots:**
+- Pack several trainings into one GPU job (concurrently if memory allows, otherwise back-to-back).
+- Use `sharing` L40S/L40/A6000 (44–48 GB) for evals and smoke tests; they are often idle.
+- **MMPose / mmcv 2.1.0 has no sm_90 kernels.** Run MMPose jobs on A100/L40S/A6000, not H100/H200.
+- Count a stream's jobs with: `squeue -u $USER -h -o "%j %T %P" | grep '^rp_'`.
+
 ## Common operations
 ```bash
 # sync code to the cluster: tar-over-ssh (macOS openrsync is incompatible with the cluster's rsync 3.2.5).

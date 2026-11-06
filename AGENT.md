@@ -22,6 +22,7 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 | D11 | 11-05 20:12 | **Improvement strategy:** ViTPose-L/H tested at 384×288 as well as 256×192 (resolution arm). HRNet-W48+DARK 384×288 in MMPose as the control. 1:1 real:synthetic mixing as in FiDIP. Recipe knobs (rotation ±180°, cosine/EMA) chosen on Val400. 5 seeds for the finalists if runs are short. A seed/cross-architecture coordinate ensemble as a secondary, pre-registered claim, always shown next to single-model numbers. | Literature: no published result beats 93.6 under this protocol. AP50 = AP75 = 98.5, so the headroom is at strict OKS (0.80–0.95), i.e. precise localization. Resolution and backbone are the levers. ViT-B lost to HRNet on another infant set (NeoPose), so B is skipped. RTMPose/Sapiens are excluded because of their extra pretraining data. |
 | D12 | 11-05 20:12 | **Add one paper-recipe attempt** (Adam 1e-3, 100 epochs, batch 64, λ = 5e-4) next to the yaml recipe. | The paper (arXiv v5) and the released yaml disagree: lr 1e-3/100 ep/batch 64/λ 5e-4 vs 1e-4/20 ep/batch 20/λ 0. |
 | D13 | 11-05 20:52 | **An improvement claim counts only if it holds under both evaluation protocols.** The headline uses `paper`, comparable with 93.6. The paired-bootstrap CI must exclude 0 under both `paper` and `fixed`. Report test0's score rank for every model. | Verified on the real Test100 GT: at realistic accuracy, `paper` vs `fixed` differ by 0.8–2.1 AP depending only on where test0's confidence ranks. A one-image artifact is about as large as the gains we expect. |
+| D14 | 11-05 20:53 | **GPU slot policy:**<br>• repro and improve each get ≤ 2 running / ≤ 4 submitted on `gpu`, and ≤ 1 / ≤ 2 on `sharing`<br>• analysis uses CPU partitions only<br>• job-name prefixes `rp_` / `im_` / `an_`<br>• pack several runs per GPU job<br>• idle slots may be borrowed<br>• repro's core-points runs have priority | Shared per-user QOS caps (gpu 4 running / 8 submitted / 4 GPUs / 8 h; sharing 2 / 4 / 2 / 1 h). Without a policy the bonus screening could starve the reproduction runs. |
 
 ---
 
@@ -221,3 +222,12 @@ The literature-scan Explore agent is still running. Its findings will be forward
 - **Perfect predictions:** `paper` AP is 98.02 (test0 ranked first) to 99.01 (ranked last). `fixed` is 100.
 - **Realistic predictions** (AP ≈ 93.6): the two protocols differ by **0.8–2.1 AP**, depending on test0's rank.
 - **Decision D13:** improvement claims must survive both protocols. We report test0's score rank per model, and the report gets a figure explaining the sensitivity.
+
+### 2026-11-05 20:53 EST — Shared QOS caps → slot policy (D14); improve-stream environment notes
+- **The improve worker hit `QOSMaxJobsPerUserLimit`:** gpu allows 4 running / 8 submitted, sharing 2 / 4, shared by all streams under one user. The H200/A100 queue on `gpu` is long, while 44–48 GB L40S/L40/A6000 cards on `sharing` are free.
+- **Decision D14 (slot policy):** written into SKILL.md and sent to all workers. The R010–R012 seeds should run concurrently on one GPU where memory allows.
+- **Environment facts from the improve worker:**
+  - mmcv 2.1.0's CUDA ops have no sm_90 kernels, so MMPose runs go on A100/L40S/A6000.
+  - mmpose 1.3.2 imports mmdet unconditionally (`rtmo_head.py`), so mmdet must be installed even with GT boxes.
+  - mmpretrain's pos-embed auto-resize fails for ViTPose's non-square 16×12 grid, so the resize is done offline (committed script + SHA256 requested).
+- **Data-integrity follow-up:** the improve worker never touched `$R/data/raw`. Its only write under `$R/data` was a temporary `improve_splits` dir (20:46), since moved to `$R/mmpose_data/splits`. The 20:08 'flatten' of `raw/SyRIP/SyRIP` is still unexplained. It predates both other streams' data writes and most likely came from the repro worker's own unzip job; verification was requested.
