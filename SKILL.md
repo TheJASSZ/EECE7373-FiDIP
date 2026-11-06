@@ -76,7 +76,11 @@ bash scripts/sync_results.sh
 ## Active runs
 | RUN_ID | Job ID | Partition / GPU | Purpose | Status | Log |
 |---|---|---|---|---|---|
-| — | (login node, pid 687507) | explorer-02 | SyRIP download + unzip | running (started 19:54 EST) | `$R/data/downloads/download.log` |
+| — | (login node, pid 687507) | explorer-02 | SyRIP download + unzip | download done 19:53; **unzip Killed** by login-node limits → redone in Slurm by the repro worker | `$R/data/downloads/download.log` |
+| — | 11659031 | short / CPU (c0587) | build `$R/envs/mmpose` (improve worker) | running (20:40 EST) | `$R/slurm_logs/build_env_mmpose_11659031.out` |
+| — | 11659053 | short / CPU (c0589) | download MMPose COCO checkpoints (improve worker) | running (20:40 EST) | `$R/slurm_logs/get_ckpts_mmpose_11659053.out` |
+
+Snapshot as of 2026-11-05 20:40 EST. Refresh with `ssh explorer 'squeue -u $USER'`; the per-stream notebooks list every job ID.
 
 ## Guardrails
 - No training or evaluation on login nodes. Use `sbatch`/`srun`. **Login nodes kill heavy processes:** an `unzip` of the 313 MB SyRIP.zip was `Killed` (2026-11-05). Only `curl`/`wget` downloads and light file operations are safe there.
