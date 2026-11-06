@@ -210,3 +210,13 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
   - **Resubmitted** with `TRAIN.LAMBDA 0.0` as job 11670943, on the same hardware as R010–R012 (H200) to avoid a hardware confound in the λ ablation. `--test-only` estimates: H200 07:28, A100-80GB 08:04, V100 12:15.
   - Lesson: pass floats as `0.0`, and smoke-test every distinct command line.
 - R016–R018 (11665029) and R019–R020 (11665030) started on H200 d4053 at ~06:40. R020 uses `DATASET.TRAIN_SET train_infant_readme`, and R019 floats are written as `0.001`.
+
+### 2026-11-06 07:05 EST — λ sweep outcome (R016–R018, s1, Val400 only; job 11665029, H200 d4053, 17 min 49 s, 19.7 GB/process)
+| λ | run | best Val400 AP (epoch) | final-epoch Val400 AP | final train MSE | final val loss |
+|---|---|---|---|---|---|
+| 1e-4 | R016 | **91.02** (16; tie with epoch 20) | 91.02 | 2.56e-4 | 3.74e-4 |
+| 5e-4 | R010–R012 | 90.51 ± 0.13 (3 seeds) | 90.39 ± 0.30 | ~3.3e-4 | ~3.8e-4 |
+| 2e-3 | R017 | 89.67 (20) | 89.67 | 3.69e-4 | 4.21e-4 |
+| 1e-2 | R018 | 85.78 (5) | 83.84 (oscillates 82–85) | 6.09e-4 | 5.99e-4 |
+- **Outcome vs hypothesis:** as predicted, large λ hurts. At λ ≥ 2e-3 the −λ·BCE term outweighs the ~3e-4 heatmap MSE: train MSE rises with λ, and at 1e-2 Val400 AP peaks at epoch 5 and then degrades.
+- Not predicted: **λ = 1e-4 beats the official 5e-4 by 0.5 AP** (single seed, about 4× the 3-seed sd of 0.13). This needs λ = 0 (R013–R015, pending) and more seeds before any claim. Test100 was not touched for the sweep.
