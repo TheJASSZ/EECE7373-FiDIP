@@ -188,3 +188,25 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
 - R010–R012 (11665025) and R013–R015 (11665026) are still PENDING (Priority; H200 contention; estimates slide 01:24 → 01:34, and 02:41 for the second).
   - `--test-only` probes: H200 with a smaller CPU/mem request → 02:07; A100-80GB (`--constraint=a100@80g`) → 02:42; sharing H100 → 03:43; sharing A100 → 02:46.
   - Kept as submitted.
+
+### 2026-11-06 06:37–07:05 EST — R010–R012 results; R013–R015 failure and resubmission
+- **R010–R012** (λ 5e-4, s1–s3; job 11665025, H200 d4054, 05:27 start, 18 min for the 3-run pack).
+  - Peak GPU memory **19.8 GB per process** when packed (vs 11.8 GB in the 1-epoch single smoke).
+  - Best Val400 epochs 20 / 19 / 18. Val400 AP and val loss still improve at epoch 20 (R010 val loss 4.14e-4 → 3.79e-4 by epoch 8, train MSE 4.5e-4 → 3.3e-4): **no overfitting within 20 epochs**.
+
+| Run | Val400 AP (best) | Test100 AP best-ckpt, paper protocol (upstream print) | Test100 final | Test100 best, fixed protocol |
+|---|---|---|---|---|
+| R010 s1 | 90.63 | 93.85 (93.9) | 93.85 | 95.33 |
+| R011 s2 | 90.38 | 93.74 (93.7) | 93.41 | 95.42 |
+| R012 s3 | 90.53 | 93.07 (93.1) | 92.88 | 94.58 |
+| **mean ± sd** | **90.51 ± 0.13** | **93.55 ± 0.42** | **93.38 ± 0.49** | **95.11 ± 0.46** |
+
+  - eval_coco (paper protocol) equals the upstream print to rounding.
+  - **The official recipe (+ COCO init, PRE_EPOCH 10 on train_pre, λ 5e-4, epochs selected on Val400) reproduces the paper's 93.6** (3-seed mean 93.55). The released checkpoint gives 93.6.
+- **R013–R015 attempt 1 FAILED** (job 11665026, 1 min): `ValueError: Type mismatch (<class 'float'> vs. <class 'int'>) with values (0.0 vs. 0) for config key: TRAIN.LAMBDA`.
+  - Cause: I passed `0` on the command line, and yacs refuses int-for-float.
+  - The smoke only tested λ 5e-4, so this path was never exercised.
+  - Dirs moved to `$R/runs/_failed/R01{3,4,5}_*_attempt1_job11665026`. Registry row status=failed.
+  - **Resubmitted** with `TRAIN.LAMBDA 0.0` as job 11670943, on the same hardware as R010–R012 (H200) to avoid a hardware confound in the λ ablation. `--test-only` estimates: H200 07:28, A100-80GB 08:04, V100 12:15.
+  - Lesson: pass floats as `0.0`, and smoke-test every distinct command line.
+- R016–R018 (11665029) and R019–R020 (11665030) started on H200 d4053 at ~06:40. R020 uses `DATASET.TRAIN_SET train_infant_readme`, and R019 floats are written as `0.001`.

@@ -45,7 +45,7 @@ def main():
                          'train_mse_final': float(E[-1]['train_mse']), 'val_loss_final': float(E[-1]['val_loss'])})
     keys = ['run_id', 'variant', 'epochs', 'best_epoch', 'val400_AP_best', 'val400_AP_final', 'test100_AP_best',
             'test100_AP_final', 'train_mse_final', 'val_loss_final']
-    fmt = lambda v: '' if v is None else ('%.2f' % v if isinstance(v, float) else str(v))
+    fmt = lambda v: '' if v is None else (('%.2e' % v if abs(v) < 0.01 else '%.2f' % v) if isinstance(v, float) else str(v))
     print(' | '.join(keys))
     for r in rows:
         print(' | '.join(fmt(r[k]) for k in keys))
