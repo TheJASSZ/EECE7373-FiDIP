@@ -235,3 +235,11 @@ Newest entries at the bottom. Timestamps in EST.
   - (Caught before submission: in 3 scripts my bulk edit had turned the rsync source into an unset `$REPO/`, i.e. `/`. Fixed and verified with `grep rsync`.)
 - **Hold undone:** the `scontrol hold 11664861` I issued as a cancel stand-in left `Priority=0 Reason=JobHeldUser` on the running job. Released at about 01:40 (`Priority=7193 Reason=None`). The `scontrol update` on 11664862 was a genuine gres/partition/time retarget to `sharing` L40S and was not used to cancel anything.
 - **Deviation (accepted by the orchestrator):** if R104 (ViT-H-384, 44.6 GB peak at batch 32) ever has to run on a ≤48 GB card, it uses gradient accumulation 16x2 (effective batch 32; ViT LayerNorm makes this equivalent; only the head's BN batch differs). Currently not needed: R104 is running on an A100-80.
+
+### 2026-11-06 06:54 EST — Resumed (usage pause 02:20-06:37). Second D19 casualty: R103/R104/R105/R107
+- screenA2 **11664861** (A100-80 d1029, 54m18s: R104 + R105) and screenB2 **11664862** (L40S d4042, 39m19s: R103 + R107) both finished training: all 30 epochs, `best_*.pth` saved, process rc=0.
+  - **But the post-train steps never ran**: no `selected` line, no preds/metrics/run.json. Same symptom as R108/R109.
+  - Both packs were submitted before my D19 change, so they executed `$R/repo/scripts/run_one_mmpose.sh` directly, and the 01:38 sync replaced it mid-run.
+- MMPose-printed Val400 AP at the selected epoch: R103 0.9277 (ep 30), R104 0.9276 (ep 13), R105 0.9242 (ep 14), R107 0.9153 (ep 25).
+- Measured per-process peaks (nvidia-smi): R104 46.2 GB, R105 24.7 GB, R103 27.9 GB, R107 16.8 GB, R120/R121 14.8 GB each.
+- **Fix:** `im_pack_finScreen` **11670941** (sharing L40S) resumes the same four RUN_IDs at epoch 30 (no-op), then runs pred dump, eval_coco and finalize. These jobs now run from D19 snapshots, so they are immune to syncs.
