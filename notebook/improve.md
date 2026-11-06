@@ -167,3 +167,45 @@ Newest entries at the bottom. Timestamps in EST.
 - **Pack smoke (job 11659697, L40S d4047, 2m46s, FAILED by design of timing):** R192 HRNet + R193 ViT-L-256, 1 epoch each.
   - Both trained concurrently: GPU util 93%, per-process peak 16.8 GB (HRNet) and 14.8 GB (ViT-L-256). Packed s/iter: HRNet 0.53 (vs 0.37 alone), ViT-L-256 0.46.
   - Both then failed at the Val400 eval with `FileNotFoundError: …/images/val400/test207.jpg`: REPRO was rebuilding the Val400 tree (207 dropped) at that moment. This confirms the decision to wait for SPLITS_READY. R192/R193 are discarded (no run.json; not registered).
+
+### 2026-11-05 21:11 EST — Coordinator notes applied (final splits, PYTHONNOUSERSITE); screening launched
+- **Derived subsets rebuilt from the final splits:** `prep_data_mmpose` job **11659874** (short) re-runs `make_train_subsets.py $R/data/splits/train_infant.json $R/mmpose_data/splits` and `check_data.py`.
+  - The source sha256 is the same `3bdcce0b…` as at 20:58, but the coordinator flagged it as stale, so it is rebuilt and the new SHA256s get logged. Only `$R/data/splits/train_infant.json` (SyRIP.zip 200R_1000S) is used; never syrip_for_train's train JSON.
+- **PYTHONNOUSERSITE:**
+  - `export PYTHONNOUSERSITE=1` added to every `*_mmpose.sbatch` that runs python and recorded in run.json.
+  - Job **11659867** (`usersite_check_mmpose.sbatch`) lists `~/.local/lib`, prints every key package's version and `__file__` with and without the flag, then runs `conda env config vars set -p $R/envs/mmpose PYTHONNOUSERSITE=1`.
+- **Launched (D14 budget: gpu 2 running / ≤4 submitted, sharing 1 running / 2 submitted), all after 11659874 and 11659867:**
+  | job | partition / GPU | contents |
+  |---|---|---|
+  | **11659880** `im_zeroshot_mmpose` | sharing L40S | Val400 zero-shot of the 5 COCO models: R181 HRNet-W48, R182 ViT-L-256, R183 ViT-L-384 (resized pos_embed, never trained at 384), R184 ViT-H-256, R185 ViT-H-384 |
+  | **11659881** `im_pack_screenA` | gpu A100-80GB | R104_mmp-vitpose-h384_base_s1 (~45 GB) + R103_mmp-vitpose-l384_base_s1 (~24 GB) |
+  | **11659885** `im_pack_screenB` | gpu A100-80GB | R105_mmp-vitpose-h256_base_s1 + R106_mmp-hrnetw48_lr2e-4_s1 + R107_mmp-hrnetw48_lr5e-5_s1 (control LR sweep, independent of which ViT wins) |
+  | **11659888** `im_pack_screenC` | sharing L40S, after zero-shot | R101_mmp-hrnetw48_base_s1 + R102_mmp-vitpose-l256_base_s1 |
+- Base recipe for all R10x: 30 epochs x 63 iters (batch 32), 1-epoch warm-up + step x0.1 at epochs 24/29, LR 1e-4 nominal, mmpose COCO augmentation, Val400 `save_best` every epoch, seed 1, TF32.
+
+### 2026-11-06 01:05 EST — Resumed after usage pause: results so far, OOM failures, reruns
+- **Usersite check (11659867):** `~/.local/lib/python3.10/site-packages` does not exist, so nothing shadows the env. All packages (numpy 1.26.4 … mmdet 3.3.0) load from `$R/envs/mmpose`. chumpy's import fails on numpy 1.26 (expected; unused). `conda env config vars set PYTHONNOUSERSITE=1` applied.
+- **Subsets rebuilt from the final splits (11659874):** real200 sha256 `081b5664c938397f8a2086991da1991ee31d855031ac216da566d8766207c879`, syn1000 `ee0c5b3bfbe080a6300197c04b460e98662adb0f4799ae1231dcbbe4cd209210`. Identical to the 20:58 build, as expected from the unchanged source.
+- **Documented failure: OOM on a 40 GB A100.** `--gres=gpu:a100:1` on `gpu` can land on **d1026 = A100-SXM4-40GB**; only d1028/d1029 have 80 GB (node feature `a100@80g`).
+  - `im_pack_screenA` **11659881** (R104 ViT-H-384 + R103 ViT-L-384) failed with OOM after 5 min.
+  - `im_pack_screenB` **11659885** (20 min): R105 ViT-H-256 `torch.cuda.OutOfMemoryError` and R107 `RuntimeError: CUDA error: out of memory`; R106 completed.
+  - Failed dirs moved to `$R/runs/_failed/<RUN_ID>_job<id>` (logs kept, .pth removed).
+  - **Fix:** `--constraint=a100@80g` for A100 packs. (SKILL note: `gpu:a100` ≠ 80 GB.)
+- **Val400 so far** (eval_coco `metrics`, 397 images, paper = fixed protocol):
+  | run | AP | AP50 | AP75 | AR | AP.80-.95 | sel. ep | job / GPU |
+  |---|---|---|---|---|---|---|---|
+  | R181 HRNet-W48 zero-shot | 86.46 | 98.92 | 92.75 | 88.31 | 71.64 | - | 11659880 L40S |
+  | R182 ViT-L-256 zero-shot | 88.21 | 98.86 | 94.77 | 90.40 | 74.79 | - | 11659880 |
+  | R183 ViT-L-384 zero-shot (resized pos_embed) | 86.30 | 97.81 | 93.66 | 89.45 | 70.87 | - | 11659880 |
+  | R184 ViT-H-256 zero-shot | 88.81 | 98.88 | 94.63 | 90.91 | 75.84 | - | 11659880 |
+  | R185 ViT-H-384 zero-shot (resized pos_embed) | 87.44 | 98.85 | 94.53 | 90.38 | 73.03 | - | 11659880 |
+  | **R101 HRNet-W48 base (control)** | **91.52** | 98.85 | 95.72 | 92.75 | 81.57 | 29 | 11659888 L40S |
+  | R106 HRNet-W48 lr 2e-4 | 91.43 | 98.83 | 95.79 | 92.59 | 81.85 | 28 | 11659885 A100-40 |
+  | **R102 ViT-L-256 base** | **92.81** | 98.84 | 96.73 | 94.13 | 84.82 | 16 | 11659888 L40S |
+- The Val400 curves plateau by ~epoch 10: HRNet 91.3-91.5, ViT-L-256 92.4-92.6. The 30-epoch budget is ample, and Val400 `save_best` picks within the plateau. The released FiDIP (R001, REPRO) scores 90.4 on Val400 for reference.
+- **Reruns (fresh dirs):**
+  | job | partition / GPU | contents |
+  |---|---|---|
+  | `im_pack_screenA2` **11664861** | gpu A100-80 | R104 + R105 (~68 GB) |
+  | `im_pack_screenB2` **11664862** | gpu A100-80 | R103 + R107 (~40 GB) |
+  | `im_pack_lrL256` **11664863** | sharing L40S | ViT LR sweep on the current best, matching the control's sweep: R108 ViT-L-256 lr 2e-4, R109 lr 5e-5 |
