@@ -27,6 +27,7 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 | D16 | 11-05 21:07 | **Official Test100 stays as shipped (primary).** Also report **Test100-clean** (95 images, minus {7, 20, 42, 46, 50}) as a sensitivity check. | The official training set contains 4 byte-identical copies and 1 near-copy of Test100 images. Keeping the official set preserves comparability with 93.6; the clean subset shows whether memorization affects conclusions. |
 | D17 | 11-05 21:07 | **Train on SyRIP.zip `200R_1000S` labels, not syrip_for_train.zip's train JSON.** Score test images from SyRIP.zip. D7 revised: `train_pre_infant` **is** shipped, so PRE_EPOCH 10 uses the real adult set. | syrip_for_train (2024) has identical image bytes but MINI-RGBD labels on all 1000 synthetic entries (median 191 px off), and its test11.jpg is a copy of test24.jpg. Optional attempt R020 quantifies what training on the README-literal labels costs. |
 | D18 | 11-06 01:05 | **Stagger agents and economize tokens.** The report worker only gets bounded tasks until results are final. An hourly heartbeat resumes workers stopped by usage limits. | All four parallel workers hit the 5-hour API usage cap together (~22:xx on 11-05). Slurm jobs survived, but orchestration stalled until a human came back. |
+| D19 | 11-06 01:26 | **Jobs run from per-job code snapshots.** `sync_to_cluster.sh` extracts with `--unlink-first`. | Concurrent tar syncs rewrote `$R/repo` scripts in place while jobs were executing them. bash reads scripts incrementally, so running jobs truncated or misbehaved. This likely explains repro's "final line never ran" at the R001→R002 boundary; the analysis worker found the cause. |
 
 ---
 
@@ -297,3 +298,11 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - trimming the main text from about 19 pages toward 10–12 once real tables and figures land;
   - filling 380 TBDs, 7 interpretation notes and 8 figures.
 - The report worker stays paused until the confirmatory results exist (D18).
+
+### 2026-11-06 01:26 EST — Heartbeat: concurrent-sync race fixed (D19); queue state
+- **Failure found by the analysis worker** (commit `43cdd78`): agents syncing code concurrently overwrote scripts under running jobs. bash executes scripts incrementally, so a job could read a half-rewritten file.
+- **Fix (D19):**
+  - Jobs run from a private per-job snapshot (the analysis stream already does this).
+  - The sync now uses `tar --unlink-first`, so running jobs keep the old inode.
+  - SKILL.md guardrail added; repro and improve told.
+- **Queue:** the improve worker's screening re-run (`screenA2`, A100) and LR screen (L40S) are running. The FiDIP retrains R010–R015 are pending on H200 availability, with R016–R020 chained behind them. The demo job is queued. SKILL.md Active runs refreshed.

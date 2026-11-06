@@ -95,17 +95,26 @@ bash scripts/sync_results.sh
 - All reported metrics come from `eval/eval_coco.py`.
 
 ## Active runs
-| RUN_ID | Job ID | Partition / GPU | Purpose | Status | Log |
-|---|---|---|---|---|---|
-| — | (login node, pid 687507) | explorer-02 | SyRIP download + unzip | download done 19:53; **unzip Killed** by login-node limits → redone in Slurm by the repro worker | `$R/data/downloads/download.log` |
-| — | 11659031 | short / CPU (c0587) | build `$R/envs/mmpose` (improve worker) | running (20:13 EST) | `$R/slurm_logs/build_env_mmpose_11659031.out` |
-| — | 11659053 | short / CPU (c0589) | download MMPose COCO checkpoints (improve worker) | running (20:13 EST) | `$R/slurm_logs/get_ckpts_mmpose_11659053.out` |
+Snapshot as of 2026-11-06 01:26 EST. Refresh with `ssh explorer 'squeue -u $USER'`. Every job ID, and every finished run, is listed in the per-stream notebooks and `results/registry.csv`.
 
-Snapshot as of 2026-11-05 20:13 EST. Refresh with `ssh explorer 'squeue -u $USER'`; the per-stream notebooks list every job ID.
+| Job ID | Name | Partition / GPU | Purpose | State |
+|---|---|---|---|---|
+| 11665025 | rp_R010-R012 | gpu / h200 | FiDIP λ = 5e-4 retrain, 3 seeds packed | pending (nodes reserved/drained) |
+| 11665026 | rp_R013-R015 | gpu / h200 | FiDIP λ = 0 (fine-tune) retrain, 3 seeds | pending (priority) |
+| 11665029 | rp_R016-R018 | gpu / h200 | λ sweep {1e-4, 2e-3, 1e-2} (Val400 only) | pending (dependency) |
+| 11665030 | rp_R019-R020 | gpu / h200 | paper recipe; README-literal labels (Val400 only) | pending (dependency) |
+| 11665101 | rp_build_env_fidip | short / CPU | env rebuild (pyarrow pin for Streamlit) | running |
+| 11665103 | rp_demo | sharing / l40s | demo CLI + Streamlit headless test | pending (dependency) |
+| 11664861 | im_pack_screenA2 | gpu / a100 | re-run ViTPose-L384 / H384 screening (after the OOM) | running (d1029) |
+| 11664862 | im_pack_screenB2 | sharing / l40s | re-run ViTPose-H256 / HRNet lr 5e-5 screening | pending (dependency) |
+| 11664863 | im_pack_lrL256 | sharing / l40s | ViTPose-L256 LR screening | running (d4042) |
+| 11664928 | im_pack_ablL256 | gpu / a100 | ablations on ViTPose-L256 | pending (priority) |
+| 11664935 | im_eval_noflip | gpu / a100 | flip-TTA ablation (eval only) | pending (dependency) |
 
 ## Guardrails
 - No training or evaluation on login nodes. Use `sbatch`/`srun`. **Login nodes kill heavy processes:** an `unzip` of the 313 MB SyRIP.zip was `Killed` (2026-11-05). Only `curl`/`wget` downloads and light file operations are safe there.
 - **Confirm with the human before `scancel`** on any job that has run for more than 30 minutes.
+- **Run jobs from a per-job code snapshot** (D19). Copy `$R/repo` to `$R/snapshots/$SLURM_JOB_ID` at job start, run from there, and record `git rev-parse HEAD^{tree}` in `run.json`. Concurrent syncs used to rewrite `$R/repo` files under running jobs: bash reads scripts incrementally, so jobs truncated or misbehaved. `scripts/sync_to_cluster.sh` now extracts with `--unlink-first`, so running jobs keep the old inode.
 - Never tune on Test100 (validate100).
 - Never put big data in `/home` or `/projects`.
 - Never print or commit `.env`.
