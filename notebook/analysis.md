@@ -255,3 +255,22 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
   - Every single-seed Δ under ±1.7 is inside the single-model bootstrap CI of Val400 AP ([88.7, 92.1] for R001), so only the ViTPose-H gap approaches significance pending seeds.
 - `numbers.tex`: 40/87 keys set (rest `\tbd`: λ=0 arm, finalists, ensemble, compute). `provenance.csv` lists RUN_ID + metrics file + protocol + split for each. Regeneration is idempotent (identical md5 on rerun).
 - Fixes: snapshots now include `results/contrasts`; `rt.seeds` counts only seeds with results; the clean-split contrast is labelled and never used for headline keys.
+
+### 2026-11-06 07:15 EST: gate audit (72f9449 slip), C1–C4 ready, generated files compile
+- **Gate audit** for the coordinator. 72f9449 briefly made R102–R104 Test100-eligible through its evidence table; erratum 3957509 fixed it.
+  - My jobs after 07:06: only 11671218 (07:06:46–07:08:51), bootstrap on explicit R010–R012/R001 files. Its private snapshot's PREREGISTRATION parses to {R010–R015}.
+  - No eval-all ran in the window, and no Test100 metrics or predictions exist for R102–R104 anywhere: `$R/analysis/eval/R102*` holds val400 + val400_noflip only, R103 val400 only, R104 has no directory, and `$R/runs/R10[234]*` has no `preds_test100*`.
+  - Cluster and local `prereg.allowed_prefixes()` now give exactly {R001, R010–R015, R101, R105, R131–R141}.
+  - Per-job snapshots make this auditable after the fact.
+- **C1–C4 ready** (`results/contrasts/final_C1_C4.json`):
+  - C1 arm B (R136–R140) vs R001; C2 arm B vs arm A (R131–R135); C3 arm B vs R010–R012; C4 R141 vs R001.
+  - B = 10000, seed 0, Holm across C1–C4 under each protocol. `robust_claim` requires Holm rejection *and* a CI excluding 0 under both protocols, i.e. H1(2).
+  - Glob run directories must match exactly one file. Missing inputs are skipped and listed, so rerun once everything has landed.
+  - Supplementary family (arm A, R101, R105 vs released): `results/contrasts/supplementary_test100.json`.
+  - `configs.json` has arm_a (control, slot 3), arm_b (final, slot 2) and ens_b (ensemble, slot 7) with glob run_ids. R101 is re-roled as the screening control; screening candidates are Δ'd against it.
+- **Compile check:** `report/generated/{numbers.tex, results_tables.tex, tab_*.tex}` compile with tectonic in a scratch document with stub `\setres`/`\tbd`; all 9 tabulars sit inside adjustbox. One bug was fixed along the way: LaTeX-math labels were being escaped, so labels are now plain text with safe substitutions (lambda/±/→/×).
+- **To refresh once new runs land:**
+  1. `sbatch scripts/slurm/analysis.sbatch script scripts/analysis/job_refresh.sh --no-released`
+  2. `... script scripts/analysis/run_contrasts.sh results/contrasts/final_C1_C4.json` (and `retrain_fidip_vs_ft.json` after R013–R015)
+  3. `bash scripts/pull_analysis.sh`
+  4. `python scripts/collect_results.py`
