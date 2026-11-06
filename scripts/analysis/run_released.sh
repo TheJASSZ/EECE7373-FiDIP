@@ -31,7 +31,7 @@ for split in ("test100", "val400"):
         import os
         vp = "/scratch/purohitham.v/fidip/analysis/splits_derived/README.json"
         if os.path.exists(vp):
-            m["leak_ids"] = json.load(open(vp))["test100_noleak"]["excluded_test_ids"]
+            m["leak_ids"] = json.load(open(vp))["test100_clean"]["excluded_test_ids"]
     json.dump(m, open(f"{out}/{rid}_{split}.json", "w"), indent=1)
 PY
 

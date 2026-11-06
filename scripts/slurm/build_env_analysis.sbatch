@@ -9,6 +9,7 @@
 #SBATCH --mem=8G
 #SBATCH --output=/scratch/purohitham.v/fidip/slurm_logs/%x_%j.out
 set -euo pipefail
+export PYTHONNOUSERSITE=1   # D16: keep ~/.local site-packages out of the conda env
 R=/scratch/purohitham.v/fidip
 ENV=$R/envs/analysis
 echo "host=$(hostname) start=$(date -Is) job=${SLURM_JOB_ID:-none}"

@@ -464,6 +464,31 @@ def fig_oks_scatter(ma, mb, ann, out):
     return ps.save(fig, out), rows
 
 
+def fig_leak_effect(models, focus, leak, lrows, out):
+    """Per-image OKS of the Test100 images that are copies of training images (diamonds) vs the rest."""
+    fig, ax = plt.subplots(figsize=(ps.COL_W * 1.25, 2.5))
+    rng = np.random.default_rng(RNG_SEED)
+    for i, m in enumerate(models):
+        st = _style(m, focus)
+        rest = np.array([m.oks(k) for k in m.keys if k[0] not in leak])
+        lk = [(k[0], m.oks(k)) for k in m.keys if k[0] in leak]
+        ax.boxplot([rest], positions=[i], widths=0.5, showfliers=False, patch_artist=True,
+                   boxprops=dict(facecolor=ps.GRID, edgecolor=ps.AXIS, lw=0.6), medianprops=dict(color=ps.INK2, lw=0.8),
+                   whiskerprops=dict(color=ps.AXIS, lw=0.6), capprops=dict(color=ps.AXIS, lw=0.6))
+        ax.scatter(i + rng.uniform(-0.18, 0.18, rest.size), rest, s=4, color=ps.CONTEXT_GREY, lw=0, zorder=2)
+        ax.scatter([i + 0.3] * len(lk), [o for _, o in lk], marker="D", s=16, color=st["color"], edgecolor=ps.INK,
+                   lw=0.4, zorder=4)
+    ax.set_xticks(range(len(models)))
+    ax.set_xticklabels([m.label for m in models], fontsize=6.5)
+    ax.set_xlim(-0.6, len(models) - 0.3)
+    ax.set_ylabel("per-image OKS")
+    ax.set_title(f"◆ the {len(leak)} Test100 images that are copies of training images; box = the other "
+                 f"{len(models[0].keys) - len(leak)}", loc="left", fontsize=6.8)
+    ax.grid(axis="x", visible=False)
+    fig.tight_layout()
+    return ps.save(fig, out)
+
+
 def ranking_quality(models, gt_path):
     """AP with the model's own scores vs oracle ranking (score = OKS): how much AP the
     confidence ranking costs. Needs the GT file (re-evaluates with eval_coco, no rescoring)."""
@@ -613,6 +638,7 @@ def cmd_models(a):
                           "diff_ci_hi": float(np.percentile(diffs, 97.5)) if diffs else None,
                           "leak_ids": sorted(leak), "per_image_oks_leak": [round(x, 4) for x in o_in]})
         write_csv(os.path.join(tabs, f"leak_effect_{split}.csv"), lrows)
+        written += fig_leak_effect(models, focus, leak, lrows, os.path.join(out, f"leak_effect_{split}"))
     img_rows = []
     for k in models[0].keys:
         r = dict(image_id=k[0], file_name=models[0].rec(k)["file_name"],

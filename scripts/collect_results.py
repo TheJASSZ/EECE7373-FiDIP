@@ -37,11 +37,11 @@ import sys
 from collections import OrderedDict, defaultdict
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SPLITS = ("test100", "val400", "validate500", "test100_noleak")
-CLEAN = {"test100": True, "val400": False, "validate500": False, "test100_noleak": True}
+SPLITS = ("test100", "val400", "validate500", "test100_clean")
+CLEAN = {"test100": True, "val400": False, "validate500": False, "test100_clean": True}
 SPLIT_ROLE = {"test100": "clean test (reporting only)", "val400": "selection",
               "validate500": "NOT clean (contains Val400)",
-              "test100_noleak": "sensitivity: Test100 minus 5 exact/near copies of training images"}
+              "test100_clean": "sensitivity: Test100 minus 5 exact/near copies of training images"}
 METRICS = ("AP", "AP50", "AP75", "AR", "AR50", "AR75", "AP_80_95")
 # Published numbers: upstream README @ a76b4f4, "Generality of our FiDIP method ... SyRIP Test100".
 PUBLISHED = OrderedDict([
@@ -197,7 +197,7 @@ class Collector:
 
     def config_summary(self, g, split, protocol="paper"):
         rids = [r for r in g["run_ids"] if (r, split) in self.metrics]
-        if split in ("test100", "test100_noleak"):
+        if split in ("test100", "test100_clean"):
             rids = [r for r in rids if self.test_allowed(r, g)]
         out = OrderedDict(n_runs=len(rids), run_ids=rids)
         for m in METRICS:
@@ -237,7 +237,7 @@ def build(c, a):
         for sp in SPLITS:
             if (rid, sp) not in c.metrics:
                 continue
-            if sp in ("test100", "test100_noleak") and not c.test_allowed(rid, g):
+            if sp in ("test100", "test100_clean") and not c.test_allowed(rid, g):
                 row["test100_note"] = "withheld (not pre-registered)"
                 continue
             d, src, p = c.metrics[(rid, sp)]
@@ -310,12 +310,12 @@ def build(c, a):
         if g.get("role") not in ("released", "retrain"):
             continue
         t, tf, v = c.config_summary(g, "test100"), c.config_summary(g, "test100", "fixed"), c.config_summary(g, "val400")
-        nl = c.config_summary(g, "test100_noleak")
+        nl = c.config_summary(g, "test100_clean")
         ci = c.single_ci.get((t["run_ids"][0], "test100")) if t["n_runs"] and t["n_runs"] == 1 else None
         repro.append(OrderedDict(row=g.get("label"), source="eval/eval_coco.py", protocol="paper",
                                  n_runs=t["n_runs"], run_ids=t["run_ids"], **{m: t[m] for m in METRICS},
                                  AP_std=t["AP_std"], AP_ci_lo=ci[0] if ci else None, AP_ci_hi=ci[1] if ci else None,
-                                 test100_AP_fixed=tf["AP"], test100_noleak_AP=nl["AP"], val400_AP=v["AP"],
+                                 test100_AP_fixed=tf["AP"], test100_clean_AP=nl["AP"], val400_AP=v["AP"],
                                  val400_AP_std=v["AP_std"]))
     tables["reproduction"] = repro
 
@@ -334,14 +334,14 @@ def build(c, a):
         if not t["n_runs"]:
             continue
         tf, v = c.config_summary(g, "test100", "fixed"), c.config_summary(g, "val400")
-        nl = c.config_summary(g, "test100_noleak")
+        nl = c.config_summary(g, "test100_clean")
         ci = c.single_ci.get((t["run_ids"][0], "test100")) if t["n_runs"] == 1 else None
         main.append(OrderedDict(model=g.get("label"), role=g.get("role"), run_ids=t["run_ids"], n_runs=t["n_runs"],
                                 test100_AP=t["AP"], test100_AP_std=t["AP_std"],
                                 test100_AP_ci_lo=ci[0] if ci else None, test100_AP_ci_hi=ci[1] if ci else None,
                                 test100_AP50=t["AP50"],
                                 test100_AP75=t["AP75"], test100_AR=t["AR"], test100_AP_80_95=t["AP_80_95"],
-                                test100_AP_fixed=tf["AP"], test100_noleak_AP=nl["AP"], val400_AP=v["AP"],
+                                test100_AP_fixed=tf["AP"], test100_clean_AP=nl["AP"], val400_AP=v["AP"],
                                 eval="eval_coco.py v1 (paper protocol; GT boxes; rescored)"))
     tables["main_comparison"] = main
 
@@ -410,7 +410,7 @@ def latex(c, tables, a):
             "implied: (10 AP - 6 AP50)/4, since AP50 = AP75 means AP is flat over .50-.75")
     for k, g in c.groups.items():
         base = g.get("macro") or k
-        for sp, tag in (("test100", "Test"), ("val400", "Val"), ("test100_noleak", "Test noleak")):
+        for sp, tag in (("test100", "Test"), ("val400", "Val"), ("test100_clean", "Test clean")):
             for proto in ("paper", "fixed"):
                 s = c.config_summary(g, sp, proto)
                 if not s["n_runs"]:

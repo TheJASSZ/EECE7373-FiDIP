@@ -10,6 +10,7 @@
 #SBATCH --mem=8G
 #SBATCH --output=/scratch/purohitham.v/fidip/slurm_logs/%x_%j.out
 set -euo pipefail
+export PYTHONNOUSERSITE=1   # D16: keep ~/.local site-packages out of the conda env
 export R=/scratch/purohitham.v/fidip
 module load miniconda3/25.9.1
 source "$(conda info --base)/etc/profile.d/conda.sh"

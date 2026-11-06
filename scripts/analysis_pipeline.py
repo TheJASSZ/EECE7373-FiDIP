@@ -93,7 +93,7 @@ def test_allowed(run_id, reg, pre, roles=None):
 
 def derived_splits():
     """Sensitivity GTs derived from the official splits (written under $R/analysis/splits_derived):
-    test100_noleak = Test100 minus images that are exact (md5) or near-exact (dHash<=10, pose OKS>=0.85)
+    test100_clean = Test100 minus images that are exact (md5) or near-exact (dHash<=10, pose OKS>=0.85)
     copies of annotated official training images (repro's $R/data/splits/VERIFY.json). The ids are read,
     never hard-coded. Annotation id 0 (test0) stays, so both protocols still apply."""
     vpath = os.path.join(R, "data", "splits", "VERIFY.json")
@@ -112,12 +112,12 @@ def derived_splits():
                annotations=[x for x in gt["annotations"] if x["image_id"] not in ids])
     d = os.path.join(R, "analysis", "splits_derived")
     os.makedirs(d, exist_ok=True)
-    p = os.path.join(d, "test100_noleak.json")
+    p = os.path.join(d, "test100_clean.json")
     if not os.path.exists(p) or json.load(open(p)) != sub:
         json.dump(sub, open(p, "w"))
-    json.dump({"test100_noleak": {"excluded_test_ids": sorted(ids), "n_images": len(sub["images"]),
+    json.dump({"test100_clean": {"excluded_test_ids": sorted(ids), "n_images": len(sub["images"]),
                                   "source": vpath}}, open(os.path.join(d, "README.json"), "w"), indent=1)
-    out["test100_noleak"] = (p, "test100")
+    out["test100_clean"] = (p, "test100")
     return out
 
 
@@ -215,7 +215,13 @@ def cmd_eval_all(a):
 
 def cmd_bootstrap(a):
     import bootstrap_ci as bc
-    gt = os.path.join(R, "data", "splits", f"{a.gt}.json") if not a.gt.endswith(".json") else a.gt
+    if a.gt.endswith(".json"):
+        gt = a.gt
+    else:   # official split, or a derived sensitivity split (e.g. test100_clean)
+        gt = os.path.join(R, "data", "splits", f"{a.gt}.json")
+        dgt = os.path.join(R, "analysis", "splits_derived", f"{a.gt}.json")
+        if not os.path.exists(gt) and os.path.exists(dgt):
+            gt = dgt
     out = os.path.join(R, "analysis", "bootstrap", f"bootstrap_{a.out}.json")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     return bc.main(["contrasts", "--gt", gt, "--spec", a.spec, "--out", out] + (["--B", str(a.B)] if a.B else []))
