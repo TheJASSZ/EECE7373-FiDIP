@@ -43,10 +43,13 @@ def main(argv=None):
             c["run_ids"].append(rid)
     used, slots = set(), {}
     for k, c in cfg.items():
-        s = c.get("slot") or ROLE_SLOT.get(c.get("role"))
-        if s in used and not c.get("slot"):
-            s = None
-        if s:
+        if "slot" in c:                         # explicit, incl. 0 = grey context
+            slots[k] = int(c["slot"])
+            if slots[k]:
+                used.add(slots[k])
+            continue
+        s = ROLE_SLOT.get(c.get("role"))
+        if s and s not in used:
             slots[k] = s
             used.add(s)
     nxt = iter([s for s in range(1, 9) if s not in used])
@@ -57,6 +60,8 @@ def main(argv=None):
     for split in ("val400", "test100"):
         models = []
         for k, c in cfg.items():
+            if c.get("role") == "smoke":
+                continue
             runs = []
             for rid in c.get("run_ids", []):
                 pi = os.path.join(a.eval_root, rid, f"per_image_{split}.json")
