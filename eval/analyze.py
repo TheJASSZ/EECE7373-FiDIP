@@ -27,6 +27,7 @@ import csv
 import json
 import math
 import os
+import re
 import sys
 from collections import OrderedDict, defaultdict
 
@@ -837,9 +838,89 @@ def cmd_gtbox(a):
               f"  mean OKS {r['mean_oks']:.4f}")
 
 
+# ----------------------------------------------------------------------------- id-0 rank sensitivity (D13)
+def id0_rank_curve(G, pred):
+    """Paper/fixed AP of one prediction set as test0's detection is moved to every score rank.
+    All other scores are untouched. Uses the shared rescoring for the actual scores."""
+    preds, _, _ = ev.load_predictions(_p(pred), G)
+    inst = ev.postprocess(preds)                     # rescored, OKS-NMS
+    zero = [a for a in G.dataset["annotations"] if a["id"] == 0]
+    if not zero:
+        raise ValueError("GT has no annotation id 0")
+    img0 = zero[0]["image_id"]
+    mine = [i for i, p in enumerate(inst) if p["image_id"] == img0]
+    if len(mine) != 1:
+        raise ValueError(f"expected exactly one detection on image {img0}, got {len(mine)}")
+    k0 = mine[0]
+    others = np.sort(np.array([p["score"] for i, p in enumerate(inst) if i != k0]))[::-1]
+    N = len(inst)
+    actual = 1 + int(np.sum(others > inst[k0]["score"]))
+    rows = []
+    for r in range(1, N + 1):
+        if r == 1:
+            s0 = others[0] + 1e-3
+        elif r == N:
+            s0 = others[-1] - 1e-3
+        else:
+            s0 = 0.5 * (others[r - 2] + others[r - 1])
+        res = [dict(p) for p in inst]
+        res[k0]["score"] = float(s0)
+        row = {"rank": r, "actual": r == actual}
+        for proto in ("paper", "fixed"):
+            _, m, _, _ = ev.run_cocoeval(G.coco(proto), ev._to_coco_results(res))
+            row[f"AP_{proto}"], row[f"AP50_{proto}"], row[f"AR_{proto}"] = m["AP"], m["AP50"], m["AR"]
+        rows.append(row)
+    return rows, actual, N
+
+
+def cmd_id0rank(a):
+    G = ev.GroundTruth(_p(a.gt))
+    fig, ax = plt.subplots(figsize=(ps.COL_W * 1.15, 2.9))
+    table = []
+    for i, spec in enumerate(a.model):
+        label, rest = spec.split("=", 1)
+        path, slot = (rest.rsplit(":", 1) if re.search(r":\d+$", rest) else (rest, i + 1))
+        rows, actual, N = id0_rank_curve(G, path)
+        col = ps.color(int(slot))
+        x = np.array([r["rank"] for r in rows])
+        yp = 100 * np.array([r["AP_paper"] for r in rows])
+        yf = 100 * np.array([r["AP_fixed"] for r in rows])
+        ax.plot(x, yp, color=col, lw=1.4, label=f"{label}: paper protocol")
+        ax.plot(x, yf, color=col, lw=0.9, alpha=0.45, label=f"{label}: fixed protocol")
+        ax.plot([actual], [yp[actual - 1]], marker="o", ms=5, mfc="white", mec=col, zorder=5)
+        ax.annotate(f"actual rank {actual}: {yp[actual - 1]:.2f}", (actual, yp[actual - 1]), xytext=(4, -10),
+                    textcoords="offset points", fontsize=6, color=ps.INK2)
+        for r in rows:
+            table.append({"model": label, "pred": path, "run_id": ev.infer_run_id(path), **r})
+        table.append({"model": label, "pred": path, "run_id": ev.infer_run_id(path), "rank": "summary",
+                      "actual": actual, "AP_paper": float(yp[actual - 1] / 100), "AP_fixed": float(yf[actual - 1] / 100),
+                      "AP50_paper": float((yp.max() - yp.min()) / 100), "AR_paper": None,
+                      "AP50_fixed": None, "AR_fixed": None})
+        print(f"{label}: actual rank {actual}/{N}; paper AP {yp[actual - 1]:.2f} (range {yp.min():.2f}-{yp.max():.2f}, "
+              f"swing {yp.max() - yp.min():.2f}); fixed AP {yf.min():.2f}-{yf.max():.2f}")
+    ax.set_xlabel("score rank of test0's detection (1 = most confident)")
+    ax.set_ylabel("Test100 AP (%)")
+    ax.set_title("same predictions; only test0's confidence rank moves", loc="left", fontsize=7.5)
+    h, l = ax.get_legend_handles_labels()
+    fig.legend(h, l, loc="lower center", ncol=2, fontsize=6, bbox_to_anchor=(0.5, 0.0))
+    fig.tight_layout(rect=(0, 0.06 + 0.045 * ((len(l) + 1) // 2), 1, 1))
+    written = ps.save(fig, os.path.join(a.outdir, f"id0_rank_sensitivity_{a.name}"))
+    for r in table:
+        if r["rank"] == "summary":
+            r["note"] = "AP50_paper column holds the paper-AP swing (max-min over ranks) in this summary row"
+    write_csv(os.path.join(a.tables, f"id0_rank_sensitivity_{a.name}.csv"), table)
+    print("\n".join(written))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
+    s = sub.add_parser("id0rank")
+    s.add_argument("--gt", required=True)
+    s.add_argument("--model", action="append", required=True, help="label=preds.json[:slot] (repeatable)")
+    s.add_argument("--name", required=True)
+    s.add_argument("--outdir", required=True)
+    s.add_argument("--tables", required=True)
     s = sub.add_parser("models")
     s.add_argument("--manifest", required=True)
     s.add_argument("--outdir", required=True)
@@ -863,7 +944,8 @@ def main(argv=None):
     s.add_argument("--gt-v500", required=True)
     s.add_argument("--tables", required=True)
     a = ap.parse_args(argv)
-    {"models": cmd_models, "splits": cmd_splits, "curves": cmd_curves, "gtbox": cmd_gtbox}[a.cmd](a)
+    {"models": cmd_models, "splits": cmd_splits, "curves": cmd_curves, "gtbox": cmd_gtbox,
+     "id0rank": cmd_id0rank}[a.cmd](a)
     return 0
 
 

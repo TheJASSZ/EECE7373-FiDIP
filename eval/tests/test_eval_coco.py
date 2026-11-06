@@ -86,6 +86,9 @@ def _variants(preds, gt):
     v["no_category"] = [{k: x for k, x in p.items() if k != "category_id"} for p in preds]
     v["float_id"] = [dict(p, image_id=float(p["image_id"])) for p in preds]
     v["dict_wrapper"] = {"annotations": preds}
+    v["json_tricks_ndarray"] = [dict(p, keypoints={"__ndarray__": np.asarray(p["keypoints"]).reshape(17, 3).tolist(),
+                                                   "dtype": "float64", "shape": [17, 3]},
+                                     score={"__ndarray__": p["score"], "dtype": "float64", "shape": []}) for p in preds]
     v["shuffled"] = [preds[i] for i in np.random.default_rng(0).permutation(len(preds))]
     return v
 
@@ -320,3 +323,19 @@ def test_paper_protocol_ceiling_for_perfect_model(rank):
     assert out["metrics"]["AP50"] == pytest.approx(expect, abs=1e-12)
     assert out["metrics"]["AR"] == pytest.approx(0.99, abs=1e-12)
     assert out["metrics_fixed"]["AP"] == pytest.approx(1.0)
+
+
+def test_id0_diagnostics_rank_and_gap():
+    gt = make_gt(100, seed=0, first_ann_id=0)
+    order = list(range(1, 100))
+    order.insert(36, 0)                                  # image 0 at rank 37
+    level = {img: 0.99 - 0.007 * k for k, img in enumerate(order)}
+    conf = [np.full(17, level[a["image_id"]]) for a in gt["annotations"]]
+    out, _ = _m(gt, gt_as_preds(gt, conf=conf))
+    z = out["id0_artifact"]
+    assert z["image_id"] == 0 and z["score_rank"] == 37 and z["n_dets"] == 100
+    assert z["rank_percentile"] == pytest.approx(0.37) and z["oks"] == pytest.approx(1.0)
+    assert z["paper_minus_fixed"]["AP"] == pytest.approx(out["metrics"]["AP"] - out["metrics_fixed"]["AP"])
+    assert z["paper_minus_fixed"]["AR"] == pytest.approx(-0.01)
+    out2, _ = _m(make_gt(10, seed=1), gt_as_preds(make_gt(10, seed=1)))
+    assert out2["id0_artifact"] is None

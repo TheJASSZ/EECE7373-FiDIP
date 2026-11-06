@@ -218,7 +218,27 @@ def _arm_summary(models, boot_arm_mean, label):
 
 
 def compare(G, a_files, b_files, B=10000, seed=0, protocol="paper", label_a="A", label_b="B",
-            metric="AP", hierarchical=False):
+            metric="AP", hierarchical=False, both_protocols=True):
+    """Paired / multi-seed comparison under `protocol` (headline). With both_protocols (D13), the other
+    protocol is computed on the SAME resamples and attached as `sensitivity`. An improvement is robust
+    only if its 95% CI excludes 0, with the same sign, under both protocols."""
+    out = _compare_one(G, a_files, b_files, B, seed, protocol, label_a, label_b, metric, hierarchical)
+    if both_protocols:
+        other = "fixed" if protocol == "paper" else "paper"
+        o2 = _compare_one(G, a_files, b_files, B, seed, other, label_a, label_b, metric, hierarchical)
+        out["sensitivity"] = OrderedDict(
+            protocol=other, delta=o2["delta"], p_one_sided_a_gt_b=o2["p_one_sided_a_gt_b"],
+            p_one_sided_b_gt_a=o2["p_one_sided_b_gt_a"], p_two_sided=o2["p_two_sided"],
+            a_mean=o2["a"]["mean"], b_mean=o2["b"]["mean"], self_check=[x["self_check"] for x in (o2["a"], o2["b"])])
+        lo1, hi1 = out["delta"][metric]["ci95"]
+        lo2, hi2 = o2["delta"][metric]["ci95"]
+        out["a_gt_b_robust_both_protocols"] = bool(lo1 > 0 and lo2 > 0)
+        out["ci_excludes_zero_both_protocols"] = bool((lo1 > 0 and lo2 > 0) or (hi1 < 0 and hi2 < 0))
+    return out
+
+
+def _compare_one(G, a_files, b_files, B=10000, seed=0, protocol="paper", label_a="A", label_b="B",
+                 metric="AP", hierarchical=False):
     """Paired (1 file per arm) or multi-seed (lists) comparison on the same resampled images."""
     A = [PerImageEval(G, f, protocol, label=f) for f in a_files]
     Bm = [PerImageEval(G, f, protocol, label=f) for f in b_files]
@@ -305,6 +325,13 @@ def run_contrasts(G, spec, B=None, seed=None, protocol=None):
     for r, pa in zip(res, adj):
         r["p_holm"] = pa
         r["reject_h0_holm"] = bool(pa < alpha)
+    if all("sensitivity" in r for r in res):
+        adj2 = holm([r["sensitivity"]["p_one_sided_a_gt_b"] for r in res])
+        for r, pa in zip(res, adj2):
+            r["sensitivity"]["p_holm"] = pa
+            r["sensitivity"]["reject_h0_holm"] = bool(pa < alpha)
+            r["robust_claim"] = bool(r["reject_h0_holm"] and r["sensitivity"]["reject_h0_holm"]
+                                     and r["a_gt_b_robust_both_protocols"])
     return OrderedDict(mode="contrasts", protocol=protocol, metric=metric, B=B, seed=seed, alpha=alpha,
                        n_contrasts=len(res), correction="Holm step-down over the declared contrasts",
                        contrasts=res)
@@ -312,8 +339,13 @@ def run_contrasts(G, spec, B=None, seed=None, protocol=None):
 
 def _fmt_delta(r, metric="AP"):
     d = r["delta"][metric]
-    return (f"Δ{metric} = {100 * d['observed']:+.2f} [{100 * d['ci95'][0]:+.2f}, {100 * d['ci95'][1]:+.2f}]"
-            f"  p(A>B)={r['p_one_sided_a_gt_b']:.4f}")
+    txt = (f"Δ{metric} = {100 * d['observed']:+.2f} [{100 * d['ci95'][0]:+.2f}, {100 * d['ci95'][1]:+.2f}]"
+           f"  p(A>B)={r['p_one_sided_a_gt_b']:.4f}")
+    if "sensitivity" in r:
+        e = r["sensitivity"]["delta"][metric]
+        txt += (f"  | {r['sensitivity']['protocol']}: {100 * e['observed']:+.2f} [{100 * e['ci95'][0]:+.2f}, "
+                f"{100 * e['ci95'][1]:+.2f}]  robust(both)={r['a_gt_b_robust_both_protocols']}")
+    return txt
 
 
 def main(argv=None):

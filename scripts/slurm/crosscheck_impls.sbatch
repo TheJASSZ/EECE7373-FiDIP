@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=crosscheck_impls
+#SBATCH --job-name=an_crosscheck
 #SBATCH --partition=short
 #SBATCH --time=00:15:00
 #SBATCH --cpus-per-task=1

@@ -241,6 +241,11 @@ def build(c, a):
             for m in METRICS:
                 row[f"{sp}_{m}"] = pct(d["metrics"].get(m))
                 row[f"{sp}_{m}_fixed"] = pct(d["metrics_fixed"].get(m))
+            z = d.get("id0_artifact")
+            if z:                                   # D13: test0's score rank and the paper-fixed gap
+                row[f"{sp}_id0_score_rank"] = z.get("score_rank")
+                row[f"{sp}_id0_rank_pct"] = None if z.get("rank_percentile") is None else 100 * z["rank_percentile"]
+                row[f"{sp}_paper_minus_fixed_AP"] = pct(z["paper_minus_fixed"]["AP"])
             row[f"{sp}_source"] = p
             row[f"{sp}_evaluator"] = d.get("evaluator")
             row[f"{sp}_pred_sha256"] = d.get("pred", {}).get("sha256")
@@ -360,6 +365,14 @@ def build(c, a):
                 seed_pairs_a_gt_b=r.get("seed_pairs_a_gt_b"),
                 images_win_tie_loss="/".join(str(r["per_image_consistency"][k]) for k in ("wins", "ties", "losses"))
                 if r.get("per_image_consistency") else None,
+                sens_protocol=(r.get("sensitivity") or {}).get("protocol"),
+                sens_delta=pct(((r.get("sensitivity") or {}).get("delta") or {}).get(r.get("metric", "AP"), {})
+                               .get("observed")) if r.get("sensitivity") else None,
+                sens_ci_lo=pct(r["sensitivity"]["delta"][r.get("metric", "AP")]["ci95"][0]) if r.get("sensitivity") else None,
+                sens_ci_hi=pct(r["sensitivity"]["delta"][r.get("metric", "AP")]["ci95"][1]) if r.get("sensitivity") else None,
+                sens_p_holm=(r.get("sensitivity") or {}).get("p_holm"),
+                robust_both_protocols=r.get("a_gt_b_robust_both_protocols"),
+                robust_claim=r.get("robust_claim"),
                 gt=r.get("gt"), self_check_passed=all(x["passed"] for x in r["a"]["self_check"] + r["b"]["self_check"])))
     tables["bootstrap_summary"] = boots
     return tables
@@ -425,6 +438,11 @@ def latex(c, tables, a):
             mac(f"Boot {nm} p", f"{b['p_one_sided']:.4f}", b["file"])
         if b["p_holm"] is not None:
             mac(f"Boot {nm} p holm", f"{b['p_holm']:.4f}", b["file"])
+        if b.get("sens_delta") is not None:
+            mac(f"Boot {nm} fixed delta", f1(b["sens_delta"], 2), b["file"])
+            mac(f"Boot {nm} fixed ci lo", f1(b["sens_ci_lo"], 2), b["file"])
+            mac(f"Boot {nm} fixed ci hi", f1(b["sens_ci_hi"], 2), b["file"])
+            mac(f"Boot {nm} robust", "yes" if b.get("robust_both_protocols") else "no", b["file"])
     L.append("")
 
     def table(caption, label, header, rows, align):
@@ -469,14 +487,18 @@ def latex(c, tables, a):
     if tables["bootstrap_summary"]:
         rows = []
         for b in tables["bootstrap_summary"]:
-            rows.append([tex_escape(b["name"]), tex_escape(b["protocol"]), f"{b['delta']:+.2f}",
-                         f"[{b['ci_lo']:+.2f}, {b['ci_hi']:+.2f}]",
+            fx = (f"{b['sens_delta']:+.2f} [{b['sens_ci_lo']:+.2f}, {b['sens_ci_hi']:+.2f}]"
+                  if b.get("sens_delta") is not None else "--")
+            rows.append([tex_escape(b["name"]), f"{b['delta']:+.2f}", f"[{b['ci_lo']:+.2f}, {b['ci_hi']:+.2f}]",
                          "--" if b["p_one_sided"] is None else f"{b['p_one_sided']:.4f}",
-                         "--" if b["p_holm"] is None else f"{b['p_holm']:.4f}", tex_escape(b["images_win_tie_loss"] or "--")])
-        table("Paired image-level bootstrap ($B$ resamples) of $\\Delta$AP on Test100; one-sided $p$ for "
-              "$H_1$: A $>$ B, Holm-adjusted over the declared contrasts. Last column: per-image OKS wins/ties/losses.",
-              "tab:boot", ["Contrast", "protocol", "$\\Delta$AP", "95\\% CI", "$p$", "$p_{\\mathrm{Holm}}$", "W/T/L"],
-              rows, "llrrrrr")
+                         "--" if b["p_holm"] is None else f"{b['p_holm']:.4f}", fx,
+                         {True: "yes", False: "no"}.get(b.get("robust_both_protocols"), "--"),
+                         tex_escape(b["images_win_tie_loss"] or "--")])
+        table("Paired image-level bootstrap ($B$ resamples) of $\\Delta$AP on Test100 (paper protocol; one-sided $p$ "
+              "for $H_1$: A $>$ B, Holm-adjusted over the declared contrasts), the same contrast under the fixed "
+              "protocol, and whether the 95\\% CI excludes 0 under both (D13). Last column: per-image OKS wins/ties/losses.",
+              "tab:boot", ["Contrast", "$\\Delta$AP", "95\\% CI", "$p$", "$p_{\\mathrm{Holm}}$", "fixed: $\\Delta$ [CI]",
+                           "robust", "W/T/L"], rows, "lrrrrrcr")
     return "\n".join(L) + "\n", macros
 
 

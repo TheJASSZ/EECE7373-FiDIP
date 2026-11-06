@@ -73,6 +73,7 @@ The published AP50 = AP75 = 98.5 sits inside this band, so on the 99 matchable i
 | `per_keypoint` | Per joint: n, n with v=1, mean/median error / sqrt(GT bbox w·h), PCK@0.05/0.1/0.2. |
 | `per_keypoint_summary` | Pooled over joints. |
 | `pred.*` | Counts: n_in, dropped, after NMS, GT images without a prediction, score ties. |
+| `id0_artifact` | D13. Where test0's detection ranks by score (`score_rank`, 1 = most confident; `rank_percentile`), its OKS, and `paper_minus_fixed` for AP/AP50/AP75/AP_80_95/AR. `null` if the GT has no annotation id 0. |
 | `warnings` | e.g. the id-0 note, dropped predictions. |
 
 **Per-keypoint normaliser.** sqrt(GT bbox w·h). For Test100 and the fixed Val400 this is exactly sqrt(`area`), the OKS scale, so PCK and OKS use the same ruler. It also stays meaningful for any GT whose `area` field is unreliable. Labelled keypoints (v=1 or 2) count. A GT without any prediction counts as an infinite error, so it fails every PCK.
@@ -113,6 +114,10 @@ Modes: `paired` (one file per arm), `multiseed` (lists of seed runs), `contrasts
   - `seed_pairs_a_gt_b`, the fraction of (a, b) seed pairs with AP_a > AP_b;
   - optionally `--hierarchical`, which resamples seeds and images jointly.
 - **Inference.** A 95% percentile CI of Δ. The one-sided p for H1: A > B is (1 + #{Δ* ≤ 0})/(B + 1). The Holm step-down adjustment runs across the declared contrasts.
+- **Both protocols (D13).** Every comparison also runs under the other protocol on the *same* resamples (`sensitivity`), and Holm is applied per protocol.
+  - `a_gt_b_robust_both_protocols` is true when the 95% CI excludes 0 under both.
+  - `robust_claim` (contrasts mode) also requires Holm rejection under both.
+  - The headline is `paper`. Only a robust improvement counts.
 - **Consistency.** Per-image OKS win/tie/loss counts, with an exact sign test and a Wilcoxon signed-rank test.
 - **Exact fast path.** Per-image matches are read verbatim from `COCOeval.evalImgs`, and only `accumulate()` is re-implemented. Every run asserts that the full-set fast AP equals COCOeval to ≤ 1e-12 (`self_check` in the output). Tests also compare against COCOeval on explicitly duplicated datasets.
 
@@ -139,6 +144,7 @@ Averages coordinates across N prediction files, either a plain mean or `--weight
 - `analyze.py models --manifest M.json`:
   - figures: AP vs OKS threshold (paper/fixed protocols, published points, ceiling band), OKS histogram and survival curve, per-keypoint error/PCK with CIs, failure-taxonomy bars, error vs orientation, score vs OKS (ranking quality), and pairwise per-image OKS scatter;
   - tables: per-threshold AP, per-keypoint, taxonomy, L/R swaps, occlusion, ranking quality (oracle AP), per-image taxonomy, and ΔOKS by category.
+- `analyze.py id0rank --gt test100.json --model "label=preds.json:slot"` (D13): the paper and fixed AP of one fixed prediction set as test0's detection is moved through every score rank, with the model's actual rank marked.
 - `analyze.py splits` compares Test100 and Val400 difficulty. `analyze.py curves` plots per-epoch train/val loss and Val400 AP/AR. `analyze.py gtbox` builds the v100-vs-v500 GT-box 2×2.
 - `visualize.py gallery|failures|compare`: skeleton overlays on square crops. GT is white with hollow markers, the prediction is in the model colour, and marker shape encodes body side.
 - `plot_style.py`: one palette, validated for colour-vision deficiency. Vector PDF and 300-dpi PNG.

@@ -285,15 +285,26 @@ class GroundTruth:
 
 
 # ----------------------------------------------------------------------------- predictions
+def _decode_tricks(v):
+    """json_tricks encodes numpy arrays/scalars as {"__ndarray__": data, "dtype": ..., "shape": ...}."""
+    if isinstance(v, dict) and "__ndarray__" in v:
+        arr = np.asarray(v["__ndarray__"], dtype=v.get("dtype") or float)
+        shape = v.get("shape")
+        return arr.reshape(shape) if shape is not None and np.prod(shape) == arr.size else arr
+    if isinstance(v, list) and v and isinstance(v[0], dict) and "__ndarray__" in v[0]:
+        return [_decode_tricks(x) for x in v]
+    return v
+
+
 def _as_kpt_array(pred, num_kpts):
     """Return keypoints as (K,3) float array [x, y, conf] from the many formats in the wild."""
-    kp = pred.get("keypoints")
+    kp = _decode_tricks(pred.get("keypoints"))
     if kp is None:
         raise ValueError("prediction has no 'keypoints'")
     arr = np.asarray(kp, dtype=float)
     while arr.ndim > 2 and arr.shape[0] == 1:   # MMPose pred_instances: (1, K, 2)
         arr = arr[0]
-    scores = pred.get("keypoint_scores")
+    scores = _decode_tricks(pred.get("keypoint_scores"))
     if scores is not None:
         scores = np.asarray(scores, dtype=float).reshape(-1)
     if arr.ndim == 1:
@@ -366,7 +377,7 @@ def load_predictions(pred, gt):
         p = dict(p)
         kpts = _as_kpt_array(p, gt.num_kpts)
         warn.extend(p.pop("_warn", []))
-        score = p.get("score")
+        score = _decode_tricks(p.get("score"))
         score = None if score is None else float(np.asarray(score, dtype=float).reshape(-1)[0])
         box_score = p.get("bbox_score", p.get("box_score"))
         box_score = None if box_score is None else float(np.asarray(box_score, dtype=float).reshape(-1)[0])
@@ -679,11 +690,38 @@ def evaluate(gt, pred, rescore=True, kpt_thr=DEFAULT_KPT_THR, nms_thr=DEFAULT_NM
         out[f"metrics_{sc}_scores_{other}"] = results[(sc, other)][0]
     out["ap_per_oks_thr"] = OrderedDict((pr, results[(scoring, pr)][1]) for pr in PROTOCOLS)
     out["ar_per_oks_thr"] = OrderedDict((pr, results[(scoring, pr)][2]) for pr in PROTOCOLS)
+    out["id0_artifact"] = id0_diagnostics(G, inst_main, results, scoring)
     out["oks"] = oks_summary(recs)
     out["per_keypoint_summary"] = per_kpt_sum
     out["per_keypoint"] = per_kpt
     out["warnings"] = warn
     return out, (recs if with_per_image else None)
+
+
+def id0_diagnostics(G, instances, results, scoring):
+    """D13: where the annotation-id-0 image's detection ranks by score, and the paper-minus-fixed gap.
+    Rank 1 = highest score. COCOeval breaks score ties by image order, and image 0 comes first, so
+    rank = 1 + #(scores strictly greater). None when the GT has no annotation id 0."""
+    if not G.has_ann_id_0:
+        return None
+    zero = [a for a in G.dataset["annotations"] if a["id"] == 0][0]
+    img = zero["image_id"]
+    scores = np.array([p["score"] for p in instances], dtype=float)
+    mine = [p for p in instances if p["image_id"] == img]
+    out = OrderedDict(image_id=img, file_name=G.images[img].get("file_name"), n_dets=int(scores.size))
+    if mine:
+        s0 = max(p["score"] for p in mine)
+        best = max(mine, key=lambda p: p["score"])
+        rank = 1 + int(np.sum(scores > s0))
+        out.update(det_score=float(s0), score_rank=rank, rank_percentile=float(rank / max(1, scores.size)),
+                   oks=oks_single(np.asarray(zero["keypoints"], float).reshape(-1, 3), best["kpts"], float(zero["area"]),
+                                  zero["bbox"]))
+    else:
+        out.update(det_score=None, score_rank=None, rank_percentile=None, oks=None)
+    mp, mf = results[(scoring, "paper")][0], results[(scoring, "fixed")][0]
+    out["paper_minus_fixed"] = OrderedDict((k, (None if mp.get(k) is None or mf.get(k) is None else mp[k] - mf[k]))
+                                           for k in ("AP", "AP50", "AP75", "AP_80_95", "AR"))
+    return out
 
 
 def _fmt(m):
@@ -760,6 +798,11 @@ def main(argv=None):
         if apt:
             print("  AP@OKS " + " ".join(f"{t}:{100 * v:.1f}" for t, v in apt.items() if v is not None)
                   + f"  | AP_80_95={100 * out['metrics']['AP_80_95']:.1f}")
+        z = out.get("id0_artifact")
+        if z and z.get("score_rank") is not None:
+            print(f"  id-0 image {z['file_name']}: score rank {z['score_rank']}/{z['n_dets']} "
+                  f"(percentile {100 * z['rank_percentile']:.0f}), OKS {z['oks']:.3f}; paper-fixed AP "
+                  f"{100 * z['paper_minus_fixed']['AP']:+.2f}")
         s = out["per_keypoint_summary"]
         if s.get("mean_err_norm") is not None:
             print(f"  mean OKS={out['oks']['mean']:.4f}  kpt err/sqrt(bbox)={s['mean_err_norm']:.4f}  "

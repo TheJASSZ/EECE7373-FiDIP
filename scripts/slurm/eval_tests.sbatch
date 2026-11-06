@@ -1,6 +1,6 @@
 #!/bin/bash
 # Run the evaluator unit tests with the cluster library versions (numpy 1.26.4, pycocotools 2.0.8).
-#SBATCH --job-name=eval_tests
+#SBATCH --job-name=an_eval_tests
 #SBATCH --partition=short
 #SBATCH --time=00:15:00
 #SBATCH --cpus-per-task=1

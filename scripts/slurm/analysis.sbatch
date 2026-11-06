@@ -3,7 +3,7 @@
 #   sbatch scripts/slurm/analysis.sbatch eval-all                 # evaluate every new/changed preds_*.json
 #   sbatch scripts/slurm/analysis.sbatch figures <manifest.json>   # analyze.py models + overlays for a manifest
 #   sbatch scripts/slurm/analysis.sbatch script <file.sh>          # run an analysis shell script (logged)
-#SBATCH --job-name=fidip_analysis
+#SBATCH --job-name=an_analysis
 #SBATCH --partition=short
 #SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=2

@@ -2,7 +2,7 @@
 # Build the small CPU-only analysis env at $R/envs/analysis (eval/*, figures, tables).
 # Same pins as the fidip env where they overlap (numpy 1.26.4, pycocotools 2.0.8), so metrics
 # are computed with identical library versions. Idempotent.
-#SBATCH --job-name=build_env_analysis
+#SBATCH --job-name=an_build_env
 #SBATCH --partition=short
 #SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=2

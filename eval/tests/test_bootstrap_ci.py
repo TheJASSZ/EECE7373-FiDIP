@@ -188,3 +188,24 @@ def test_cli_paired_and_single(tmp_path):
     assert bc.main(["single", "--gt", str(g), "--a", str(b), "--out", str(o), "--B", "50"]) == 0
     r = json.loads(o.read_text())
     assert r["observed"]["AP"] == pytest.approx(1.0) and r["boot_ci95"]["AP"] == pytest.approx([1.0, 1.0])
+
+
+def test_both_protocols_sensitivity_and_robust_flag(tmp_path):
+    gt = make_gt(60, seed=2, first_ann_id=0)            # has annotation id 0 -> protocols differ
+    rng = np.random.default_rng(0)
+    base = rng.standard_normal((60, 17, 2))
+    conf = rng.uniform(0.3, 1, (60, 17))
+    good, bad = tmp_path / "good.json", tmp_path / "bad.json"
+    good.write_text(json.dumps(make_preds(gt, 0.02, base_noise=base, conf=conf)))
+    bad.write_text(json.dumps(make_preds(gt, 0.04, base_noise=base, conf=conf)))
+    G = ev.GroundTruth(gt)
+    r = bc.compare(G, [str(good)], [str(bad)], B=500, seed=0)
+    assert r["protocol"] == "paper" and r["sensitivity"]["protocol"] == "fixed"
+    assert r["delta"]["AP"]["observed"] != r["sensitivity"]["delta"]["AP"]["observed"]
+    assert r["a_gt_b_robust_both_protocols"] and r["ci_excludes_zero_both_protocols"]
+    spec = {"B": 300, "contrasts": [{"name": "g>b", "a": str(good), "b": str(bad)},
+                                     {"name": "b>g", "a": str(bad), "b": str(good)}]}
+    out = bc.run_contrasts(G, spec)
+    c0, c1 = out["contrasts"]
+    assert c0["robust_claim"] and not c1["robust_claim"]
+    assert "p_holm" in c0["sensitivity"]

@@ -44,6 +44,9 @@ python eval/bootstrap_ci.py single --gt $R/data/splits/test100.json --a $R/runs/
        --out $A/bootstrap/bootstrap_single_${RID}_test100.json
 python eval/bootstrap_ci.py single --gt $R/data/splits/val400.json --a $R/runs/$RID/preds_val400.json \
        --out $A/bootstrap/bootstrap_single_${RID}_val400.json
+# D13: paper-protocol AP of these exact predictions as test0's confidence rank moves
+python eval/analyze.py id0rank --gt $R/data/splits/test100.json --model "$LABEL=$R/runs/$RID/preds_test100.json:1" \
+       --name $RID --outdir $A/figures/${RID}/test100 --tables $A/tables/${RID}_test100
 # v100-vs-v500 GT-box 2x2 (needs preds_validate500.json made with validate500 boxes)
 if [ -f $R/runs/$RID/preds_validate500.json ]; then
   python eval/analyze.py gtbox --pred-v100box $R/runs/$RID/preds_test100.json \
