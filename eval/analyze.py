@@ -743,7 +743,8 @@ def cmd_curves(a):
     summary = []
     groups = OrderedDict()
     for spec in a.runs:
-        label, path = (spec.split("=", 1) if "=" in spec else (os.path.basename(spec.rstrip("/")), spec))
+        # "label#seed=PATH": split on the LAST '=' so labels may contain '=' (e.g. "λ=5e-4")
+        label, path = (spec.rsplit("=", 1) if "=" in spec else (os.path.basename(spec.rstrip("/")), spec))
         groups.setdefault(label.split("#")[0], []).append((label, _p(path)))
     for gi, (glabel, runs) in enumerate(groups.items()):
         col = ps.SLOTS[gi % len(ps.SLOTS)]
@@ -753,7 +754,12 @@ def cmd_curves(a):
                 print(f"WARNING: no epochs.csv/scalars.json in {path}")
                 continue
             ec = _col(rows, "epoch") or "epoch"
-            tl = _col(rows, "train_loss", "loss")
+            # upstream epochs.csv: train_mse is the pose MSE without the -LAMBDA*BCE term, i.e. the same
+            # quantity as val_loss -> the like-for-like over/underfitting comparison
+            tl = _col(rows, "train_mse", "train_loss", "loss")
+            vset = sorted({str(r.get("val_set")) for r in rows if r.get("val_set") not in (None, "")})
+            if any(("test" in v.lower() or v in ("validate_infant", "validate100")) for v in vset):
+                print(f"WARNING {path}: per-epoch AP computed on {vset} (Test100?) -- NOT a selection signal")
             vl = _col(rows, "val400_loss", "val_loss", "valid_loss")
             ap = _col(rows, "val400_AP", "val_AP", "AP")
             ar = _col(rows, "val400_AR", "val_AR", "AR")
@@ -771,10 +777,17 @@ def cmd_curves(a):
                 y = np.array([r.get(ap, np.nan) for r in rows], dtype=float)
                 scale = 100 if np.nanmax(y) <= 1.0 else 1
                 axes[1].plot(ep, scale * y, color=col, lw=1.3, label=f"{glabel}: AP" if first else None)
-                b = int(np.nanargmax(y))
+                flags = [r.get("is_best") for r in rows]
+                if any(isinstance(f, float) and f == 1.0 for f in flags):
+                    b = max(i for i, f in enumerate(flags) if isinstance(f, float) and f == 1.0)   # upstream rule
+                else:
+                    b = int(np.nanargmax(y))
                 axes[1].plot(ep[b], scale * y[b], marker="o", ms=4.5, mfc="white", mec=col, zorder=5)
                 best = {"best_epoch": ep[b], "best_val_AP": float(y[b]), "final_epoch": ep[-1],
-                        "final_val_AP": float(y[~np.isnan(y)][-1])}
+                        "final_val_AP": float(y[~np.isnan(y)][-1]), "val_set": ";".join(vset),
+                        "train_loss_col": tl, "gap_final_val_minus_train": (
+                            float(rows[-1][vl] - rows[-1][tl]) if (vl and tl and isinstance(rows[-1].get(vl), float)
+                                                                   and isinstance(rows[-1].get(tl), float)) else None)}
             if ar:
                 y = np.array([r.get(ar, np.nan) for r in rows], dtype=float)
                 scale = 100 if np.nanmax(y) <= 1.0 else 1
@@ -785,8 +798,8 @@ def cmd_curves(a):
                             "train_loss_last": rows[-1].get(tl) if tl else None,
                             "val_loss_min_epoch": (ep[int(np.nanargmin([r.get(vl, np.nan) for r in rows]))]
                                                    if vl else None)})
-    axes[0].set_ylabel("loss")
-    axes[0].set_title("training vs validation loss", loc="left")
+    axes[0].set_ylabel("heatmap MSE")
+    axes[0].set_title("train vs Val400 pose loss (same MSE)", loc="left")
     axes[0].legend(fontsize=6)
     from matplotlib.ticker import MaxNLocator
     axes[1].xaxis.set_major_locator(MaxNLocator(integer=True))
