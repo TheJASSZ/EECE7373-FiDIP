@@ -204,3 +204,13 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - AR ≤ 0.99.
   - A perfect model gets per-threshold AP of 0.980–0.990, depending on how test0's score ranks.
   - The published AP50 = AP75 = 98.5 therefore means FiDIP is already perfect at OKS 0.5/0.75 on the 99 matchable images. All headroom is at OKS ≥ 0.8.
+
+### 2026-11-05 20:47 EST — Analysis pipeline gated and armed; data-integrity check requested
+- **Analysis worker committed `ac8e359`:**
+  - `scripts/slurm/analysis.sbatch eval-all` re-evaluates every `$R/runs/*/preds_<split>.json`.
+  - It has a **unit-tested gate**: Test100 and validate500 (which contains Test100) are evaluated only for released, retrain and pre-registered RUN_IDs. All others are withheld, never computed. This enforces D1 in code rather than by convention.
+  - `scripts/analysis/run_released.sh` builds the full figure set and CIs as soon as R001's predictions exist.
+- **Request relayed to repro:** add `preds_validate500.json` for R001 (released checkpoint, validate500's own boxes) to separate the crop and metric effects of the v100/v500 box difference.
+- **Possible data tampering:** the repro log notes that `raw/SyRIP/SyRIP` was "flattened" at 20:08 by an unknown actor. The analysis worker says it only reads there.
+  - Asked repro to verify integrity against `unzip -l` and member md5s before SPLITS_READY.
+  - Asked improve whether it touched the directory, and made `$R/data` read-only for it. The repro worker owns the data; other layouts go in symlink trees.
