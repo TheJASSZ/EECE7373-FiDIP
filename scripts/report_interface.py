@@ -395,37 +395,48 @@ class ReportInterface:
         def rel_row(label, weights, gkey, pub):
             g = self.group(gkey)
             if not g or not g["run_ids"]:
-                return [label, weights, pub] + [TBD] * 7
+                return [label, weights, pub] + [TBD] * 9
             rid = g["run_ids"][0]
             d, _ = self.m(rid, "test100")
             dv, _ = self.m(rid, "val400")
+            dc, _ = self.m(rid, "test100_clean")
+            val = v(pct1(dv["metrics"]["AP"])) if dv else TBD
             if not d:
-                return [label, weights, pub] + [TBD] * 6 + [v(pct1(dv["metrics"]["AP"])) if dv else TBD]
+                return [label, weights, pub] + [TBD] * 8 + [val]
             mm, mf = d["metrics"], d["metrics_fixed"]
             return [label, weights, pub, pct1(mm["AP"]), pct1(mm["AP50"]), pct1(mm["AP75"]), pct1(mm["AP_80_95"]),
-                    pct1(mm["AR"]), pct1(mf["AP"]), v(pct1(dv["metrics"]["AP"])) if dv else TBD]
+                    pct1(mm["AR"]), pct1(mf["AP"]), v(pct1(dc["metrics"]["AP"])) if dc else TBD,
+                    v(pct1(dc["metrics_fixed"]["AP"])) if dc else TBD, val]
 
-        def rt_row(label, gkey, pub):
+        def rt_row(label, gkey, pub, variant=None):
             g = self.group(gkey)
             if not g:
-                return [label, f"retrain, {TBD}{{}} seeds", pub] + [TBD] * 7
-            st, sf, sv = c.config_summary(g, "test100"), c.config_summary(g, "test100", "fixed"), c.config_summary(g, "val400")
-            return [label, f"retrain, {len(g['run_ids'])} seeds", pub, pm(st["AP"], st["AP_std"]), v(num1(st["AP50"])),
-                    v(num1(st["AP75"])), v(num1(st["AP_80_95"])), v(num1(st["AR"])), v(num1(sf["AP"])),
-                    pm(sv["AP"], sv["AP_std"])]
+                return [label, f"retrain, {TBD}{{}} seeds", pub] + [TBD] * 9
+            sm = lambda sp, pr="paper": c.config_summary(g, sp, pr, variant)
+            st, sf, sv = sm("test100"), sm("test100", "fixed"), sm("val400")
+            sc, scf = sm("test100_clean"), sm("test100_clean", "fixed")
+            n = st["n_runs"] or sv["n_runs"]
+            rule = "final epoch" if variant == "final" else "best-Val400 epoch"
+            return [label, f"retrain, {n or TBD} seeds, {rule}", pub, pm(st["AP"], st["AP_std"]), v(num1(st["AP50"])),
+                    v(num1(st["AP75"])), v(num1(st["AP_80_95"])), v(num1(st["AR"])), pm(sf["AP"], sf["AP_std"]),
+                    pm(sc["AP"], sc["AP_std"]), pm(scf["AP"], scf["AP_std"]), pm(sv["AP"], sv["AP_std"])]
 
         p = os.path.join(gen_dir, "tab_reproduction.tex")
-        self._tabular(p, ["Test100 = paper protocol unless noted; retrain rows mean +- sd over seeds."], "@{}llcccccccc@{}",
-                      ["& & \\multicolumn{7}{c}{SyRIP Test100} & Val400\\\\",
-                       "\\cmidrule(lr){3-9}\\cmidrule(l){10-10}",
+        self._tabular(p, ["Test100 = paper protocol unless noted; retrain rows mean +- sd over seeds; both checkpoint "
+                          "rules of PREREGISTRATION repro-1.",
+                          "Test100-clean = Test100 minus the 5 copies of training images (D16)."], "@{}llcccccccccc@{}",
+                      ["& & \\multicolumn{9}{c}{SyRIP Test100} & Val400\\\\",
+                       "\\cmidrule(lr){3-11}\\cmidrule(l){12-12}",
                        "Model & Weights / runs & Publ.\\ AP & AP & AP$_{50}$ & AP$_{75}$ & AP$_{80:95}$ & AR & "
-                       "AP$^{\\text{fixed}}$ & AP\\\\"],
+                       "AP$^{\\text{fixed}}$ & AP$^{\\text{clean}}$ & AP$^{\\text{clean,fixed}}$ & AP\\\\"],
                       [rel_row("DarkPose W48 (COCO only)", "\\texttt{w48\\_384x288.pth}", "zs_darkpose", "88.5"),
                        rel_row("DarkPose + FiDIP", "\\texttt{hrnet\\_fidip.pth}", "rel_fidip_w48", "93.6"),
                        rel_row("Pose-MobileNet + FiDIP", "\\texttt{mobile\\_fidip.pth}", "rel_fidip_mobile", "79.2"),
                        "\\midrule",
                        rt_row("DarkPose + Finetune ($\\lambda{=}0$)", "rt_ft", "92.7"),
-                       rt_row("DarkPose + FiDIP ($\\lambda{=}5{\\cdot}10^{-4}$)", "rt_fidip", "93.6")])
+                       rt_row("", "rt_ft", "", variant="final"),
+                       rt_row("DarkPose + FiDIP ($\\lambda{=}5{\\cdot}10^{-4}$)", "rt_fidip", "93.6"),
+                       rt_row("", "rt_fidip", "", variant="final")])
         written.append(p)
 
         # final comparison

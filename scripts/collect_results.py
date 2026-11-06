@@ -200,20 +200,21 @@ class Collector:
         return (rid in self.prereg or rid[:4] in self.prereg or g.get("role") in ("released", "retrain")
                 or bool(g.get("test_allowed")))
 
-    def value(self, rid, split, metric, protocol="paper"):
-        x = self.metrics.get((rid, split))
+    def value(self, rid, split, metric, protocol="paper", variant=None):
+        x = (self.final_metrics if variant == "final" else self.metrics).get((rid, split))
         if not x:
             return None
         d = x[0]["metrics" if protocol == "paper" else "metrics_fixed"]
         return d.get(metric)
 
-    def config_summary(self, g, split, protocol="paper"):
-        rids = [r for r in g["run_ids"] if (r, split) in self.metrics]
+    def config_summary(self, g, split, protocol="paper", variant=None):
+        store = self.final_metrics if variant == "final" else self.metrics
+        rids = [r for r in g["run_ids"] if (r, split) in store]
         if split in TESTLIKE:
             rids = [r for r in rids if self.test_allowed(r, g)]
         out = OrderedDict(n_runs=len(rids), run_ids=rids)
         for m in METRICS:
-            mu, sd, n = mean_std([self.value(r, split, m, protocol) for r in rids])
+            mu, sd, n = mean_std([self.value(r, split, m, protocol, variant) for r in rids])
             out[m] = pct(mu)
             out[m + "_std"] = pct(sd)
         return out

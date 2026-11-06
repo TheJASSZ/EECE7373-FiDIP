@@ -124,22 +124,22 @@ def derived_splits():
 def eval_derived(run_id, pred, split, tag, od, derived, rows, force=False):
     """Evaluate `pred` on every derived GT of `split` (only reached after the Test100 gate passed)."""
     for dname, (dgt, parent) in derived.items():
-        if parent != split or tag != "":
+        if parent != split or tag not in ("", "_best", "_final"):    # checkpoint variants get clean metrics too
             continue
-        dm, dp = os.path.join(od, f"metrics_{dname}.json"), os.path.join(od, f"per_image_{dname}.json")
+        dm, dp = os.path.join(od, f"metrics_{dname}{tag}.json"), os.path.join(od, f"per_image_{dname}{tag}.json")
         ps, gs = sha(pred), sha(dgt)
         if os.path.exists(dm) and not force:
             old = json.load(open(dm))
             if (old.get("pred", {}).get("sha256") == ps and old.get("gt", {}).get("sha256") == gs
                     and old.get("evaluator") == f"eval/eval_coco.py v{ev.EVALUATOR_VERSION}"):
-                rows.append({"run_id": run_id, "split": dname, "pred": pred, "status": "up to date (derived)",
+                rows.append({"run_id": run_id, "split": dname + tag, "pred": pred, "status": "up to date (derived)",
                              "AP": old["metrics"]["AP"], "AP_fixed": old["metrics_fixed"]["AP"],
                              "AP_80_95": old["metrics"]["AP_80_95"], "n_images": old["gt"]["n_images"]})
                 continue
-        ev.main(["--gt", dgt, "--pred", pred, "--out", dm, "--per-image", dp, "--run-id", run_id, "--split", dname,
+        ev.main(["--gt", dgt, "--pred", pred, "--out", dm, "--per-image", dp, "--run-id", run_id, "--split", dname + tag,
                  "--quiet"])
         dd = json.load(open(dm))
-        rows.append({"run_id": run_id, "split": dname, "pred": pred, "status": "evaluated (derived)",
+        rows.append({"run_id": run_id, "split": dname + tag, "pred": pred, "status": "evaluated (derived)",
                      "AP": dd["metrics"]["AP"], "AP_fixed": dd["metrics_fixed"]["AP"],
                      "AP_80_95": dd["metrics"]["AP_80_95"], "n_images": dd["gt"]["n_images"]})
         print(f"{run_id:40s} {dname:15s} AP {100 * dd['metrics']['AP']:6.2f}  fixed {100 * dd['metrics_fixed']['AP']:6.2f}")
