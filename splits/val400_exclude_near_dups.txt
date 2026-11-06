@@ -1,0 +1,5 @@
+# Val400 image ids excluded as (near-)duplicates of Test100 images (scripts/near_dups.py:
+# exact md5, or dHash<=10 and GT pose OKS>=0.85 in normalized coordinates); visually checked.
+207  # test47 dhash=1 md5=False pose_oks=0.870
+217  # test56 dhash=0 md5=True pose_oks=0.993
+222  # test7 dhash=0 md5=True pose_oks=0.990

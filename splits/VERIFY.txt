@@ -1,0 +1,46 @@
+SyRIP split verification (scripts/make_splits.py)
+
+image dir for split X: /scratch/purohitham.v/fidip/data/syrip/images/X/<file_name>
+
+train_infant                         imgs 1200 anns 1200 multi-person 0 synthetic {'False': 200, 'True': 1000} sha256 3bdcce0b5a59f0d9
+test100                              imgs  100 anns  100 multi-person 0 synthetic {'False': 100} sha256 8b299a879a959134
+val400                               imgs  397 anns  397 multi-person 0 synthetic {'False': 397} sha256 8ed74bd53ef8cd69
+validate500                          imgs  500 anns  500 multi-person 0 synthetic {'False': 500} sha256 d129e2f50d9611ee
+train_pre_infant(syrip_for_train)    imgs 4057 anns 4057 multi-person 0 synthetic {'False': 2029, 'True': 2028} sha256 -
+
+area source:train_200R_1000S              n 1200 unique    1 min    14232.8 median    14232.8 max    14232.8 area==w*h 1
+area source:validate100                   n  100 unique  100 min    32296.8 median   259399.2 max  4297617.7 area==w*h 100
+area source:validate500                   n  500 unique    1 min  2443298.5 median  2443298.5 max  2443298.5 area==w*h 1
+area train_infant                         n 1200 unique 1190 min     6600.0 median    64148.5 max  3112011.4 area==w*h 1200
+area test100                              n  100 unique  100 min    32296.8 median   259399.2 max  4297617.7 area==w*h 100
+area val400                               n  397 unique  395 min    17372.0 median   148852.0 max  3358044.0 area==w*h 397
+area validate500                          n  500 unique  498 min    17372.0 median   156953.5 max  3358044.0 area==w*h 500
+area train_pre_infant(syrip_for_train)    n 4057 unique 2030 min     1028.7 median    76800.0 max   235886.3 area==w*h 2028
+
+images train_infant                         missing 0 wh_mismatch 0 dup_md5 0  (/scratch/purohitham.v/fidip/data/syrip/images/train_infant)
+images test100                              missing 0 wh_mismatch 0 dup_md5 0  (/scratch/purohitham.v/fidip/data/syrip/images/test100)
+images val400                               missing 0 wh_mismatch 0 dup_md5 1 groups(image ids) [[345, 349]] (/scratch/purohitham.v/fidip/data/syrip/images/val400)
+images validate500                          missing 0 wh_mismatch 0 dup_md5 3 groups(image ids) [[7, 222], [56, 217], [345, 349]] (/scratch/purohitham.v/fidip/data/syrip/images/validate500)
+images validate_infant(upstream,100)        missing 0 wh_mismatch 1 dup_md5 1 groups(image ids) [[11, 24]] (/scratch/purohitham.v/fidip/data/syrip/images/validate_infant)
+images train_pre_infant(syrip_for_train)    missing 0 wh_mismatch 0 dup_md5 0  (/scratch/purohitham.v/fidip/data/raw/syrip_for_train/syrip/images/train_pre_infant)
+non-JPEG files (PNG bytes, .jpg name; decoded fine by cv2/PIL): ['/scratch/purohitham.v/fidip/data/syrip/images/val400/test489.jpg', '/scratch/purohitham.v/fidip/data/syrip/images/validate500/test489.jpg']
+
+overlap test100_subset_validate500_by_id = True
+overlap test100_subset_validate500_by_md5 = True
+overlap val400_x_test100_by_id = 0
+overlap val400_x_test100_by_file_name = 0
+overlap val400_x_test100_by_md5 = 0
+overlap train_x_val400_by_md5 = 0
+overlap train_x_test100_by_md5_pairs(test_id,train_id) = [(20, 73), (42, 315), (46, 272), (50, 340)]
+overlap upstream_validate_infant_100_ids_whose_bytes_differ_from_SyRIP_zip = [11]
+overlap test100_x_train_near_dups(pose_oks>=0.85 or md5) = [(7, 47, 9, 0.9631), (20, 73, 0, 0.9219), (42, 315, 0, 0.9716), (46, 272, 0, 0.9585), (50, 340, 0, 0.9212)]
+overlap train_infant_dir_unannotated_images = 300
+overlap train_infant_dir_unannotated_x_validate500_by_md5 = 199
+overlap train_infant_dir_unannotated_examples = ['train00006.jpg', 'train00012.jpg', 'train00015.jpg', 'train00497.jpg', 'train00498.jpg', 'train00499.jpg']
+
+NOTE OFFICIAL-DATASET LEAK, kept as shipped for comparability with the paper: 4 Test100 images are byte-identical to annotated official training images, (test id, train id) = [(20, 73), (42, 315), (46, 272), (50, 340)]. Every model trained on SyRIP train (including the published FiDIP) has seen them; report Test100 also without these ids as a sensitivity check.
+NOTE Val400 has 397 images (not 400): dropped {'207': 'near-duplicate of a Test100 image (reviewed list /scratch/purohitham.v/fidip/repo/splits/val400_exclude_near_dups.txt)', '217': 'byte-identical (md5) to Test100 image id(s) [56]', '222': 'byte-identical (md5) to Test100 image id(s) [7]'}.
+NOTE Test100 images with an exact or near-exact (dHash<=10, pose OKS>=0.85) copy in the official train set, (test id, train id, dHash, pose OKS): [(7, 47, 9, 0.9631), (20, 73, 0, 0.9219), (42, 315, 0, 0.9716), (46, 272, 0, 0.9585), (50, 340, 0, 0.9212)]
+NOTE DEFECT in syrip_for_train.zip images/validate_infant (the folder the upstream README layout uses for TEST_SET validate_infant): test11.jpg has different bytes than SyRIP.zip test11.jpg and is byte-identical to test24.jpg; its size is [(11, 'test11.jpg', (2048, 2048), (1536, 2048))] but the GT says see GT. Our test100 split uses the SyRIP.zip images, which match the GT.
+NOTE Test100 GT: validate100 vs validate500 copies of the same 100 images: keypoints differ on 2 images [83, 84], bbox differs on 100 images.
+NOTE DEFECT, not used: syrip_for_train.zip annotations/person_keypoints_train_infant.json. Same 1200 ids and file names as SyRIP 200R_1000S and identical image bytes (1200/1200 md5 equal), real-image labels identical (True), but 1000/1000 synthetic entries carry MINI-RGBD labels (original_file_name like "10/syn_00360.png", image_source "MINI_dataset"); JSON size != JPEG size on 46 images. Training uses SyRIP.zip 200R_1000S instead.
