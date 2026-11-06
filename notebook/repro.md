@@ -238,3 +238,21 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
 - Train MSE 1.53e-4 (vs ~3.3e-4 after the yaml's 20 epochs), while val loss rises to 4.09e-4: **overfitting after ~10 epochs** on 1200 images.
 - vs R010–R012 (90.51 ± 0.13): +0.23 at the best epoch (below the 0.5 AP "tell the orchestrator" threshold), −0.7 at the final epoch.
 - Hypothesis outcome: the paper recipe does not explain any gap. The shipped yaml (lr 1e-4, 20 epochs) already reproduces 93.6 on Test100. The 10× LR only reaches the same Val400 level faster, then overfits. No Test100 (preregistered Val400-only).
+
+### 2026-11-06 07:30 EST — R013–R015 (λ = 0) and the domain-adaptation ablation (all eval_coco; paper protocol, fixed in brackets)
+- Job 11670943 (H200 d4053, 17 min 53 s, 19.8 GB/process). Same recipe and hardware as R010–R012, except `TRAIN.LAMBDA 0.0`. The classifier is still trained (PRE_EPOCH 10 + Step I) but never feeds back into the pose net.
+
+| Variant (3 seeds) | Val400 AP (best epoch) | Test100 AP, best-Val400 ckpt | Test100 AP, final epoch |
+|---|---|---|---|
+| λ = 0 (R013–R015) | **90.80 ± 0.21** | 93.59 ± 0.13 [95.08 ± 0.23] | 93.66 ± 0.10 [95.16 ± 0.16] |
+| λ = 5e-4 FiDIP (R010–R012) | 90.51 ± 0.13 | 93.55 ± 0.42 [95.11 ± 0.46] | 93.38 ± 0.48 [94.91 ± 0.47] |
+| released FiDIP (R001) | 90.36 | 93.60 [94.99] | — |
+| paper | — | FiDIP 93.6 / DarkPose + Finetune 92.7 | — |
+
+- **Outcome:** the paper's +0.9 AP from domain adaptation does **not** reproduce under the shipped recipe.
+  - With λ = 0 the same pipeline reaches 93.6 on Test100, the same as FiDIP and the released checkpoint.
+  - On Val400, λ = 0 is 0.29 AP *better* than λ = 5e-4 (Welch t ≈ 2.0, df ≈ 3.3; not significant with 3 seeds).
+  - Together with the λ sweep, Val400 AP is non-increasing in λ: 0 (90.80) ≈ 1e-4 (91.02, 1 seed) > 5e-4 (90.51) > 2e-3 (89.67) > 1e-2 (85.78).
+- Caveat: our λ = 0 control keeps the PRE_EPOCH stage, which runs the pose net in train mode on adult COCO+SURREAL crops, so its BN statistics drift before fine-tuning. The paper's 92.7 "Finetune" row may have used a plain fine-tune (shipped yaml, PRE_EPOCH 0). That would be a separate control (proposed, not run: it needs a preregistration decision).
+- Note: R013's standalone re-eval of `model_best.pth` gives Val400 91.02 vs 91.09 in-training. cuDNN benchmark mode is nondeterministic, so differences of ≤ 0.07 AP are expected; R010 matched exactly. The registry uses eval_coco values.
+- Archived: `~/fidip_artifacts/runs/<RUN_ID>/` holds the best and final checkpoints (SHA256 verified against run.json, 22 files), run.json, epochs.csv, metrics, preds and logs, 5.3 GB (archive jobs 11671234, 11671596).
