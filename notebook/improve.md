@@ -282,3 +282,16 @@ Newest entries at the bottom. Timestamps in EST.
   - On the local copy, `allowed_prefixes()` = {R001, R010-R015, R101, R105, R131-R141}. R102/R103/R104/R120/R190 → False.
   - `final_test_eval_mmpose.sbatch` now loops over `RUN_IDS`, prints the allowed set, verifies each checkpoint's SHA256, and keeps the one-shot rule per run.
 - `train_pack_mmpose.sbatch` has `SEQUENTIAL=1` (back-to-back) for runs that cannot share a 40 GB card.
+
+### 2026-11-06 07:17 EST — Confirmatory training launched (fresh seeds s2-s6)
+- **Gate checked on the cluster copy** `$R/repo/results/PREREGISTRATION.md`: `### Erratum` is present, and `prereg.allowed_prefixes()` is an EXACT MATCH of {R001, R010-R015, R101, R105, R131-R141}.
+  - The only existing Test100 preds are REPRO's R001/R002 (released checkpoints). No MMPose run has Test100 preds.
+- **Packs** (D14: gpu 2 running / ≤4 submitted; sharing 1 / ≤2):
+  | job | partition / GPU | contents |
+  |---|---|---|
+  | `im_pack_confH_s2-s4` **11671548** | gpu A100, `SEQUENTIAL=1` | R136, R137, R138 (ViT-H-256 s2-s4), 24.7 GB each |
+  | `im_pack_confA_s2-s3` **11671549** | gpu A100 | R131 + R132 (HRNet s2, s3) concurrent, 33.6 GB |
+  | `im_pack_confA_s4-s5` **11671553** | gpu A100, after 11671549 | R133 + R134 (HRNet s4, s5) |
+  | `im_pack_confAB_s6s5` **11671556** | sharing L40S, after R122 (11671163) | R135 (HRNet s6) + R139 (ViT-H s5), 41.5 GB |
+  | (next) | sharing L40S | R140 (ViT-H s6), once a sharing submit slot frees |
+- Checkpoint rule: best-Val400 epoch per seed (run.json `checkpoint` + SHA256). Test100 runs only after all trainings finish, via one `final_test_eval_mmpose.sbatch` job over R101 R105 R131-R140. Then R141 = `eval/ensemble_preds.py` over R136-R140 `preds_test100.json`, scored with eval_coco.
