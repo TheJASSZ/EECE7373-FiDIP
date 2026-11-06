@@ -14,7 +14,7 @@ All arms share the training data (200 real + 1000 synthetic, official labels), F
 \subsection{Screening and ablations on Val400}\label{sec:backbone}\label{sec:ablations}
 
 \paragraph{Screening} (one seed each, Val400 only; \cref{tab:backbone} in \cref{app:attempts}).
-Fine-tuning lifts every COCO model well above its zero-shot Val400 AP (\res{zs.hrnet} for HRNet to \res{zs.vith256} for ViTPose-H~256). The control reaches \res{scr.hrnet}, ViTPose-L \res{scr.vitl256} ($256{\times}192$) and \res{scr.vitl384} ($384{\times}288$), and ViTPose-H \res{scr.vith256} and \res{scr.vith384}. Learning-rate sweeps are flat (HRNet: \res{scr.hrnet.lr2} at $2{\cdot}10^{-4}$, \res{scr.hrnet.lr5} at $5{\cdot}10^{-5}$), so single-seed noise is about $\pm$\res{imp.noise}.
+Fine-tuning lifts every COCO model well above its zero-shot Val400 AP (\res{zs.vitl384} for ViTPose-L~384 to \res{zs.vith256} for ViTPose-H~256). The control reaches \res{scr.hrnet}, ViTPose-L \res{scr.vitl256} ($256{\times}192$) and \res{scr.vitl384} ($384{\times}288$), and ViTPose-H \res{scr.vith256} and \res{scr.vith384}. Learning-rate sweeps are flat (HRNet: \res{scr.hrnet.lr2} at $2{\cdot}10^{-4}$, \res{scr.hrnet.lr5} at $5{\cdot}10^{-5}$), so single-seed noise is about $\pm$\res{imp.noise}.
 Against that noise, \emph{capacity} matters (ViTPose-H beats ViTPose-L by about 2--3$\times$ the noise), and \emph{resolution} does not ($384{\times}288$ versus $256{\times}192$ is within noise for both sizes).
 We therefore chose ViTPose-H at $256{\times}192$ over $384{\times}288$, which would have cost about twice the compute and memory (\code{results/PREREGISTRATION.md}).
 
@@ -35,7 +35,7 @@ Synthetic data still helps a strong backbone: real images alone give \res{scr.vi
   \item \textbf{Contrasts.} C1: arm~B versus the released checkpoint (primary). C2: B versus A. C3: B versus our FiDIP retrains. C4: the ensemble versus the released checkpoint. All are paired image bootstraps with $B=\res{boot.n}$, Holm-corrected.
   \item \textbf{Decision rule (H1).} Arm~B's mean Test100 AP exceeds 93.6, \emph{and} the C1 CI excludes 0 under both protocols.
 \end{itemize}
-Checkpoint SHA256s were verified before each single evaluation. GPUs were a mix of H200, A100, L40S and V100 (D22), recorded per run.
+Checkpoint SHA256s were verified before each single evaluation. The arm runs trained on L40S GPUs, except where \code{run.json} records otherwise (runs first queued on V100 were cancelled and restarted on L40S; D22).
 
 \paragraph{Results} (\cref{tab:final,tab:boot}).
 \begin{itemize}[leftmargin=*]

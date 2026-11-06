@@ -13,6 +13,8 @@ P7 & \texttt{25cb420} & loss files written to the run directory; no \texttt{add\
 P8 & \texttt{44dcb09} & per-epoch \texttt{epochs.csv} (train MSE, Val400 loss, AP/AR) & over/underfitting monitoring (guide Part 4.5)\\
 P10 & \texttt{fe6d81c} & any split name (\texttt{test100}, \texttt{val400}, \texttt{validate500}); evaluation of labelled \texttt{test*} splits & upstream hard-codes split names\\
 P11 & \texttt{596fb7b} & \texttt{SEED} option & repeatable seeds\\
+P2 & --- & considered, not applied & building the NMS extensions for sm\_90 is unnecessary after P1\\
+P9 & --- & considered, not applied & the \texttt{pose\_hrnet} return-value fix is on an unused code path\\
 demo & \texttt{7e68cfe} & added \texttt{tools/demo.py}, \texttt{tools/streamlit\_demo.py}, \texttt{gpu\_test.py} & guide Parts 1.3 and 6; not in upstream\\
 \bottomrule
 \end{tabular}

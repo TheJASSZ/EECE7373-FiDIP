@@ -405,6 +405,46 @@
    ],
    "what_changed": "PRE_EPOCH 0 and lambda 0.0: no classifier pre-stage, no adversarial term (repro-3)",
    "hypothesis": "faithful counterpart of the paper's DarkPose+Finetune 92.7 row; FiDIP > plain fine-tune"
+  },
+  "rt_paperrecipe": {
+   "label": "FiDIP retrain, paper recipe",
+   "role": "hparam",
+   "slot": 0,
+   "macro": "RtPaperRecipe",
+   "run_ids": [
+    "R019_fidip-w48_paperrecipe_s1"
+   ],
+   "what_changed": "paper recipe: Adam lr 1e-3, 100 epochs, batch 64, lambda 5e-4 (1 seed)",
+   "hypothesis": "the paper's recipe (not the released yaml) explains the published numbers",
+   "outcome": "no gain: best Val400 at epoch 10, then overfits"
+  },
+  "rt_readme_labels": {
+   "label": "FiDIP retrain, README-literal labels",
+   "role": "ablation",
+   "slot": 0,
+   "macro": "RtReadmeLabels",
+   "run_ids": [
+    "R020_fidip-w48_readme-literal-labels_s1"
+   ],
+   "what_changed": "train on syrip_for_train.zip train_infant.json (MINI-RGBD labels on the synthetic images), 1 seed",
+   "hypothesis": "the README's training labels cost accuracy",
+   "factor": "Training labels",
+   "setting": "README-literal (syrip_for_train.zip)",
+   "baseline": "rt_fidip"
+  },
+  "mmp_vith256_realonly": {
+   "label": "ViTPose-H 256, real only",
+   "role": "ablation",
+   "slot": 0,
+   "macro": "MmpVitHReal",
+   "run_ids": [
+    "R122_mmp-vitpose-h256_realonly_s1"
+   ],
+   "what_changed": "train on the 200 real images only (no synthetic), ViTPose-H 256",
+   "hypothesis": "synthetic SyRIP images still help the selected backbone",
+   "factor": "Training data",
+   "setting": "real only (200), ViTPose-H 256",
+   "baseline": "mmp_vith256_base"
   }
  }
 }

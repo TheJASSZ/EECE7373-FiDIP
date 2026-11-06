@@ -515,7 +515,8 @@ class ReportInterface:
                 outcome = TBD if d is None else (f"above {what}" if d > 0 else f"not above {what}")
             nums = sorted({x[:4] for x in r["run_ids"]})
             idtxt = (nums[0] if len(nums) == 1 else f"{nums[0]}--{nums[-1]}") if nums else "---"
-            rows.append([idtxt, stream, tex(r["what_changed"] or ""), str(r["n_runs"]), pm(r["val400_AP"], r["val400_AP_std"]),
+            rows.append([idtxt, stream, tex(r["what_changed"] or ""), str(r["n_runs"]),
+                         "---" if r["role"] == "failed" else pm(r["val400_AP"], r["val400_AP_std"]),
                          v(signed(d)) if d is not None else "---", pm(r["test100_AP"], r["test100_AP_std"])
                          if r["test100_reported"] else "---", outcome])
         self._tabular(p, ["Every attempt (chronological by RUN_ID), Val400 selection; Test100 only for reproduction targets / "
@@ -549,18 +550,18 @@ class ReportInterface:
         for key, name, inp in (("mmp_hrnet_base", "HRNet-W48 + DARK (control)", "384$\\times$288"),
                                ("mmp_vitl256_base", "ViTPose-L", "256$\\times$192"),
                                ("mmp_vitl384_base", "ViTPose-L", "384$\\times$288"),
+                               ("mmp_vith256_base", "ViTPose-H (selected)", "256$\\times$192"),
                                ("mmp_vith384_base", "ViTPose-H", "384$\\times$288")):
             g = self.group(key)
             if not g:
-                bb.append([name, inp] + [TBD] * 6)
+                bb.append([name, inp] + [TBD] * 4)
                 continue
             sv = c.config_summary(g, "val400")
             st = c.config_summary(g, "test100")
-            bb.append([name, inp, v(g.get("params_m")), pm(sv["AP"], sv["AP_std"]), v(num1(sv["AP_80_95"])),
-                       str(sv["n_runs"]) if sv["n_runs"] else TBD, pm(st["AP"], st["AP_std"]) if st["n_runs"] else "---",
-                       v(g.get("gpuh_per_run"))])
-        self._tabular(p, ["Controlled backbone comparison under one MMPose recipe (Val400 selection)."], "@{}llccccc c@{}",
-                      ["Backbone & Input & Params (M) & Val400 AP & Val400 AP$_{80:95}$ & Seeds & Test100 AP & GPU-h/run\\\\"], bb)
+            bb.append([name, inp, pm(sv["AP"], sv["AP_std"]), v(num1(sv["AP_80_95"])),
+                       str(sv["n_runs"]) if sv["n_runs"] else TBD, pm(st["AP"], st["AP_std"]) if st["n_runs"] else "---"])
+        self._tabular(p, ["Controlled backbone comparison under one MMPose recipe (Val400 selection)."], "@{}llcccc@{}",
+                      ["Backbone & Input & Val400 AP & Val400 AP$_{80:95}$ & Seeds & Test100 AP\\\\"], bb)
         written.append(p)
 
         # ablations: configs with factor/setting/baseline

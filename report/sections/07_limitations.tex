@@ -3,6 +3,7 @@
 \begin{itemize}[leftmargin=*]
   \item \textbf{A 100-image test set.} About $\pm$\res{test.resolution}~AP is the smallest Test100 difference our paired design resolves, and a single-seed Val400 AP has a CI of about $\pm$\res{val.single.ci}.
   Screening on one seed is therefore coarse, which is why the confirmatory test uses five fresh seeds per arm.
+  \item \textbf{CIs condition on the trained models.} The bootstrap resamples images with the seeds (and trained models) fixed, so the CIs understate configuration-level uncertainty, such as variation from retraining or from recipe choices.
   \item \textbf{GT boxes only.} Like the published work, we evaluate with ground-truth person boxes. With a detector, zero-shot adult models reach only about 42~AP on SyRIP~\citep{gama2025seven}, and our demo shows confidences falling sharply with detector boxes (\cref{sec:demo}).
   \item \textbf{Selection set.} Val400 is validate500 minus the complex poses, with tighter boxes than Test100. It may favour models that are good on easier poses, although the rank correlation (\cref{sec:thresholds}) suggests the ranking transfers.
   \item \textbf{Reproduction scope.} Our retrains select epochs on Val400, whereas the released loop selects on Test100. They also train on the official labels, while the README points to a mislabelled file. The paper's recipe was run once.

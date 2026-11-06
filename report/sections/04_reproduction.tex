@@ -30,7 +30,7 @@ The same predictions score \res{rel.fidip.test.ap.fixed}~AP under the \texttt{fi
 
 \subsection{Retraining FiDIP and the domain-adaptation ablation}\label{sec:retrain}
 
-\paragraph{Recipe.} We retrained with the released code and yaml plus two command-line overrides (D5): \code{TRAIN.CHECKPOINT}, set to the COCO DarkPose weights, and \code{TRAIN.LAMBDA}, set to $5{\cdot}10^{-4}$.
+\paragraph{Recipe.} We retrained with the released code and yaml plus command-line overrides (D5): \code{TRAIN.CHECKPOINT} (the COCO DarkPose weights), \code{TRAIN.LAMBDA} ($5{\cdot}10^{-4}$), \code{TRAIN.PRE_EPOCH} (10), \code{DATASET.TEST_SET} (\code{val400}, so the per-epoch selection never sees Test100) and \code{SEED}.
 The classifier pre-stage runs for 10 epochs (as in \code{_custom.yaml}) on the shipped adult set; the best Val400 epoch is kept; the same recipe with $\lambda=0.0$ isolates domain adaptation; each arm has \res{rt.seeds} seeds.
 
 \paragraph{FiDIP reproduces.} The FiDIP retrains score \resms{rt.fidip.test.ap}~AP on Test100 at the Val400-selected epoch, and \res{rt.fidip.test.ap.final.mean}\,{\footnotesize$\pm$\,\res{rt.fidip.test.ap.final.sd}} at the final epoch. On Val400 they score \resms{rt.fidip.val.ap}.
@@ -41,11 +41,11 @@ Paired with the released checkpoint on the same images, the difference is \res{r
 FiDIP minus fine-tuning is \res{rt.delta.test.ap}~AP, 95\% CI [\res{rt.delta.test.ci.lo}, \res{rt.delta.test.ci.hi}].
 The paper's +0.9~AP from domain adaptation (92.7 to 93.6) is therefore \emph{not} reproduced. The adversarial term neither helps nor hurts measurably at $n=100$.
 
-Our $\lambda=0$ runs still contain the classifier pre-stage, so we also ran the paper-faithful plain fine-tune without it (\code{PRE_EPOCH} 0, R021--R023, D21). It scores \resms{rt.ftnp.test.ap}~AP on Test100 and \resms{rt.ftnp.val.ap} on Val400.
+Our $\lambda=0$ runs still contain the classifier pre-stage, so we also ran the paper-faithful plain fine-tune without it (\code{PRE_EPOCH} 0, R021--R023, D21). This control (repro-3) was registered at 07:23 EST, after the R010--R015 Test100 results were known; it is a reproduction control and feeds no selection. It scores \resms{rt.ftnp.test.ap}~AP on Test100 and \resms{rt.ftnp.val.ap} on Val400.
 
 \paragraph{Other reproduction attempts} (Val400, one seed; all in \cref{tab:attempts}).
 \begin{itemize}[leftmargin=*]
-  \item \textbf{$\lambda$ sweep.} Accuracy falls monotonically as $\lambda$ grows: $10^{-4}$ scores \res{rt.sweep.l1e4}, $2{\cdot}10^{-3}$ \res{rt.sweep.l2e3}, and $10^{-2}$ \res{rt.sweep.l1e2} (\res{rt.sweep.l1e2.final} by the last epoch), against \resms{rt.fidip.val.ap} at $5{\cdot}10^{-4}$.
+  \item \textbf{$\lambda$ sweep.} For $\lambda\ge10^{-4}$, accuracy falls monotonically as $\lambda$ grows: $10^{-4}$ scores \res{rt.sweep.l1e4}, $2{\cdot}10^{-3}$ \res{rt.sweep.l2e3}, and $10^{-2}$ \res{rt.sweep.l1e2} (\res{rt.sweep.l1e2.final} by the last epoch), against \resms{rt.fidip.val.ap} at $5{\cdot}10^{-4}$.
   \item \textbf{The paper's recipe} (Adam $10^{-3}$, 100 epochs, batch 64; R019) peaks at \res{rt.paper.val.best} at epoch \res{rt.paper.bestepoch}, then overfits, ending at \res{rt.paper.val.final}. It explains no gap: the shipped yaml already reproduces 93.6.
   \item \textbf{The README-literal training labels} (R020, the MINI-RGBD labels on the synthetic images) score \res{rt.readme.val.ap}, which is \res{rt.readme.delta}~AP against the retrains with the official labels.
 \end{itemize}
@@ -62,6 +62,6 @@ The data invite overfitting in two ways: each of the 200 real images is seen abo
 \begin{figure}[t]
   \centering
   \GenFigure[width=0.78\linewidth]{curves_fidip}{per-epoch training loss, Val400 AP (and domain loss) for the FiDIP and fine-tune retrains, all seeds}
-  \caption{Retrain curves: per-epoch training loss, Val400 loss and Val400 AP for all seeds. Test100 was never evaluated per epoch.}
+  \caption{FiDIP retrain curves (R010--R012, $\lambda=5{\cdot}10^{-4}$): per-epoch training loss, Val400 loss and Val400 AP for all seeds. Test100 was never evaluated per epoch.}
   \label{fig:curves}
 \end{figure}

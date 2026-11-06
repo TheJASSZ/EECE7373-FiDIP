@@ -1,7 +1,7 @@
 \section{Reproduction commands}\label{app:commands}
 
 All commands run from the repository root. Cluster commands run in \code{/scratch/purohitham.v/fidip/repo}, which is kept in sync with \code{scripts/sync_to_cluster.sh}.
-\code{README.md} has the full, current sequence, and each run's exact command is recorded in its \code{run.json} and in \code{MANIFEST.md}.
+\code{MANIFEST.md}~\S10 has the full, tested sequence, and each run's exact command is recorded in its \code{run.json}.
 
 \begin{lstlisting}[language=bash]
 # 0. access (SKILL.md): passwordless key, host alias "explorer"; never compute on the login node
@@ -15,10 +15,12 @@ sbatch scripts/slurm/build_env_analysis.sbatch       # numpy 1.26.4 + pycocotool
 sbatch scripts/slurm/get_data.sbatch
 # 3. checkpoints (SHA256 in MANIFEST.md section 4)
 sbatch scripts/slurm/get_ckpts_mmpose.sbatch; sbatch scripts/slurm/prep_ckpts_mmpose.sbatch
-# 4. FiDIP retrain = the README command plus the two overrides it needs (one seed shown)
+# 4. FiDIP retrain = the README command plus the overrides it needs (one seed shown; MANIFEST section 10)
+#    without DATASET.TEST_SET val400 the upstream loop would select model_best on Test100
 python tools/train_adaptive_model_hrnet.py \
   --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml \
-  TRAIN.CHECKPOINT models/coco/w48_384x288.pth TRAIN.LAMBDA 0.0005   # 0.0 = fine-tune ablation
+  TRAIN.CHECKPOINT models/coco/w48_384x288.pth TRAIN.LAMBDA 0.0005 \
+  TRAIN.PRE_EPOCH 10 DATASET.TEST_SET val400 SEED <s>        # LAMBDA 0.0 = fine-tune ablation
 # 5. MMPose run (Val400 selection inside; never touches Test100)
 sbatch --export=ALL,RUN_ID=<RUN_ID>,CONFIG=mmpose_exps/configs/<config>.py,SEED=1 \
   scripts/slurm/train_mmpose.sbatch
@@ -36,7 +38,7 @@ bash report/build.sh                                                # -> report/
 
 Six details of the upstream code matter for anyone reproducing it:
 \begin{enumerate}[label=(\roman*), leftmargin=*]
-  \item The literal README command is plain fine-tuning from random weights (\cref{sec:fidip}). We pass \code{TRAIN.CHECKPOINT} and \code{TRAIN.LAMBDA} on the command line rather than editing code.
+  \item The literal README command is plain fine-tuning from random weights (\cref{sec:fidip}). We pass \code{TRAIN.CHECKPOINT}, \code{TRAIN.LAMBDA}, \code{TRAIN.PRE_EPOCH}, \code{DATASET.TEST_SET} and \code{SEED} on the command line rather than editing code.
   \item The loader always builds the adult \code{train_pre_infant} set, even when \code{PRE_EPOCH} is 0.
   \item \code{lib/dataset/syrip.py} skips evaluation for any split whose name contains ``test''.
   \item \code{tools/test_adaptive_model.py} loads weights with \code{strict=False}, so a key-prefix mismatch would silently leave the network at its initialisation. We added a strict-load check.
@@ -75,7 +77,7 @@ The bootstrap, ensemble, taxonomy and analysis tools have their own tests in the
 
 \begin{table}[h]
   \centering\small
-  \caption{Resolved training and inference settings. Upstream values come from the released yaml and code at \texttt{a76b4f4}, plus the two command-line overrides. MMPose values come from the dumped configs of the selected runs.}
+  \caption[Resolved training and inference settings]{Resolved training and inference settings. Upstream values come from the released yaml and code at \texttt{a76b4f4}, plus the command-line overrides (\code{TRAIN.CHECKPOINT}, \code{TRAIN.LAMBDA}, \code{TRAIN.PRE_EPOCH}, \code{DATASET.TEST_SET}, \code{SEED}). MMPose values come from the dumped configs of the selected runs.}
   \label{tab:hparams}
   \GenTable{tab_hparams}{resolved hyperparameters of every arm}
 \end{table}

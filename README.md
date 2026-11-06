@@ -17,8 +17,10 @@ SyRIP Test100, GT person boxes, flip test. Metrics are `eval_coco.py` under the 
 |---|---|---|---|
 | DarkPose + FiDIP, HRNet-W48 384×288, released checkpoint (R001) | 93.6 | **93.6** [95.0]; AP50/AP75 98.5/98.5; AR 94.6 (exact match) | `results/tables/reproduction.csv` |
 | Pose-MobileNet + FiDIP, released checkpoint (R002) | 79.2 | 79.1 | `results/tables/reproduction.csv` |
+| DarkPose HRNet-W48, COCO only, no infant training (R003) | 88.5 | 88.5; AP50/AP75 98.5/98.5; AR 90.0 (exactly the paper's row) | `$R/runs/R003_darkpose-w48-coco_released/metrics_upstream_test100.txt` |
 | Our FiDIP retrain, λ = 5e-4, 3 seeds, Val400-selected epoch (R010–R012) | 93.6 | 93.6 ± 0.4; paired ΔAP vs. R001 −0.05 [−0.67, +0.65] | `results/tables/bootstrap_summary.csv` |
-| Same recipe without domain adaptation, λ = 0.0 (R013–R015) | 92.7 (Finetune) | 93.59 ± 0.13, so the +0.9 DA gain **does not reproduce** | `notebook/repro.md`, `AGENT.md` (11-06 07:30) |
+| Same recipe without domain adaptation, λ = 0.0 (R013–R015) | 92.7 (Finetune) | 93.6 ± 0.1 (Val400 90.8 ± 0.2); FiDIP − FT ΔAP −0.04 [−0.34, +0.20], so the +0.9 DA gain **does not reproduce** | `results/analysis_eval/R013–R015`, `results/tables/bootstrap_retrain_fidip_vs_ft_test100.json` |
+| Plain fine-tune, no classifier pre-stage, λ = 0.0 (R021–R023, repro-3) | 92.7 (Finetune) | 93.7 ± 0.2 (Val400 90.9 ± 0.2); FiDIP − plain FT ΔAP −0.15 [−0.43, +0.15] | `results/analysis_eval/R021–R023`, `results/tables/bootstrap_*` |
 | Improvement: ViTPose-H 256×192, pre-registered arm B (R136–R140, 5 fresh seeds) | — | see report §5.4 and `results/tables/main_comparison.csv` | `results/PREREGISTRATION.md` (D20) |
 
 The report's §5.4 states the published baseline, our result and the exact evaluation conditions in one place (the highlighted box).
@@ -34,7 +36,7 @@ The report's §5.4 states the published baseline, our result and the exact evalu
 | The README's `syrip_for_train.zip` puts MINI-RGBD labels on all 1000 synthetic images; its `test11.jpg` is a copy of `test24.jpg` | −1.2 Val400 AP when training on those labels (R020); −1.5 AP from the test11 copy | use `SyRIP.zip` `200R_1000S` labels and images (D17) |
 | The released training loop selects `model_best` on Test100; the README command trains from random weights with λ = 0 | the published protocol is not the README command | pass `TRAIN.CHECKPOINT` and `TRAIN.LAMBDA`; select on Val400 (D1, D5) |
 
-Sources for these figures: `report/generated/numbers.tex` and `report/generated/manual_numbers.tex`, mirrored in `results/tables/provenance.csv`.
+Sources for these figures: `report/generated/numbers.tex` (mirrored in `results/tables/provenance.csv`) and `report/generated/manual_numbers.tex` (mirrored in `results/tables/provenance_manual.csv`).
 
 ## Quickstart (STUDENT_GUIDE Parts 1–6)
 
@@ -57,13 +59,13 @@ The complete, tested command sequence is **[MANIFEST.md §10 "Reproduce everythi
 
 **Part 3: pretrained models.** `sbatch scripts/slurm/get_models.sbatch` fetches `hrnet_fidip.pth`, `mobile_fidip.pth` and COCO `w48_384x288.pth` with a strict-load check. `sbatch scripts/slurm/get_ckpts_mmpose.sbatch` fetches the MMPose COCO checkpoints.
 
-**Part 4: train.** The FiDIP retrain is the upstream README command plus the two overrides it needs. Note that λ must be a float:
+**Part 4: train.** The FiDIP retrain is the upstream README command plus the overrides it needs: `TRAIN.CHECKPOINT`, `TRAIN.LAMBDA`, `TRAIN.PRE_EPOCH`, `DATASET.TEST_SET` (Val400, so selection never sees Test100) and `SEED`. Note that λ must be a float:
 ```bash
 python tools/train_adaptive_model_hrnet.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml \
-  TRAIN.CHECKPOINT models/coco/w48_384x288.pth TRAIN.LAMBDA 0.0005 TRAIN.PRE_EPOCH 10 DATASET.TEST_SET val400
+  TRAIN.CHECKPOINT models/coco/w48_384x288.pth TRAIN.LAMBDA 0.0005 TRAIN.PRE_EPOCH 10 DATASET.TEST_SET val400 SEED 1
 ```
 On the cluster this is wrapped by `scripts/slurm/train_fidip_pack.sbatch`, which packs 3 seeds on one H200; the exact lines are in MANIFEST §10.
-MMPose runs: `bash scripts/launch_mmpose.sh <RUN_ID> mmpose_exps/configs/<config>.py <seed> "" -p gpu --gres=gpu:h200:1`.
+MMPose runs: `bash scripts/launch_mmpose.sh <RUN_ID> mmpose_exps/configs/<config>.py <seed> "" -p sharing --gres=gpu:l40s:1 -t 00:58:00` (the MMPose arms ran on L40S, as recorded per run).
 Over- and underfitting are monitored with the per-epoch `epochs.csv` (train loss, Val400 loss and AP); curves are in `results/figures/curves/`.
 
 **Part 5: test.**
@@ -92,7 +94,7 @@ python3 report/check_bib.py report/refs.bib                           # re-verif
 
 ### Where this repo differs from the STUDENT_GUIDE and upstream
 - The guide's `fidip_simple.yml`, `gpu_test.py`, `tools/demo.py` and `tools/streamlit_demo.py` are **not in upstream**. We wrote `gpu_test.py` and both demos from the guide's documented interface. The env is pip-only instead of `fidip_simple.yml`.
-- Run literally, the upstream README training command trains from random weights with λ = 0. **It needs `TRAIN.CHECKPOINT` and `TRAIN.LAMBDA`** (and `TRAIN.PRE_EPOCH 10` for the classifier pre-stage).
+- Run literally, the upstream README training command trains from random weights with λ = 0. **It needs `TRAIN.CHECKPOINT` and `TRAIN.LAMBDA`**, plus `TRAIN.PRE_EPOCH 10` for the classifier pre-stage and `DATASET.TEST_SET val400` so that `model_best` is not chosen on Test100.
 - The main SyRIP zips downloaded **without a password**; only Expanded SyRIP is protected. The adult `train_pre_infant` set ships inside `syrip_for_train.zip`.
 - Upstream patches P1–P11 are separate commits, listed in MANIFEST §6.
 
