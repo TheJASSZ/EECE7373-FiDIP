@@ -28,6 +28,7 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 | D17 | 11-05 21:07 | **Train on SyRIP.zip `200R_1000S` labels, not syrip_for_train.zip's train JSON.** Score test images from SyRIP.zip. D7 revised: `train_pre_infant` **is** shipped, so PRE_EPOCH 10 uses the real adult set. | syrip_for_train (2024) has identical image bytes but MINI-RGBD labels on all 1000 synthetic entries (median 191 px off), and its test11.jpg is a copy of test24.jpg. Optional attempt R020 quantifies what training on the README-literal labels costs. |
 | D18 | 11-06 01:05 | **Stagger agents and economize tokens.** The report worker only gets bounded tasks until results are final. An hourly heartbeat resumes workers stopped by usage limits. | All four parallel workers hit the 5-hour API usage cap together (~22:xx on 11-05). Slurm jobs survived, but orchestration stalled until a human came back. |
 | D19 | 11-06 01:26 | **Jobs run from per-job code snapshots.** `sync_to_cluster.sh` unpacks to a staging dir and copies it in with an atomic per-file rsync rename. | Concurrent tar syncs rewrote `$R/repo` scripts in place while jobs were executing them. bash reads scripts incrementally, so running jobs truncated or misbehaved. This likely explains repro's "final line never ran" at the R001→R002 boundary; the analysis worker found the cause. |
+| D20 | 11-06 07:06 | **Pre-registration imp-1…4** (`results/PREREGISTRATION.md`, commit 72f9449, erratum 3957509).<br>• Arm A: HRNet-W48 DARK 384, R131–R135. Arm B: ViTPose-H 256, R136–R140. Both on 5 *fresh* seeds s2–s6 and an identical recipe.<br>• Checkpoint per seed: the best-Val400 epoch.<br>• Secondary: R141 = B ensemble. Supplementary: R101, R105.<br>• Decision rule H1: mean B > 93.6, **and** the paired-bootstrap CI vs the released FiDIP excludes 0 under both protocols, after Holm correction over C1–C4. | Screening on Val400: ViT-H 256 scores 93.17 vs HRNet 91.52, with single-seed noise of about ±0.2. ViT-H 384 (93.27) is within noise and needs about 2× the compute and 80 GB GPUs. **Fresh seeds are used instead of the improve worker's proposal (s1 + 4 new)**, because s1 won the selection and would carry winner's-curse bias. |
 
 ---
 
@@ -357,3 +358,20 @@ The literature-scan Explore agent is still running. Its findings will be forward
 
   - **Ablations** (eval_coco): real-only (R120) scores 92.24, so synthetic data adds about +0.6. Rotation ±180 (R121) scores 92.58, no gain.
   - The improve worker is asked for the final table and a pre-registration recommendation.
+
+### 2026-11-06 07:11 EST — Screening complete → pre-registration (D20); a gate slip caught and fixed
+- **Improve worker's final screening** (Val400, eval_coco, seed 1):
+  - ViT-H 384 93.27, **ViT-H 256 93.17**, ViT-L 256 92.81, ViT-L 384 92.77, HRNet 91.52.
+  - LR sweeps are flat (±0.2 noise). ViT-H peaks early (epochs 13–14).
+  - Ablations on ViT-L 256: real-only −0.57 (synthetic data helps), rotation ±180 −0.23 (noise).
+  - Flip-TTA adds +0.24 to +0.69 on every model.
+  - Zero-shot COCO models score 86.3–88.8.
+- **Pre-registration committed at 07:06** (D20), before any Test100 evaluation of MMPose runs.
+- **Slip (my error):**
+  - I wrote the selection evidence as a markdown table. The gate parser `scripts/prereg.py` reads *every* table row as a registration, so screening runs **R102, R103 and R104 became Test100-eligible**.
+  - The same commit also wrote the ensemble ID (`R141.`) in a form the parser doesn't match.
+  - My own post-commit gate check (an assertion that unregistered IDs stay blocked) caught it right away.
+  - **Fix:** erratum commit 3957509 (evidence as bullets, R141 token fixed). The allowed set is now exactly {released, R010–R015, R101, R105, R131–R141}.
+  - **Checked:** no Test100 predictions or metrics exist for any unregistered run.
+  - The analysis worker was told to hold Test100 work until the corrected file is verified on the cluster.
+  - **Lesson:** a machine-parsed protocol file needs its parse checked after *every* edit. That check is what caught this.
