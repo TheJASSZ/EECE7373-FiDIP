@@ -64,7 +64,8 @@ def save(fig, out_base, formats=("pdf", "png")):
     paths = []
     for ext in formats:
         p = f"{out_base}.{ext}"
-        fig.savefig(p)
+        # deterministic files: no creation timestamp, so an unchanged figure is byte-identical in git
+        fig.savefig(p, metadata={"CreationDate": None} if ext == "pdf" else None)
         paths.append(p)
     plt.close(fig)
     return paths

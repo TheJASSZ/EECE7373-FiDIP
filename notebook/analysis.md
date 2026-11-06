@@ -220,3 +220,18 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
 **Report interface:** `scripts/report_interface.py` (called by `collect_results.py`) fills `report/generated/numbers.tex` (33/85 keys set so far; the rest are `\tbd` pending retrains and finalists), 9 `tab_*.tex` tabulars, `results/tables/provenance.csv`, and `report/figures/generated/{oks_thresholds, per_keypoint, qual_success, qual_failure, val_vs_test}`.
 **Infra bug found and fixed:** two analysis jobs ended silently mid-script with exit 0, at different points. Cause: other streams' `sync_to_cluster.sh` re-extracts `$R/repo` while jobs run, and bash reads scripts incrementally. Every analysis job now runs from a private snapshot (`$R/analysis/snapshots/<jobid>/`), which also pins one code version per job.
 **Pre-registration parser:** a shared `scripts/prereg.py` expands "R010-R012" ranges and skips rows marked "no Test100". So R010–R015 are registered and R016–R020 are Val400-only, as written; the earlier naive parser would have allowed R016–R020.
+
+### 2026-11-06 06:59 EST: FiDIP retrains R010–R012 (λ = 5e-4): reproduction, both checkpoint rules, over/underfitting
+- `eval-all` jobs 11670953 and 11671005: all 21 run/split pairs (the tagged best/final ones included) match upstream's printout.
+- **Test100 AP, best-Val400 checkpoint** (pre-registered rule a): 93.85 / 93.74 / 93.07, **mean 93.6 ± 0.4**, the same as the published 93.6 and the released checkpoint's 93.6.
+  - fixed: 95.1 ± 0.5
+  - Test100-clean: 92.8 ± 0.4 (clean-fixed 95.0 ± 0.4)
+  - Val400: 90.5 ± 0.1
+- **Final-epoch checkpoint** (rule b): 93.4 ± 0.5; Val400 90.4 ± 0.3. Seed 1's best epoch *is* epoch 20, so rules (a) and (b) coincide for it.
+- So Val400-selected retrains reproduce FiDIP exactly, and the Test100-selection worry about the released checkpoint does not show up at this resolution.
+- **Over/underfitting** (`report/figures/generated/curves_fidip`, `results/tables/training_curves_fidip_retrain.csv`):
+  - Train pose MSE falls monotonically, 4.5e-4 → 2.8e-4. Val400 MSE drops until about epoch 6, then sits flat at about 3.8e-4; its minimum is at epochs 16 / 13 / 10.
+  - So the train–val loss gap widens (about 1.0e-4 at epoch 20): mild overfitting *in loss*.
+  - Val400 AP, the selection metric, rises to about 90.0 by epoch 9 and then creeps to 90.4–90.6. The best epochs are 20 / 19 / 18 of 20, and the final-minus-best gap is ≤ 0.33 AP. There is no overfitting in AP within the 20-epoch budget.
+  - The LR is a constant 1e-4 (the yaml's LR steps at 40/200 are never reached). More epochs alone would add at most a few tenths. A late LR decay, or stronger augmentation to narrow the loss gap, is the more promising lever. The flat Val400 MSE while AP still improves also shows heatmap MSE is a poor proxy for keypoint AP.
+- R013–R015 (λ = 0) failed upstream and are being resubmitted by repro. Their table rows stay `\tbd`.
