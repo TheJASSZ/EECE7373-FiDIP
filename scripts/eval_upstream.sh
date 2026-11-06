@@ -39,6 +39,6 @@ for SET in "$@"; do
   } > "$RUN_DIR/metrics_upstream_${SET}${sfx}.txt"
   cat "$RUN_DIR/metrics_upstream_${SET}${sfx}.txt" | tail -3
   python3 -I $R/repo/scripts/write_run_json.py --run-dir "$RUN_DIR" --run-id "$RUN_ID" --cmd "cd $UP && $CMD" \
-    --set "eval_seconds_${SET}${sfx}=$(( $(date +%s) - t0 ))"
+    --set "eval_seconds_${SET}${sfx}=$(( $(date +%s) - t0 ))" --stamp end
 done
 python3 -I $R/repo/scripts/write_run_json.py --run-dir "$RUN_DIR" --run-id "$RUN_ID" --stamp end
