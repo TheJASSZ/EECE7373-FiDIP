@@ -1,0 +1,17 @@
+a,b,factor,category,n,mean_delta_oks,ci_lo,ci_hi,share_of_total_gain
+rel_fidip_w48,mmp_vith256_base,inplane,upright,33,0.00430006,-0.000325396,0.00938061,0.127067
+rel_fidip_w48,mmp_vith256_base,inplane,sideways,65,0.0143241,0.00854137,0.0203728,0.833729
+rel_fidip_w48,mmp_vith256_base,inplane,inverted,2,0.0218903,-0.000432558,0.0442132,0.0392037
+rel_fidip_w48,mmp_vith256_base,posture,supine,43,0.0113528,0.00379182,0.0194481,0.437138
+rel_fidip_w48,mmp_vith256_base,posture,prone,41,0.0124382,0.00678537,0.0181099,0.456652
+rel_fidip_w48,mmp_vith256_base,posture,sitting,11,0.00990739,0.00164236,0.0198262,0.0975882
+rel_fidip_w48,mmp_vith256_base,posture,standing,5,0.00192585,-0.0049536,0.0120123,0.0086226
+rel_fidip_w48,mmp_vith256_base,occ_bin,0,93,0.0116703,0.00730539,0.0164254,0.971878
+rel_fidip_w48,mmp_vith256_base,occ_bin,1,3,0.00439971,0.000269082,0.00877786,0.0118193
+rel_fidip_w48,mmp_vith256_base,occ_bin,≥2,4,0.00455158,-0.0331416,0.0376766,0.016303
+rel_fidip_w48,mmp_vith256_base,scale_bin,small,34,0.0120315,0.00422125,0.0205243,0.366305
+rel_fidip_w48,mmp_vith256_base,scale_bin,medium,33,0.014297,0.00625845,0.0226731,0.422478
+rel_fidip_w48,mmp_vith256_base,scale_bin,large,33,0.00714777,0.0022058,0.0125559,0.211217
+rel_fidip_w48,mmp_vith256_base,view,front,60,0.00764315,0.00276695,0.0127521,0.410647
+rel_fidip_w48,mmp_vith256_base,view,back,28,0.0162318,0.00999389,0.023162,0.406977
+rel_fidip_w48,mmp_vith256_base,view,profile,12,0.0169723,-0.000603961,0.0368071,0.182376

@@ -573,7 +573,7 @@
   "test100_AP_fixed": 95.02080176375323,
   "test100_reported": true,
   "test100_rule": "pre-registered",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 28,
@@ -598,7 +598,7 @@
   "test100_AP_fixed": 96.95253279059587,
   "test100_reported": true,
   "test100_rule": "pre-registered",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 29,
@@ -619,7 +619,7 @@
   "test100_AP_fixed": 97.38956443095742,
   "test100_reported": true,
   "test100_rule": "pre-registered",
-  "status": "unregistered"
+  "status": "completed"
  },
  {
   "attempt": 30,
@@ -640,7 +640,7 @@
   "test100_AP_fixed": 89.91537204842402,
   "test100_reported": true,
   "test100_rule": "released/retrain (reproduction target)",
-  "status": "unregistered"
+  "status": "completed"
  },
  {
   "attempt": 31,
@@ -663,7 +663,7 @@
   "test100_AP_fixed": 95.07869975007549,
   "test100_reported": true,
   "test100_rule": "released/retrain (reproduction target)",
-  "status": "unregistered"
+  "status": "completed"
  },
  {
   "attempt": 32,
@@ -726,7 +726,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 35,

@@ -1,5 +1,12 @@
 model,key,run_ids,n_images_with_swap,images,n_eyes,n_ears,n_shoulders,n_elbows,n_wrists,n_hips,n_knees,n_ankles
 FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,1,test41.jpg,0,0,0,0,0,0,1,1
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,5,test5.jpg;test10.jpg;test41.jpg;test49.jpg;test53.jpg,0,1,1,0,0,0,2,4
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,1,test41.jpg,0,0,0,0,0,0,1,1
 "FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,1,test41.jpg,0,0,0,0,0,0,1,1
 "Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,1,test41.jpg,0,0,0,0,0,0,1,1
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,1,test41.jpg,0,0,0,0,0,0,1,1
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,1,test41.jpg,0,0,0,0,0,0,1,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,1,test41.jpg,0,0,0,0,0,0,1,1
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,1.4,test41.jpg;test49.jpg,0,0.4,0,0,0,0,1,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,2,test41.jpg;test49.jpg,0,1,0,0,0,0,1,1
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,1,test41.jpg,0,0,0,0,0,0,1,1

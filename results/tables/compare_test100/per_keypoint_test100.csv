@@ -16,3 +16,37 @@ FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,left_knee,100,0
 FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,right_knee,100,0.0334809,0.0260743,0.0428636,0.86,0.95,0.98
 FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,left_ankle,100,0.045258,0.0352053,0.0569079,0.74,0.91,0.97
 FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,right_ankle,100,0.035203,0.0281206,0.0429441,0.82,0.94,1
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,nose,100,0.00949812,0.00812363,0.0110134,1,1,1
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,left_eye,100,0.00733041,0.00617103,0.0084608,1,1,1
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,right_eye,100,0.00938938,0.00773121,0.0112956,0.99,1,1
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,left_ear,100,0.0233846,0.0175954,0.0303221,0.89,0.97,0.99
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,right_ear,100,0.0202764,0.0164662,0.024968,0.93,0.99,1
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,left_shoulder,100,0.0255004,0.021901,0.029498,0.88,1,1
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,right_shoulder,100,0.0242985,0.0212887,0.0277646,0.91,1,1
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,left_elbow,100,0.0301288,0.0230606,0.0384254,0.86,0.95,0.98
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,right_elbow,100,0.0283264,0.022996,0.0351166,0.84,0.96,1
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,left_wrist,100,0.0350837,0.0235689,0.049419,0.87,0.91,0.96
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,right_wrist,100,0.0228261,0.0178101,0.0289368,0.93,0.96,1
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,left_hip,100,0.048681,0.0410414,0.0575229,0.68,0.9,0.99
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,right_hip,100,0.046114,0.0397358,0.0528155,0.67,0.91,1
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,left_knee,100,0.0382284,0.0290161,0.0484166,0.8,0.95,0.97
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,right_knee,100,0.0320525,0.0249748,0.0414941,0.9,0.94,0.98
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,left_ankle,100,0.0399757,0.0315908,0.0495335,0.8,0.89,0.98
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,right_ankle,100,0.0323592,0.0257296,0.04027,0.87,0.95,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,nose,100,0.00998932,0.00830761,0.011805,0.99,1,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,left_eye,100,0.00840664,0.00705245,0.00981059,1,1,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,right_eye,100,0.0104534,0.00848389,0.0127942,0.99,1,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,left_ear,100,0.0236919,0.0180148,0.0305744,0.91,0.96,0.99
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,right_ear,100,0.0198637,0.0160894,0.0242849,0.92,0.99,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,left_shoulder,100,0.0256496,0.0223122,0.0288735,0.91,1,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,right_shoulder,100,0.0243903,0.0211737,0.0277422,0.94,1,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,left_elbow,100,0.0282341,0.0228325,0.0341842,0.88,0.95,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,right_elbow,100,0.028902,0.0236649,0.0346829,0.85,0.96,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,left_wrist,100,0.0267745,0.0190574,0.0356761,0.89,0.95,0.98
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,right_wrist,100,0.0209523,0.01698,0.0257043,0.93,0.98,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,left_hip,100,0.0434045,0.0365829,0.0511128,0.74,0.94,0.99
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,right_hip,100,0.042068,0.0362015,0.0481494,0.7,0.95,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,left_knee,100,0.0307643,0.0245195,0.0385722,0.86,0.95,0.99
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,right_knee,100,0.0314554,0.0247342,0.0407025,0.87,0.96,0.99
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,left_ankle,100,0.0307376,0.0254352,0.0373643,0.86,0.96,0.99
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,right_ankle,100,0.0300743,0.0238241,0.0385553,0.88,0.98,0.99

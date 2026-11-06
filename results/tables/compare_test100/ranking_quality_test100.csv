@@ -1,9 +1,26 @@
 model,key,run_id,spearman_score_oks,AP_oracle_paper,AP_paper,ranking_loss_paper,AP_oracle_fixed,AP_fixed,ranking_loss_fixed
 FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,0.658926,0.943134,0.93605,0.0070839,0.955446,0.949891,0.00555413
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,0.206529,0.840908,0.791367,0.0495406,0.849505,0.798414,0.0510907
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,0.707771,0.894781,0.884569,0.0102127,0.909901,0.899154,0.0107473
 "FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1,0.654749,0.946588,0.938525,0.00806366,0.959406,0.953345,0.0060612
 "FiDIP retrain, lambda 5e-4",rt_fidip,R011_fidip-w48_lambda5e-4_s2,0.686769,0.945513,0.937372,0.00814093,0.959406,0.954158,0.00524783
 "FiDIP retrain, lambda 5e-4",rt_fidip,R012_fidip-w48_lambda5e-4_s3,0.720252,0.937566,0.930678,0.00688808,0.950495,0.945753,0.00474242
 "Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1,0.67994,0.941485,0.934785,0.00669978,0.954455,0.948936,0.00551989
 "Fine-tune retrain, lambda 0",rt_ft,R014_fidip-w48_lambda0_s2,0.646133,0.94593,0.937362,0.00856815,0.959406,0.953311,0.00609478
 "Fine-tune retrain, lambda 0",rt_ft,R015_fidip-w48_lambda0_s3,0.711419,0.942885,0.935536,0.00734915,0.954455,0.95003,0.00442575
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1,0.675848,0.945497,0.936376,0.00912043,0.955446,0.950023,0.00542276
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R022_fidip-w48_ft-noprestage_s2,0.637492,0.948091,0.939438,0.00865337,0.959406,0.953072,0.00633441
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R023_fidip-w48_ft-noprestage_s3,0.732481,0.941902,0.935213,0.00668847,0.953465,0.949267,0.00419866
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2,0.687897,0.943592,0.935981,0.00761182,0.956436,0.950627,0.00580834
+HRNet-W48 DARK 384 (arm A),arm_a,R132_mmp-hrnetw48_conf_s3,0.711803,0.945769,0.9386,0.0071695,0.957426,0.952122,0.00530406
+HRNet-W48 DARK 384 (arm A),arm_a,R133_mmp-hrnetw48_conf_s4,0.712463,0.943592,0.936145,0.00744699,0.956436,0.950374,0.00606128
+HRNet-W48 DARK 384 (arm A),arm_a,R134_mmp-hrnetw48_conf_s5,0.713879,0.940007,0.932623,0.00738412,0.953465,0.947959,0.00550681
+HRNet-W48 DARK 384 (arm A),arm_a,R135_mmp-hrnetw48_conf_s6,0.712463,0.94163,0.934703,0.00692659,0.955446,0.949958,0.00548734
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,0.653417,0.958204,0.946898,0.0113056,0.971287,0.967457,0.00383011
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2,0.586235,0.964587,0.953542,0.0110451,0.976238,0.972345,0.00389261
+ViTPose-H 256 (arm B),arm_b,R137_mmp-vitpose-h256_conf_s3,0.680888,0.960556,0.951714,0.00884134,0.972277,0.967795,0.00448189
+ViTPose-H 256 (arm B),arm_b,R138_mmp-vitpose-h256_conf_s4,0.585887,0.961241,0.951479,0.00976205,0.973267,0.969065,0.0042024
+ViTPose-H 256 (arm B),arm_b,R139_mmp-vitpose-h256_conf_s5,0.611941,0.961137,0.950321,0.0108159,0.974257,0.969394,0.00486313
+ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,0.628575,0.961733,0.951661,0.0100727,0.973267,0.969027,0.00424026
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,0.641392,0.966746,0.956989,0.00975701,0.977228,0.973896,0.00333208
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,0.687525,0.946528,0.93899,0.00753817,0.959406,0.953439,0.0059668
