@@ -375,3 +375,21 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - **Checked:** no Test100 predictions or metrics exist for any unregistered run.
   - The analysis worker was told to hold Test100 work until the corrected file is verified on the cluster.
   - **Lesson:** a machine-parsed protocol file needs its parse checked after *every* edit. That check is what caught this.
+
+### 2026-11-06 07:11 EST — Gate-slip audit: no effect; reproduction statistics
+- **Analysis worker audit:** no Test100 metrics were ever computed for R102–R104.
+  - Its four jobs today ran from private snapshots whose PREREGISTRATION parsed to {R010–R015}, the pre-72f9449 version.
+  - The only post-07:06 job (11671218) ran bootstrap contrasts on explicit R010–R012 vs R001 files, not eval-all.
+  - No `preds_test100*.json` exists for R102–R104. Locally, `per_run.csv` and `report/generated` show only Val400 values for them.
+  - The cluster and local parses now agree: {R001, R010–R015, R101, R105, R131–R141}.
+  - **The slip had no effect on the protocol.**
+- **Reproduction statistics** (eval_coco, R010–R012 FiDIP retrains, 3 seeds):
+
+| Measure | Test100 AP |
+|---|---|
+| Best-Val400 checkpoint | **93.6 ± 0.4** |
+| Final epoch | 93.4 ± 0.5 |
+| `fixed` protocol | 95.1 ± 0.5 |
+| Test100-clean (95 images) | 92.8 ± 0.4 |
+
+  - Paired bootstrap, retrain vs released checkpoint: **ΔAP −0.05 [−0.67, +0.65]** (`fixed`: +0.12 [−0.61, +0.72]). They are statistically indistinguishable, so the training reproduction is successful.
