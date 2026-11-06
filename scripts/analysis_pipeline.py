@@ -31,8 +31,11 @@ import eval_coco as ev  # noqa: E402
 
 R = os.environ.get("R", "/scratch/purohitham.v/fidip")
 RUN_RE = re.compile(r"\bR\d{3}[A-Za-z0-9_.\-]*")
-TEST_LIKE = ("test100", "validate100", "validate500")
-SPLIT_RE = re.compile(r"^preds_(test100|val400|validate500|validate100)(.*)\.json$")
+TEST_LIKE = ("test100", "validate100", "validate500", "validate_infant")
+# upstream's syrip_for_train name for the Test100 images: same GT as test100.json (ids, keypoints, boxes, area
+# verified identical by repro), but its image folder has a defective test11.jpg (bytes of test24)
+SPLIT_ALIAS_GT = {"validate_infant": "test100", "validate100": "test100"}
+SPLIT_RE = re.compile(r"^preds_(test100|val400|validate500|validate100|validate_infant)(.*)\.json$")
 
 
 def sha(p):
@@ -158,7 +161,7 @@ def cmd_eval_all(a):
             rows.append({"run_id": run_id, "split": "?", "pred": pred, "status": "unrecognised file name"})
             continue
         split, tag = m.group(1), m.group(2)          # e.g. preds_val400_noflip.json -> val400, _noflip
-        gt = os.path.join(R, "data", "splits", f"{split}.json")
+        gt = os.path.join(R, "data", "splits", f"{SPLIT_ALIAS_GT.get(split, split)}.json")
         row = {"run_id": run_id, "split": split + tag, "pred": pred, "status": ""}
         if not os.path.exists(gt):
             row["status"] = f"no GT {gt}"

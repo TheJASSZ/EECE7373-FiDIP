@@ -37,3 +37,8 @@ def test_split_and_tag_parsing():
     assert m and m.group(1) == "test100" and m.group(2) == ""
     assert apl.SPLIT_RE.match("preds_validate500.json").group(1) == "validate500"
     assert apl.SPLIT_RE.match("preds_train_infant.json") is None
+
+
+def test_validate_infant_alias_is_gated_and_scored_on_test100():
+    assert apl.SPLIT_RE.match("preds_validate_infant.json").group(1) == "validate_infant"
+    assert apl.SPLIT_ALIAS_GT["validate_infant"] == "test100" and "validate_infant" in apl.TEST_LIKE
