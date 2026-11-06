@@ -393,3 +393,29 @@ The literature-scan Explore agent is still running. Its findings will be forward
 | Test100-clean (95 images) | 92.8 ± 0.4 |
 
   - Paired bootstrap, retrain vs released checkpoint: **ΔAP −0.05 [−0.67, +0.65]** (`fixed`: +0.12 [−0.61, +0.72]). They are statistically indistinguishable, so the training reproduction is successful.
+
+### 2026-11-06 07:16 EST — Analysis stream complete (waiting only on the final runs)
+- **Evaluator:** 69 pytest tests pass (locally and on the cluster). `eval_coco` matches upstream's own printout on **all 21 run/split pairs** within 3-decimal rounding (max diff 0.00048). On Val400 it is bit-identical to MMPose's metric.
+- **Data problems, quantified on the released model R001:**
+
+| Problem | Effect |
+|---|---|
+| validate500's placeholder area | Val400 AP inflated to 98.9, vs 90.4 with true w×h areas (D8 justified) |
+| validate500 boxes (a median 12% smaller) | 92.0 instead of 93.6 |
+| syrip_for_train's test11 defect | −1.5 AP (OKS 0.985 → 0.091) |
+| Test100-clean (5 leaked images removed) | 92.8 `paper` / 94.9 `fixed`; under `fixed` the leak is worth only ~0.1 AP |
+| id-0 artifact | `fixed` 95.0 vs `paper` 93.6; moving test0's rank swings `paper` AP from 92.98 to 94.07 |
+
+- **Over/underfitting** (R010–R012 curves): train loss keeps falling while Val400 loss flattens after ~epoch 6. Val400 AP still rises (best epochs 18–20 of 20), so there is no AP overfitting. A late LR decay is the better lever, not more epochs.
+- **Failure modes** (R001, Test100):
+  - Rotation dominates: 65/100 infants are sideways, with a mean OKS deficit of 5.5%, vs 3.0% for upright infants.
+  - L/R swaps are rare (1 image, a back view). No whole-body mirrors.
+  - 4 heavy-occlusion images; 2 with an inverted torso.
+  - All headroom is at OKS ≥ 0.80 (AP over 0.80–0.95 = 86.2).
+- **λ sweep** (Val400, single seed, relative to λ = 5e-4): 1e-4 is +0.5, 2e-3 is −0.8, 1e-2 is −4.7. A weaker adversarial weight looks slightly better; a strong one hurts badly.
+- **Resolution limit:** a single-seed Val400 AP has a bootstrap CI of about ±1.7. On Test100, about ±0.7 AP is the smallest difference this set can resolve. This is why the multi-seed paired design (D20) matters.
+- **Outputs:**
+  - figures in `report/figures/generated/` and `results/figures/`;
+  - report interface: 42 of 87 `numbers.tex` keys set, 9 tables;
+  - `results/tables/provenance.csv`.
+- **Prepared for the final contrasts:** `results/contrasts/final_C1_C4.json` (Holm, both protocols, an H1 robust flag) and the refresh commands. They wait for the R131–R141 Test100 predictions and R013–R015.
