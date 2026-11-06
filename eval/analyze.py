@@ -904,6 +904,9 @@ def cmd_gtbox(a):
                  "mean_oks": None, "n_dropped": len(ratio), "run_id": "median/min/max in AP_paper/AP_fixed/AP_80_95_fixed"})
     write_csv(os.path.join(a.tables, "gtbox_v100_vs_v500.csv"), rows)
     for r in rows:
+        if r["mean_oks"] is None:            # the box-ratio stats row
+            print(f"box-area ratio v100/v500: median {r['AP_paper']:.3f} (min {r['AP_fixed']:.3f}, max {r['AP_80_95_fixed']:.3f})")
+            continue
         print(f"{r['pred_boxes']:11s} x {r['gt']:8s}: AP paper {100 * r['AP_paper']:.2f}  fixed {100 * r['AP_fixed']:.2f}"
               f"  mean OKS {r['mean_oks']:.4f}")
 
