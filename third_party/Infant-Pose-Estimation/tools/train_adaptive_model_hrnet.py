@@ -14,6 +14,7 @@ import os
 import pprint
 import random
 import shutil
+import time
 
 import torch
 import torch.nn.parallel
@@ -313,6 +314,7 @@ def main():
             losses_D_list.append(losses_d.val)          
     
         
+    t_start = time.time()  # [EECE7373 patch P8]
     print('Training Stage (Step I and II):')
     losses_P_list = []
     acces_P_list = []
@@ -334,6 +336,27 @@ def main():
             best_model = True
         else:
             best_model = False
+
+        # [EECE7373 patch P8] one row per epoch: train MSE (pose loss without the -LAMBDA*BCE term),
+        # train loss_p, domain-classifier loss/accuracy, validation loss/accuracy and the COCO AP/AR
+        # table on DATASET.TEST_SET, for over/underfitting curves and model selection.
+        tr = writer_dict.get('epoch_train_stats', {})
+        va = writer_dict.get('epoch_val_stats', {})
+        names = [('AP', 'AP'), ('Ap .5', 'AP50'), ('AP .75', 'AP75'), ('AP (M)', 'APm'), ('AP (L)', 'APl'),
+                 ('AR', 'AR'), ('AR .5', 'AR50'), ('AR .75', 'AR75'), ('AR (M)', 'ARm'), ('AR (L)', 'ARl')]
+        row = [('epoch', epoch + 1), ('lr', optimizer_p.param_groups[0]['lr']),
+               ('train_mse', tr.get('mse')), ('train_loss_p', tr.get('loss_p')),
+               ('train_loss_d', tr.get('loss_d')), ('train_loss_d2', tr.get('loss_d2')),
+               ('train_acc_p', tr.get('acc_p')), ('train_acc_d', tr.get('acc_d')),
+               ('val_set', cfg.DATASET.TEST_SET), ('val_loss', va.get('val_loss')), ('val_acc', va.get('val_acc'))]
+        row += [(short, va.get(long)) for long, short in names]
+        row += [('is_best', int(best_model)), ('wall_s', round(time.time() - t_start, 1))]
+        csv_path = os.path.join(final_output_dir, 'epochs.csv')
+        write_header = not os.path.exists(csv_path)
+        with open(csv_path, 'a') as f:
+            if write_header:
+                f.write(','.join(k for k, _ in row) + '\n')
+            f.write(','.join('' if v is None else str(v) for _, v in row) + '\n')
 
         logger.info('=> saving checkpoint to {}'.format(final_output_dir))
         save_checkpoint({

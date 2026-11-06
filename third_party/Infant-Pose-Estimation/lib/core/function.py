@@ -105,6 +105,8 @@ def train_adaptive(config, train_loader, model_p, model_d, criterion_p, criterio
     batch_time = AverageMeter()
     data_time = AverageMeter()
     losses_d_2 = AverageMeter()
+    # [EECE7373 patch P8] per-epoch meters (losses_p/acc_p/losses_d passed in accumulate across epochs)
+    ep = {k: AverageMeter() for k in ('mse', 'loss_p', 'loss_d', 'loss_d2', 'acc_p', 'acc_d')}
    
     # switch to train mode
     model_d.train()
@@ -137,7 +139,8 @@ def train_adaptive(config, train_loader, model_p, model_d, criterion_p, criterio
         
         target = target.cuda(non_blocking=True)
         target_weight = target_weight.cuda(non_blocking=True)
-        loss_p = criterion_p(outputs, target, target_weight) - config.TRAIN.LAMBDA * criterion_d(domain_logits_p, domain_label)
+        loss_mse = criterion_p(outputs, target, target_weight)  # [EECE7373 patch P8] same graph, MSE kept for logging
+        loss_p = loss_mse - config.TRAIN.LAMBDA * criterion_d(domain_logits_p, domain_label)
         loss_d_2 = criterion_d(domain_logits_p, domain_label)
   
 
@@ -170,6 +173,13 @@ def train_adaptive(config, train_loader, model_p, model_d, criterion_p, criterio
         acc_d = acc_num * 1.0 / input.size(0)
         acces_D_list.append(acc_d)
         losses_P_list.append(losses_p.val) 
+        n_in = input.size(0)  # [EECE7373 patch P8]
+        ep['mse'].update(loss_mse.item(), n_in)
+        ep['loss_p'].update(loss_p.item(), n_in)
+        ep['loss_d'].update(loss_d.item(), n_in)
+        ep['loss_d2'].update(loss_d_2.item(), n_in)
+        ep['acc_p'].update(avg_acc, cnt)
+        ep['acc_d'].update(acc_d, n_in)
         losses_D_list.append(losses_d.val)
 
         # measure elapsed time
@@ -200,6 +210,7 @@ def train_adaptive(config, train_loader, model_p, model_d, criterion_p, criterio
             prefix = '{}_{}'.format(os.path.join(output_dir, 'train'), i)
             save_debug_images(config, input, meta, target, pred*4, outputs,
                               prefix)
+    writer_dict['epoch_train_stats'] = {k: m.avg for k, m in ep.items()}  # [EECE7373 patch P8]
     return losses_P_list,losses_D_list, acces_P_list, acces_D_list
 
 
@@ -463,6 +474,10 @@ def validate_adaptive(config, val_loader, val_dataset, model_p, criterion_p, out
             else:
                 writer.add_scalars('valid', dict(name_values), global_steps)
             writer_dict['valid_global_steps'] = global_steps + 1
+            # [EECE7373 patch P8] keep the epoch's validation loss/accuracy/AP table for epochs.csv
+            writer_dict['epoch_val_stats'] = dict(
+                val_loss=losses.avg, val_acc=acc.avg,
+                **({k: float(v) for k, v in name_values.items()} if isinstance(name_values, dict) else {}))
 
     return perf_indicator
     
