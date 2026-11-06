@@ -17,6 +17,7 @@ for i in range(torch.cuda.device_count()):
     print('device %d: %s | capability %d.%d | %.1f GB' % (i, p.name, p.major, p.minor, p.total_memory / 2**30))
 a = torch.randn(4096, 4096, device='cuda')
 b = torch.randn(4096, 4096, device='cuda')
+c = a @ b  # warm-up (cuBLAS init)
 torch.cuda.synchronize()
 t = time.time()
 c = a @ b

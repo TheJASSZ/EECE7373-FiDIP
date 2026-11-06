@@ -81,6 +81,10 @@ stage_layout() {
   # validate_infant = upstream's TEST_SET name = official validate100 = the paper's Test100
   ln -sfn "$S/annotations/validate100/person_keypoints_validate_infant.json" "$SY/annotations/person_keypoints_validate_infant.json"
   ln -sfn "$T/images/validate_infant" "$SY/images/validate_infant"
+  # R020 only (README-literal training labels): syrip_for_train's train json, whose 1000 synthetic entries carry
+  # MINI-RGBD labels (see VERIFY.txt). NOT used by any other run.
+  ln -sfn "$T/annotations/person_keypoints_train_infant.json" "$SY/annotations/person_keypoints_train_infant_readme.json"
+  ln -sfn "$T/images/train_infant" "$SY/images/train_infant_readme"
   log "layout written to $SY"
 }
 

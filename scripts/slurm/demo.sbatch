@@ -39,6 +39,7 @@ import cv2, glob
 fs = sorted(glob.glob('$D/in/*.jpg'))[:4]; w = cv2.VideoWriter('$D/in/clip.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 2, (640, 480))
 [w.write(cv2.resize(cv2.imread(f), (640, 480))) for f in fs for _ in range(2)]; w.release()"
 $PY tools/demo.py --cfg $CFG --model $M --video $D/in/clip.mp4 --output $D/clip_pose.mp4 --gt-json '' --output-size 640,480
+export FIDIP_MODEL=$M FIDIP_CFG=$CFG
 echo "== streamlit AppTest"; $PY $R/repo/scripts/test_streamlit_demo.py $D/in/$(ls $D/in | grep jpg | head -1) $R/data/splits/test100.json
 echo "== streamlit run + health"; FIDIP_MODEL=$M $R/envs/fidip/bin/streamlit run tools/streamlit_demo.py --server.headless true --server.port 8599 > $D/streamlit_server.log 2>&1 &
 SP=$!; for i in $(seq 1 30); do sleep 2; h=$(curl -s localhost:8599/_stcore/health || true); [[ $h == ok ]] && break; done
