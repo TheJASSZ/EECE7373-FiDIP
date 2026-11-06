@@ -114,7 +114,7 @@ Snapshot as of 2026-11-06 01:26 EST. Refresh with `ssh explorer 'squeue -u $USER
 ## Guardrails
 - No training or evaluation on login nodes. Use `sbatch`/`srun`. **Login nodes kill heavy processes:** an `unzip` of the 313 MB SyRIP.zip was `Killed` (2026-11-05). Only `curl`/`wget` downloads and light file operations are safe there.
 - **Confirm with the human before `scancel`** on any job that has run for more than 30 minutes.
-- **Run jobs from a per-job code snapshot** (D19). Copy `$R/repo` to `$R/snapshots/$SLURM_JOB_ID` at job start, run from there, and record `git rev-parse HEAD^{tree}` in `run.json`. Concurrent syncs used to rewrite `$R/repo` files under running jobs: bash reads scripts incrementally, so jobs truncated or misbehaved. `scripts/sync_to_cluster.sh` now extracts with `--unlink-first`, so running jobs keep the old inode.
+- **Run jobs from a per-job code snapshot** (D19). Copy `$R/repo` to `$R/snapshots/$SLURM_JOB_ID` at job start, run from there, and record `git rev-parse HEAD^{tree}` in `run.json`. Concurrent syncs used to rewrite `$R/repo` files under running jobs: bash reads scripts incrementally, so jobs truncated or misbehaved. `scripts/sync_to_cluster.sh` now unpacks into a private staging dir and copies it over with the cluster's `rsync`. rsync renames each file into place atomically, so running jobs keep reading the old inode.
 - Never tune on Test100 (validate100).
 - Never put big data in `/home` or `/projects`.
 - Never print or commit `.env`.

@@ -27,7 +27,7 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 | D16 | 11-05 21:07 | **Official Test100 stays as shipped (primary).** Also report **Test100-clean** (95 images, minus {7, 20, 42, 46, 50}) as a sensitivity check. | The official training set contains 4 byte-identical copies and 1 near-copy of Test100 images. Keeping the official set preserves comparability with 93.6; the clean subset shows whether memorization affects conclusions. |
 | D17 | 11-05 21:07 | **Train on SyRIP.zip `200R_1000S` labels, not syrip_for_train.zip's train JSON.** Score test images from SyRIP.zip. D7 revised: `train_pre_infant` **is** shipped, so PRE_EPOCH 10 uses the real adult set. | syrip_for_train (2024) has identical image bytes but MINI-RGBD labels on all 1000 synthetic entries (median 191 px off), and its test11.jpg is a copy of test24.jpg. Optional attempt R020 quantifies what training on the README-literal labels costs. |
 | D18 | 11-06 01:05 | **Stagger agents and economize tokens.** The report worker only gets bounded tasks until results are final. An hourly heartbeat resumes workers stopped by usage limits. | All four parallel workers hit the 5-hour API usage cap together (~22:xx on 11-05). Slurm jobs survived, but orchestration stalled until a human came back. |
-| D19 | 11-06 01:26 | **Jobs run from per-job code snapshots.** `sync_to_cluster.sh` extracts with `--unlink-first`. | Concurrent tar syncs rewrote `$R/repo` scripts in place while jobs were executing them. bash reads scripts incrementally, so running jobs truncated or misbehaved. This likely explains repro's "final line never ran" at the R001→R002 boundary; the analysis worker found the cause. |
+| D19 | 11-06 01:26 | **Jobs run from per-job code snapshots.** `sync_to_cluster.sh` unpacks to a staging dir and copies it in with an atomic per-file rsync rename. | Concurrent tar syncs rewrote `$R/repo` scripts in place while jobs were executing them. bash reads scripts incrementally, so running jobs truncated or misbehaved. This likely explains repro's "final line never ran" at the R001→R002 boundary; the analysis worker found the cause. |
 
 ---
 
@@ -316,3 +316,8 @@ The literature-scan Explore agent is still running. Its findings will be forward
 - **Improve status:** `screenA2` (R104 ViT-H-384 + R105 ViT-H-256) is running on an 80 GB A100.
   - R104 peaks at **44.6 GB** at batch 32 (measured), so it can't run on 40 GB cards. The fallback is gradient accumulation 16×2 (≈ 27 GB). This is equivalent for LayerNorm ViTs and is logged as a deviation.
   - Queued: real-only and rotation ±180 ablations on ViT-L-256, a flip-off eval, the R103/R107 screens, and the L256 LR screen (R108/R109).
+
+### 2026-11-06 01:30 EST — D19 implementation corrected (failed attempt logged)
+- **First attempt failed:** `tar --unlink-first` also tries to unlink existing *directories* ("Cannot unlink: Directory not empty"). tar exited non-zero, and the SSH connection was then reset mid-stream. Every agent that syncs would have seen this as a failure.
+- **Fix:** `sync_to_cluster.sh` now unpacks into a private `mktemp` staging dir on the cluster and runs `rsync -a staging/ repo/` there. rsync writes each file to a temp name and renames it, so running jobs keep the old inode. Nothing is deleted; concurrent syncs each get their own staging dir.
+- **Verified:** the sync ran cleanly, no staging leftovers remain, and the repo tree is intact. The re-sync also repaired anything the interrupted transfer had left half-written.
