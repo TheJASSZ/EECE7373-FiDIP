@@ -58,3 +58,39 @@ Newest entries at the bottom. Timestamps in EST.
   - `scripts/push_mmpose.sh`: syncs, then writes `$R/repo/GIT_INFO_mmpose.json` (HEAD, HEAD^{tree}, dirty flag) for run.json, per the coordinator's commit-rewrite note.
   - `eval_ckpt.py` and `final_test_eval_mmpose.sbatch` refuse Test100 unless the RUN_ID has a row in `results/PREREGISTRATION.md`. The final script also checks the checkpoint SHA256 against run.json and refuses a second Test100 eval.
 - **GPU verify jobs** (after prep 11659247): **11659249** (gpu, H200) and **11659250** (sharing, A100).
+
+### 2026-11-05 20:34 EST — First GPU verify: two failures, fixes
+- **Verify jobs 11659249 (H200, d4053, 49 s) and 11659250 (A100-SXM4-80GB, d3204, 31 s)** both COMPLETED, but every config check failed with `ModuleNotFoundError: No module named 'mmdet'`.
+  - **Cause:** mmpose 1.3.2 imports mmdet unconditionally in `mmpose/models/heads/hybrid_heads/rtmo_head.py:9` (`from mmdet.utils import ConfigType, reduce_mean`), so `import mmpose.models` needs it even with GT boxes. The literature note "mmdet isn't needed" holds for inference APIs, not for model building.
+  - **Fix:** `mmdet==3.3.0` (accepts mmcv>=2.0.0rc4,<2.2.0) added to `build_env_mmpose.sbatch`. Re-run job **11659316**. Verify re-queued: **11659317** (H200) and **11659318** (A100).
+  - Benign pip warning seen in the rebuild: `openxlab 0.1.3 requires setuptools~=60.2.0, but you have setuptools 69.5.1`. openxlab comes in with openmim and is unused here.
+- **H200: mmcv 2.1.0 CUDA ops have no sm_90 kernels.** `mmcv.ops.nms` → `RuntimeError: CUDA error: no kernel image is available for execution on the device`.
+  - torch itself is fine: arch list `sm_50 … sm_90`. On the A100 the same ops pass (`nms_keep [0, 2]`).
+  - **Decision:** the top-down heatmap path (HRNet / mmpretrain ViT, HeatmapHead, KeypointMSELoss, DARK/UDP codecs in numpy/cv2, mmcv CPU transforms) calls **no mmcv CUDA op**. A call on the H200 would raise loudly rather than fail silently, so a clean H200 train + eval smoke run is sufficient evidence that H200 results are valid.
+  - **Why H200 at all:** A100 capacity is thin. `sinfo` at 20:30: all 11 `gpu` A100s allocated, 6 of the `sharing` A100 nodes `down*`, 167 jobs pending on `gpu`. H200: 32 on `gpu` + 8 on `sharing`.
+  - Plan: train on H200 and record the GPU in every run.json. If anything mmcv-CUDA shows up, fall back to A100 or build mmcv from source with `TORCH_CUDA_ARCH_LIST="8.0;9.0"`.
+- Added `scripts/slurm/zeroshot_mmpose.sbatch` (Val400 eval of the raw COCO checkpoints) and `scripts/slurm/prep_data_mmpose.sbatch` + `mmpose_exps/tools/check_data.py` (real200/syn1000 subsets + image-existence check).
+
+### 2026-11-05 20:44 EST — Verify results (A100, L40S, L40S+TF32); batch 32 for every backbone; TF32 on
+- **mmdet rebuild (job 11659316, COMPLETED, 2m51s):** `mmdet==3.3.0` installed; numpy 1.26.4 and opencv 4.11.0.86 pins held.
+- **Verify jobs:** A100-SXM4-80GB sm_80 (11659318, d1028); L40S sm_89 FP32 (11659395, d4047); L40S with `TORCH_ALLOW_TF32_CUBLAS_OVERRIDE=1` (11659409, d4042). H200 re-verify 11659317 is still queued (Priority).
+  - mmcv CUDA ops pass on A100 and L40S (`nms_keep [0,2]`, roi_align OK); they fail on H200 (above).
+  - Checkpoint loading: **no missing keys for any config**. The only unexpected key is `backbone.cls_token` for ViTPose, which is expected with `with_cls_token=False` and is mmpose's own behaviour.
+  - Train step (fwd+bwd+AdamW) in s/step, with peak GB:
+    | config | batch | A100 FP32 | L40S FP32 | L40S TF32 |
+    |---|---|---|---|---|
+    | HRNet-W48 DARK 384x288 | 32 | 0.28 (14.5) | 0.31 (14.4) | 0.31 (14.4) |
+    | ViTPose-L 256x192 | 64 | 1.37 (22.7) | 0.80 (22.7) | 0.49 (22.7) |
+    | ViTPose-L 384x288 | 64 | 3.14 (47.6) | OOM | OOM |
+    | ViTPose-H 256x192 | 64 | 2.82 (40.8) | 1.60 (40.8) | 0.97 (40.8) |
+    | ViTPose-H 384x288 | 64 | OOM | OOM | OOM |
+    | ViTPose-H 384x288 | 32 | 3.28 (44.6) | OOM | OOM |
+- **Decision: batch 32 for every backbone.** Officially it is 64 per GPU for ViTPose and 32 for HRNet.
+  - It gives identical iterations: 63 per epoch, 1890 over 30 epochs, close to FiDIP's 2000.
+  - Everything except ViT-H-384 then fits the 44-48 GB cards that are free on `sharing` (L40S/L40/A6000, 1 h limit). The `gpu` partition's A100/H200 are congested: the verify estimate was a 40-80 min wait.
+  - ViT-H-384 at batch 32 needs an 80 GB+ card (A100/H200 on `gpu`).
+- **Decision: TF32 matmuls on** (`TORCH_ALLOW_TF32_CUBLAS_OVERRIDE=1`) for every IMPROVE train and eval job, recorded in run.json.
+  - PyTorch 2.1 already runs cuDNN convs in TF32 by default, so HRNet is unaffected (0.31 s/step either way) and ViT matmuls now get the same treatment (1.6x faster on L40S, more on A100).
+  - FP32 accumulation is kept. Inference is FP32/TF32 (no AMP).
+- **Data still pending:** REPRO's `make_splits.py` (jobs 11659256/299/351/400) fails `assert ov['val400_x_test100_by_id'] == ov['val400_x_test100_by_file_name'] == ov['val400_x_test100_by_md5'] == 0`. Some Val400/Test100 overlap, likely md5 duplicates (REPRO has a `dups.py`). If so, `val400.json` may still change.
+  - I will not start screening until `SPLITS_READY`. Two-epoch **smoke** runs (pipeline check only, no selection) go ahead on the current files.

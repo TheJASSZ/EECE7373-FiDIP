@@ -7,7 +7,10 @@
 #   * SyRIP data (1:1 real:syn, 2000 samples/epoch), Val400 selection, 30-epoch step schedule
 #   * LR set explicitly (no auto_scale_lr). Official: AdamW 5e-4 @ total batch 512 (8x64),
 #     wd 0.1, layer-wise LR decay 0.8 over 24 blocks, grad-clip 1.0, drop-path 0.5.
-#     Screening LR = 1e-4 @ batch 64 (same nominal LR as the HRNet control); swept on Val400.
+#     Screening LR = 1e-4 (same nominal LR as the HRNet control); swept on Val400.
+#   * Batch 32 for EVERY backbone (official per-GPU: 64 for ViTPose, 32 for HRNet): identical
+#     iterations per epoch (63) and in total (1890 at 30 epochs, ~FiDIP's 2000), and ViT-L at
+#     384x288 fits the 44-48 GB cards (b64 needs 47.6 GB; measured, verify jobs 11659318/395/409).
 #   * Layer decay (not freezing) keeps the early blocks close to the COCO weights:
 #     lr(block i) = lr * 0.8^(24-i); patch/pos embed get 0.8^25; head + last norm get lr.
 _base_ = ['./_base_/syrip_base.py']
@@ -84,6 +87,6 @@ val_pipeline = [
     dict(type='TopdownAffine', input_size=codec['input_size'], use_udp=True),
     dict(type='PackPoseInputs')
 ]
-train_dataloader = dict(batch_size=64, dataset=dict(pipeline=train_pipeline))
+train_dataloader = dict(batch_size=32, dataset=dict(pipeline=train_pipeline))
 val_dataloader = dict(dataset=dict(pipeline=val_pipeline))
 test_dataloader = dict(dataset=dict(pipeline=val_pipeline))

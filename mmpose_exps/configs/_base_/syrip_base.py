@@ -56,8 +56,11 @@ coco_metainfo = dict(
     from_file='/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py')
 dataset_type = 'CocoDataset'
 data_mode = 'topdown'
+# image resolution rule of the REPRO split builder (scripts/make_splits.py):
+#   <SYRIP>/images/<split>/<file_name>,  SYRIP = $R/data/syrip
 img_train = 'syrip/images/train_infant/'
-img_val = 'syrip/images/validate_infant/'
+img_val400 = 'syrip/images/val400/'
+img_test100 = 'syrip/images/test100/'
 ann_real200 = 'improve_splits/train_real200.json'   # train_infant images with is_synthetic == 0
 ann_syn1000 = 'improve_splits/train_syn1000.json'   # train_infant images with is_synthetic == 1
 ann_val400 = 'splits/val400.json'
@@ -95,7 +98,7 @@ val_dataloader = dict(
         data_mode=data_mode,
         metainfo=coco_metainfo,
         ann_file=ann_val400,
-        data_prefix=dict(img=img_val),
+        data_prefix=dict(img=img_val400),
         test_mode=True,
         pipeline=[],                      # set by the model config
     ))
@@ -111,7 +114,7 @@ test_dataloader = dict(
         data_mode=data_mode,
         metainfo=coco_metainfo,
         ann_file=ann_test100,
-        data_prefix=dict(img=img_val),
+        data_prefix=dict(img=img_test100),
         test_mode=True,
         pipeline=[],                      # set by the model config
     ))

@@ -64,8 +64,13 @@ def main():
     ap.add_argument('--started', default=None)
     ap.add_argument('--status', default='done')
     ap.add_argument('--notes', default='')
+    ap.add_argument('--eval-only-ckpt', default=None,
+                    help='no training: record this checkpoint (e.g. a COCO model, zero-shot eval)')
     args = ap.parse_args()
     rd = args.run_dir
+    if args.eval_only_ckpt and not osp.isfile(osp.join(rd, 'config.py')):
+        from mmengine.config import Config as _C
+        _C.fromfile(args.config).dump(osp.join(rd, 'config.py'))
 
     # canonical copies of the resolved config (mmengine dump) and the train log(s)
     dumped = osp.join(rd, args.config_name)
@@ -81,6 +86,8 @@ def main():
     best = sorted(glob.glob(osp.join(rd, 'best_coco_AP_epoch_*.pth')))
     best_ckpt = best[-1] if best else None
     best_epoch = int(re.search(r'epoch_(\d+)\.pth$', best_ckpt).group(1)) if best_ckpt else None
+    if args.eval_only_ckpt:
+        best_ckpt, best_epoch = osp.abspath(args.eval_only_ckpt), None
 
     from mmengine.config import Config
     cfg = Config.fromfile(osp.join(rd, 'config.py'))
@@ -99,6 +106,7 @@ def main():
         slurm_job_id=os.environ.get('SLURM_JOB_ID'),
         partition=os.environ.get('SLURM_JOB_PARTITION'), node=socket.gethostname(),
         gpu=gpu_name(), seed=args.seed,
+        tf32_cublas_override=os.environ.get('TORCH_ALLOW_TF32_CUBLAS_OVERRIDE'),
         config='mmpose_exps/configs/' + args.config_name,
         config_src=osp.abspath(args.config), config_src_sha256=sha256(args.config),
         config_resolved=osp.join(rd, 'config.py'),
@@ -109,7 +117,8 @@ def main():
         init_checkpoint_sha256=sha256(cfg.load_from) if cfg.get('load_from') else None,
         max_epochs=cfg.train_cfg.get('max_epochs'), batch_size=cfg.train_dataloader.batch_size,
         lr=cfg.optim_wrapper.optimizer.get('lr'), optimizer=cfg.optim_wrapper.optimizer.type,
-        selection_rule='best Val400 coco/AP epoch (MMPose CocoMetric, checked every epoch)',
+        selection_rule=('none (eval-only of an existing checkpoint)' if args.eval_only_ckpt else
+                        'best Val400 coco/AP epoch (MMPose CocoMetric, checked every epoch)'),
         best_epoch=best_epoch, checkpoint=best_ckpt,
         checkpoint_sha256=sha256(best_ckpt) if best_ckpt else None,
         val400_mmpose_best=max(curve, key=lambda r: r['coco/AP']) if curve else None,

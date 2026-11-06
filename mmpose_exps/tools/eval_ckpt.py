@@ -59,7 +59,7 @@ def main():
         cfg.merge_from_dict(args.cfg_options)
     ann = SPLITS[args.split]
     cfg.test_dataloader.dataset.ann_file = ann
-    cfg.test_dataloader.dataset.data_prefix = dict(img=cfg.img_val)
+    cfg.test_dataloader.dataset.data_prefix = dict(img=cfg['img_' + args.split])
     cfg.test_dataloader.dataset.test_mode = True
     cfg.test_dataloader.dataset.pop('bbox_file', None)      # GT boxes
     os.makedirs(args.out_dir, exist_ok=True)
