@@ -1,27 +1,11 @@
 \section{Lessons learned}\label{sec:lessons}
 
 \begin{itemize}[leftmargin=*]
-  \item \textbf{At $n=100$, evaluation details are as large as method effects.} Five details each move AP by about FiDIP's published gain over fine-tuning (\cref{tab:sensitivity}):
-  \begin{itemize}[leftmargin=*]
-    \item the id-0 artifact;
-    \item the evaluator library;
-    \item the GT boxes;
-    \item one misplaced test image;
-    \item the train/test overlap.
-  \end{itemize}
-  Building, testing and cross-checking the evaluator \emph{before} running experiments was the most valuable step of the project.
+  \item \textbf{At $n=100$, evaluation details are as large as method effects.} The id-0 artifact, the evaluator library, the GT boxes, one misplaced test image and the train/test overlap each move AP by about FiDIP's published gain over fine-tuning (\cref{tab:sensitivity}). Building, testing and cross-checking the evaluator \emph{before} running experiments was the most valuable step of the project.
   \item \textbf{Verify the data, not just the code.} Hashing, near-duplicate search and label/image checks found six issues (\cref{tab:hygiene}). Each would have biased the results silently, and none shows up in a training curve.
   \item \textbf{Read the code, not only the paper.} Run literally, the README trains plain fine-tuning from random weights and selects on the test set. Once those were fixed, the training pipeline reproduced 93.6, but the domain-adaptation gain did not reappear.
   \item \textbf{Read published numbers diagnostically.} AP$_{50}$ = AP$_{75}$ = 98.5 alone shows that all headroom is at strict thresholds.
-  \item \textbf{Cluster hygiene.} Several failures came from the infrastructure rather than the research:
-  \begin{itemize}[leftmargin=*]
-    \item a slow \code{du} hung an SSH probe;
-    \item the login node killed \code{unzip};
-    \item reading JPEG headers dropped the session;
-    \item macOS \code{openrsync} could not talk to the cluster's rsync~3.2.5;
-    \item the lab share was unreadable.
-  \end{itemize}
-  The fixes were \code{timeout} and BatchMode SSH, Slurm jobs even for light data work, tar over ssh, and our own checksummed download.
+  \item \textbf{Cluster hygiene.} A slow \code{du} hung an SSH probe, the login node killed \code{unzip}, reading JPEG headers dropped the session, macOS \code{openrsync} could not talk to the cluster's rsync~3.2.5, and the lab share was unreadable. The fixes were \code{timeout} and BatchMode SSH, Slurm jobs even for light data work, tar over ssh, and our own checksummed download.
   \item \textbf{Guardrails need tests too.} The pre-registration gate parses \code{PREREGISTRATION.md}. When the selection evidence was once written as a table, three screening runs briefly became eligible; a post-commit check caught this before any evaluation. Configs are typed as well: \code{TRAIN.LAMBDA 0} (an int) failed, and \code{0.0} is required.
   \item \textbf{Agents get interrupted.} Workers stopped twice on usage limits, and parallel workers raced on one shared filesystem. Scheduled heartbeats, file-count checks and the live notebooks made recovery cheap, because nothing lived only in an agent's context.
 \end{itemize}

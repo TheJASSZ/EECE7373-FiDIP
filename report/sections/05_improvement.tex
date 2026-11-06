@@ -7,39 +7,19 @@ Two standard levers act on precision: backbone capacity with stronger pre-traini
 We test both with ViTPose~\citep{xu2022vitpose}. In the MMPose model zoo~\citep{mmpose2020}, its COCO checkpoints score 78.2~AP (L) and 78.8~AP (H), against 77.2~AP for HRNet-W48 + DARK at $384{\times}288$ (COCO val2017, detected boxes).
 
 \paragraph{One recipe for every arm.} All improvement runs use MMPose~1.3.2.
-\begin{itemize}[leftmargin=*]
-  \item The control is HRNet-W48 + DARK at $384{\times}288$, the MMPose counterpart of FiDIP's network. The treatments are ViTPose-L and ViTPose-H at $256{\times}192$ and $384{\times}288$.
-  \item Shared by all arms:
-  \begin{itemize}[leftmargin=*]
-    \item the training data (200 real + 1000 synthetic, official labels);
-    \item FiDIP's 1:1 real:synthetic mix (each real image five times per 2000-sample epoch);
-    \item LR $10^{-4}$, 30 epochs with steps at 24 and 29, and MMPose's COCO augmentation;
-    \item GT boxes, flip test, and per-epoch Val400 checkpoint selection.
-  \end{itemize}
-  \item What differs is only what each family needs: Adam versus AdamW with layer-wise decay and drop-path, the batch size, and the codec (DARK versus UDP).
-\end{itemize}
+The control is HRNet-W48 + DARK at $384{\times}288$, the MMPose counterpart of FiDIP's network; the treatments are ViTPose-L and ViTPose-H at $256{\times}192$ and $384{\times}288$.
+All arms share the training data (200 real + 1000 synthetic, official labels), FiDIP's 1:1 real:synthetic mix, LR $10^{-4}$ with 30 epochs (steps at 24 and 29), MMPose's COCO augmentation, GT boxes, flip test and per-epoch Val400 checkpoint selection. Only what each family needs differs: Adam versus AdamW with layer-wise decay and drop-path, and DARK versus UDP.
 \Cref{tab:hparams} lists the resolved settings. The only pose data besides SyRIP are the COCO checkpoints; we excluded models whose pre-training adds other pose datasets.
 
 \subsection{Screening and ablations on Val400}\label{sec:backbone}\label{sec:ablations}
 
 \paragraph{Screening} (one seed each, Val400 only; \cref{tab:backbone} in \cref{app:attempts}).
-\begin{itemize}[leftmargin=*]
-  \item Fine-tuning on SyRIP lifts every COCO model well above its zero-shot Val400 AP, which ranges from \res{zs.hrnet} (HRNet) to \res{zs.vith256} (ViTPose-H~256).
-  \item The control reaches \res{scr.hrnet}.
-  \item ViTPose-L reaches \res{scr.vitl256} at $256{\times}192$ and \res{scr.vitl384} at $384{\times}288$.
-  \item ViTPose-H reaches \res{scr.vith256} and \res{scr.vith384} at the same two sizes.
-  \item The learning-rate sweeps are flat (HRNet at $2{\cdot}10^{-4}$ and $5{\cdot}10^{-5}$: \res{scr.hrnet.lr2} and \res{scr.hrnet.lr5}), so single-seed noise is about $\pm$\res{imp.noise}.
-\end{itemize}
+Fine-tuning lifts every COCO model well above its zero-shot Val400 AP (\res{zs.hrnet} for HRNet to \res{zs.vith256} for ViTPose-H~256). The control reaches \res{scr.hrnet}, ViTPose-L \res{scr.vitl256} ($256{\times}192$) and \res{scr.vitl384} ($384{\times}288$), and ViTPose-H \res{scr.vith256} and \res{scr.vith384}. Learning-rate sweeps are flat (HRNet: \res{scr.hrnet.lr2} at $2{\cdot}10^{-4}$, \res{scr.hrnet.lr5} at $5{\cdot}10^{-5}$), so single-seed noise is about $\pm$\res{imp.noise}.
 Against that noise, \emph{capacity} matters (ViTPose-H beats ViTPose-L by about 2--3$\times$ the noise), and \emph{resolution} does not ($384{\times}288$ versus $256{\times}192$ is within noise for both sizes).
 We therefore chose ViTPose-H at $256{\times}192$ over $384{\times}288$, which would have cost about twice the compute and memory (\code{results/PREREGISTRATION.md}).
 
 \paragraph{Ablations} (ViTPose-L~256 unless noted; \cref{tab:ablations}).
-\begin{itemize}[leftmargin=*]
-  \item Synthetic data still helps a strong backbone: training on the 200 real images alone gives \res{scr.vitl256.real}, against \res{scr.vitl256} with synthetic data.
-  \item Rotation up to $\pm180^\circ$ gives \res{scr.vitl256.rot}, no gain.
-  \item Flip testing adds \res{imp.flip.lo}--\res{imp.flip.hi}~AP on every model.
-  \item The FiDIP weight $\lambda$ behaves as described in \cref{sec:retrain}.
-\end{itemize}
+Synthetic data still helps a strong backbone: real images alone give \res{scr.vitl256.real}, against \res{scr.vitl256} with synthetic data. Rotation up to $\pm180^\circ$ gives \res{scr.vitl256.rot} (no gain). Flip testing adds \res{imp.flip.lo}--\res{imp.flip.hi}~AP on every model. The effect of $\lambda$ is described in \cref{sec:retrain}.
 
 \subsection{All attempts}\label{sec:attempts}
 

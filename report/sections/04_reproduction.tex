@@ -31,12 +31,7 @@ The same predictions score \res{rel.fidip.test.ap.fixed}~AP under the \texttt{fi
 \subsection{Retraining FiDIP and the domain-adaptation ablation}\label{sec:retrain}
 
 \paragraph{Recipe.} We retrained with the released code and yaml plus two command-line overrides (D5): \code{TRAIN.CHECKPOINT}, set to the COCO DarkPose weights, and \code{TRAIN.LAMBDA}, set to $5{\cdot}10^{-4}$.
-\begin{itemize}[leftmargin=*]
-  \item The classifier pre-stage runs for 10 epochs (as in \code{_custom.yaml}) on the shipped adult set.
-  \item After each epoch the model is evaluated on Val400, and the best epoch is kept.
-  \item The same recipe with $\lambda=0.0$ isolates domain adaptation.
-  \item Each arm has \res{rt.seeds} seeds.
-\end{itemize}
+The classifier pre-stage runs for 10 epochs (as in \code{_custom.yaml}) on the shipped adult set; the best Val400 epoch is kept; the same recipe with $\lambda=0.0$ isolates domain adaptation; each arm has \res{rt.seeds} seeds.
 
 \paragraph{FiDIP reproduces.} The FiDIP retrains score \resms{rt.fidip.test.ap}~AP on Test100 at the Val400-selected epoch, and \res{rt.fidip.test.ap.final.mean}\,{\footnotesize$\pm$\,\res{rt.fidip.test.ap.final.sd}} at the final epoch. On Val400 they score \resms{rt.fidip.val.ap}.
 Paired with the released checkpoint on the same images, the difference is \res{rt.vsrel.delta}~AP, with a 95\% CI of [\res{rt.vsrel.ci.lo}, \res{rt.vsrel.ci.hi}]. Under \texttt{fixed} it is \res{rt.vsrel.fixed.delta} [\res{rt.vsrel.fixed.ci.lo}, \res{rt.vsrel.fixed.ci.hi}] (\cref{tab:boot}).

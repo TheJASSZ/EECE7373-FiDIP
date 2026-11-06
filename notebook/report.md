@@ -32,3 +32,11 @@ Newest entries at the bottom. Timestamps in EST.
 - Build: 27 pages with placeholders (main text ~19 pp incl. placeholder floats); 0 undefined keys/refs/cites, 0 overfull boxes; 380 TBD values, 7 interpretation notes, 8 pending figures (expected until results land).
 - Not yet done (next session, per coordinator): repo-root README.md; fill results via generated files; replace `\interp` notes; trim main text to ~12 pp; final visual check.
 - Pitfalls hit: `\code` (url-based) breaks in captions -> short caption titles; underscores in placeholder descriptions; `step` is a TikZ key; url drops spaces -> `obeyspaces`; `comment` pkg cannot skip floats inside `\IfFileExists` -> `environ`.
+
+## 2026-11-06 08:04 EST — final-results pass (deadline mode)
+- Sections 4-6 rewritten with final results via keys: generated numbers.tex (analysis), keymap.tex -> results_tables.tex macros (\setresmac, fail-soft, math-mode minus), and generated/manual_numbers.tex for sourced numbers without a key (31 + 1 rows, each with a source comment; mirrored in results/tables/provenance.csv).
+- Pending keys default to TBD via \setresdefault (never override generated values): rt.ftnp.* (R021-R023), armA.test.ap.*, c2.*, c3.*; best.*/ens.*/rt.ft.* stay generated. \finaloutcome is a \newcommand line in manual_numbers.tex for the orchestrator to set.
+- Data-hygiene findings condensed into tab:hygiene (Sec 3.3); implementation detail, attempts, screening, sensitivity, failure counts, success cases and the demo figure moved to appendices I-K.
+- Main text now 16 pp (was 22); 28 pp total; 0 undefined keys/refs/cites, 0 overfull boxes, 0 interp notes; 142 TBDs = pending final numbers.
+- README.md written: overview, sourced results summary, findings table, guide-ordered quickstart pointing to MANIFEST section 10, guide/upstream differences, repo map, docs/integrity.
+- Visual check: title page, hygiene table, keybox page, analysis figures OK; fixed a protocol-figure label overlap and figure widths.

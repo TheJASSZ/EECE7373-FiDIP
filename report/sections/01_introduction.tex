@@ -20,16 +20,7 @@ Its strongest variant, DarkPose~\citep{zhang2020darkpose} with an HRNet-W48 back
   Retraining with the released recipe gives \resms{rt.fidip.test.ap}~AP with domain adaptation and \resms{rt.ft.test.ap}~AP without it (\res{rt.seeds} seeds each). The paper's +0.9~AP from domain adaptation does not reproduce.
   \item \textbf{Protocol} (\cref{sec:fidip,sec:data}). Run literally, the README training command fine-tunes from random weights with the adaptation weight $\lambda=0$, and the training loop keeps the epoch that is best on Test100.
   We select every model on Val400, the 397 validate500 images that neither belong to nor duplicate Test100, and pre-register each configuration before its single Test100 evaluation.
-  \item \textbf{Data and evaluation conditions} (\cref{sec:data,sec:eval}). Hashing, near-duplicate search and label/image checks found six issues that would silently bias results (\cref{tab:hygiene}):
-  \begin{itemize}[leftmargin=*]
-    \item placeholder areas;
-    \item an annotation with id~0 that pycocotools never matches (\res{sens.id0.delta}~AP for the released model);
-    \item five test images that duplicate training images;
-    \item three Val400 candidates that duplicate test images;
-    \item mislabelled synthetic images in the README's training file;
-    \item unannotated duplicates in the training folder.
-  \end{itemize}
-  Claims must hold under both matching protocols.
+  \item \textbf{Data and evaluation conditions} (\cref{sec:data,sec:eval}). Hashing, near-duplicate search and label/image checks found six issues that would silently bias results (\cref{tab:hygiene}): placeholder areas; an annotation with id~0 that pycocotools never matches (\res{sens.id0.delta}~AP for the released model); five test images copied from training; three Val400 candidates duplicating test images; mislabelled synthetic images in the README's training file; and unannotated duplicates in the training folder. Claims must hold under both matching protocols.
   \item \textbf{Improvement} (\cref{sec:improve}). We ran a controlled backbone and input-resolution comparison under one MMPose recipe, plus ablations, all selected on Val400.
   The pre-registered winner, \res{best.name}, scores \resms{best.test.ap}~AP on Test100. That is \res{best.delta.ap}~AP from the released checkpoint, with a paired-bootstrap 95\% CI of [\res{best.delta.ci.lo}, \res{best.delta.ci.hi}].
   \item \textbf{Process} (\cref{sec:lessons,sec:aiuse}). The agent kept \code{SKILL.md}, \code{AGENT.md} and \code{MANIFEST.md} current during the work, not after it, and every reported number traces to a run and a commit.

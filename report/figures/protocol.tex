@@ -17,7 +17,7 @@
   {\textbf{Test100}\\{\tiny ids 0--99}};
 \draw[decorate, decoration={brace, amplitude=4pt}, line width=0.5pt] (tr.north west) -- node[lab, above=4pt] {SyRIP train (official \texttt{200R\_1000S} annotations)} (ts.north east);
 \draw[decorate, decoration={brace, amplitude=4pt}, line width=0.5pt] (val.north west) -- node[lab, above=4pt] {validate500 = Test500 (500 real); validate100 $\subset$ validate500} (test.north east);
-\node[lab, below=1mm of test.south, anchor=north, text=lossC!85!black] {incl.\ 5 copies of training images};
+\node[lab, right=1mm of test.east, anchor=west, text=lossC!85!black, align=left] {incl.\ 5 copies\\of training\\images (D16)};
 % ---- the procedure ----------------------------------------------------------------------------
 \node[pstep, below=9mm of ts.south west, anchor=north west, xshift=-14mm] (s1)
   {\textbf{1 train}\\candidate configs\\$\times$ seeds};

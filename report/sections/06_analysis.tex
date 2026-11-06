@@ -11,10 +11,10 @@ Test100's looser boxes explain part of that gap (\cref{sec:released}). The ranki
 
 \begin{figure}[t]
   \centering
-  \begin{minipage}[b]{0.52\linewidth}\centering
+  \begin{minipage}[b]{0.63\linewidth}\centering
     \GenFigure[width=\linewidth]{oks_thresholds}{AP at OKS 0.50--0.95: released FiDIP, retrain, best config; paper-protocol ceiling band}
   \end{minipage}\hfill
-  \begin{minipage}[b]{0.44\linewidth}\centering
+  \begin{minipage}[b]{0.33\linewidth}\centering
     \GenFigure[width=\linewidth]{val_vs_test}{Val400 AP vs Test100 AP, one point per run that has both}
   \end{minipage}
   \caption{Left: Test100 AP at each OKS threshold (\texttt{paper} protocol); the band is the ceiling of a perfect model under the id-0 artifact. Right: Val400 against Test100 AP for every run evaluated on both sets.}
@@ -22,13 +22,7 @@ Test100's looser boxes explain part of that gap (\cref{sec:released}). The ranki
 \end{figure}
 
 \paragraph{Evaluation choices.} \Cref{tab:sensitivity} (\cref{app:attempts}) holds the released model's predictions fixed and changes one evaluation choice at a time. Each choice moves AP by about as much as FiDIP's published gain over fine-tuning (0.9):
-\begin{itemize}[leftmargin=*]
-  \item the matching protocol: \res{sens.id0.delta}~AP. Moving test0's score rank alone swings the \texttt{paper} AP from \res{id0.rank.lo} to \res{id0.rank.hi};
-  \item Test100-clean: \res{sens.clean.delta};
-  \item validate500's boxes: \res{sens.box.v500.ap} versus \res{sens.box.v100.ap};
-  \item the README layout's misplaced \code{test11}: \res{test11.delta};
-  \item the placeholder area: \res{sens.area.const.ap}~AP on Val400, against \res{rel.fidip.val.ap}.
-\end{itemize}
+The matching protocol moves AP by \res{sens.id0.delta}, and moving test0's score rank alone swings the \texttt{paper} AP from \res{id0.rank.lo} to \res{id0.rank.hi}. Test100-clean moves it by \res{sens.clean.delta}, validate500's boxes give \res{sens.box.v500.ap} instead of \res{sens.box.v100.ap}, the misplaced \code{test11} costs \res{test11.delta}, and the placeholder area inflates Val400 to \res{sens.area.const.ap} from \res{rel.fidip.val.ap}.
 
 \subsection{Per-keypoint accuracy and failure modes}\label{sec:perkp}\label{sec:failures}
 
@@ -37,12 +31,7 @@ This fits infant anatomy: hip centres are hidden under diapers and clothing, and
 Heads and wrists are the most precise.
 
 \paragraph{Failure modes.} \code{eval/taxonomy.py} assigns failure modes with unit-tested rules (\cref{tab:failures} in \cref{app:attempts} gives counts and exact criteria).
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Rotation dominates} (\cref{fig:perkp}, right). \res{fail.sideways.n} of the 100 infants lie sideways, and their mean OKS deficit is \res{fail.sideways.deficit}\%, against \res{fail.upright.deficit}\% for upright infants.
-  \item Left/right swaps are rare: \res{fail.lrswap.n} image, a back view.
-  \item No prediction is a whole-body mirror.
-  \item \res{fail.occl.n} images are heavily occluded, and \res{fail.inverted.n} have an inverted torso.
-\end{itemize}
+\textbf{Rotation dominates} (\cref{fig:perkp}, right): \res{fail.sideways.n} of the 100 infants lie sideways, with a mean OKS deficit of \res{fail.sideways.deficit}\% against \res{fail.upright.deficit}\% for upright infants. Left/right swaps are rare (\res{fail.lrswap.n} image, a back view), no prediction is a whole-body mirror, \res{fail.occl.n} images are heavily occluded and \res{fail.inverted.n} have an inverted torso.
 The failures are mostly a matter of degree: sideways and partly hidden infants get somewhat imprecise joints, not catastrophic errors. That is consistent with AP being decided at strict thresholds.
 \Cref{fig:qual} shows the worst Test100 cases.
 
