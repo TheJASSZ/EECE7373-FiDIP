@@ -289,7 +289,7 @@
  {
   "run_id": "R010_fidip-w48_lambda5e-4_s1",
   "config": "rt_fidip",
-  "label": "FiDIP retrain, $\\lambda=5\\cdot10^{-4}$",
+  "label": "FiDIP retrain, lambda 5e-4",
   "role": "retrain",
   "seed": "1",
   "status": "done",
@@ -359,7 +359,7 @@
  {
   "run_id": "R011_fidip-w48_lambda5e-4_s2",
   "config": "rt_fidip",
-  "label": "FiDIP retrain, $\\lambda=5\\cdot10^{-4}$",
+  "label": "FiDIP retrain, lambda 5e-4",
   "role": "retrain",
   "seed": "2",
   "status": "done",
@@ -429,7 +429,7 @@
  {
   "run_id": "R012_fidip-w48_lambda5e-4_s3",
   "config": "rt_fidip",
-  "label": "FiDIP retrain, $\\lambda=5\\cdot10^{-4}$",
+  "label": "FiDIP retrain, lambda 5e-4",
   "role": "retrain",
   "seed": "3",
   "status": "done",
@@ -789,7 +789,7 @@
  {
   "run_id": "R121_mmp-vitpose-l256_rot180_s1",
   "config": "mmp_vitl256_rot180",
-  "label": "ViTPose-L 256, rotation $\\pm$180",
+  "label": "ViTPose-L 256, rotation +-180 deg",
   "role": "ablation",
   "seed": "1",
   "status": "done",

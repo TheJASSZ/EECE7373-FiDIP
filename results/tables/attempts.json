@@ -255,7 +255,7 @@
  {
   "attempt": 13,
   "config": "rt_fidip",
-  "label": "FiDIP retrain, $\\lambda=5\\cdot10^{-4}$",
+  "label": "FiDIP retrain, lambda 5e-4",
   "role": "retrain",
   "what_changed": "official recipe retrain (COCO DarkPose init, PRE_EPOCH 10, lambda 5e-4), Val400 epoch selection",
   "hypothesis": "reproduces DarkPose+FiDIP 93.6 without Test100 selection",
@@ -278,7 +278,7 @@
  {
   "attempt": 14,
   "config": "rt_ft",
-  "label": "Fine-tune retrain, $\\lambda=0$",
+  "label": "Fine-tune retrain, lambda 0",
   "role": "retrain",
   "what_changed": "same recipe with lambda = 0 (no domain adaptation)",
   "hypothesis": "reproduces DarkPose+Finetune 92.7; FiDIP > fine-tune",
@@ -511,7 +511,7 @@
  {
   "attempt": 25,
   "config": "mmp_vitl256_rot180",
-  "label": "ViTPose-L 256, rotation $\\pm$180",
+  "label": "ViTPose-L 256, rotation +-180 deg",
   "role": "ablation",
   "what_changed": "rotation augmentation up to 180 degrees",
   "hypothesis": "infants appear at any in-plane angle",

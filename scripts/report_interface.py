@@ -62,8 +62,13 @@ def pm(mean, sd):
 
 
 def tex(s):
+    """Plain text -> LaTeX: escape specials, then a few safe typographic substitutions."""
     s = str(s)
     s = s.replace("\\", r"\textbackslash{}").replace("_", r"\_").replace("%", r"\%").replace("&", r"\&").replace("#", r"\#")
+    s = s.replace("$", r"\$")
+    s = s.replace("^", r"\^{}").replace("~", r"\~{}")
+    s = s.replace("+-", r"$\pm$").replace("->", r"$\to$")
+    s = re.sub(r"\blambda\b", r"$\\lambda$", s)
     return re.sub(r"(\d+)x(\d+)", r"\1$\\times$\2", s)
 
 

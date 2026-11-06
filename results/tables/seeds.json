@@ -366,7 +366,7 @@
  },
  {
   "config": "rt_fidip",
-  "label": "FiDIP retrain, $\\lambda=5\\cdot10^{-4}$",
+  "label": "FiDIP retrain, lambda 5e-4",
   "split": "val400",
   "split_role": "selection",
   "clean_test": false,
@@ -394,7 +394,7 @@
  },
  {
   "config": "rt_fidip",
-  "label": "FiDIP retrain, $\\lambda=5\\cdot10^{-4}$",
+  "label": "FiDIP retrain, lambda 5e-4",
   "split": "test100",
   "split_role": "clean test (reporting only)",
   "clean_test": true,
@@ -682,7 +682,7 @@
  },
  {
   "config": "mmp_vitl256_rot180",
-  "label": "ViTPose-L 256, rotation $\\pm$180",
+  "label": "ViTPose-L 256, rotation +-180 deg",
   "split": "val400",
   "split_role": "selection",
   "clean_test": false,

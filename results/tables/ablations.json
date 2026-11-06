@@ -423,7 +423,7 @@
  {
   "attempt": 25,
   "config": "mmp_vitl256_rot180",
-  "label": "ViTPose-L 256, rotation $\\pm$180",
+  "label": "ViTPose-L 256, rotation +-180 deg",
   "role": "ablation",
   "what_changed": "rotation augmentation up to 180 degrees",
   "hypothesis": "infants appear at any in-plane angle",

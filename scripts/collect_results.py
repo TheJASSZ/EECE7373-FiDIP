@@ -121,8 +121,12 @@ def f1(x, nd=1):
 
 
 def tex_escape(s):
-    return (str(s).replace("\\", r"\textbackslash{}").replace("_", r"\_").replace("%", r"\%").replace("&", r"\&")
-            .replace("#", r"\#").replace("$", r"\$"))
+    s = (str(s).replace("\\", r"\textbackslash{}").replace("_", r"\_").replace("%", r"\%").replace("&", r"\&")
+         .replace("#", r"\#").replace("$", r"\$"))
+    s = s.replace("^", r"\^{}").replace("~", r"\~{}")
+    s = s.replace("+-", r"$\pm$").replace("->", r"$\to$")
+    s = re.sub(r"\blambda\b", r"$\\lambda$", s)
+    return re.sub(r"(\d+)x(\d+)", r"\1$\\times$\2", s)
 
 
 # ----------------------------------------------------------------------------- build

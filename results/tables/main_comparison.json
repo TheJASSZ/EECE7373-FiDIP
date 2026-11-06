@@ -55,7 +55,7 @@
   "eval": "eval_coco.py v1 (paper protocol; GT boxes; rescored)"
  },
  {
-  "model": "FiDIP retrain, $\\lambda=5\\cdot10^{-4}$",
+  "model": "FiDIP retrain, lambda 5e-4",
   "role": "retrain",
   "run_ids": [
    "R010_fidip-w48_lambda5e-4_s1",

@@ -144,7 +144,7 @@
    "hypothesis": "none (not an attempt)"
   },
   "rt_fidip": {
-   "label": "FiDIP retrain, $\\lambda=5\\cdot10^{-4}$",
+   "label": "FiDIP retrain, lambda 5e-4",
    "role": "retrain",
    "slot": 4,
    "macro": "RtFiDIP",
@@ -157,7 +157,7 @@
    "hypothesis": "reproduces DarkPose+FiDIP 93.6 without Test100 selection"
   },
   "rt_ft": {
-   "label": "Fine-tune retrain, $\\lambda=0$",
+   "label": "Fine-tune retrain, lambda 0",
    "role": "retrain",
    "slot": 5,
    "macro": "RtFT",
@@ -231,7 +231,7 @@
    ],
    "what_changed": "domain-adaptation weight lambda 5e-4 -> 1e-4 (1 seed)",
    "hypothesis": "the DA weight matters",
-   "factor": "FiDIP $\\lambda$",
+   "factor": "FiDIP lambda",
    "setting": "1e-4",
    "baseline": "rt_fidip"
   },
@@ -245,7 +245,7 @@
    ],
    "what_changed": "domain-adaptation weight lambda 5e-4 -> 2e-3 (1 seed)",
    "hypothesis": "the DA weight matters",
-   "factor": "FiDIP $\\lambda$",
+   "factor": "FiDIP lambda",
    "setting": "2e-3",
    "baseline": "rt_fidip"
   },
@@ -259,7 +259,7 @@
    ],
    "what_changed": "domain-adaptation weight lambda 5e-4 -> 1e-2 (1 seed)",
    "hypothesis": "the DA weight matters",
-   "factor": "FiDIP $\\lambda$",
+   "factor": "FiDIP lambda",
    "setting": "1e-2",
    "baseline": "rt_fidip"
   },
@@ -305,7 +305,7 @@
    "baseline": "mmp_vitl256_base"
   },
   "mmp_vitl256_rot180": {
-   "label": "ViTPose-L 256, rotation $\\pm$180",
+   "label": "ViTPose-L 256, rotation +-180 deg",
    "role": "ablation",
    "slot": 0,
    "macro": "MmpVitLRot",
@@ -315,7 +315,7 @@
    "what_changed": "rotation augmentation up to 180 degrees",
    "hypothesis": "infants appear at any in-plane angle",
    "factor": "Rotation aug.",
-   "setting": "up to $\\pm$180$^\\circ$",
+   "setting": "up to +-180 deg",
    "baseline": "mmp_vitl256_base"
   },
   "rt_ft_attempt1": {

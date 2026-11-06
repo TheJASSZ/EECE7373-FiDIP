@@ -94,7 +94,7 @@
   "val400_AP_std": null
  },
  {
-  "row": "FiDIP retrain, $\\lambda=5\\cdot10^{-4}$",
+  "row": "FiDIP retrain, lambda 5e-4",
   "source": "eval/eval_coco.py",
   "protocol": "paper",
   "n_runs": 3,
@@ -119,7 +119,7 @@
   "val400_AP_std": 0.12792195729629838
  },
  {
-  "row": "Fine-tune retrain, $\\lambda=0$",
+  "row": "Fine-tune retrain, lambda 0",
   "source": "eval/eval_coco.py",
   "protocol": "paper",
   "n_runs": 0,
