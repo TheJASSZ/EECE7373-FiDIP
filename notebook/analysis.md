@@ -184,3 +184,16 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
 - **Caveat for the report.** Upstream's training loop keeps `model_best` by AP on `DATASET.TEST_SET = validate_infant`, which is Test100 in syrip_for_train (D1). The released checkpoint may therefore be the best-on-Test100 epoch, and its Test100 AP (and the paper's 93.6) would be optimistic relative to a Val400-selected model.
   - Our retrains select on Val400, so a released-vs-retrain gap of a few tenths could be selection bias, not a reproduction failure.
   - I'll quantify what I can: Test100 minus Val400 AP for the released model vs our retrains.
+
+### 2026-11-05 21:08 EST: final splits (D15) and the Test100 leak (D16) built into the pipeline
+- Splits final at 21:02:55 (`$R/data/splits/VERIFY.txt`). Val400 has 397 images (207, 217, 222 removed as Test100 duplicates). Every Val400 number from now on uses the 397-image file. The smoke-run Val400 numbers above were computed on 400 images and are superseded; `eval-all` re-evaluates automatically because the GT sha256 changed.
+- **Test100-clean** (`test100_clean`, 95 images) = Test100 minus {7, 20, 42, 46, 50}:
+  - test20/42/46/50 are byte-identical to official training images train73/315/272/340;
+  - test7 ≈ train47 (dHash 9, pose OKS 0.96).
+  - `analysis_pipeline.derived_splits()` reads the ids from `VERIFY.json` (never hard-coded) and writes `$R/analysis/splits_derived/test100_clean.json`.
+  - `eval-all` evaluates every Test100-allowed run on it (both protocols, all metrics). It is gated exactly like Test100. test0 stays, so the id-0 artefact still applies.
+  - Bootstrap contrasts run on it via `analysis_pipeline.py bootstrap --gt test100_clean`.
+  - `collect_results.py` adds `test100_clean_AP` columns and `...TestCleanAP` macros.
+- **Memorisation check** (D16): `analyze.py models` with `leak_ids` in the manifest (build_manifests / run_released.sh fill it from the derived-split README) writes `leak_effect_<split>.csv` and a figure. The figure shows the 5 leaked images as diamonds against a box and strip of the other 95, per model; the CSV gives mean OKS for leaked vs rest with a bootstrap CI on the difference.
+- **Env leak:** `~/.local/lib/python3.12/site-packages` holds only transformers, datasets, accelerate, peft, bitsandbytes, tokenizers, absl, rouge_score and rarfile. None of the packages my code imports (numpy, pycocotools, matplotlib, pandas, scipy, PIL, cv2) are there. The analysis-env test job (11659381) reported exactly the pinned numpy 1.26.4 / pycocotools 2.0.8, so nothing was shadowed. All analysis sbatch scripts now export `PYTHONNOUSERSITE=1` regardless.
+- **To do when R001 lands:** quantify the AP impact of syrip_for_train's defective `validate_infant/test11.jpg` (bytes of test24, wrong size) by scoring R001's upstream-layout predictions against the same Test100 GT.
