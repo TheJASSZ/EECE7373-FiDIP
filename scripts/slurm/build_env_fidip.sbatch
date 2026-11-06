@@ -3,6 +3,7 @@
 # Deviation from upstream fidip_env.yml (logged in notebook/repro.md): the yml's pip stage pins
 # wheels that do not exist for cp312 (grpcio 1.48.2, mkl-fft/mkl-random/mkl-service), so we install
 # the same python/torch/numpy/opencv/pycocotools versions with pip only (torch cu121 wheels).
+# pyarrow is pinned to 17.0.0: streamlit's default pyarrow (26.x) requires NumPy >= 2, but upstream needs 1.26.4.
 # Usage: sbatch scripts/slurm/build_env_fidip.sbatch
 #SBATCH --job-name=build_env_fidip
 #SBATCH --partition=short
@@ -40,7 +41,7 @@ python -m pip install torch==2.3.1 torchvision==0.18.1 --index-url https://downl
 python -m pip install -c "$R/envs/fidip-constraints.txt" \
   numpy==1.26.4 opencv-python-headless==4.10.0.84 pycocotools==2.0.8 json-tricks==3.17.3 yacs==0.1.8 \
   dsntnn==0.5.3 tensorboard==2.17.0 tensorboardX==2.6.2.2 cython==3.0.10 scipy==1.14.0 matplotlib==3.9.1 \
-  pyyaml==6.0.1 easydict==1.13 pillow==10.3.0 gdown==5.2.0 streamlit==1.39.0
+  pyyaml==6.0.1 easydict==1.13 pillow==10.3.0 gdown==5.2.0 streamlit==1.39.0 pyarrow==17.0.0
 
 python - <<'EOF'
 import torch, torchvision, numpy, cv2, pycocotools, json_tricks, yacs, dsntnn, scipy, matplotlib, gdown, streamlit
