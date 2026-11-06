@@ -156,3 +156,14 @@ Newest entries at the bottom. Timestamps in EST.
   - All job names carry the `im_` prefix.
   - Finalized runs drop the resumable `epoch_*.pth` (optimizer state: 765 MB HRNet, ~3.7 GB ViT-L) and keep `best_*.pth`.
   - run.json gains `throughput` (median s/iter, data s/iter, max memory).
+
+### 2026-11-05 21:05 EST — SPLITS_READY (21:02); Val400 = 397 images; pack smoke shows packing works
+- **REPRO's final splits** (`$R/data/splits/VERIFY.txt`):
+  - `train_infant` 1200 (200 real / 1000 syn), sha256 `3bdcce0b…`. **Unchanged**, so my derived real200/syn1000 subsets (`$R/mmpose_data/splits`, built 20:58 from this exact file) remain valid.
+  - `test100` 100, sha256 `8b299a87…`, unchanged.
+  - **`val400` now 397 images**, sha256 `8ed74bd5…`. REPRO dropped 207 (near-duplicate of a Test100 image) and 217 and 222 (byte-identical to Test100 ids 56 and 7). Val400×Test100 overlap by id, file name and md5 is now 0. The name "Val400" is kept and the file is `val400.json`.
+  - Image rule unchanged: `$R/data/syrip/images/<split>/<file_name>`. `test489.jpg` is PNG bytes; cv2 decodes it fine.
+  - Official leak noted by REPRO: 4 Test100 images are byte-identical to official train images (test,train) = (20,73),(42,315),(46,272),(50,340), plus near-dup (7,47). They are kept for comparability with the paper, which trained on the same split.
+- **Pack smoke (job 11659697, L40S d4047, 2m46s, FAILED by design of timing):** R192 HRNet + R193 ViT-L-256, 1 epoch each.
+  - Both trained concurrently: GPU util 93%, per-process peak 16.8 GB (HRNet) and 14.8 GB (ViT-L-256). Packed s/iter: HRNet 0.53 (vs 0.37 alone), ViT-L-256 0.46.
+  - Both then failed at the Val400 eval with `FileNotFoundError: …/images/val400/test207.jpg`: REPRO was rebuilding the Val400 tree (207 dropped) at that moment. This confirms the decision to wait for SPLITS_READY. R192/R193 are discarded (no run.json; not registered).
