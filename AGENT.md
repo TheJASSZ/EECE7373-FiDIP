@@ -419,3 +419,16 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - report interface: 42 of 87 `numbers.tex` keys set, 9 tables;
   - `results/tables/provenance.csv`.
 - **Prepared for the final contrasts:** `results/contrasts/final_C1_C4.json` (Holm, both protocols, an H1 robust flag) and the refresh commands. They wait for the R131–R141 Test100 predictions and R013–R015.
+
+### 2026-11-06 07:22 EST — Confirmatory set in flight; orchestrator takes over the final steps
+- **The improve worker handed back** after launching the confirmatory jobs (D20, fresh seeds s2–s6):
+  - 11671548: ViT-H R136–R138, back-to-back on A100.
+  - 11671549 and 11671553: HRNet R131–R134.
+  - 11671556: R135 + R139 on L40S.
+- It also hardened its own gates. They had matched full RUN_IDs as substrings, so they would have *refused* the range-registered R136–R140. Both gates now use the shared `scripts/prereg.py` and require the Erratum section.
+- **Who runs the final steps:** the orchestrator, not a resumed improve worker. Its context is about 580k tokens, and the steps are a few documented commands (D18 economy).
+  - Pushed with provenance (head `1d7bc1b`, tree `88a76de`, clean).
+  - Submitted **R140** (ViT-H seed 6) as job **11671737** on sharing/L40S, using the free second sharing slot instead of chaining behind R122.
+  - A background watcher waits for all ten R131–R140 to finalize.
+  - Then: one `final_test_eval_mmpose.sbatch` over R101, R105 and R131–R140 (gated, SHA256-verified, one-shot), the R141 ensemble job, and the analysis refresh plus contrasts C1–C4.
+- **Concurrently:** repro's λ = 0 retrains (R013–R015, job 11670943) are running on H200. R122 (ViT-H real-only ablation) is running on L40S.
