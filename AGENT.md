@@ -471,3 +471,13 @@ The literature-scan Explore agent is still running. Its findings will be forward
 - **Running now:** `im_pack_confAB_s6s5` (R135 + R139, L40S), `im_R140` (L40S), and `rp_R021-R023` (H200). The retargeted packs are pending with reason None or Priority.
 - **Done:** R122 (ViT-H-256 real-only ablation, Val400 only).
 - **Improve worker:** its last two handbacks (07:3x) repeat its plan from before R140's submission and the retarget, and it has stopped. No reply was needed, which avoids resuming a ~590k-token context (D18).
+
+### 2026-11-06 07:53 EST — Human: "I need to submit by 10 am"; deadline plan
+- **Human approved cancelling the never-started pack 11671548** (ViT-H s2–s4; the H200 estimate was a 09:58 start).
+  - Cancelled.
+  - Resubmitted as three single jobs on V100-32GB (`gpu`), which fits ViT-H-256's 24.7 GB: R136 → 11672130, R137 → 11672131, R138 → 11672133.
+  - The two HRNet packs moved to sharing/L40S (11671549, 11671553; parameter retarget), to start as our 2-job sharing cap frees.
+- **Plain fine-tune control R021–R023 finished:** Test100 best-Val400 checkpoints score 93.6 / 93.9 / 93.5, Val400 91.1 / 90.6 / 91.0. Even against the faithful no-pre-stage control, the paper's +0.9 domain-adaptation gain (93.6 vs 92.7) does not reproduce. Contrast added to `results/contrasts/retrain_fidip_vs_ft.json`.
+- **Analysis refresh 11672198 → contrasts 11672199** (CPU).
+- **Report worker resumed, time-boxed:** all sections plus the README by 09:10. Final bonus numbers enter as generated macros at about 09:15–09:30.
+- **Bonus fallback:** if any confirmatory seed can't finish in time, report the completed seeds and state the deviation from the pre-registration explicitly. No other change to the decision rule.
