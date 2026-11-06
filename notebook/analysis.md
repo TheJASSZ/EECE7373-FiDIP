@@ -128,7 +128,7 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
 
 **Waiting on:** `$R/data/SPLITS_READY`, the fidip env (job 11659313), the released checkpoints, and R001 predictions.
 
-### 2026-11-05 20:58 EST: pipeline hardening while waiting for R001, plus a contamination check to run
+### 2026-11-05 20:48 EST: pipeline hardening while waiting for R001, plus a contamination check to run
 - `analysis_pipeline.py` changes:
   - **validate500 is now gated exactly like Test100**, because it contains Test100. Without this, a validate500 evaluation of an unregistered model would leak Test100 numbers.
   - Tagged prediction files (`preds_val400_noflip.json`, improve's test-time ablations) are parsed as split + tag.
