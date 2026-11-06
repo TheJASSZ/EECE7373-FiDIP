@@ -142,3 +142,26 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
 - **The paper's numbers were evidently computed on the correct test images.** The README's own layout loses about 1.5 AP (93.6 → 92.1) through the duplicated test11.jpg. MobileNet's 0.1 AP gap is within version noise (cv2/torch builds).
 - Outputs: `$R/runs/R00{1,2}_*/preds_{test100,val400,validate_infant[,validate500]}.json`, `metrics_upstream_*.txt`, `run.json`.
 - Glitch: `run.json` lacked `time_end`. The final `--stamp end` line did not take effect in the job, but a stub of the same script tail works. I backfilled it from the slurm log, and the stamp is now written after every split.
+
+### 2026-11-06 01:05–01:20 EST — smoke test, retrain submissions, hypotheses
+- Checkpoint rules stated up front in `results/PREREGISTRATION.md` (rows repro-1/2, commit 3a06c5f): R010–R015 report BOTH the best-Val400 epoch and final epoch 20 on Test100; R016–R020 Val400 only.
+- **Smoke R009_fidip-w48_smoke_s1** (job 11664893, gpu H200 d4053, 1 min 48 s; duplicate L40S job 11664960 cancelled while pending). Spec: λ 5e-4, PRE_EPOCH 1, END_EPOCH 1, Val400 eval only.
+  - Pre-stage, then train at 0.12 s/iteration at batch 20; epochs.csv OK.
+  - In-training Val400 AP 0.8811 equals the re-evaluation of `model_best.pth` (0.881).
+  - **Peak GPU memory 11.8 GB per process**, so 3 seeds (~36 GB) are packed on one H200.
+  - `loss_p` goes ≤ 0 at times: −λ·BCE (5e-4 × ~0.7 ≈ 3.5e-4) is the same order as the heatmap MSE (~4e-4). So the adversarial term is not negligible at λ = 5e-4, and P8 logs MSE separately.
+- Submitted (D14: ≤ 2 running on gpu, followers chained with `--dependency=afterany`):
+  - 11665025 `rp_R010-R012` (λ 5e-4, s1–s3)
+  - 11665026 `rp_R013-R015` (λ 0, s1–s3)
+  - 11665029 `rp_R016-R018` (λ sweep)
+  - 11665030 `rp_R019-R020`
+- **Hypotheses (logged before results):**
+  - R010–R012 vs R013–R015: the paper reports +0.9 AP for domain adaptation (93.6 vs 92.7). With a 3-seed sd likely ~0.3–0.5 AP, we may or may not resolve it.
+  - λ sweep R016–R018 (1e-4, 2e-3, 1e-2): small λ should approach the λ = 0 result. At large λ (2e-3, 1e-2) the −λ·BCE term dominates the ~4e-4 MSE and should hurt pose accuracy. Expect a flat or slightly peaked curve around 5e-4.
+  - R019 paper recipe (Adam lr 1e-3, 100 epochs, batch 64, λ 5e-4; LR_STEP [40, 200] kept from the yaml, so ×0.1 at epoch 40): 10× higher LR on a partly frozen pretrained net may overfit 1200 images or destabilize. The longer schedule plus LR drop may compensate. This tests whether the paper recipe, not the yaml, explains 93.6.
+  - R020 README-literal labels (syrip_for_train json: MINI-RGBD labels on SyRIP synthetic images): expect a clear drop, because the 1000 synthetic samples carry wrong keypoints. This quantifies what following the README literally costs.
+- **Demo** job 11664937 (sharing L40S): all `tools/demo.py` modes passed.
+  - 8 Test100 overlays with GT boxes, 2 per posture (ids 0, 3, 1, 6, 2, 5, 38, 69); mean conf 0.82–0.90.
+  - Detector path: test0 mean conf 0.46 with the detector box vs 0.87 with the GT box. Box quality matters, a point for the report.
+  - Single image and an 8-frame video also worked.
+  - The Streamlit AppTest failed only because FIDIP_MODEL was not exported for that step. Fixed; rerunning as job 11665018.
