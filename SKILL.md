@@ -95,18 +95,10 @@ bash scripts/sync_results.sh
 - All reported metrics come from `eval/eval_coco.py`.
 
 ## Active runs
-Snapshot as of 2026-11-06 07:33 EST. Refresh with `ssh explorer 'squeue -u $USER'`.
+**None. The project is complete** (2026-11-06 10:26 EST). All runs, their Slurm job IDs and their checkpoints are listed in `results/registry.csv` and in MANIFEST §5/§8.
 
-| Job ID | Name | Partition / GPU | Purpose | State |
-|---|---|---|---|---|
-| 11671810 | rp_R021-R023 | gpu / h200 | plain fine-tune control (PRE_EPOCH 0, λ 0.0), 3 seeds (repro-3) | running |
-| 11671549 | im_pack_confA_s2-s3 | gpu / h200 (moved from a100, D22) | HRNet R131 + R132 (arm A) | pending |
-| 11671553 | im_pack_confA_s4-s5 | gpu / h200 (moved from a100, D22) | HRNet R133 + R134 (arm A) | pending |
-| 11671548 | im_pack_confH_s2-s4 | gpu / h200 (moved from a100, D22) | ViT-H-256 R136–R138, back-to-back (arm B) | pending |
-| 11671556 | im_pack_confAB_s6s5 | sharing / l40s | HRNet R135 + ViT-H R139 | running |
-| 11671737 | im_R140 | sharing / l40s | ViT-H-256 R140 (arm B, s6) | running |
-
-**Next:** once all ten of R131–R140 have finalized, run one `final_test_eval_mmpose.sbatch` over R101, R105 and R131–R140, then `ensemble_mmpose.sbatch` (R141), then the analysis refresh and contrasts C1–C4 (MANIFEST §10).
+- **Login-node outage:** from about 09:35 on 2026-11-06, `login.explorer.northeastern.edu` refused key auth ("Permission denied (publickey)"). The transfer node `xfer.discovery.neu.edu` still accepted the same key and serves the same `/home` and `/scratch`; use it to read or pull files.
+- **No Slurm on xfer:** `squeue`/`sacct` are not available there.
 
 ## Guardrails
 - No training or evaluation on login nodes. Use `sbatch`/`srun`. **Login nodes kill heavy processes:** an `unzip` of the 313 MB SyRIP.zip was `Killed` (2026-11-05). Only `curl`/`wget` downloads and light file operations are safe there.

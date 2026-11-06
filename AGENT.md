@@ -546,3 +546,8 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - **H1 is supported:** mean > 93.6, and C1's CI excludes 0 under both protocols after Holm correction. The verdict is computed by `scripts/fill_final_keys.py`.
   - The ensemble R141 and the supplementary R101/R105 are in the generated tables.
 - **Closing steps:** registry backfilled (16 rows from run.json); MANIFEST §8 generated from the provenance files (89 rows); report rebuilt (0 undefined refs, 0 overfull boxes); pushed to the private GitHub repo; zip rebuilt.
+
+### 2026-11-06 10:26 EST — Close-out
+- Project complete and submitted-ready.
+- Stopped the hourly heartbeat cron.
+- SKILL.md active runs set to none, with the login-node outage noted.
