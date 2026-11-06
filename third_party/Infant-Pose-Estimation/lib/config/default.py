@@ -25,6 +25,8 @@ _C.PRINT_FREQ = 20
 _C.AUTO_RESUME = False
 _C.PIN_MEMORY = True
 _C.RANK = 0
+# [EECE7373 patch P11] seed for python/numpy/torch RNGs (-1 = unseeded, as upstream)
+_C.SEED = -1
 
 # Cudnn related params
 _C.CUDNN = CN()

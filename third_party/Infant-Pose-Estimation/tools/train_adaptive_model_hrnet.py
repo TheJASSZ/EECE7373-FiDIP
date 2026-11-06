@@ -12,6 +12,7 @@ from __future__ import print_function
 import argparse
 import os
 import pprint
+import random
 import shutil
 
 import torch
@@ -87,6 +88,16 @@ def main():
 
     logger.info(pprint.pformat(args))
     logger.info(cfg)
+
+    # [EECE7373 patch P11] optional seeding, before the models (domain-classifier init), the
+    # BalancedBatchSampler oversampling (python random) and the DataLoader worker seeds (torch RNG).
+    # cuDNN benchmark mode stays on as upstream, so runs are seeded but not bit-deterministic.
+    if cfg.SEED >= 0:
+        random.seed(cfg.SEED)
+        np.random.seed(cfg.SEED)
+        torch.manual_seed(cfg.SEED)
+        torch.cuda.manual_seed_all(cfg.SEED)
+        logger.info('=> seeded python/numpy/torch/cuda RNGs with SEED={}'.format(cfg.SEED))
 
     # cudnn related setting
     cudnn.benchmark = cfg.CUDNN.BENCHMARK
