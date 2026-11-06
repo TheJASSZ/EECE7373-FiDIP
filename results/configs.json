@@ -381,6 +381,30 @@
    "what_changed": "mean of the 5 arm-B predictions (eval/ensemble_preds.py)",
    "hypothesis": "secondary (imp-3, C4)",
    "outcome": "pre-registered (imp-3)"
+  },
+  "zs_darkpose": {
+   "label": "DarkPose HRNet-W48 (COCO only, released)",
+   "role": "released",
+   "slot": 0,
+   "macro": "ZsDarkPose",
+   "run_ids": [
+    "R003_darkpose-w48-coco_released"
+   ],
+   "what_changed": "upstream TGA_models coco/w48_384x288.pth, no SyRIP fine-tuning (upstream test code)",
+   "hypothesis": "reproduces the published DarkPose 88.5 on Test100"
+  },
+  "rt_ftnp": {
+   "label": "Plain fine-tune retrain (no pre-stage, lambda 0)",
+   "role": "retrain",
+   "slot": 6,
+   "macro": "RtFTnp",
+   "run_ids": [
+    "R021_fidip-w48_ft-noprestage_s1",
+    "R022_fidip-w48_ft-noprestage_s2",
+    "R023_fidip-w48_ft-noprestage_s3"
+   ],
+   "what_changed": "PRE_EPOCH 0 and lambda 0.0: no classifier pre-stage, no adversarial term (repro-3)",
+   "hypothesis": "faithful counterpart of the paper's DarkPose+Finetune 92.7 row; FiDIP > plain fine-tune"
   }
  }
 }
