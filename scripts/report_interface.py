@@ -202,6 +202,16 @@ class ReportInterface:
                 self.set("imp.control.val.ap.sd", num1(s["AP_std"]) if s["AP_std"] is not None else "---",
                          s["run_ids"], "", "paper", "val400")
         self._fill_best()
+        ge = self.group(role="ensemble")
+        if ge:
+            st = c.config_summary(ge, "test100")
+            if st["n_runs"]:
+                self.set("ens.name", tex(ge.get("label", ge["key"])), st["run_ids"], "results/configs.json")
+                self.set("ens.test.ap", num1(st["AP"]), st["run_ids"], "", "paper", "test100")
+            b = self._boot(ge["key"], "rel_fidip_w48")
+            if b:
+                self.set("ens.delta.ci.lo", signed(b["ci_lo"]), b["ids"], b["file"], "paper", "test100")
+                self.set("ens.delta.ci.hi", signed(b["ci_hi"]), b["ids"], b["file"], "paper", "test100")
         # bootstrap resamples
         Bs = {b.get("B") for b in self.t.get("bootstrap_summary", []) if b.get("B")}
         self.set("boot.n", str(max(Bs)) if Bs else "10000", "", "bootstrap_ci.py" if not Bs else "results/tables/bootstrap_*.json")
@@ -489,11 +499,12 @@ class ReportInterface:
                 ref = c.config_summary(self.group(bkey), "val400")["AP"]
             else:
                 ref = cmean if stream == "improve" else rmean
-            d = None if (r["val400_AP"] is None or ref is None or r["role"] in ("control", "released", "retrain", "failed")) \
+            d = None if (r["val400_AP"] is None or ref is None or r["role"] in ("control", "screen_control", "released",
+                                                                                 "retrain", "failed")) \
                 else r["val400_AP"] - ref
             outcome = gcfg.get("outcome") or {"released": "reproduction target", "retrain": "reproduction",
-                                              "control": "control", "zeroshot": "zero-shot reference",
-                                              "failed": "failed"}.get(r["role"])
+                                              "control": "control", "screen_control": "screening control",
+                                              "zeroshot": "zero-shot reference", "failed": "failed"}.get(r["role"])
             if outcome is None:
                 what = "baseline" if bkey else "control"
                 outcome = TBD if d is None else (f"above {what}" if d > 0 else f"not above {what}")

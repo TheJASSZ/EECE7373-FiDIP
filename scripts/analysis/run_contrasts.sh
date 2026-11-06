@@ -8,12 +8,23 @@ export R=${R:-/scratch/purohitham.v/fidip}
 SPEC=$1; NAME=$(basename "$SPEC" .json); RUNSPEC=$R/analysis/bootstrap/${NAME}.runnable.json
 mkdir -p $R/analysis/bootstrap
 python - "$SPEC" "$RUNSPEC" <<'PY'
-import json, os, sys
+import glob, json, os, sys
 spec = json.load(open(sys.argv[1]))
 keep, skip = [], []
+def expand(p):
+    p = os.path.expandvars(p)
+    if any(ch in p for ch in "*?["):
+        m = sorted(glob.glob(p))
+        return m[0] if len(m) == 1 else None          # a pattern must name exactly one file
+    return p if os.path.exists(p) else None
 for c in spec["contrasts"]:
-    files = [os.path.expandvars(p) for k in ("a", "b") for p in (c[k] if isinstance(c[k], list) else [c[k]])]
-    (keep if all(os.path.exists(f) for f in files) else skip).append(c)
+    ok = True
+    for k in ("a", "b"):
+        lst = c[k] if isinstance(c[k], list) else [c[k]]
+        ex = [expand(p) for p in lst]
+        ok &= all(ex)
+        c[k] = ex if all(ex) else lst
+    (keep if ok else skip).append(c)
 spec["contrasts"] = keep
 spec["skipped_missing_inputs"] = [c["name"] for c in skip]
 json.dump(spec, open(sys.argv[2], "w"), indent=1)

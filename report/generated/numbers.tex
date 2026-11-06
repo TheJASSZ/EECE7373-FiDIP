@@ -56,15 +56,15 @@
 \setres{rt.ft.bestepoch}{\tbd}                     % same, fine-tune arm
 
 % ---- Improvement study (MMPose; all selection on Val400) ------------------------------------
-\setres{imp.control.name}{HRNet-W48 DARK 384 (MMPose control)} % control, e.g. HRNet-W48 DARK 384$\times$288 (MMPose)
-\setres{imp.control.val.ap.mean}{91.5}             % control Val400 AP mean over seeds
-\setres{imp.control.val.ap.sd}{---}
-\setres{best.name}{\tbd}                           % final pre-registered configuration, short name
-\setres{best.input}{\tbd}                          % input size, e.g. 384$\times$288
-\setres{best.flip}{\tbd}                           % flip test at inference: yes / no
-\setres{best.ckptrule}{\tbd}                       % checkpoint rule, e.g. "best Val400 AP epoch"
+\setres{imp.control.name}{HRNet-W48 DARK 384 (arm A)} % control, e.g. HRNet-W48 DARK 384$\times$288 (MMPose)
+\setres{imp.control.val.ap.mean}{\tbd}             % control Val400 AP mean over seeds
+\setres{imp.control.val.ap.sd}{\tbd}
+\setres{best.name}{ViTPose-H 256 (arm B)}          % final pre-registered configuration, short name
+\setres{best.input}{256$\times$192}                % input size, e.g. 384$\times$288
+\setres{best.flip}{yes}                            % flip test at inference: yes / no
+\setres{best.ckptrule}{best Val400 coco/AP epoch per seed} % checkpoint rule, e.g. "best Val400 AP epoch"
 \setres{best.seeds}{\tbd}                          % number of seeds evaluated on Test100
-\setres{best.prereg.commit}{\tbd}                  % commit that registered it in results/PREREGISTRATION.md
+\setres{best.prereg.commit}{\texttt{72f9449}}      % commit that registered it in results/PREREGISTRATION.md
 \setres{best.val.ap.mean}{\tbd}                    % Val400 AP mean over seeds
 \setres{best.val.ap.sd}{\tbd}
 \setres{best.test.ap.mean}{\tbd}                   % Test100 AP mean over seeds (paper protocol)  <- headline
@@ -91,8 +91,8 @@
 \setres{ens.test.ap}{\tbd}
 \setres{ens.delta.ci.lo}{\tbd}
 \setres{ens.delta.ci.hi}{\tbd}
-\setres{att.n}{26}                                 % number of rows in tab_attempts
-\setres{att.nbetter}{10}                           % attempts whose Val400 AP beats the control's mean
+\setres{att.n}{29}                                 % number of rows in tab_attempts
+\setres{att.nbetter}{\tbd}                         % attempts whose Val400 AP beats the control's mean
 
 % ---- Evaluation-condition sensitivity (D8, D10) ---------------------------------------------
 \setres{sens.id0.delta}{$+1.4$}                    % R001: AP(fixed) - AP(paper) on Test100, signed

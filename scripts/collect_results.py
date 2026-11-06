@@ -141,11 +141,17 @@ class Collector:
         self.unregistered = sorted(found - set(self.run_meta))
         for rid in self.unregistered:
             self.run_meta[rid] = {"run_id": rid, "status": "unregistered", "notes": "metrics found; no registry row"}
-        # config groups
+        # config groups (run_ids may be fnmatch patterns such as "R136_*", expanded against known runs)
+        import fnmatch
         self.groups = OrderedDict()
         assigned = set()
         for key, c in self.configs.items():
-            ids = [r for r in c.get("run_ids", []) if r in self.run_meta or True]
+            ids = []
+            for r in c.get("run_ids", []):
+                if any(ch in r for ch in "*?["):
+                    ids += sorted(x for x in self.run_meta if fnmatch.fnmatch(x, r))
+                else:
+                    ids.append(r)
             self.groups[key] = dict(c, key=key, run_ids=ids)
             assigned.update(ids)
         for rid, row in self.run_meta.items():

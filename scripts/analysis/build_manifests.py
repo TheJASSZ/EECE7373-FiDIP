@@ -63,8 +63,16 @@ def main(argv=None):
             if c.get("role") == "smoke":
                 continue
             runs = []
+            rids = []
             for rid in c.get("run_ids", []):
+                if any(ch in rid for ch in "*?["):
+                    rids += sorted(os.path.basename(x) for x in glob.glob(os.path.join(a.eval_root, rid)))
+                else:
+                    rids.append(rid)
+            for rid in rids:
                 pi = os.path.join(a.eval_root, rid, f"per_image_{split}.json")
+                if not os.path.exists(pi):
+                    pi = os.path.join(a.eval_root, rid, f"per_image_{split}_best.json")
                 if not os.path.exists(pi):
                     continue
                 if split == "test100" and not apl.test_allowed(rid, reg, pre)[0]:

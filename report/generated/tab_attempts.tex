@@ -15,23 +15,26 @@ R016 & repro (DA) & domain-adaptation weight lambda 5e-4 -> 1e-4 (1 seed) & 1 & 
 R017 & repro (DA) & domain-adaptation weight lambda 5e-4 -> 2e-3 (1 seed) & 1 & 89.7 & $-0.8$ & --- & not above baseline\\
 R018 & repro (DA) & domain-adaptation weight lambda 5e-4 -> 1e-2 (1 seed) & 1 & 85.8 & $-4.7$ & --- & not above baseline\\
 \midrule
-R101 & improve & FiDIP backbone re-implemented in MMPose, no domain adaptation, shared recipe & 1 & 91.5 & --- & --- & control\\
-R101 & improve & test-time: noflip & 1 & 90.9 & $-0.6$ & --- & not above control\\
-R102 & improve & backbone HRNet-W48 -> ViTPose-L (UDP, 256$\times$192), same recipe & 1 & 92.8 & $+1.3$ & --- & above control\\
-R102 & improve & test-time: noflip & 1 & 92.3 & $+0.7$ & --- & above control\\
-R103 & improve & backbone -> ViTPose-L (UDP, 384$\times$288), same recipe & 1 & 92.8 & $+1.3$ & --- & above control\\
-R104 & improve & backbone -> ViTPose-H (UDP, 384$\times$288), same recipe & 1 & 93.3 & $+1.8$ & --- & above control\\
-R105 & improve & backbone -> ViTPose-H (UDP, 256$\times$192), same recipe & 1 & 93.2 & $+1.6$ & --- & above control\\
+R101 & improve & FiDIP backbone re-implemented in MMPose, no domain adaptation, shared recipe & 1 & 91.5 & --- & --- & screening control (seed s1; supplementary, imp-4)\\
+R101 & improve & test-time: noflip & 1 & 90.9 & --- & --- & screening control (seed s1; supplementary, imp-4)\\
+R102 & improve & backbone HRNet-W48 -> ViTPose-L (UDP, 256$\times$192), same recipe & 1 & 92.8 & $+1.3$ & --- & above baseline\\
+R102 & improve & test-time: noflip & 1 & 92.3 & $+0.7$ & --- & above baseline\\
+R103 & improve & backbone -> ViTPose-L (UDP, 384$\times$288), same recipe & 1 & 92.8 & $+1.3$ & --- & above baseline\\
+R104 & improve & backbone -> ViTPose-H (UDP, 384$\times$288), same recipe & 1 & 93.3 & $+1.8$ & --- & above baseline\\
+R105 & improve & backbone -> ViTPose-H (UDP, 256$\times$192), same recipe & 1 & 93.2 & $+1.6$ & --- & selected as arm B (seed s1; supplementary, imp-4)\\
 R106 & improve & control with LR 1e-4 -> 2e-4 & 1 & 91.4 & $-0.1$ & --- & not above baseline\\
 R107 & improve & control with LR 1e-4 -> 5e-5 & 1 & 91.7 & $+0.2$ & --- & above baseline\\
 R108 & improve & ViTPose-L 256 with LR 1e-4 -> 2e-4 & 1 & 92.6 & $-0.2$ & --- & not above baseline\\
 R109 & improve & ViTPose-L 256 with LR 1e-4 -> 5e-5 & 1 & 92.6 & $-0.2$ & --- & not above baseline\\
 R120 & improve & train on the 200 real images only (no synthetic) & 1 & 92.2 & $-0.6$ & --- & not above baseline\\
 R121 & improve & rotation augmentation up to 180 degrees & 1 & 92.6 & $-0.2$ & --- & not above baseline\\
-R181 & improve & no infant training (MMPose COCO checkpoint) & 1 & 86.5 & $-5.1$ & --- & zero-shot reference\\
-R182 & improve & no infant training & 1 & 88.2 & $-3.3$ & --- & zero-shot reference\\
-R183 & improve & no infant training (pos-embed resized to 24$\times$18) & 1 & 86.3 & $-5.2$ & --- & zero-shot reference\\
-R184 & improve & no infant training & 1 & 88.8 & $-2.7$ & --- & zero-shot reference\\
-R185 & improve & no infant training (pos-embed resized to 24$\times$18) & 1 & 87.4 & $-4.1$ & --- & zero-shot reference\\
+R181 & improve & no infant training (MMPose COCO checkpoint) & 1 & 86.5 & --- & --- & zero-shot reference\\
+R182 & improve & no infant training & 1 & 88.2 & --- & --- & zero-shot reference\\
+R183 & improve & no infant training (pos-embed resized to 24$\times$18) & 1 & 86.3 & --- & --- & zero-shot reference\\
+R184 & improve & no infant training & 1 & 88.8 & --- & --- & zero-shot reference\\
+R185 & improve & no infant training (pos-embed resized to 24$\times$18) & 1 & 87.4 & --- & --- & zero-shot reference\\
+--- & improve & pre-registered control, 5 fresh seeds s2-s6 & 0 & \tbd & --- & --- & pre-registered (imp-1)\\
+--- & improve & pre-registered treatment: backbone ViTPose-H 256$\times$192, same recipe as arm A, 5 fresh seeds s2-s6 & 0 & \tbd & --- & --- & pre-registered (imp-2)\\
+--- & improve & mean of the 5 arm-B predictions (eval/ensemble\_preds.py) & 0 & \tbd & --- & --- & pre-registered (imp-3)\\
 \bottomrule
 \end{tabular}

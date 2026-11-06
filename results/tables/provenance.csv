@@ -20,12 +20,14 @@ rt.fidip.val.ap.sd,0.1,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2
 rt.fidip.test.ap.final.mean,93.4,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,metrics_test100_final.json,paper,test100
 rt.fidip.test.ap.final.sd,0.5,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,metrics_test100_final.json,paper,test100
 rt.seeds,3,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,results/analysis_eval,,
-imp.control.name,HRNet-W48 DARK 384 (MMPose control),R101_mmp-hrnetw48_base_s1,results/configs.json,,
-imp.control.val.ap.mean,91.5,R101_mmp-hrnetw48_base_s1,,paper,val400
-imp.control.val.ap.sd,---,R101_mmp-hrnetw48_base_s1,,paper,val400
+imp.control.name,HRNet-W48 DARK 384 (arm A),,results/configs.json,,
+best.name,ViTPose-H 256 (arm B),,results/configs.json,,
+best.input,256$\times$192,,results/configs.json,,
+best.flip,yes,,results/configs.json,,
+best.ckptrule,best Val400 coco/AP epoch per seed,,results/configs.json,,
+best.prereg.commit,\texttt{72f9449},,results/PREREGISTRATION.md,,
 boot.n,10000,,results/tables/bootstrap_*.json,,
-att.n,26,,results/tables/attempts.csv,,
-att.nbetter,10,R101_mmp-hrnetw48_base_s1,results/tables/attempts.csv,paper,val400
+att.n,29,,results/tables/attempts.csv,,
 sens.id0.delta,$+1.4$,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100.json,fixed-paper,test100
 sens.id0.min,0.9,R001_fidip-w48_released,results/tables/R001_fidip-w48_released_test100/id0_rank_sensitivity_R001_fidip-w48_released.csv,fixed-paper over test0 ranks,test100
 sens.id0.max,2.0,R001_fidip-w48_released,results/tables/R001_fidip-w48_released_test100/id0_rank_sensitivity_R001_fidip-w48_released.csv,fixed-paper over test0 ranks,test100

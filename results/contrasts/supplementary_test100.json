@@ -1,0 +1,47 @@
+{
+ "_doc": "Reported outside the bonus claim (PREREGISTRATION): arm A vs released; screening seeds R101/R105 vs released. Separate Holm family.",
+ "B": 10000,
+ "seed": 0,
+ "protocol": "paper",
+ "metric": "AP",
+ "alpha": 0.05,
+ "contrasts": [
+  {
+   "name": "S1: arm A vs released FiDIP",
+   "label_a": "HRNet-W48 (arm A)",
+   "label_b": "FiDIP released",
+   "a": [
+    "$R/runs/R131_*/preds_test100.json",
+    "$R/runs/R132_*/preds_test100.json",
+    "$R/runs/R133_*/preds_test100.json",
+    "$R/runs/R134_*/preds_test100.json",
+    "$R/runs/R135_*/preds_test100.json"
+   ],
+   "b": [
+    "$R/runs/R001_fidip-w48_released/preds_test100.json"
+   ]
+  },
+  {
+   "name": "S2: R105 (arm B s1) vs released FiDIP",
+   "label_a": "ViTPose-H 256 s1",
+   "label_b": "FiDIP released",
+   "a": [
+    "$R/runs/R105_*/preds_test100.json"
+   ],
+   "b": [
+    "$R/runs/R001_fidip-w48_released/preds_test100.json"
+   ]
+  },
+  {
+   "name": "S3: R101 (arm A s1) vs released FiDIP",
+   "label_a": "HRNet-W48 s1",
+   "label_b": "FiDIP released",
+   "a": [
+    "$R/runs/R101_*/preds_test100.json"
+   ],
+   "b": [
+    "$R/runs/R001_fidip-w48_released/preds_test100.json"
+   ]
+  }
+ ]
+}

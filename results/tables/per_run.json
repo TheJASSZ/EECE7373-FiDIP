@@ -510,7 +510,7 @@
   "run_id": "R101_mmp-hrnetw48_base_s1",
   "config": "mmp_hrnet_base",
   "label": "HRNet-W48 DARK 384 (MMPose control)",
-  "role": "control",
+  "role": "screen_control",
   "seed": "1",
   "status": "done",
   "job_id": "11659888",

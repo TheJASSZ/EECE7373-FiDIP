@@ -1,0 +1,76 @@
+{
+ "_doc": "PREREGISTRATION imp-1..imp-4 (commit 72f9449 + erratum 3957509): contrasts C1-C4, paired image bootstrap of the seed-averaged AP, B=10000, seed 0, Holm across C1-C4, both protocols (D13). H1 needs C1's CI to exclude 0 under both protocols after Holm and mean arm-B Test100 AP > 93.6. Run: sbatch scripts/slurm/analysis.sbatch script scripts/analysis/run_contrasts.sh results/contrasts/final_C1_C4.json",
+ "B": 10000,
+ "seed": 0,
+ "protocol": "paper",
+ "metric": "AP",
+ "alpha": 0.05,
+ "contrasts": [
+  {
+   "name": "C1: arm B vs released FiDIP",
+   "label_a": "ViTPose-H 256 (arm B)",
+   "label_b": "FiDIP released",
+   "hypothesis": "H1 (primary)",
+   "a": [
+    "$R/runs/R136_*/preds_test100.json",
+    "$R/runs/R137_*/preds_test100.json",
+    "$R/runs/R138_*/preds_test100.json",
+    "$R/runs/R139_*/preds_test100.json",
+    "$R/runs/R140_*/preds_test100.json"
+   ],
+   "b": [
+    "$R/runs/R001_fidip-w48_released/preds_test100.json"
+   ]
+  },
+  {
+   "name": "C2: arm B vs arm A",
+   "label_a": "ViTPose-H 256 (arm B)",
+   "label_b": "HRNet-W48 (arm A)",
+   "hypothesis": "controlled backbone comparison",
+   "a": [
+    "$R/runs/R136_*/preds_test100.json",
+    "$R/runs/R137_*/preds_test100.json",
+    "$R/runs/R138_*/preds_test100.json",
+    "$R/runs/R139_*/preds_test100.json",
+    "$R/runs/R140_*/preds_test100.json"
+   ],
+   "b": [
+    "$R/runs/R131_*/preds_test100.json",
+    "$R/runs/R132_*/preds_test100.json",
+    "$R/runs/R133_*/preds_test100.json",
+    "$R/runs/R134_*/preds_test100.json",
+    "$R/runs/R135_*/preds_test100.json"
+   ]
+  },
+  {
+   "name": "C3: arm B vs FiDIP retrain",
+   "label_a": "ViTPose-H 256 (arm B)",
+   "label_b": "FiDIP retrain R010-R012",
+   "hypothesis": "vs our reproduction",
+   "a": [
+    "$R/runs/R136_*/preds_test100.json",
+    "$R/runs/R137_*/preds_test100.json",
+    "$R/runs/R138_*/preds_test100.json",
+    "$R/runs/R139_*/preds_test100.json",
+    "$R/runs/R140_*/preds_test100.json"
+   ],
+   "b": [
+    "$R/runs/R010_fidip-w48_lambda5e-4_s1/preds_test100_best.json",
+    "$R/runs/R011_fidip-w48_lambda5e-4_s2/preds_test100_best.json",
+    "$R/runs/R012_fidip-w48_lambda5e-4_s3/preds_test100_best.json"
+   ]
+  },
+  {
+   "name": "C4: arm B ensemble vs released FiDIP",
+   "label_a": "ViTPose-H 256 ensemble (R141)",
+   "label_b": "FiDIP released",
+   "hypothesis": "secondary",
+   "a": [
+    "$R/runs/R141_*/preds_test100.json"
+   ],
+   "b": [
+    "$R/runs/R001_fidip-w48_released/preds_test100.json"
+   ]
+  }
+ ]
+}

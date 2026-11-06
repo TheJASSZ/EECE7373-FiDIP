@@ -332,8 +332,11 @@ FiDIP retrain, \$\textbackslash{}lambda=5\textbackslash{}cdot10^{-4}\$ & 3 & 93.
 24 & ViTPose-L 256, real only & train on the 200 real images only (no synthetic) & 1 & 92.2 & withheld \\
 25 & ViTPose-L 256, rotation \$\textbackslash{}pm\$180 & rotation augmentation up to 180 degrees & 1 & 92.6 & withheld \\
 26 & Fine-tune retrain, attempt 1 & lambda = 0 retrain, first submission & 1 & -- & withheld \\
-27 & HRNet-W48 DARK 384 (MMPose control) [noflip] & test-time: noflip & 1 & 90.9 & withheld \\
-28 & ViTPose-L 256 (MMPose) [noflip] & test-time: noflip & 1 & 92.3 & withheld \\
+27 & HRNet-W48 DARK 384 (arm A) & pre-registered control, 5 fresh seeds s2-s6 & 0 & -- & withheld \\
+28 & ViTPose-H 256 (arm B) & pre-registered treatment: backbone ViTPose-H 256x192, same recipe as arm A, 5 fresh seeds s2-s6 & 0 & -- & withheld \\
+29 & ViTPose-H 256, 5-seed ensemble & mean of the 5 arm-B predictions (eval/ensemble\_preds.py) & 0 & -- & withheld \\
+30 & HRNet-W48 DARK 384 (MMPose control) [noflip] & test-time: noflip & 1 & 90.9 & withheld \\
+31 & ViTPose-L 256 (MMPose) [noflip] & test-time: noflip & 1 & 92.3 & withheld \\
 \bottomrule
 \end{tabular}
 \end{table}

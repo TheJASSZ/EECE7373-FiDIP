@@ -25,26 +25,28 @@
   },
   "mmp_hrnet_base": {
    "label": "HRNet-W48 DARK 384 (MMPose control)",
-   "role": "control",
-   "slot": 3,
+   "role": "screen_control",
+   "slot": 0,
    "macro": "MmpHRNet",
    "run_ids": [
     "R101_mmp-hrnetw48_base_s1"
    ],
    "what_changed": "FiDIP backbone re-implemented in MMPose, no domain adaptation, shared recipe",
-   "hypothesis": "recipe-parity control for the backbone swap"
+   "hypothesis": "recipe-parity control for the backbone swap",
+   "outcome": "screening control (seed s1; supplementary, imp-4)"
   },
   "mmp_vitl256_base": {
    "label": "ViTPose-L 256 (MMPose)",
    "role": "candidate",
-   "slot": 2,
+   "slot": 0,
    "macro": "MmpVitLTwo",
    "run_ids": [
     "R102_mmp-vitpose-l256_base_s1"
    ],
    "what_changed": "backbone HRNet-W48 -> ViTPose-L (UDP, 256x192), same recipe",
    "hypothesis": "a stronger COCO-pretrained transformer prior localises infant joints better",
-   "baseline_for_delta": "mmp_hrnet_base"
+   "baseline_for_delta": "mmp_hrnet_base",
+   "baseline": "mmp_hrnet_base"
   },
   "mmp_hrnet_lr2e4": {
    "label": "HRNet-W48 DARK 384, LR 2e-4",
@@ -184,26 +186,29 @@
   "mmp_vith256_base": {
    "label": "ViTPose-H 256 (MMPose)",
    "role": "candidate",
-   "slot": 6,
+   "slot": 0,
    "macro": "MmpVitHTwo",
    "run_ids": [
     "R105_mmp-vitpose-h256_base_s1"
    ],
    "what_changed": "backbone -> ViTPose-H (UDP, 256x192), same recipe",
    "hypothesis": "a larger ViT prior helps further",
-   "baseline_for_delta": "mmp_hrnet_base"
+   "baseline_for_delta": "mmp_hrnet_base",
+   "baseline": "mmp_hrnet_base",
+   "outcome": "selected as arm B (seed s1; supplementary, imp-4)"
   },
   "mmp_vith384_base": {
    "label": "ViTPose-H 384 (MMPose)",
    "role": "candidate",
-   "slot": 7,
+   "slot": 0,
    "macro": "MmpVitHThree",
    "run_ids": [
     "R104_mmp-vitpose-h384_base_s1"
    ],
    "what_changed": "backbone -> ViTPose-H (UDP, 384x288), same recipe",
    "hypothesis": "higher input resolution helps the strict OKS thresholds",
-   "baseline_for_delta": "mmp_hrnet_base"
+   "baseline_for_delta": "mmp_hrnet_base",
+   "baseline": "mmp_hrnet_base"
   },
   "repro_smoke": {
    "label": "FiDIP retrain smoke (repro)",
@@ -268,7 +273,8 @@
    ],
    "what_changed": "backbone -> ViTPose-L (UDP, 384x288), same recipe",
    "hypothesis": "higher input resolution helps the strict OKS thresholds",
-   "baseline_for_delta": "mmp_hrnet_base"
+   "baseline_for_delta": "mmp_hrnet_base",
+   "baseline": "mmp_hrnet_base"
   },
   "mmp_hrnet_lr5e5": {
    "label": "HRNet-W48 DARK 384, LR 5e-5",
@@ -323,6 +329,58 @@
    "what_changed": "lambda = 0 retrain, first submission",
    "hypothesis": "-",
    "outcome": "failed: yacs type error (LAMBDA float vs int); resubmitted"
+  },
+  "arm_a": {
+   "label": "HRNet-W48 DARK 384 (arm A)",
+   "role": "control",
+   "slot": 3,
+   "macro": "ArmA",
+   "run_ids": [
+    "R131_*",
+    "R132_*",
+    "R133_*",
+    "R134_*",
+    "R135_*"
+   ],
+   "what_changed": "pre-registered control, 5 fresh seeds s2-s6",
+   "hypothesis": "control arm of imp-1",
+   "input": "384x288",
+   "flip": "yes",
+   "ckptrule": "best Val400 coco/AP epoch per seed",
+   "outcome": "pre-registered (imp-1)"
+  },
+  "arm_b": {
+   "label": "ViTPose-H 256 (arm B)",
+   "role": "final",
+   "slot": 2,
+   "macro": "ArmB",
+   "run_ids": [
+    "R136_*",
+    "R137_*",
+    "R138_*",
+    "R139_*",
+    "R140_*"
+   ],
+   "what_changed": "pre-registered treatment: backbone ViTPose-H 256x192, same recipe as arm A, 5 fresh seeds s2-s6",
+   "hypothesis": "H1: Test100 AP > 93.6 and C1 CI excludes 0 under both protocols",
+   "input": "256x192",
+   "flip": "yes",
+   "ckptrule": "best Val400 coco/AP epoch per seed",
+   "prereg_commit": "72f9449",
+   "outcome": "pre-registered (imp-2)",
+   "baseline": "arm_a"
+  },
+  "ens_b": {
+   "label": "ViTPose-H 256, 5-seed ensemble",
+   "role": "ensemble",
+   "slot": 7,
+   "macro": "EnsB",
+   "run_ids": [
+    "R141_*"
+   ],
+   "what_changed": "mean of the 5 arm-B predictions (eval/ensemble_preds.py)",
+   "hypothesis": "secondary (imp-3, C4)",
+   "outcome": "pre-registered (imp-3)"
   }
  }
 }
