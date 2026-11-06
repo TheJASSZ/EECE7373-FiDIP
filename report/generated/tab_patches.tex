@@ -1,9 +1,18 @@
-% report/generated/tab_patches.tex -- PLACEHOLDER (to be generated from MANIFEST.md section 6 /
-% the separate third_party/ patch commits). Columns: ID | file | change | why
-\begin{tabular}{@{}llp{0.38\linewidth}p{0.30\linewidth}@{}}
+% report/generated/tab_patches.tex -- from MANIFEST.md section 6 (each patch is one commit marked
+% "[EECE7373 patch Pn]" touching third_party/Infant-Pose-Estimation). Text only, no results.
+\begin{tabular}{@{}llp{0.40\linewidth}p{0.33\linewidth}@{}}
 \toprule
-ID & File & Change & Why\\
+Patch & Commit & Change & Why\\
 \midrule
-\tbd & \tbd & \tbd & \tbd\\
+P1 & \texttt{7168b1e} & compiled-NMS imports made optional & only the pure-Python OKS-NMS is used; no \texttt{make}/nvcc needed\\
+P3 & \texttt{4f3f869} & \texttt{torch.load(map\_location, weights\_only=False)}; strict loading at test time & prevents a silent \texttt{strict=False} mis-load\\
+P4 & \texttt{7ec379a} & build the \texttt{train\_pre} loader only if \texttt{PRE\_EPOCH} $>0$ & the shipped code always required its JSON\\
+P5 & \texttt{67fde20} & \texttt{is '*'} $\to$ \texttt{== '*'} & SyntaxWarning under Python 3.12\\
+P6 & \texttt{763a36f} & \texttt{mkdir(parents=True, exist\_ok=True)} & nested output directories\\
+P7 & \texttt{25cb420} & loss files written to the run directory; no \texttt{add\_graph} & no pollution of the working directory; removes a slow CPU trace\\
+P8 & \texttt{44dcb09} & per-epoch \texttt{epochs.csv} (train MSE, Val400 loss, AP/AR) & over/underfitting monitoring (guide Part 4.5)\\
+P10 & \texttt{fe6d81c} & any split name (\texttt{test100}, \texttt{val400}, \texttt{validate500}); evaluation of labelled \texttt{test*} splits & upstream hard-codes split names\\
+P11 & \texttt{596fb7b} & \texttt{SEED} option & repeatable seeds\\
+demo & \texttt{7e68cfe} & added \texttt{tools/demo.py}, \texttt{tools/streamlit\_demo.py}, \texttt{gpu\_test.py} & guide Parts 1.3 and 6; not in upstream\\
 \bottomrule
 \end{tabular}

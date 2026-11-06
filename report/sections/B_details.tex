@@ -1,0 +1,168 @@
+\section{Implementation details}\label{app:details}
+
+\subsection{Compute and agentic workflow}\label{app:workflow}
+
+\paragraph{Compute.} Training and evaluation ran under Slurm on Northeastern's Explorer cluster~\citep{explorerdocs}:
+\begin{itemize}[leftmargin=*]
+  \item \code{gpu} (H200/A100, 8\,h limit) for training;
+  \item \code{sharing} (1\,h) for smoke tests and evaluations;
+  \item \code{short} for CPU jobs.
+\end{itemize}
+Datasets, environments and checkpoints stay on \code{/scratch}; only code, metrics, predictions and figures travel to the laptop, which had about 7\,GB free.
+
+\paragraph{Agents.} Claude Code~\citep{claudecode}, running Claude Opus 5.5, acted as an \emph{orchestrator} (\cref{fig:workflow}). After the student approved a written plan, it launched four parallel workers, each with a self-contained brief:
+\begin{itemize}[leftmargin=*]
+  \item \emph{repro}: data, environments, released checkpoints and retraining;
+  \item \emph{improve}: MMPose experiments;
+  \item \emph{analysis}: the evaluator, statistics, figures and generated tables;
+  \item \emph{report}: this document and the README.
+\end{itemize}
+A fresh-context reviewer checks the final state against the rubric.
+
+\paragraph{Live files.} The orchestrator owns three of them:
+\begin{itemize}[leftmargin=*]
+  \item \code{SKILL.md}: how to operate the cluster;
+  \item \code{AGENT.md}: the lab notebook of asks, attempts, failures and dated decisions D1, D2, \dots;
+  \item \code{MANIFEST.md}: datasets, checkpoints, configs, and the run behind every number.
+\end{itemize}
+Workers log commands, job IDs and errors in \code{notebook/<stream>.md}, and register runs in \code{results/registry.csv}.
+
+\paragraph{Shared rules.} All agents load \code{CLAUDE.md}, which requires:
+\begin{itemize}[leftmargin=*]
+  \item no compute on login nodes;
+  \item no selection on Test100;
+  \item one evaluator for every number;
+  \item secrets only in a git-ignored \code{.env};
+  \item timestamps from \code{date}.
+\end{itemize}
+
+\paragraph{Cluster loop.} The agent connects with \code{ssh -o BatchMode=yes -o ConnectTimeout=15} and wraps slow login-node commands in \code{timeout}, so failures surface quickly. For each job it:
+\begin{enumerate}[leftmargin=*]
+  \item pushes code with tar over ssh;
+  \item submits an \code{sbatch} script, smoke-tested first on \code{sharing};
+  \item polls \code{squeue}, \code{sacct} and the logs;
+  \item pulls back only small artifacts.
+\end{enumerate}
+Each run's directory \code{runs/<RUN_ID>/} holds its resolved config, logs, predictions, evaluator outputs, and a \code{run.json} with the commit and tree SHAs, Slurm job ID, node, GPU, seed and checkpoint SHA256.
+
+
+\subsection{Environments}\label{app:env}
+
+\paragraph{Environments.} The upstream \code{fidip_env.yml} cannot be built: its pip stage pins \code{grpcio==1.48.2}, which has no Python~3.12 wheel, and \code{mkl-*} packages with no wheels. We built three environments instead:
+\begin{itemize}[leftmargin=*]
+  \item \emph{FiDIP:} pip-only, Python~3.12, PyTorch~2.3.1 (CUDA~12.1), NumPy~1.26.4, with every imported package pinned to the yml's version.
+  \item \emph{MMPose:} Python~3.10, PyTorch~2.1.2, MMEngine~0.10.7, MMCV~2.1.0, MMPretrain~1.2.0 and MMPose~1.3.2~\citep{mmpose2020}, from conda-forge, with \code{numpy<2} and \code{opencv-python<4.12}.
+  \item \emph{Analysis:} CPU-only, with the same NumPy and pycocotools pins as FiDIP.
+\end{itemize}
+Package lists are in \code{envs/} and checkpoint hashes in \code{MANIFEST.md}.
+
+\paragraph{Upstream patches.} \Cref{app:patches} lists six upstream traps and our patches.
+The most consequential trap, the README training command, needs no code change: \code{TRAIN.CHECKPOINT} and \code{TRAIN.LAMBDA} are passed on the command line.
+The course guide's \code{gpu_test.py}, \code{tools/demo.py} and \code{tools/streamlit_demo.py} (and \code{fidip_simple.yml}) do not exist upstream. We wrote the GPU check and both demos from the guide's documented interface.
+
+\subsection{Data preparation}\label{app:data}
+
+\paragraph{Download.} A Slurm job (\code{scripts/get_data.sh}):
+\begin{enumerate}[leftmargin=*]
+  \item downloads both public SyRIP archives, which needed no password;
+  \item verifies their SHA256;
+  \item extracts them on a compute node, because the login node killed \code{unzip};
+  \item checks file counts against the archives;
+  \item builds the upstream layout from symlinks and writes the split files.
+\end{enumerate}
+The adult \code{train_pre_infant} set (2029 real and 2028 synthetic images), described upstream as available on request, ships inside \code{syrip_for_train.zip}, so the classifier pre-stage can be run faithfully.
+\code{SyRIP.zip}'s \code{images/train_infant/} also holds 300 unannotated real images, 199 of them byte-identical to validate500 images. We use only images listed in an annotation file.
+
+\paragraph{Training labels.} Two annotation files cover the 1200 training images: the official \code{200R_1000S} file in \code{SyRIP.zip}, and \code{train_infant.json} in \code{syrip_for_train.zip}. They agree on the real images but differ on every synthetic one, because the second file carries MINI-RGBD labels:
+\begin{itemize}[leftmargin=*]
+  \item its source fields point to MINI-RGBD frames;
+  \item eyes and ears are zeroed on most entries;
+  \item some sizes and boxes do not fit the renders, with a median keypoint offset of 191\,px from the official labels (\code{notebook/repro.md}).
+\end{itemize}
+The images in the two archives are identical, except that the second archive's \code{validate_infant/test11.jpg} is a copy of \code{test24.jpg}.
+Following the README literally therefore trains on mislabelled synthetic data and scores one test image against the wrong picture: the released checkpoint scores \res{sens.test11.ap}~AP on that archive's test images, against \res{rel.fidip.test.ap}~AP on the correct ones.
+We use \code{SyRIP.zip}'s images and \code{200R_1000S} labels everywhere (D17); attempt R020 measures what the README-literal path costs.
+
+\paragraph{Val400 (D15).} validate100 is a subset of validate500 (image ids 0--99, with identical files). \textbf{Val400} is validate500 ids 100--499 minus three images that duplicate Test100 images (two exact copies, one near-duplicate), which leaves 397 images.
+Exact copies were found by file hash, and near-duplicates by a flip-aware perceptual hash with visual confirmation (\code{scripts/near_dups.py}).
+
+\paragraph{Train/test overlap (D16).} Test100 images \code{test20}, \code{test42}, \code{test46} and \code{test50} are byte-identical to training images 73, 315, 272 and 340, and \code{test7} is a near-duplicate of training image 47.
+We keep Test100 as shipped, for comparability with the published numbers (which carry the same overlap). As a sensitivity check we also report the 95-image \emph{Test100-clean} subset, where the released model's AP changes by \res{sens.clean.delta}.
+Two further properties of the shipped GT need care.
+
+\paragraph{Placeholder areas (D8).} Every validate500 annotation carries the same \code{area}, 2443298.48 ($\sqrt{\text{area}}\approx1563$\,px), and the training file carries another constant, 14232.77; validate100 instead uses $\text{area}=w\cdot h$ of its box.
+Since OKS divides squared errors by the area (\cref{eq:oks}), the shipped Val400 makes almost any prediction look perfect: the released model scores \res{sens.area.const.ap}~AP on it.
+We rebuilt Val400, validate500 and the framework-neutral training file with $\text{area}=w\cdot h$ from their own boxes, and left Test100 exactly as shipped. \code{scripts/make_splits.py} asserts this rule, and the evaluator refuses GT files whose areas are all identical.
+
+\paragraph{Different boxes.} On the 100 shared images, validate100's boxes are a median \res{data.boxratio.pct}\% larger than validate500's, while the keypoints agree on 98 images; the other two were re-annotated. Val400 boxes are therefore tighter than Test100's, which means a smaller OKS scale and tighter crops (\cref{sec:thresholds}).
+
+\paragraph{Protocol (D1).} \Cref{fig:protocol} summarises the protocol:
+\begin{itemize}[leftmargin=*]
+  \item Every choice of epoch, hyperparameter, backbone or recipe is made on Val400.
+  \item A configuration reaches Test100 only after a commit lists it, with its Val400 evidence and checkpoint rule, in \code{results/PREREGISTRATION.md}.
+  \item The final-evaluation script refuses unregistered or repeated runs, and checks the checkpoint SHA256 against \code{run.json}.
+  \item The released checkpoints and the official-recipe retrains are reproduction targets, so they are evaluated on Test100 directly; the retrains' epochs are still chosen on Val400.
+\end{itemize}
+
+\paragraph{Why Val400.} It keeps the training data identical to the paper's, and it is almost twice as large as the real training set; cross-validation on the 200 real images could not match that without shrinking training.
+It has two costs: Test500 is no longer clean, so we never report it, and Val400 is not the complex-pose subset, so it may rank models differently from Test100 (\cref{sec:thresholds}).
+
+
+
+\section{All attempts, screening, sensitivity and failure counts}\label{app:attempts}
+
+\begin{table}[h]
+  \centering\small
+  \caption{Backbone and input-size screening under one MMPose recipe (Val400, seed 1). Test100 was not evaluated for screening runs.}
+  \label{tab:backbone}
+  \GenTable{tab_backbone}{backbone $\times$ input-size comparison on Val400}
+\end{table}
+
+\begin{table}[h]
+  \centering\small
+  \caption{One-factor ablations on Val400 (one seed). $\Delta$ is relative to the stated default.}
+  \label{tab:ablations}
+  \GenTable{tab_ablations}{one-factor ablations on Val400}
+\end{table}
+
+\begin{table}[h]
+  \centering\small
+  \caption{Sensitivity of AP to evaluation choices, with predictions held fixed. Headline numbers use the first row of each pair.}
+  \label{tab:sensitivity}
+  \GenTable{tab_sensitivity}{AP under each evaluation-condition variant}
+\end{table}
+
+\begin{table}[h]
+  \centering\footnotesize
+  \caption[Every attempt with its accuracy]{Every attempt with its Val400 accuracy and outcome, generated from \code{results/registry.csv}. Each run ID resolves to \code{runs/<RUN_ID>/} and to \code{MANIFEST.md}.}
+  \label{tab:attempts}
+  \GenTable{tab_attempts}{every attempt with its accuracy}
+\end{table}
+
+\begin{table}[h]
+  \centering\small
+  \caption[Failure taxonomy on Test100]{Automatic failure taxonomy on Test100 (\code{eval/taxonomy.py}). Counts are images; mean OKS is taken within each group.}
+  \label{tab:failures}
+  \GenTable{tab_failures}{failure-mode counts for released FiDIP vs best}
+\end{table}
+
+\begin{figure}[h]
+  \centering
+  \GenFigure[width=\linewidth,height=0.3\textheight,keepaspectratio]{qual_success}{overlay grid: best Test100 cases}
+  \caption{The highest-OKS Test100 cases for the released FiDIP model (legend in the figure).}
+  \label{fig:qualsucc}
+\end{figure}
+
+\section{Demo output}\label{app:demo}
+
+\begin{figure}[h]
+  \centering
+  \begin{minipage}[b]{0.28\linewidth}\centering
+    \GenFigure[width=\linewidth]{demo_gtbox}{demo output with the GT box}
+  \end{minipage}\hspace{6mm}
+  \begin{minipage}[b]{0.28\linewidth}\centering
+    \GenFigure[width=\linewidth]{demo_detbox}{demo output with a detector box}
+  \end{minipage}
+  \caption[Demo with GT and detector boxes]{\code{tools/demo.py} on \code{test0.jpg}. Left: the GT box. Right: a person-detector box. Confidences are drawn per keypoint.}
+  \label{fig:demo}
+\end{figure}

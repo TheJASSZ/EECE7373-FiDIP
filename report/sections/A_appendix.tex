@@ -91,15 +91,9 @@ The bootstrap, ensemble, taxonomy and analysis tools have their own tests in the
 
 \section{Compute used}\label{app:compute}
 
-The project used \res{comp.jobs} Slurm jobs and \res{comp.gpuh} GPU-hours in total, including \res{comp.runs} training runs (\cref{tab:compute}; accounting from \code{sacct}).
-GPU jobs ran on H200 and A100 nodes of the \code{gpu} and \code{sharing} partitions. Data preparation, environment builds and analysis ran as CPU jobs.
-
-\begin{table}[h]
-  \centering\small
-  \caption[Compute by work stream]{Compute by work stream, from \code{sacct}.}
-  \label{tab:compute}
-  \GenTable{tab_compute}{jobs and GPU-hours per stream}
-\end{table}
+Every run's Slurm job ID, partition, GPU model, start and end times are recorded in \code{results/registry.csv} and in its \code{run.json}, so the compute behind any number can be read back with \code{sacct -j <job>}.
+GPU jobs ran on H200, A100 (40/80\,GB), L40S and V100 nodes of the \code{gpu} and \code{sharing} partitions, with several runs packed per job where memory allowed (D14, D22). Data preparation, environment builds and analysis ran as CPU jobs.
+Per-user quotas (four running \code{gpu} jobs, two on \code{sharing}) and two agent usage-limit stops bounded the number of seeds more than the GPU time did.
 
 \section{Provenance: from a number to its run}\label{app:provenance}
 

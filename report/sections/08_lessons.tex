@@ -1,61 +1,47 @@
 \section{Lessons learned}\label{sec:lessons}
 
-\paragraph{Small-data evaluation.}
 \begin{itemize}[leftmargin=*]
-  \item \textbf{On 100 test images, evaluation details are as large as method effects.} The id-0 artifact, the evaluator library and the source of the GT boxes each move AP by about FiDIP's whole published gain over fine-tuning (\cref{tab:sensitivity}). Fixing, testing and cross-checking the evaluator \emph{before} running experiments was the most valuable step of the project.
-  \item \textbf{Read the code, not only the paper.} Run literally, the README trains plain fine-tuning from random weights and selects on the test set. The paper describes the adversarial update as a gradient reversal layer, but the code implements it as a negative loss weight.
-  \item \textbf{Verify the data, not just the code.} File hashes, a near-duplicate search and label/image consistency checks found six issues that would each have silently biased the results:
+  \item \textbf{At $n=100$, evaluation details are as large as method effects.} Five details each move AP by about FiDIP's published gain over fine-tuning (\cref{tab:sensitivity}):
   \begin{itemize}[leftmargin=*]
-    \item placeholder areas;
     \item the id-0 artifact;
-    \item test images that duplicate training images;
-    \item selection-set images that duplicate test images;
-    \item a training file carrying another dataset's labels, shipped with a misplaced test image;
-    \item unannotated duplicates of validation images in the training folder.
+    \item the evaluator library;
+    \item the GT boxes;
+    \item one misplaced test image;
+    \item the train/test overlap.
   \end{itemize}
-  None of them shows up in a training curve.
-  \item \textbf{Read the published numbers diagnostically.} AP$_{50}$ = AP$_{75}$ = 98.5 alone shows that all the headroom is at strict thresholds. That pointed the improvement study at localisation precision.
-\end{itemize}
-
-\paragraph{Working on a shared cluster.}
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Login nodes are not for work.} Several things failed there:
+  Building, testing and cross-checking the evaluator \emph{before} running experiments was the most valuable step of the project.
+  \item \textbf{Verify the data, not just the code.} Hashing, near-duplicate search and label/image checks found six issues (\cref{tab:hygiene}). Each would have biased the results silently, and none shows up in a training curve.
+  \item \textbf{Read the code, not only the paper.} Run literally, the README trains plain fine-tuning from random weights and selects on the test set. Once those were fixed, the training pipeline reproduced 93.6, but the domain-adaptation gain did not reappear.
+  \item \textbf{Read published numbers diagnostically.} AP$_{50}$ = AP$_{75}$ = 98.5 alone shows that all headroom is at strict thresholds.
+  \item \textbf{Cluster hygiene.} Several failures came from the infrastructure rather than the research:
   \begin{itemize}[leftmargin=*]
-    \item an SSH probe hung behind slow \code{du} and \code{module avail} calls;
+    \item a slow \code{du} hung an SSH probe;
     \item the login node killed \code{unzip};
-    \item reading about 1000 JPEG headers in Python dropped the session twice.
+    \item reading JPEG headers dropped the session;
+    \item macOS \code{openrsync} could not talk to the cluster's rsync~3.2.5;
+    \item the lab share was unreadable.
   \end{itemize}
-  Using \code{timeout}, \code{BatchMode} SSH, and Slurm CPU jobs even for light data work removed these failures.
-  \item \textbf{Small tooling mismatches cost time.} macOS ships \code{openrsync} (protocol 29), which fails against the cluster's rsync~3.2.5 with ``unexpected end of file''. A ten-line tar-over-ssh script replaced it in both directions.
-  \item \textbf{Missing access became provenance.} The lab's project share was not readable, so we downloaded and checksummed the data ourselves.
-  \item \textbf{Parallel agents share one filesystem.} A partial extraction was reorganised under a running unzip job, and a file-count check caught the mismatch. Rewriting commit messages changes commit SHAs, so run records also store the tree SHA, which survives the rewrite.
-  \item \textbf{Turn policies into guardrails.} ``Never select on Test100'' became a script that refuses unregistered evaluations and checks checkpoint hashes. ``Log as you go'' became three live files plus timestamped per-stream notebooks.
+  The fixes were \code{timeout} and BatchMode SSH, Slurm jobs even for light data work, tar over ssh, and our own checksummed download.
+  \item \textbf{Guardrails need tests too.} The pre-registration gate parses \code{PREREGISTRATION.md}. When the selection evidence was once written as a table, three screening runs briefly became eligible; a post-commit check caught this before any evaluation. Configs are typed as well: \code{TRAIN.LAMBDA 0} (an int) failed, and \code{0.0} is required.
+  \item \textbf{Agents get interrupted.} Workers stopped twice on usage limits, and parallel workers raced on one shared filesystem. Scheduled heartbeats, file-count checks and the live notebooks made recovery cheap, because nothing lived only in an agent's context.
 \end{itemize}
 
 \subsection{Reflection: how the agentic workflow changed the approach}\label{sec:reflection}
-% STUDENT: please review/personalize
+% STUDENT: review -- please review/personalize
 % (Drafted in the student's voice from facts recorded in AGENT.md; edit freely before submission.)
 
-I started by asking the agent for ``maximum points + bonus'' and for work to begin immediately. Within minutes I interrupted with ``Wait'' and switched to plan mode.
-That pause shaped the project. The agent explored the cluster, the upstream code and the dataset read-only and wrote a plan, which I approved at about 19:50, before anything was changed.
-I supplied the course slides and later the STUDENT\_GUIDE, which the agent could not find on its own. These defined deliverables (the three live files, the demos, the over/underfitting analysis), so the plan had to absorb new requirements mid-stream.
+\paragraph{Starting out.} I began by asking the agent for ``maximum points + bonus'', and within minutes I interrupted with ``Wait'' to switch to plan mode.
+That pause shaped the project: the agent explored the cluster, the code and the data read-only, and I approved a written plan before anything changed.
+I supplied the course slides and the STUDENT\_GUIDE, which the agent could not find on its own. They added deliverables mid-stream.
 
-\paragraph{What the agent was good at.} It was good at work that is tedious by hand:
+\paragraph{What the agent was good at.} It was strongest at work that is tedious by hand:
 \begin{itemize}[leftmargin=*]
-  \item reading an unfamiliar codebase and finding what decides what a reproduction measures: random initialisation, $\lambda=0$, and selection on the test set;
-  \item auditing data files line by line, which exposed the placeholder areas, the mislabelled synthetic file and the id-0 artifact;
-  \item running four streams in parallel on the cluster, with tests and notes;
-  \item checking citations against publisher records.
+  \item reading unfamiliar code and spotting what decides a reproduction, such as random initialisation, $\lambda=0$ and test-set selection;
+  \item auditing data files, which exposed the placeholder areas, the mislabelled file, the train/test copies and the id-0 artifact;
+  \item running four streams in parallel, with tests and notes;
+  \item checking citations.
 \end{itemize}
-Because checking became cheap, far more of the project went into evaluation conditions than I had expected.
+Because checking was cheap, far more of the project went into evaluation conditions than I expected. That is how we learned that a stricter protocol reproduces 93.6 but not the domain-adaptation gain behind it.
 
-\paragraph{Where I had to step in.}
-\begin{itemize}[leftmargin=*]
-  \item forcing planning before execution;
-  \item providing the course material;
-  \item approving the plan and the parallel-agent setup;
-  \item setting policy, namely a global secrets rule and no AI co-author credit;
-  \item reviewing the results and this report.
-\end{itemize}
-The agent's mistakes were caught by checks rather than by luck: estimated timestamps, a wrong claim from its literature scan about automatic position-embedding resizing, and a hung SSH probe.
-My takeaway is that an agent accelerates execution most when the human fixes the goals, the rules and the standard of evidence first.
+\paragraph{Where I stepped in.} I forced planning before execution, provided the course material, approved the plan and the parallel setup, set policy (secrets handling, no AI co-author credit), and reviewed the results and this report.
+The agent's mistakes surfaced through its own checks, not by luck. My takeaway is that an agent speeds up execution most when the human first fixes the goals, the rules and the standard of evidence.

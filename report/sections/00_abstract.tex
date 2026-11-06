@@ -6,13 +6,8 @@ The released FiDIP checkpoint scores \res{rel.fidip.test.ap}~AP on Test100.
 The released training loop selects its checkpoint on Test100. We instead select all models on Val400, the 397 real validate500 images that neither belong to nor duplicate Test100, and evaluate Test100 only for pre-registered configurations.
 Retraining FiDIP gives \resms{rt.fidip.test.ap}~AP over \res{rt.seeds} seeds, against \resms{rt.ft.test.ap}~AP without domain adaptation.
 
-Checking the data surfaced issues that change the numbers:
-\begin{itemize}
-  \item validate500 ships a constant placeholder object area, which makes OKS meaningless;
-  \item an annotation with id~0 in Test100 is never matched by pycocotools, which caps recall at 0.99 in our numbers and the published ones alike;
-  \item five Test100 images duplicate training images;
-  \item the training file that the README points to carries another dataset's labels for every synthetic image.
-\end{itemize}
+Checking the data found issues that change the numbers. validate500 ships a constant placeholder object area. An annotation with id~0 in Test100 is never matched by pycocotools, which caps recall at 0.99 in our numbers and the published ones alike. Five Test100 images duplicate training images. And the training file the README points to carries another dataset's labels.
+The released checkpoint and our retrains reproduce 93.6, but FiDIP's gain from domain adaptation over plain fine-tuning does not reproduce.
 
 A controlled backbone and resolution study in MMPose leads to our pre-registered configuration, \res{best.name}. It scores \resms{best.test.ap}~AP on Test100, \res{best.delta.ap}~AP from the released checkpoint (95\% CI [\res{best.delta.ci.lo}, \res{best.delta.ci.hi}]).
 Every run, decision and failure is logged in the repository.

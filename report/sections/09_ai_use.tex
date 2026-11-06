@@ -1,46 +1,47 @@
 \section{AI-tool use statement}\label{sec:aiuse}
 
-\paragraph{Tool.} The project used Claude Code~\citep{claudecode}, Anthropic's agentic coding tool, with the Claude Opus 5.5 model. It ran on the student's laptop with passwordless SSH to Explorer.
-One orchestrator session delegated work to sub-agents for reproduction, improvement, analysis and the report, each through a written brief. A fresh-context reviewer checks the final state against the rubric.
-The AI is credited as a tool, not as an author. The student is responsible for the content of the report and the repository.
+\paragraph{Tool.} The project used Claude Code~\citep{claudecode}, Anthropic's agentic coding tool, with the Claude Opus 5.5 model. It ran on the student's laptop with passwordless SSH to Explorer, as one orchestrator plus four worker sub-agents (repro, improve, analysis, report) briefed in writing, and a fresh-context reviewer at the end.
+The AI is credited as a tool, not as an author. The student is responsible for the report and the repository.
 
 \paragraph{What the agent did.}
 \begin{itemize}[leftmargin=*]
-  \item explored and planned in plan mode, then executed the approved plan;
-  \item wrote the code: data scripts, Slurm jobs, MMPose configs, the evaluator and its tests, the bootstrap and ensemble tools, the demos, the figure and table generators, and this report's source;
-  \item submitted and monitored cluster jobs, and diagnosed failures;
-  \item audited the upstream code and the data;
-  \item searched the literature and verified the bibliography;
-  \item kept the live files and notebooks current.
+  \item planned in plan mode, then executed the approved plan;
+  \item wrote the code: data scripts, Slurm jobs, configs, the evaluator, tests and statistics, demos, figure and table generators, and this report's source;
+  \item submitted and monitored jobs, and diagnosed their failures;
+  \item audited the upstream code and data;
+  \item verified the literature;
+  \item kept \code{SKILL.md}, \code{AGENT.md}, \code{MANIFEST.md} and the notebooks current.
 \end{itemize}
 
 \paragraph{What the human did.}
 \begin{itemize}[leftmargin=*]
-  \item set the goal and constraints: the rubric and the course rules;
-  \item stopped the first execution attempt to require a plan, then approved the plan;
-  \item supplied the course slides and the STUDENT\_GUIDE;
-  \item asked for the work to be parallelised;
-  \item set policies: a global rule never to print or commit secrets, and no AI co-author attribution in commits or documents;
+  \item set the goal and constraints (the rubric and the course rules);
+  \item required and approved a plan;
+  \item supplied the course slides and guide;
+  \item asked for parallel agents;
+  \item set the secrets and no-co-author policies;
   \item reviewed results and documents.
 \end{itemize}
 
 \paragraph{How outputs were verified.}
 \begin{enumerate}[label=(\arabic*), leftmargin=*]
-  \item \textbf{Unit tests:} 24 evaluator tests, plus tests for the bootstrap, ensemble and taxonomy tools (\code{pytest eval/tests}).
-  \item \textbf{Cross-check:} our evaluator against the AP that upstream's test script prints for the released checkpoint (\cref{sec:eval}).
-  \item \textbf{Checksums:} SHA256 for every download and checkpoint, recorded in \code{MANIFEST.md}. Each \code{run.json} also records the commit and tree SHAs, the Slurm job ID and the checkpoint hash.
-  \item \textbf{Pre-registration:} enforced by the final-evaluation script.
-  \item \textbf{No hand-typed results:} every experimental number is read with \code{\input} from files that \code{scripts/collect_results.py} generates from the evaluator outputs.
-  \item \textbf{References:} every reference was checked online against Crossref or the publisher's page; \code{report/check_bib.py} repeats the DOI check.
-  \item \textbf{Final review:} by a fresh-context agent that reads the repository and the rubric rather than the workers' summaries.
+  \item \res{tests.n} unit tests, run locally and on the cluster.
+  \item Agreement with upstream's printed AP on \res{xcheck.pairs} run/split pairs.
+  \item SHA256 for every download and checkpoint, plus a \code{run.json} provenance record per run.
+  \item Script-enforced pre-registration.
+  \item No hand-typed results: every number comes from \code{report/generated/}. Numbers without a generated key sit in \code{manual_numbers.tex} with their source, mirrored in \code{results/tables/provenance.csv}.
+  \item Online verification of every reference (\code{report/check_bib.py}).
+  \item A fresh-context final review.
 \end{enumerate}
 
-\paragraph{Known agent errors, and how they were caught.}
+\paragraph{Agent errors caught by these checks.}
 \begin{itemize}[leftmargin=*]
-  \item Estimated timestamps in \code{AGENT.md}: found by comparing with git commit times, corrected, and a rule added.
-  \item A literature note claiming that MMPretrain resizes ViTPose position embeddings automatically: contradicted by a failing load, and fixed offline.
-  \item A hung SSH probe: fixed with \code{timeout} and \code{BatchMode}.
-  \item A race on the shared filesystem: caught by a file-count check.
+  \item estimated timestamps;
+  \item a wrong literature claim about resizing position embeddings;
+  \item a hung SSH probe;
+  \item a shared-filesystem race;
+  \item the pre-registration parse slip;
+  \item \code{TRAIN.LAMBDA 0} instead of \code{0.0}.
 \end{itemize}
 
-\paragraph{Integrity.} No other student's repository was opened or used. Files that the course guide references but upstream lacks were written from the guide's documented interface.
+\paragraph{Integrity.} No other student's repository was opened or used. The files the guide references but upstream lacks were written from the guide's documented interface.

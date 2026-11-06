@@ -22,7 +22,7 @@ We test both with ViTPose~\citep{xu2022vitpose}. In the MMPose model zoo~\citep{
 
 \subsection{Screening and ablations on Val400}\label{sec:backbone}\label{sec:ablations}
 
-\paragraph{Screening} (\cref{tab:backbone}; one seed each, Val400 only).
+\paragraph{Screening} (one seed each, Val400 only; \cref{tab:backbone} in \cref{app:attempts}).
 \begin{itemize}[leftmargin=*]
   \item Fine-tuning on SyRIP lifts every COCO model well above its zero-shot Val400 AP, which ranges from \res{zs.hrnet} (HRNet) to \res{zs.vith256} (ViTPose-H~256).
   \item The control reaches \res{scr.hrnet}.
@@ -33,7 +33,7 @@ We test both with ViTPose~\citep{xu2022vitpose}. In the MMPose model zoo~\citep{
 Against that noise, \emph{capacity} matters (ViTPose-H beats ViTPose-L by about 2--3$\times$ the noise), and \emph{resolution} does not ($384{\times}288$ versus $256{\times}192$ is within noise for both sizes).
 We therefore chose ViTPose-H at $256{\times}192$ over $384{\times}288$, which would have cost about twice the compute and memory (\code{results/PREREGISTRATION.md}).
 
-\paragraph{Ablations} (\cref{tab:ablations}, ViTPose-L~256 unless noted).
+\paragraph{Ablations} (ViTPose-L~256 unless noted; \cref{tab:ablations}).
 \begin{itemize}[leftmargin=*]
   \item Synthetic data still helps a strong backbone: training on the 200 real images alone gives \res{scr.vitl256.real}, against \res{scr.vitl256} with synthetic data.
   \item Rotation up to $\pm180^\circ$ gives \res{scr.vitl256.rot}, no gain.
@@ -41,43 +41,21 @@ We therefore chose ViTPose-H at $256{\times}192$ over $384{\times}288$, which wo
   \item The FiDIP weight $\lambda$ behaves as described in \cref{sec:retrain}.
 \end{itemize}
 
-\begin{table}[t]
-  \centering\small
-  \caption{Backbone and input-size screening under one MMPose recipe (Val400, seed 1). Test100 was not evaluated for screening runs.}
-  \label{tab:backbone}
-  \GenTable{tab_backbone}{backbone $\times$ input-size comparison on Val400}
-\end{table}
-
-\begin{table}[t]
-  \centering\small
-  \caption{One-factor ablations on Val400 (one seed). $\Delta$ is relative to the stated default.}
-  \label{tab:ablations}
-  \GenTable{tab_ablations}{one-factor ablations on Val400}
-\end{table}
-
 \subsection{All attempts}\label{sec:attempts}
 
-\Cref{tab:attempts} lists all \res{att.n} attempts with their accuracy, including those that did not help: the reproduction variants, the domain-adaptation tweaks, and every backbone, resolution, augmentation and recipe change. Test100 is shown only for reproduction targets and pre-registered runs.
+\Cref{tab:attempts} (\cref{app:attempts}) lists all \res{att.n} attempts with their accuracy, including those that did not help: the reproduction variants, the domain-adaptation tweaks, and every backbone, resolution, augmentation and recipe change. Test100 is shown only for reproduction targets and pre-registered runs.
 
-\begin{table}[t]
-  \centering\footnotesize
-  \caption[Every attempt with its accuracy]{Every attempt with its Val400 accuracy and outcome, generated from \code{results/registry.csv}. Each run ID resolves to \code{runs/<RUN_ID>/} and to \code{MANIFEST.md}.}
-  \label{tab:attempts}
-  \GenTable{tab_attempts}{every attempt with its accuracy}
-\end{table}
 
 \subsection{Pre-registered confirmatory test}\label{sec:final}
 
-\paragraph{Design (D20).} After screening, and before any MMPose run touched Test100, we registered (commit \res{best.prereg.commit}):
+\paragraph{Design (D20).} After screening, and before any MMPose run touched Test100, we registered the following at commit \res{best.prereg.commit}:
 \begin{itemize}[leftmargin=*]
-  \item \textbf{Two arms with the same recipe:} arm~A, the HRNet-W48 control (R131--R135), and arm~B, ViTPose-H~256 (R136--R140).
-  \item \textbf{Fresh seeds} s2--s6 for both arms, so the seed that won the screening cannot inflate the estimate (winner's curse). The screening seeds R101 and R105 are reported separately.
-  \item \textbf{A secondary claim:} a five-seed coordinate ensemble of arm~B (R141).
-  \item \textbf{Four contrasts:} C1, arm~B versus the released checkpoint (primary); C2, arm~B versus arm~A; C3, arm~B versus our FiDIP retrains; C4, the ensemble versus the released checkpoint.
-  \item \textbf{Statistics:} a paired image bootstrap with $B=\res{boot.n}$, Holm-corrected across C1--C4.
-  \item \textbf{Decision rule H1:} arm~B's mean Test100 AP exceeds 93.6, \emph{and} the C1 CI excludes 0 under both protocols.
+  \item \textbf{Arms.} Arm~A is the HRNet-W48 control (R131--R135) and arm~B is ViTPose-H~256 (R136--R140), with the same recipe. Both use fresh seeds s2--s6, so the screening winner's seed cannot inflate the estimate; the screening seeds R101 and R105 are reported separately.
+  \item \textbf{Secondary claim.} An arm-B ensemble (R141).
+  \item \textbf{Contrasts.} C1: arm~B versus the released checkpoint (primary). C2: B versus A. C3: B versus our FiDIP retrains. C4: the ensemble versus the released checkpoint. All are paired image bootstraps with $B=\res{boot.n}$, Holm-corrected.
+  \item \textbf{Decision rule (H1).} Arm~B's mean Test100 AP exceeds 93.6, \emph{and} the C1 CI excludes 0 under both protocols.
 \end{itemize}
-Checkpoint SHA256s were verified before the single evaluation of each run. Runs used a mix of H200, A100, L40S and V100 GPUs (D22), recorded per run.
+Checkpoint SHA256s were verified before each single evaluation. GPUs were a mix of H200, A100, L40S and V100 (D22), recorded per run.
 
 \paragraph{Results} (\cref{tab:final,tab:boot}).
 \begin{itemize}[leftmargin=*]

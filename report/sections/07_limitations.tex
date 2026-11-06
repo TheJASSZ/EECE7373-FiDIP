@@ -1,27 +1,14 @@
 \section{Limitations}\label{sec:limits}
 
 \begin{itemize}[leftmargin=*]
-  \item \textbf{A 100-image test set.} One image can move AP by about a point, and strong models' AP$_{50}$/AP$_{75}$ sit at the id-0 ceiling. Differences below about one AP are hard to establish (see \cref{tab:final}), and three seeds give only a rough estimate of seed variance.
-  \item \textbf{One protocol.} Like the published work, we use GT person boxes. The numbers therefore say nothing about deployment with a person detector, where zero-shot adult models reach about 42~AP on SyRIP's real test images~\citep{gama2025seven}.
-  \item \textbf{Selection-set mismatch.} Val400 is what remains of validate500 once the complex poses are removed, and its boxes are tighter than Test100's. It may favour models that do well on easier poses. The correlation in \cref{sec:thresholds} measures how well it transfers, but evaluating Test100 only once per configuration limits the number of such comparisons.
-  \item \textbf{What ``reproduction'' means here.} Our retrains differ from the released code in three ways:
-  \begin{itemize}[leftmargin=*]
-    \item They select epochs on Val400, whereas the released loop selects on Test100. Test-set selection can only raise the reported test score, so a small shortfall of a Val400-selected retrain is expected and is not by itself a failed reproduction.
-    \item The upstream README points training to \code{syrip_for_train.zip}, whose synthetic labels do not match the images (\cref{sec:data}). We used the official labels, and we cannot tell which file produced the published models.
-    \item The paper's recipe differs from the config, and we ran the paper's recipe only once.
-  \end{itemize}
-  \item \textbf{Kept artifacts.} For comparability, the headline numbers keep two properties of the published evaluation:
-  \begin{itemize}[leftmargin=*]
-    \item the pycocotools id-0 artifact. The \texttt{fixed} numbers are closer to the true COCO AP, and claims must hold under both protocols;
-    \item the five Test100 images that duplicate training images. They favour any model that memorises its training set, so the Test100-clean subset is reported alongside.
-  \end{itemize}
-  \item \textbf{Scope of the search.}
-  \begin{itemize}[leftmargin=*]
-    \item We tried ViTPose-L/H at two input sizes and a few recipe changes.
-    \item We excluded backbones pre-trained on extra pose data.
-    \item ViTPose with FiDIP-style adaptation was a stretch goal; its status is in \cref{tab:attempts}.
-    \item Only comparisons within MMPose are controlled, because upstream and MMPose also differ in augmentation and training code.
-  \end{itemize}
-  \item \textbf{Expanded SyRIP.} Its 400 extra real training images are most likely validate500 \textbackslash{} validate100, which is our Val400. Training on them would consume the selection set and change the split, so it is out of scope under the same-split rule. A natural follow-up is to train on the expanded set, select by cross-validation, and report on Test100.
-  \item \textbf{Agent-executed work.} An AI agent did most of the execution and made mistakes (\cref{sec:aiuse}). Tests, cross-checks, pre-registration and provenance records reduce the risk, but no safeguard is complete.
+  \item \textbf{A 100-image test set.} About $\pm$\res{test.resolution}~AP is the smallest Test100 difference our paired design resolves, and a single-seed Val400 AP has a CI of about $\pm$\res{val.single.ci}.
+  Screening on one seed is therefore coarse, which is why the confirmatory test uses five fresh seeds per arm.
+  \item \textbf{GT boxes only.} Like the published work, we evaluate with ground-truth person boxes. With a detector, zero-shot adult models reach only about 42~AP on SyRIP~\citep{gama2025seven}, and our demo shows confidences falling sharply with detector boxes (\cref{sec:demo}).
+  \item \textbf{Selection set.} Val400 is validate500 minus the complex poses, with tighter boxes than Test100. It may favour models that are good on easier poses, although the rank correlation (\cref{sec:thresholds}) suggests the ranking transfers.
+  \item \textbf{Reproduction scope.} Our retrains select epochs on Val400, whereas the released loop selects on Test100. They also train on the official labels, while the README points to a mislabelled file. The paper's recipe was run once.
+  The ``no gain from adaptation'' result holds for the released recipe at three seeds. A gain below the resolution limit cannot be excluded.
+  \item \textbf{Kept artifacts.} For comparability, headline numbers keep the pycocotools id-0 artifact and the five Test100 copies of training images. Hence the \texttt{fixed} and Test100-clean numbers, and the rule that claims must hold under both protocols.
+  \item \textbf{Search scope.} We screened ViTPose-L/H at two input sizes plus a few recipe changes, with COCO-only pose pre-training. Only comparisons within MMPose are controlled, because upstream and MMPose also differ in augmentation and training code.
+  \item \textbf{Expanded SyRIP.} Its 400 extra real training images are most likely validate500 \textbackslash{} validate100, i.e.\ our Val400. Using them would consume the selection set, so this is left for future work with cross-validated selection.
+  \item \textbf{Agent-executed work.} An AI agent did most of the execution and made mistakes (\cref{sec:aiuse}). Tests, cross-checks, pre-registration and provenance records reduce this risk but cannot remove it.
 \end{itemize}

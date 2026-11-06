@@ -16,30 +16,23 @@ Its strongest variant, DarkPose~\citep{zhang2020darkpose} with an HRNet-W48 back
 
 \paragraph{Findings.}
 \begin{itemize}[leftmargin=*]
-  \item \textbf{Reproduction} (\cref{sec:repro}). The released FiDIP checkpoint scores \res{rel.fidip.test.ap}~AP on Test100 with our evaluator, against the published 93.6.
-  Retraining with the released recipe gives \resms{rt.fidip.test.ap}~AP with domain adaptation and \resms{rt.ft.test.ap}~AP without it (\res{rt.seeds} seeds each).
+  \item \textbf{Reproduction} (\cref{sec:repro}). The released FiDIP checkpoint scores \res{rel.fidip.test.ap}~AP on Test100 with our evaluator, matching the published 93.6 exactly.
+  Retraining with the released recipe gives \resms{rt.fidip.test.ap}~AP with domain adaptation and \resms{rt.ft.test.ap}~AP without it (\res{rt.seeds} seeds each). The paper's +0.9~AP from domain adaptation does not reproduce.
   \item \textbf{Protocol} (\cref{sec:fidip,sec:data}). Run literally, the README training command fine-tunes from random weights with the adaptation weight $\lambda=0$, and the training loop keeps the epoch that is best on Test100.
   We select every model on Val400, the 397 validate500 images that neither belong to nor duplicate Test100, and pre-register each configuration before its single Test100 evaluation.
-  \item \textbf{Data and evaluation conditions} (\cref{sec:data,sec:eval}). Hashing, near-duplicate search and label/image consistency checks found six issues that would silently bias results:
+  \item \textbf{Data and evaluation conditions} (\cref{sec:data,sec:eval}). Hashing, near-duplicate search and label/image checks found six issues that would silently bias results (\cref{tab:hygiene}):
   \begin{itemize}[leftmargin=*]
-    \item a constant placeholder object area in validate500;
-    \item an annotation with id~0 in Test100 that pycocotools never matches, which caps AR at 0.99 and moves AP by \res{sens.id0.delta} for the released model;
-    \item five Test100 images that duplicate training images;
-    \item three Val400 candidates that duplicate Test100 images;
-    \item MINI-RGBD labels on the synthetic images in the README's training file;
-    \item unannotated real images that duplicate validation images.
+    \item placeholder areas;
+    \item an annotation with id~0 that pycocotools never matches (\res{sens.id0.delta}~AP for the released model);
+    \item five test images that duplicate training images;
+    \item three Val400 candidates that duplicate test images;
+    \item mislabelled synthetic images in the README's training file;
+    \item unannotated duplicates in the training folder.
   \end{itemize}
-  MMPose's evaluator lacks the id-0 artifact, so we accept a claim only if it holds under both matching protocols.
+  Claims must hold under both matching protocols.
   \item \textbf{Improvement} (\cref{sec:improve}). We ran a controlled backbone and input-resolution comparison under one MMPose recipe, plus ablations, all selected on Val400.
   The pre-registered winner, \res{best.name}, scores \resms{best.test.ap}~AP on Test100. That is \res{best.delta.ap}~AP from the released checkpoint, with a paired-bootstrap 95\% CI of [\res{best.delta.ci.lo}, \res{best.delta.ci.hi}].
   \item \textbf{Process} (\cref{sec:lessons,sec:aiuse}). The agent kept \code{SKILL.md}, \code{AGENT.md} and \code{MANIFEST.md} current during the work, not after it, and every reported number traces to a run and a commit.
 \end{itemize}
 
-\paragraph{Roadmap.}
-\begin{itemize}[leftmargin=*]
-  \item \Cref{sec:background}: FiDIP and SyRIP, including where the released code differs from the paper.
-  \item \Cref{sec:impl}: the cluster workflow, data preparation, split protocol and evaluator.
-  \item \Cref{sec:repro,sec:improve,sec:analysis}: reproduction, improvement and analysis.
-  \item \Cref{sec:limits,sec:lessons,sec:aiuse}: limitations, lessons learned and AI-tool use.
-  \item The appendix: commands, hyperparameters, compute, provenance and a rubric map.
-\end{itemize}
+\paragraph{Roadmap.} \Cref{sec:background} covers FiDIP, SyRIP and the gaps between paper and code. \Cref{sec:impl} covers the workflow, data, protocol and evaluator. \Cref{sec:repro,sec:improve,sec:analysis} report the reproduction, the improvement study and the analysis. \Cref{sec:limits,sec:lessons,sec:aiuse} cover limitations, lessons and AI-tool use. The appendix gives commands, details, all attempts, provenance and a rubric map.

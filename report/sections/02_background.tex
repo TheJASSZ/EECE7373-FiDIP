@@ -2,15 +2,9 @@
 
 \subsection{Top-down pose estimation and its metric}\label{sec:metric}
 
-\paragraph{Models.} A top-down estimator crops each person box to a fixed input size (\eg $384{\times}288$) and predicts one heatmap per keypoint at $1/4$ resolution, from which it decodes coordinates. The models used here:
-\begin{itemize}[leftmargin=*]
-  \item SimpleBaseline~\citep{xiao2018simple} adds deconvolutions to a ResNet.
-  \item HRNet~\citep{sun2019hrnet} keeps a high-resolution branch throughout, fused with lower-resolution branches. W48 is that branch's width.
-  \item DARK~\citep{zhang2020darkpose} decodes sub-pixel maxima with a Taylor expansion of the smoothed log-heatmap, and encodes targets without quantisation.
-  \item UDP~\citep{huang2020udp} removes systematic errors from the resizing and flipping transforms and from keypoint encoding.
-  \item ViTPose~\citep{xu2022vitpose} uses a plain Vision Transformer with a light decoder.
-\end{itemize}
-Flip testing averages the heatmaps of the image and of its mirror, with left and right channels swapped.
+\paragraph{Models.} A top-down estimator crops each person box to a fixed input size (\eg $384{\times}288$), predicts one heatmap per keypoint at $1/4$ resolution, and decodes coordinates.
+SimpleBaseline~\citep{xiao2018simple} adds deconvolutions to a ResNet. HRNet~\citep{sun2019hrnet} keeps a high-resolution branch (width 48 in W48) throughout. DARK~\citep{zhang2020darkpose} decodes sub-pixel maxima from the smoothed log-heatmap, and UDP~\citep{huang2020udp} removes biases in the resize/flip transforms and encoding. ViTPose~\citep{xu2022vitpose} uses a plain Vision Transformer.
+Flip testing averages the heatmaps of the image and its mirror.
 
 \paragraph{Metric.} COCO evaluation~\citep{lin2014coco,cocoapi} scores a prediction against a ground-truth (GT) instance by the object keypoint similarity
 \begin{equation}
@@ -112,9 +106,9 @@ Pose-MobileNet & MobileNetV2~\citep{sandler2018mobilenetv2} & 224$\times$224 & 4
 
 We found no later paper that beats 93.6 on Test100 with GT boxes. Later work on SyRIP uses other protocols:
 \begin{itemize}[leftmargin=*]
-  \item \citet{gama2025seven} benchmark seven adult models zero-shot on the 500 real test images with \emph{detected} boxes; ViTPose is best, at 41.9~AP.
-  \item SHIFT~\citep{bose2025shift} adapts from SURREAL adults without infant labels and reports PCK@0.05.
-  \item \citet{huang2023symmetry} and \citet{zhou2024zedoi} evaluate 3D pose on Test100.
-  \item \citet{grafton2025neonatal} and \citet{jahn2025comparison} use SyRIP only for cross-dataset checks.
-  \item AggPose~\citep{cao2022aggpose} and the InfantNet preprint~\citep{hui2026infantnet} evaluate on their own, larger infant datasets.
+  \item zero-shot adult models with \emph{detected} boxes on the 500 real test images (ViTPose best, at 41.9~AP)~\citep{gama2025seven};
+  \item unsupervised adaptation measured by PCK~\citep{bose2025shift};
+  \item 3D pose on Test100~\citep{huang2023symmetry,zhou2024zedoi};
+  \item cross-dataset checks~\citep{grafton2025neonatal,jahn2025comparison}.
 \end{itemize}
+AggPose~\citep{cao2022aggpose} and InfantNet~\citep{hui2026infantnet} use their own, larger datasets.

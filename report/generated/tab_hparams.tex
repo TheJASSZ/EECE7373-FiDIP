@@ -1,22 +1,22 @@
-% report/generated/tab_hparams.tex -- PLACEHOLDER (regenerate from the resolved configs: the upstream
-% yaml + command-line overrides in run.json, and MMPose's dumped config of the selected runs).
-% Upstream column pre-filled by the report stream from experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml,
-% lib/utils/utils.py (Adam gets no weight decay), lib/dataset/JointsDataset.py (aug. rules) at a76b4f4.
-% MMPose columns pre-filled from notebook/improve.md (20:28 EST); values marked \tbd are not final.
-\begin{tabular}{@{}lp{0.30\linewidth}p{0.25\linewidth}p{0.25\linewidth}@{}}
+% report/generated/tab_hparams.tex -- resolved settings. Upstream column: the infant yaml + overrides in
+% scripts/train_fidip.sh (MANIFEST.md section 6), lib/utils/utils.py (Adam without weight decay),
+% lib/dataset/JointsDataset.py (augmentation). MMPose columns: results/PREREGISTRATION.md imp-1/imp-2,
+% notebook/improve.md, mmpose_exps/configs/. Configuration values only, no results.
+\begin{tabular}{@{}lp{0.31\linewidth}p{0.25\linewidth}p{0.25\linewidth}@{}}
 \toprule
-Setting & FiDIP retrain (upstream code) & MMPose control (HRNet-W48) & ViTPose-L / H\\
+Setting & FiDIP retrain (upstream code) & Arm A: HRNet-W48 (MMPose) & Arm B: ViTPose-H (MMPose)\\
 \midrule
-Initial weights & COCO DarkPose \texttt{w48\_384x288.pth} & MMPose HRNet-W48 DARK COCO (\texttt{39c3c381}) & MMPose ViTPose COCO $256{\times}192$ (\texttt{53609f55} / \texttt{e32adcd4}); pos.\ embeddings resized for $384{\times}288$\\
-Input / heatmap & $384{\times}288$ / $96{\times}72$, $\sigma=3$ & $384{\times}288$ / $96{\times}72$ (DARK) & $256{\times}192$ or $384{\times}288$ (UDP)\\
-Optimiser & Adam, LR $10^{-4}$ constant, no weight decay & Adam, LR \tbd & AdamW, LR \tbd, wd 0.1, layer decay 0.8 / 0.85, clip 1.0, drop-path 0.5 / 0.55\\
-Batch / epochs & 20 / 20 & 32 / \tbd & 64 / \tbd\\
-Schedule & constant (steps at 40, 200 never reached) & warm-up 1 epoch, $\times0.1$ late (\tbd) & same as control\\
-Domain adaptation & $\lambda=5{\cdot}10^{-4}$ (FiDIP) or 0; $D$: Adam $10^{-4}$ & none & none\\
-Frozen layers & first 109 parameter tensors & \tbd & \tbd\\
-Augmentation & flip 0.5; rotation $\mathcal{N}(0,45^\circ)$ clipped to $\pm90^\circ$ w.p.\ 0.6; scale $\pm35\%$; half-body 0.3 & MMPose COCO default (\tbd) & same as control\\
-Real : synthetic & balanced sampler, 1:1 (real oversampled $\times5$) & 1:1 (\texttt{CombinedDataset}, real $\times5$) & same\\
-Test time & GT boxes, flip, DARK (blur kernel 11) & GT boxes, flip, DARK & GT boxes, flip, UDP\\
+Initial weights & COCO DarkPose \texttt{w48\_384x288.pth} & MMPose HRNet-W48 DARK COCO (\texttt{39c3c381}) & MMPose ViTPose-H COCO $256{\times}192$ (\texttt{e32adcd4})\\
+Input / codec & $384{\times}288$, heatmap $96{\times}72$, $\sigma=3$, DARK & $384{\times}288$, DARK & $256{\times}192$, UDP\\
+Optimiser & Adam, LR $10^{-4}$ constant, no weight decay & Adam, LR $10^{-4}$ & AdamW, LR $10^{-4}$, wd 0.1, layer decay 0.85, clip 1.0, drop-path 0.55\\
+Batch / epochs & 20 / 20 & 32 / 30 & 32 / 30\\
+Schedule & constant (steps at 40, 200 never reached) & warm-up, $\times0.1$ at epochs 24 and 29 & same as arm A\\
+Domain adaptation & $\lambda=5{\cdot}10^{-4}$ (FiDIP) or 0.0; pre-stage 10 epochs on the adult set; $D$: Adam $10^{-4}$ & none & none\\
+Frozen layers & first 109 parameter tensors & none & none\\
+Augmentation & flip 0.5; rotation $\mathcal{N}(0,45^\circ)$ clipped to $\pm90^\circ$ w.p.\ 0.6; scale $\pm35\%$; half-body 0.3 & MMPose COCO default & same as arm A\\
+Real : synthetic & balanced sampler 1:1 (real oversampled $\times5$) & 1:1 (real $\times5$ per epoch) & same\\
+Test time & GT boxes, flip, DARK (blur kernel 11) & GT boxes, flip & GT boxes, flip\\
 Selection & best Val400 AP epoch & best Val400 AP epoch & best Val400 AP epoch\\
+Seeds & s1--s3 & s2--s6 (R131--R135) & s2--s6 (R136--R140)\\
 \bottomrule
 \end{tabular}

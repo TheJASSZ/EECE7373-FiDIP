@@ -21,7 +21,7 @@ Test100's looser boxes explain part of that gap (\cref{sec:released}). The ranki
   \label{fig:thresholds}\label{fig:valtest}
 \end{figure}
 
-\paragraph{Evaluation choices.} \Cref{tab:sensitivity} holds the released model's predictions fixed and changes one evaluation choice at a time. Each choice moves AP by about as much as FiDIP's published gain over fine-tuning (0.9):
+\paragraph{Evaluation choices.} \Cref{tab:sensitivity} (\cref{app:attempts}) holds the released model's predictions fixed and changes one evaluation choice at a time. Each choice moves AP by about as much as FiDIP's published gain over fine-tuning (0.9):
 \begin{itemize}[leftmargin=*]
   \item the matching protocol: \res{sens.id0.delta}~AP. Moving test0's score rank alone swings the \texttt{paper} AP from \res{id0.rank.lo} to \res{id0.rank.hi};
   \item Test100-clean: \res{sens.clean.delta};
@@ -30,20 +30,13 @@ Test100's looser boxes explain part of that gap (\cref{sec:released}). The ranki
   \item the placeholder area: \res{sens.area.const.ap}~AP on Val400, against \res{rel.fidip.val.ap}.
 \end{itemize}
 
-\begin{table}[t]
-  \centering\small
-  \caption{Sensitivity of AP to evaluation choices, with predictions held fixed. Headline numbers use the first row of each pair.}
-  \label{tab:sensitivity}
-  \GenTable{tab_sensitivity}{AP under each evaluation-condition variant}
-\end{table}
-
 \subsection{Per-keypoint accuracy and failure modes}\label{sec:perkp}\label{sec:failures}
 
 \paragraph{Per keypoint.} \Cref{fig:perkp} (left) and \cref{tab:perkp} break the error down by joint. \textbf{Hips are by far the hardest joints}: their median error is more than twice that of any other group, and fewer than half fall within 5\% of the box scale.
 This fits infant anatomy: hip centres are hidden under diapers and clothing, and legs are often flexed against the trunk. The paper likewise found the lower body hardest for adult-trained models~\citep{huang2021fidip}.
 Heads and wrists are the most precise.
 
-\paragraph{Failure modes.} \code{eval/taxonomy.py} assigns failure modes with unit-tested rules (\cref{tab:failures}; its ``Rule'' column gives the exact criteria).
+\paragraph{Failure modes.} \code{eval/taxonomy.py} assigns failure modes with unit-tested rules (\cref{tab:failures} in \cref{app:attempts} gives counts and exact criteria).
 \begin{itemize}[leftmargin=*]
   \item \textbf{Rotation dominates} (\cref{fig:perkp}, right). \res{fail.sideways.n} of the 100 infants lie sideways, and their mean OKS deficit is \res{fail.sideways.deficit}\%, against \res{fail.upright.deficit}\% for upright infants.
   \item Left/right swaps are rare: \res{fail.lrswap.n} image, a back view.
@@ -51,7 +44,7 @@ Heads and wrists are the most precise.
   \item \res{fail.occl.n} images are heavily occluded, and \res{fail.inverted.n} have an inverted torso.
 \end{itemize}
 The failures are mostly a matter of degree: sideways and partly hidden infants get somewhat imprecise joints, not catastrophic errors. That is consistent with AP being decided at strict thresholds.
-\Cref{fig:qual} shows the best and worst Test100 cases with GT and predictions overlaid.
+\Cref{fig:qual} shows the worst Test100 cases.
 
 \begin{figure}[t]
   \centering
@@ -65,18 +58,11 @@ The failures are mostly a matter of degree: sideways and partly hidden infants g
   \label{fig:perkp}
 \end{figure}
 
-\begin{table}[t]
-  \centering\small
-  \caption[Failure taxonomy on Test100]{Automatic failure taxonomy on Test100 (\code{eval/taxonomy.py}). Counts are images; mean OKS is taken within each group.}
-  \label{tab:failures}
-  \GenTable{tab_failures}{failure-mode counts for released FiDIP vs best}
-\end{table}
 
 \begin{figure}[t]
   \centering
-  \GenFigure[width=\linewidth,height=0.25\textheight,keepaspectratio]{qual_success}{overlay grid: best Test100 cases}\\[2pt]
-  \GenFigure[width=\linewidth,height=0.25\textheight,keepaspectratio]{qual_failure}{overlay grid: worst Test100 cases}
-  \caption{Qualitative Test100 results (released FiDIP): highest per-image OKS (top) and lowest (bottom), with GT and predictions overlaid as in the legend.}
+  \GenFigure[width=\linewidth,height=0.2\textheight,keepaspectratio]{qual_failure}{overlay grid: worst Test100 cases}
+  \caption{The lowest-OKS Test100 cases for the released FiDIP model, with GT and predictions overlaid (legend in the figure). The best cases are shown in \cref{fig:qualsucc}.}
   \label{fig:qual}
 \end{figure}
 
@@ -85,16 +71,5 @@ The failures are mostly a matter of degree: sideways and partly hidden infants g
 Part~6 of the course guide asks for two demos. The command-line demo \code{tools/demo.py} follows the guide's interface: \code{--cfg}, \code{--image}, \code{--model}, \code{--output}, and optionally \code{--conf-threshold} and \code{--output-size}; it also accepts \code{--video}.
 \code{tools/streamlit_demo.py} lets a user upload an image, set the confidence threshold with a slider, and view keypoints with their confidences. Both were verified on the cluster, the Streamlit app through its AppTest harness and a live health check.
 
-\Cref{fig:demo} shows one practical lesson. The same image is processed with the GT box and with a detector box. Mean keypoint confidence drops from \res{demo.conf.gt} to \res{demo.conf.det}, so box quality matters as much as the pose model once GT boxes are gone.
+\Cref{fig:demo} (appendix) shows one practical lesson. The same image is processed with the GT box and with a detector box. Mean keypoint confidence drops from \res{demo.conf.gt} to \res{demo.conf.det}, so box quality matters as much as the pose model once GT boxes are gone.
 
-\begin{figure}[t]
-  \centering
-  \begin{minipage}[b]{0.36\linewidth}\centering
-    \GenFigure[width=\linewidth]{demo_gtbox}{demo output with the GT box}
-  \end{minipage}\hspace{6mm}
-  \begin{minipage}[b]{0.36\linewidth}\centering
-    \GenFigure[width=\linewidth]{demo_detbox}{demo output with a detector box}
-  \end{minipage}
-  \caption[Demo with GT and detector boxes]{\code{tools/demo.py} on \code{test0.jpg}. Left: the GT box. Right: a person-detector box. Confidences are drawn per keypoint.}
-  \label{fig:demo}
-\end{figure}
