@@ -29,6 +29,7 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 | D18 | 11-06 01:05 | **Stagger agents and economize tokens.** The report worker only gets bounded tasks until results are final. An hourly heartbeat resumes workers stopped by usage limits. | All four parallel workers hit the 5-hour API usage cap together (~22:xx on 11-05). Slurm jobs survived, but orchestration stalled until a human came back. |
 | D19 | 11-06 01:26 | **Jobs run from per-job code snapshots.** `sync_to_cluster.sh` unpacks to a staging dir and copies it in with an atomic per-file rsync rename. | Concurrent tar syncs rewrote `$R/repo` scripts in place while jobs were executing them. bash reads scripts incrementally, so running jobs truncated or misbehaved. This likely explains repro's "final line never ran" at the R001→R002 boundary; the analysis worker found the cause. |
 | D20 | 11-06 07:06 | **Pre-registration imp-1…4** (`results/PREREGISTRATION.md`, commit 72f9449, erratum 3957509).<br>• Arm A: HRNet-W48 DARK 384, R131–R135. Arm B: ViTPose-H 256, R136–R140. Both on 5 *fresh* seeds s2–s6 and an identical recipe.<br>• Checkpoint per seed: the best-Val400 epoch.<br>• Secondary: R141 = B ensemble. Supplementary: R101, R105.<br>• Decision rule H1: mean B > 93.6, **and** the paired-bootstrap CI vs the released FiDIP excludes 0 under both protocols, after Holm correction over C1–C4. | Screening on Val400: ViT-H 256 scores 93.17 vs HRNet 91.52, with single-seed noise of about ±0.2. ViT-H 384 (93.27) is within noise and needs about 2× the compute and 80 GB GPUs. **Fresh seeds are used instead of the improve worker's proposal (s1 + 4 new)**, because s1 won the selection and would carry winner's-curse bias. |
+| D21 | 11-06 07:30 | **Add a plain fine-tune control R021–R023** (PRE_EPOCH 0, λ 0.0, COCO init; 3 seeds), pre-registered as repro-3 before its Test100 eval. **Decline extra λ seeds.** | The repro result is that FiDIP's domain-adaptation gain doesn't reproduce: λ = 0 ties λ = 5e-4. But our λ = 0 runs still include the classifier pre-stage, which shifts BatchNorm statistics. The faithful counterpart of the paper's "+Finetune 92.7" row has no pre-stage. More λ seeds would only matter for a Val400-only DA claim, and the bonus doesn't need that. |
 
 ---
 
@@ -432,3 +433,33 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - A background watcher waits for all ten R131–R140 to finalize.
   - Then: one `final_test_eval_mmpose.sbatch` over R101, R105 and R131–R140 (gated, SHA256-verified, one-shot), the R141 ensemble job, and the analysis refresh plus contrasts C1–C4.
 - **Concurrently:** repro's λ = 0 retrains (R013–R015, job 11670943) are running on H200. R122 (ViT-H real-only ablation) is running on L40S.
+
+### 2026-11-06 07:30 EST — Repro stream complete: 93.6 reproduces, the domain-adaptation gain does not
+- **Results** (eval_coco, `paper` protocol; `fixed` in brackets):
+
+| Run | Test100 AP | Val400 AP |
+|---|---|---|
+| R001 released HRNet | 93.60 [94.99] | 90.36 |
+| R002 released MobileNet | 79.14 | |
+| FiDIP λ = 5e-4 (R010–R012), best-Val400 checkpoint | 93.55 ± 0.42 [95.11] | 90.51 ± 0.13 |
+| **λ = 0 (R013–R015)**, best-Val400 checkpoint | **93.59 ± 0.13** [95.08] | **90.80 ± 0.21** |
+
+  - Final-epoch checkpoints: 93.38 ± 0.48 for λ = 5e-4, 93.66 ± 0.10 for λ = 0.
+  - **The paper's +0.9 AP from domain adaptation (93.6 vs 92.7) does not reproduce** under Val400 selection. λ = 0 is even 0.29 better on Val400 (Welch t ≈ 2.0, n = 3, not significant).
+  - Caveat: our λ = 0 runs still include the classifier pre-stage. Hence D21.
+- **λ sweep** (Val400, s1): 1e-4 91.02, 2e-3 89.67, 1e-2 85.78 (falls to 83.84 by the final epoch). Accuracy falls monotonically with λ.
+- **Paper recipe** (R019: lr 1e-3, 100 epochs, batch 64): best 90.74 at epoch 10, final 89.80. It overfits after epoch 10 and doesn't explain any gap; below the +0.5 threshold, so no extra seeds.
+- **README-literal labels** (R020): 89.33, i.e. **−1.2 AP** from the MINI-RGBD labels on the synthetic images.
+- **Repro worker's failures and fixes** (all in `notebook/repro.md`):
+  - λ written as `0` instead of `0.0`;
+  - pyarrow vs numpy conflicts in Streamlit, fixed by pinning pyarrow 17;
+  - `~/.local` leaking into the env;
+  - cluster-side exports clobbered by a push, now moved out of the synced tree;
+  - the compute-node proxy, bypassed for localhost with `--noproxy`;
+  - `run.json` missing its end time, caused by the old in-place sync.
+- **Demo verified:** CLI on images and video, Streamlit AppTest plus a live health check, 10 overlays.
+  - Detector boxes vs GT boxes matters: test0 mean confidence is 0.46 with the detector box vs 0.87 with the GT box.
+- **Orchestrator actions:**
+  - pre-registered repro-3 (`7fc8b46`), with the gate re-verified;
+  - submitted **R021–R023 as job 11671810** (H200);
+  - merged repro's and improve's inventory into MANIFEST §2, §4, §5, §6 and §10. §10 holds the reproduce-everything commands; its λ = 0 command is fixed to `0.0`.
