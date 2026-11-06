@@ -69,6 +69,16 @@ All three Drive checkpoints load with `strict=True`; none has a `module.` prefix
 See `results/registry.csv` (one row per run: run ID, Slurm job ID, config, seed, GPU, git SHA, Val400 AP, Test100 AP, checkpoint).
 
 ## 8. Reported numbers → provenance
-| Report table / figure | Number | RUN_ID | Metrics file |
-|---|---|---|---|
-| _TBD_ | | | |
+- Every number in the report enters through `report/generated/numbers.tex` (`\setres{key}{value}`) and `report/generated/tab_*.tex`. Both are written by `scripts/collect_results.py` from `eval/eval_coco.py` and `eval/bootstrap_ci.py` outputs. Published baselines are the only hand-typed numbers, and they are cited.
+- `results/tables/provenance.csv` maps each report key to its value, RUN_ID(s), metrics file, protocol (`paper`/`fixed`) and split. The table below is generated from it once results are final.
+
+| Report key | Value | RUN_ID(s) | Metrics file | Protocol / split |
+|---|---|---|---|---|
+| _generated at finalization_ | | | | |
+
+## 9. Report build
+| What | Command |
+|---|---|
+| Build the PDF (`report/FiDIP_Report.pdf`) | `bash report/build.sh` (Tectonic) |
+| Re-verify citations (31 entries; the 22 DOIs are checked against Crossref) | `python3 report/check_bib.py` |
+| Regenerate results tables, numbers and provenance | `python3 scripts/collect_results.py` |
