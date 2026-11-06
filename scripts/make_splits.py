@@ -338,10 +338,10 @@ def main():
         same_as = [j for j, h in H['test100'].items() if h == up[k]]
         rep['notes'].append(
             'DEFECT in syrip_for_train.zip images/validate_infant (the folder the upstream README layout uses for '
-            'TEST_SET validate_infant): test%d.jpg has different bytes than SyRIP.zip test%d.jpg%s; its size is %s '
-            'but the GT says %s. Our test100 split uses the SyRIP.zip images, which match the GT.' % (
+            'TEST_SET validate_infant): test%d.jpg has different bytes than SyRIP.zip test%d.jpg%s; '
+            '(id, file, actual WxH, GT WxH) = %s. Our test100 split uses the SyRIP.zip images, which match the GT.' % (
                 k, k, (' and is byte-identical to test%s.jpg' % same_as[0]) if same_as else '',
-                rep['images']['validate_infant(upstream,100)']['wh_mismatch_examples'], 'see GT'))
+                rep['images']['validate_infant(upstream,100)']['wh_mismatch_examples']))
     # extra unannotated real images shipped in images/train_infant (informational leakage check)
     tdir = os.path.join(img_root, 'train_infant')
     annotated = set(fn['train_infant'].values())
