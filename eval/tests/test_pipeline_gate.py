@@ -21,3 +21,12 @@ def test_gate():
 
 def test_validate500_is_gated_like_test100():
     assert "validate500" in apl.TEST_LIKE and "test100" in apl.TEST_LIKE and "val400" not in apl.TEST_LIKE
+
+
+def test_split_and_tag_parsing():
+    m = apl.SPLIT_RE.match("preds_val400_noflip.json")
+    assert m and m.group(1) == "val400" and m.group(2) == "_noflip"
+    m = apl.SPLIT_RE.match("preds_test100.json")
+    assert m and m.group(1) == "test100" and m.group(2) == ""
+    assert apl.SPLIT_RE.match("preds_validate500.json").group(1) == "validate500"
+    assert apl.SPLIT_RE.match("preds_train_infant.json") is None

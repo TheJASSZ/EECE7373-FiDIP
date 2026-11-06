@@ -32,6 +32,7 @@ import eval_coco as ev  # noqa: E402
 R = os.environ.get("R", "/scratch/purohitham.v/fidip")
 RUN_RE = re.compile(r"\bR\d{3}[A-Za-z0-9_.\-]*")
 TEST_LIKE = ("test100", "validate100", "validate500")
+SPLIT_RE = re.compile(r"^preds_(test100|val400|validate500|validate100)(.*)\.json$")
 
 
 def sha(p):
@@ -80,9 +81,13 @@ def cmd_eval_all(a):
     rows = []
     for pred in sorted(glob.glob(os.path.join(R, "runs", "*", "preds_*.json"))):
         run_id = os.path.basename(os.path.dirname(pred))
-        split = os.path.splitext(os.path.basename(pred))[0][len("preds_"):]
+        m = SPLIT_RE.match(os.path.basename(pred))
+        if not m:
+            rows.append({"run_id": run_id, "split": "?", "pred": pred, "status": "unrecognised file name"})
+            continue
+        split, tag = m.group(1), m.group(2)          # e.g. preds_val400_noflip.json -> val400, _noflip
         gt = os.path.join(R, "data", "splits", f"{split}.json")
-        row = {"run_id": run_id, "split": split, "pred": pred, "status": ""}
+        row = {"run_id": run_id, "split": split + tag, "pred": pred, "status": ""}
         if not os.path.exists(gt):
             row["status"] = f"no GT {gt}"
             rows.append(row)
@@ -97,7 +102,8 @@ def cmd_eval_all(a):
                 continue
         od = os.path.join(out_root, run_id)
         os.makedirs(od, exist_ok=True)
-        mpath, ppath = os.path.join(od, f"metrics_{split}.json"), os.path.join(od, f"per_image_{split}.json")
+        mpath = os.path.join(od, f"metrics_{split}{tag}.json")
+        ppath = os.path.join(od, f"per_image_{split}{tag}.json")
         ps, gs = sha(pred), sha(gt)
         if os.path.exists(mpath) and os.path.exists(ppath) and not a.force:
             old = json.load(open(mpath))
@@ -109,7 +115,7 @@ def cmd_eval_all(a):
                 continue
         try:
             rc = ev.main(["--gt", gt, "--pred", pred, "--out", mpath, "--per-image", ppath, "--run-id", run_id,
-                          "--split", split, "--quiet"])
+                          "--split", split + tag, "--quiet"])
             m = json.load(open(mpath))
             row.update(status="evaluated" if rc == 0 else f"rc={rc}", AP=m["metrics"]["AP"],
                        AP_fixed=m["metrics_fixed"]["AP"], AP_80_95=m["metrics"]["AP_80_95"],
