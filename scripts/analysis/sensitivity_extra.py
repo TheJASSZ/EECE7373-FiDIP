@@ -9,7 +9,9 @@ sys.path.insert(0, os.path.join(REPO, "eval"))
 import eval_coco as ev
 R = os.environ.get("R", "/scratch/purohitham.v/fidip")
 rid = sys.argv[1]
-out = {"run_id": rid}
+OUT = f"{R}/analysis/tables/sensitivity_extra_{rid}.json"
+out = json.load(open(OUT)) if os.path.exists(OUT) else {}      # merge: the two envs add different keys
+out["run_id"] = rid
 raw = json.load(open(f"{R}/data/raw/SyRIP/annotations/validate500/person_keypoints_validate_infant.json"))
 v400 = json.load(open(f"{R}/data/splits/val400.json"))
 ids = {im["id"] for im in v400["images"]}
@@ -37,6 +39,6 @@ try:
     out.update(test100_AP_xtcocotools=float(E.stats[0]), test100_AP_eval_coco_paper=o["metrics"]["AP"],
                test100_AP_eval_coco_fixed=o["metrics_fixed"]["AP"])
 except ImportError:
-    out["xtcocotools"] = "not installed in this env"
-json.dump(out, open(f"{R}/analysis/tables/sensitivity_extra_{rid}.json", "w"), indent=1)
+    pass                                                        # analysis env: no xtcocotools
+json.dump(out, open(OUT, "w"), indent=1)
 print(out)

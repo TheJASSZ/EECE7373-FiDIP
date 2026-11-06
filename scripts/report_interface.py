@@ -304,9 +304,9 @@ class ReportInterface:
             d = json.load(open(p))
             if d.get("val400_AP_const_area") is not None:
                 self.set("sens.area.const.ap", pct1(d["val400_AP_const_area"]), [rid], p, "paper", "val400 (constant area)")
-            if d.get("test100_AP_xtcocotools") is not None:
-                self.set("sens.xtcoco.delta", signed(100 * (d["test100_AP_xtcocotools"] - d["test100_AP_eval_coco_paper"])),
-                         [rid], p, "xtcocotools-paper", "test100")
+            if d.get("test100_AP_xtcocotools") is not None and ap is not None:   # vs the official eval_coco number
+                self.set("sens.xtcoco.delta", signed(100 * (d["test100_AP_xtcocotools"] - ap)),
+                         [rid], p, "xtcocotools - paper", "test100")
 
     def _fill_val_vs_test(self):
         pts = []

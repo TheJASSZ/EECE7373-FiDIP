@@ -15,4 +15,6 @@ for s in val400 test100; do
 done
 step bash scripts/analysis/curves.sh mmpose_screen "HRNet-W48 control@3#s1=R101_mmp-hrnetw48_base_s1" \
      "ViTPose-L 256@2#s1=R102_mmp-vitpose-l256_base_s1" "HRNet-W48 LR 2e-4@6#s1=R106_mmp-hrnetw48_lr2e-4_s1"
-echo "job done"
+
+step python scripts/analysis/sensitivity_extra.py R001_fidip-w48_released
+echo "job done (after sensitivity)"
