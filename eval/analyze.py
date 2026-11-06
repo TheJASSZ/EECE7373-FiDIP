@@ -747,8 +747,12 @@ def cmd_curves(a):
         # "label#seed=PATH": split on the LAST '=' so labels may contain '=' (e.g. "λ=5e-4")
         label, path = (spec.rsplit("=", 1) if "=" in spec else (os.path.basename(spec.rstrip("/")), spec))
         groups.setdefault(label.split("#")[0], []).append((label, _p(path)))
-    for gi, (glabel, runs) in enumerate(groups.items()):
-        col = ps.SLOTS[gi % len(ps.SLOTS)]
+    any_val_loss = False
+    for gi, (gkey, runs) in enumerate(groups.items()):
+        # "label@3#s1": explicit categorical slot, so a model keeps its colour across figures
+        m_slot = re.search(r"@(\d+)$", gkey)
+        glabel = gkey[:m_slot.start()] if m_slot else gkey
+        col = ps.color(int(m_slot.group(1))) if m_slot else ps.SLOTS[gi % len(ps.SLOTS)]
         for ri, (label, path) in enumerate(runs):
             rows, src = _read_epochs(path)
             if not rows:
@@ -770,6 +774,7 @@ def cmd_curves(a):
                 y = np.array([r.get(tl, np.nan) for r in rows], dtype=float)
                 axes[0].plot(ep, y, color=col, lw=1.2, label=f"{glabel}: train" if first else None)
             if vl:
+                any_val_loss = True
                 y = np.array([r.get(vl, np.nan) for r in rows], dtype=float)
                 axes[0].plot(ep, y, color=col, lw=1.2, alpha=0.55, marker=".", ms=3,
                              label=f"{glabel}: Val400" if first else None)
@@ -800,7 +805,8 @@ def cmd_curves(a):
                             "val_loss_min_epoch": (ep[int(np.nanargmin([r.get(vl, np.nan) for r in rows]))]
                                                    if vl else None)})
     axes[0].set_ylabel("heatmap MSE")
-    axes[0].set_title("train vs Val400 pose loss (same MSE)", loc="left")
+    axes[0].set_title("train vs Val400 pose loss (same MSE)" if any_val_loss else
+                      "training loss (no validation loss logged)", loc="left")
     axes[0].legend(fontsize=6)
     from matplotlib.ticker import MaxNLocator
     axes[1].xaxis.set_major_locator(MaxNLocator(integer=True))
@@ -933,7 +939,8 @@ def main(argv=None):
     s.add_argument("--outdir", required=True)
     s.add_argument("--tables", required=True)
     s = sub.add_parser("curves")
-    s.add_argument("--runs", nargs="+", required=True, help="[label#seed=]RUN_DIR (same label -> same colour)")
+    s.add_argument("--runs", nargs="+", required=True,
+                   help="[label[@slot]#seed=]RUN_DIR (same label -> same colour; @slot pins the model's colour)")
     s.add_argument("--name", required=True)
     s.add_argument("--outdir", required=True)
     s.add_argument("--tables", required=True)
