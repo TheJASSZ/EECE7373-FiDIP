@@ -101,3 +101,29 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 - **report:** LaTeX report, verified refs, TikZ diagrams, README, build + visual check.
 
 The literature-scan Explore agent is still running. Its findings will be forwarded to the improve worker.
+
+### 2026-11-05 20:10–20:20 EST — Data bug in official GT; STUDENT_GUIDE.md arrives
+**Analysis worker found a GT defect (D8):**
+- In `validate500`, every annotation has the same placeholder `area` (2443298.48, i.e. √area ≈ 1563 px). OKS normalizes by area, so Val400 AP would be ~100 for any model and useless for selection.
+- `validate100` (Test100) uses `area = bbox_w × bbox_h` exactly.
+- The train JSON also has a constant placeholder area (14232.77).
+- validate100 ⊂ validate500 (same ids and filenames). Keypoints are identical on 98/100 images. The validate100 boxes are a median 12% larger than validate500's boxes for the same images.
+- **Decision D8:**
+  - Build `val400.json` / `validate500.json` with `area = w × h` from validate500's own boxes.
+  - Use `test100.json` = validate100 exactly as shipped.
+  - Add an assertion in `make_splits.py`, and a degenerate-area guard in `eval_coco.py`.
+  - Relayed to the repro worker before it wrote the splits.
+  - Asked the analysis worker to quantify the v100-vs-v500 box effect (AP of the released model on the 100 shared images under both GTs).
+
+**Human provided `STUDENT_GUIDE.md`.** It is mostly consistent with the plan. New requirements are tracked in `docs/REQUIREMENTS_CHECKLIST.md`:
+- `tools/demo.py` with the guide's CLI, plus `tools/streamlit_demo.py`.
+- `gpu_test.py`.
+- Over/underfitting monitoring (train/val loss and val AP per epoch).
+- A MANIFEST that reproduces the results "from this file alone".
+- A report with the accuracy of every attempt, the final best config vs baseline, and a reflection on the agentic workflow.
+- The guide names "domain-adaptation tweaks" as an expected extension. **Decision D9:** add a cheap λ sweep (single seed, Val400 only) to the repro stream as documented DA attempts.
+
+**Integrity note:**
+- The guide's `gpu_test.py`, `demo.py`, `streamlit_demo.py` and `fidip_simple.yml` aren't in upstream.
+- A GitHub code search for them only surfaced classmates' public forks, whose notes say the files exist nowhere public.
+- We **did not open or use any other student's repository**. We implement these files ourselves from the guide's documented interface.
