@@ -91,8 +91,63 @@ def test_allowed(run_id, reg, pre, roles=None):
     return False, "not pre-registered -> withheld"
 
 
+def derived_splits():
+    """Sensitivity GTs derived from the official splits (written under $R/analysis/splits_derived):
+    test100_noleak = Test100 minus images that are exact (md5) or near-exact (dHash<=10, pose OKS>=0.85)
+    copies of annotated official training images (repro's $R/data/splits/VERIFY.json). The ids are read,
+    never hard-coded. Annotation id 0 (test0) stays, so both protocols still apply."""
+    vpath = os.path.join(R, "data", "splits", "VERIFY.json")
+    out = {}
+    if not os.path.exists(vpath):
+        return out
+    ov = json.load(open(vpath)).get("overlap", {})
+    ids = set()
+    for k, v in ov.items():
+        if k.startswith("train_x_test100_by_md5_pairs") or k.startswith("test100_x_train_near_dups"):
+            ids.update(int(x[0]) for x in v)
+    if not ids:
+        return out
+    gt = json.load(open(os.path.join(R, "data", "splits", "test100.json")))
+    sub = dict(gt, images=[im for im in gt["images"] if im["id"] not in ids],
+               annotations=[x for x in gt["annotations"] if x["image_id"] not in ids])
+    d = os.path.join(R, "analysis", "splits_derived")
+    os.makedirs(d, exist_ok=True)
+    p = os.path.join(d, "test100_noleak.json")
+    if not os.path.exists(p) or json.load(open(p)) != sub:
+        json.dump(sub, open(p, "w"))
+    json.dump({"test100_noleak": {"excluded_test_ids": sorted(ids), "n_images": len(sub["images"]),
+                                  "source": vpath}}, open(os.path.join(d, "README.json"), "w"), indent=1)
+    out["test100_noleak"] = (p, "test100")
+    return out
+
+
+def eval_derived(run_id, pred, split, tag, od, derived, rows, force=False):
+    """Evaluate `pred` on every derived GT of `split` (only reached after the Test100 gate passed)."""
+    for dname, (dgt, parent) in derived.items():
+        if parent != split or tag != "":
+            continue
+        dm, dp = os.path.join(od, f"metrics_{dname}.json"), os.path.join(od, f"per_image_{dname}.json")
+        ps, gs = sha(pred), sha(dgt)
+        if os.path.exists(dm) and not force:
+            old = json.load(open(dm))
+            if (old.get("pred", {}).get("sha256") == ps and old.get("gt", {}).get("sha256") == gs
+                    and old.get("evaluator") == f"eval/eval_coco.py v{ev.EVALUATOR_VERSION}"):
+                rows.append({"run_id": run_id, "split": dname, "pred": pred, "status": "up to date (derived)",
+                             "AP": old["metrics"]["AP"], "AP_fixed": old["metrics_fixed"]["AP"],
+                             "AP_80_95": old["metrics"]["AP_80_95"], "n_images": old["gt"]["n_images"]})
+                continue
+        ev.main(["--gt", dgt, "--pred", pred, "--out", dm, "--per-image", dp, "--run-id", run_id, "--split", dname,
+                 "--quiet"])
+        dd = json.load(open(dm))
+        rows.append({"run_id": run_id, "split": dname, "pred": pred, "status": "evaluated (derived)",
+                     "AP": dd["metrics"]["AP"], "AP_fixed": dd["metrics_fixed"]["AP"],
+                     "AP_80_95": dd["metrics"]["AP_80_95"], "n_images": dd["gt"]["n_images"]})
+        print(f"{run_id:40s} {dname:15s} AP {100 * dd['metrics']['AP']:6.2f}  fixed {100 * dd['metrics_fixed']['AP']:6.2f}")
+
+
 def cmd_eval_all(a):
     reg, pre = registry(), prereg_ids()
+    derived = derived_splits()
     out_root = os.path.join(R, "analysis", "eval")
     os.makedirs(out_root, exist_ok=True)
     rows = []
@@ -129,6 +184,7 @@ def cmd_eval_all(a):
                 row.update(status="up to date", AP=old["metrics"]["AP"], AP_fixed=old["metrics_fixed"]["AP"],
                            AP_80_95=old["metrics"]["AP_80_95"], n_images=old["gt"]["n_images"])
                 rows.append(row)
+                eval_derived(run_id, pred, split, tag, od, derived, rows, a.force)
                 continue
         try:
             rc = ev.main(["--gt", gt, "--pred", pred, "--out", mpath, "--per-image", ppath, "--run-id", run_id,
@@ -139,8 +195,9 @@ def cmd_eval_all(a):
                        n_images=m["gt"]["n_images"], n_pred=m["pred"]["n_in"],
                        n_dropped=m["pred"]["n_dropped_not_in_gt"],
                        n_missing=m["pred"]["n_gt_images_without_pred"], warnings=" | ".join(m["warnings"]))
-            print(f"{run_id:40s} {split:12s} AP {100 * m['metrics']['AP']:6.2f}  fixed {100 * m['metrics_fixed']['AP']:6.2f}"
+            print(f"{run_id:40s} {split + tag:15s} AP {100 * m['metrics']['AP']:6.2f}  fixed {100 * m['metrics_fixed']['AP']:6.2f}"
                   f"  AP80-95 {100 * m['metrics']['AP_80_95']:6.2f}")
+            eval_derived(run_id, pred, split, tag, od, derived, rows, a.force)
         except Exception as e:  # keep going; record the failure
             row["status"] = f"ERROR {type(e).__name__}: {e}"
             print(f"ERROR {run_id}/{split}: {e}")
