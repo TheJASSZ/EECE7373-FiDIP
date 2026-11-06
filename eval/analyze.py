@@ -187,7 +187,7 @@ def fig_ap_vs_threshold(models, focus, published, out):
                     mfc="white", mec=ps.INK, ms=4.5, zorder=5, label=published.get("label", "paper"))
             strict = (10 * published["AP"] - 6 * published["AP50"]) / 4
             ax.plot([0.8, 0.95], [100 * strict] * 2, color=ps.INK, lw=1.0, zorder=5,
-                    label=f"paper: implied mean AP over .80-.95 ({100 * strict:.1f})")
+                    label=f"paper: implied mean AP over .80-.95 ({100 * strict:.2f})")
         ax.set_title(title, loc="left", color=ps.INK)
         ax.set_xlabel("OKS threshold")
         ax.set_xticks(x[::1])
