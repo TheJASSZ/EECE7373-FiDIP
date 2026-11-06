@@ -1,5 +1,25 @@
-% report/keymap.tex -- optional, hand-maintained map from the report's canonical keys to macros that
-% scripts/collect_results.py writes into generated/results_tables.tex (see generated/MACROS.md).
-% It must never contain a number: only lines of the form
-%   \setres{rel.fidip.test.ap}{\SomeGeneratedMacro}
-% Loaded after generated/numbers.tex, so a mapping here overrides a placeholder there.
+% report/keymap.tex -- hand-maintained map from canonical keys to macros that scripts/collect_results.py
+% writes into generated/results_tables.tex (see generated/MACROS.md). Never holds a number. \setresmac{key}{MacroName} fails soft (red ??) if the macro disappears.
+\setresmac{rt.sweep.l1e4}{RtLamOneEFourValAP}
+\setresmac{rt.sweep.l2e3}{RtLamTwoEThreeValAP}
+\setresmac{rt.sweep.l1e2}{RtLamOneETwoValAP}
+\setresmac{rt.vsrel.delta}{BootFiDIPRetrainVsReleasedDelta}
+\setresmac{rt.vsrel.ci.lo}{BootFiDIPRetrainVsReleasedCiLo}
+\setresmac{rt.vsrel.ci.hi}{BootFiDIPRetrainVsReleasedCiHi}
+\setresmac{rt.vsrel.fixed.delta}{BootFiDIPRetrainVsReleasedFixedDelta}
+\setresmac{rt.vsrel.fixed.ci.lo}{BootFiDIPRetrainVsReleasedFixedCiLo}
+\setresmac{rt.vsrel.fixed.ci.hi}{BootFiDIPRetrainVsReleasedFixedCiHi}
+\setresmac{rt.fidip.test.ap.fixed}{RtFiDIPTestAPFixed}
+\setresmac{rt.fidip.test.clean.ap}{RtFiDIPTestCleanAP}
+\setresmac{scr.hrnet}{MmpHRNetValAP}
+\setresmac{scr.hrnet.lr2}{MmpHRNetLrTwoValAP}
+\setresmac{scr.hrnet.lr5}{MmpHRNetLrFiveValAP}
+\setresmac{scr.vitl256}{MmpVitLTwoValAP}
+\setresmac{scr.vitl384}{MmpVitLThreeValAP}
+\setresmac{scr.vith256}{MmpVitHTwoValAP}
+\setresmac{scr.vith384}{MmpVitHThreeValAP}
+\setresmac{scr.vitl256.real}{MmpVitLRealValAP}
+\setresmac{scr.vitl256.rot}{MmpVitLRotValAP}
+\setresmac{zs.hrnet}{ZsHRNetValAP}
+\setresmac{zs.vitl256}{ZsVitLTwoValAP}
+\setresmac{zs.vith256}{ZsVitHTwoValAP}

@@ -59,6 +59,8 @@
 \newcounter{pendingcount}
 \newcommand{\tbd}{\stepcounter{tbdcount}\textcolor{tbdred}{\textbf{TBD}}}
 \newcommand{\setres}[2]{\@namedef{res@#1}{#2}}
+\newcommand{\setresdefault}[2]{\@ifundefined{res@#1}{\setres{#1}{#2}}{}}  % only if not set by a generated file
+\newcommand{\setresmac}[2]{\setres{#1}{\@ifundefined{#2}{\textcolor{tbdred}{\textbf{??}}\PackageWarning{report}{Generated macro \string\#2\space missing (key #1)}}{\@nameuse{#2}}}}
 \DeclareRobustCommand{\res}[1]{%
   \@ifundefined{res@#1}%
     {\textcolor{tbdred}{\textbf{??}}\PackageWarning{report}{Result key `#1' is not defined}}%
@@ -116,7 +118,9 @@
 % 2. generated/numbers.tex: the report's canonical keys, \setres{<key>}{<value or generated macro>}.
 % 3. keymap.tex (optional, hand-maintained, no numbers): \setres{<key>}{\SomeGeneratedMacro}.
 \IfFileExists{generated/numbers.tex}{\input{generated/numbers.tex}}{}
+\IfFileExists{generated/manual_numbers.tex}{\input{generated/manual_numbers.tex}}{}  % sourced numbers without a generated key
 \IfFileExists{keymap.tex}{\input{keymap.tex}}{}
+\providecommand{\finaloutcome}{\tbd}
 \IfFileExists{generated/build_info.tex}{\input{generated/build_info.tex}}{}
 
 \title{\vspace{-8mm}Reproducing and Improving FiDIP for Infant Pose Estimation on SyRIP}

@@ -2,59 +2,71 @@
 
 \subsection{Released checkpoints}\label{sec:released}
 
-\paragraph{Setup.} We evaluated three checkpoints under their released test settings (GT boxes, flip test, DARK post-processing), with predictions scored by \code{eval_coco.py} (\cref{tab:repro}, upper block):
-\begin{itemize}[leftmargin=*]
-  \item \code{hrnet_fidip.pth}, DarkPose + FiDIP;
-  \item \code{mobile_fidip.pth}, Pose-MobileNet + FiDIP;
-  \item the COCO-only DarkPose \code{w48_384x288.pth} that FiDIP starts from.
-\end{itemize}
+We evaluated \code{hrnet_fidip.pth} (DarkPose + FiDIP) and \code{mobile_fidip.pth} (Pose-MobileNet + FiDIP) under their released test settings: GT boxes, flip test and DARK post-processing.
+Their predictions were then scored by \code{eval_coco.py}; \cref{tab:repro}, upper block, gives the results.
 
-\paragraph{Results.} The released FiDIP model scores \res{rel.fidip.test.ap}~AP under the \texttt{paper} protocol (\res{rel.fidip.test.diffpub} from the published 93.6), and \res{rel.fidip.test.ap.fixed}~AP under \texttt{fixed}. The individual metrics, against the published values:
+\paragraph{HRNet.} The released HRNet checkpoint reproduces the published numbers \emph{exactly}:
 \begin{itemize}[leftmargin=*]
-  \item AP$_{50}$ \res{rel.fidip.test.ap50} and AP$_{75}$ \res{rel.fidip.test.ap75} (98.5 each);
-  \item AR \res{rel.fidip.test.ar} (94.6);
-  \item \APstrict{} \res{rel.fidip.test.apstrict} (86.3 implied, \cref{sec:published}).
+  \item \res{rel.fidip.test.ap}~AP (published 93.6);
+  \item AP$_{50}$/AP$_{75}$ \res{rel.fidip.test.ap50}/\res{rel.fidip.test.ap75} (published 98.5/98.5);
+  \item AR \res{rel.fidip.test.ar} (published 94.6).
 \end{itemize}
-The released Pose-MobileNet scores \res{rel.mobile.test.ap}~AP (published 79.2), and the COCO-only DarkPose \res{zs.darkpose.test.ap}~AP (published 88.5).
+Upstream's own test script prints the same AP (\res{rel.fidip.test.ap.upstream}). Over all \res{xcheck.pairs} run/split pairs, our evaluator agrees with upstream's printout to within \res{xcheck.maxdiff}~AP.
+The same predictions score \res{rel.fidip.test.ap.fixed}~AP under the \texttt{fixed} protocol, \res{rel.fidip.test.clean.ap}~AP on Test100-clean, and \res{rel.fidip.val.ap}~AP on Val400.
 
-\interp{Does the released checkpoint reproduce 93.6 within what 100 test images allow? If not, does AP$_{50}$/AP$_{75}$ or \APstrict{} explain the gap, and does upstream's printed AP agree (\cref{sec:eval})?}
+\paragraph{MobileNet.} The released Pose-MobileNet scores \res{rel.mobile.test.ap}~AP, against a published 79.2.
+
+\paragraph{Val400 versus Test100.} Val400 is lower than Test100 for every model we evaluated on both (\cref{sec:thresholds}). Part of the gap comes from validate500's tighter boxes: on the same 100 images, swapping in validate500's boxes lowers the released model from \res{sens.box.v100.ap} to \res{sens.box.v500.ap}~AP.
 
 \begin{table}[t]
   \centering\small
-  \caption[Reproduction on Test100 and Val400]{Reproduction on SyRIP Test100 (\texttt{paper} protocol, GT boxes, flip test) and Val400. \emph{Upper block:} released checkpoints scored by \code{eval_coco.py}. \emph{Lower block:} retrains with the released recipe from COCO DarkPose weights (mean $\pm$ s.d.\ over seeds, epochs selected on Val400). ``Publ.'' is the published AP~\citep{huang2021fidip,fidipcode}.}
+  \caption[Reproduction on Test100 and Val400]{Reproduction on SyRIP Test100 (\texttt{paper} protocol unless marked; GT boxes; flip test) and on Val400.
+  \emph{Upper block:} released checkpoints, scored by \code{eval_coco.py}.
+  \emph{Lower block:} our retrains of the released recipe from COCO DarkPose weights, mean $\pm$ s.d.\ over seeds, at the Val400-selected epoch and at the final epoch.
+  ``Publ.'' is the published AP~\citep{huang2021fidip,fidipcode}; ``clean'' is Test100-clean.}
   \label{tab:repro}
   \GenTable{tab_reproduction}{released checkpoints and retrains vs.\ published}
 \end{table}
 
-\subsection{Retraining FiDIP and the fine-tuning ablation}\label{sec:retrain}
+\subsection{Retraining FiDIP and the domain-adaptation ablation}\label{sec:retrain}
 
-\paragraph{Recipe.} We retrained with the released code and yaml, adding two command-line overrides (D5): \code{TRAIN.CHECKPOINT} set to the COCO DarkPose weights, and \code{TRAIN.LAMBDA} set to the paper's $5{\cdot}10^{-4}$.
-The classifier pre-stage runs for 10 epochs (\code{PRE_EPOCH}, as in \code{_custom.yaml}) on the shipped adult set. The model is evaluated on Val400 after every epoch, and the best epoch is kept.
-To isolate domain adaptation, we also ran the same recipe with $\lambda=0$, which is the paper's ``DarkPose + Finetune'' row. Each arm has \res{rt.seeds} seeds.
-
-Because the paper's recipe differs from the yaml (\cref{tab:paper-vs-code}), we also ran two extra attempts, listed in \cref{sec:attempts}:
+\paragraph{Recipe.} We retrained with the released code and yaml plus two command-line overrides (D5): \code{TRAIN.CHECKPOINT}, set to the COCO DarkPose weights, and \code{TRAIN.LAMBDA}, set to $5{\cdot}10^{-4}$.
 \begin{itemize}[leftmargin=*]
-  \item the paper's recipe once (Adam $10^{-3}$, 100 epochs, batch 64), D12;
-  \item a single-seed $\lambda$ sweep on Val400, D9.
+  \item The classifier pre-stage runs for 10 epochs (as in \code{_custom.yaml}) on the shipped adult set.
+  \item After each epoch the model is evaluated on Val400, and the best epoch is kept.
+  \item The same recipe with $\lambda=0.0$ isolates domain adaptation.
+  \item Each arm has \res{rt.seeds} seeds.
 \end{itemize}
 
-\paragraph{Results.} On Test100, FiDIP scores \resms{rt.fidip.test.ap}~AP and fine-tuning \resms{rt.ft.test.ap}~AP. On Val400 they score \resms{rt.fidip.val.ap} and \resms{rt.ft.val.ap}.
-The seed-averaged difference on Test100 is \res{rt.delta.test.ap}~AP, with 95\% CI [\res{rt.delta.test.ci.lo}, \res{rt.delta.test.ci.hi}] and one-sided $p=\res{rt.delta.test.p}$ (\cref{tab:repro}, lower block).
+\paragraph{FiDIP reproduces.} The FiDIP retrains score \resms{rt.fidip.test.ap}~AP on Test100 at the Val400-selected epoch, and \res{rt.fidip.test.ap.final.mean}\,{\footnotesize$\pm$\,\res{rt.fidip.test.ap.final.sd}} at the final epoch. On Val400 they score \resms{rt.fidip.val.ap}.
+Paired with the released checkpoint on the same images, the difference is \res{rt.vsrel.delta}~AP, with a 95\% CI of [\res{rt.vsrel.ci.lo}, \res{rt.vsrel.ci.hi}]. Under \texttt{fixed} it is \res{rt.vsrel.fixed.delta} [\res{rt.vsrel.fixed.ci.lo}, \res{rt.vsrel.fixed.ci.hi}] (\cref{tab:boot}).
+\textbf{The training pipeline therefore reproduces the published 93.6, under a stricter protocol that never selects on the test set.}
 
-\interp{Is FiDIP's published 0.9-AP gain over fine-tuning (92.7 to 93.6) reproduced, and is it distinguishable from seed and sampling noise at $n=100$? How does the retrain compare with the released checkpoint?}
+\paragraph{The domain-adaptation gain does not reproduce.} With $\lambda=0$ the same recipe scores \resms{rt.ft.test.ap}~AP on Test100, \res{rt.ft.test.ap.final.mean}\,{\footnotesize$\pm$\,\res{rt.ft.test.ap.final.sd}} at the final epoch, and \resms{rt.ft.val.ap} on Val400.
+FiDIP minus fine-tuning is \res{rt.delta.test.ap}~AP, 95\% CI [\res{rt.delta.test.ci.lo}, \res{rt.delta.test.ci.hi}].
+The paper's +0.9~AP from domain adaptation (92.7 to 93.6) is therefore \emph{not} reproduced. The adversarial term neither helps nor hurts measurably at $n=100$.
+
+Our $\lambda=0$ runs still contain the classifier pre-stage, so we also ran the paper-faithful plain fine-tune without it (\code{PRE_EPOCH} 0, R021--R023, D21). It scores \resms{rt.ftnp.test.ap}~AP on Test100 and \resms{rt.ftnp.val.ap} on Val400.
+
+\paragraph{Other reproduction attempts} (Val400, one seed; all in \cref{tab:attempts}).
+\begin{itemize}[leftmargin=*]
+  \item \textbf{$\lambda$ sweep.} Accuracy falls monotonically as $\lambda$ grows: $10^{-4}$ scores \res{rt.sweep.l1e4}, $2{\cdot}10^{-3}$ \res{rt.sweep.l2e3}, and $10^{-2}$ \res{rt.sweep.l1e2} (\res{rt.sweep.l1e2.final} by the last epoch), against \resms{rt.fidip.val.ap} at $5{\cdot}10^{-4}$.
+  \item \textbf{The paper's recipe} (Adam $10^{-3}$, 100 epochs, batch 64; R019) peaks at \res{rt.paper.val.best} at epoch \res{rt.paper.bestepoch}, then overfits, ending at \res{rt.paper.val.final}. It explains no gap: the shipped yaml already reproduces 93.6.
+  \item \textbf{The README-literal training labels} (R020, the MINI-RGBD labels on the synthetic images) score \res{rt.readme.val.ap}, which is \res{rt.readme.delta}~AP against the retrains with the official labels.
+\end{itemize}
 
 \subsection{Training dynamics: over- and underfitting}\label{sec:curves}
 
-\paragraph{What we monitor.} As the course guide asks, every run logs the training loss and the Val400 AP after each epoch, and FiDIP runs also log the domain-classifier loss (\cref{fig:curves}).
-Out of \res{rt.epochs} epochs, the median Val400-selected epoch is \res{rt.fidip.bestepoch} for FiDIP and \res{rt.ft.bestepoch} for fine-tuning.
+Every run logs the training loss, the Val400 loss and Val400 AP per epoch (\cref{fig:curves}).
+For the FiDIP retrains, the training loss keeps falling, while the Val400 loss flattens after about epoch \res{fit.valloss.flat}.
+Val400 AP, however, still rises: the selected epochs are \res{rt.fidip.bestepoch} of \res{rt.epochs} for $\lambda=5{\cdot}10^{-4}$ and \res{rt.ft.bestepoch} for $\lambda=0$. There is thus no AP overfitting within the released 20-epoch schedule.
 
-\paragraph{Risk factors.} Two features of the data invite overfitting: there are only 200 real images, each seen about five times per epoch through the balanced sampler, and the batch order never changes between epochs. The released recipe counteracts this with a low constant LR ($10^{-4}$) and frozen early layers.
+A longer schedule does not help either. The paper's 10$\times$ learning rate reaches the same Val400 level by epoch 10 and then overfits, as described above. A late LR decay looks like the better lever than more epochs.
+The data invite overfitting in two ways: each of the 200 real images is seen about five times per epoch, and the balanced sampler repeats the same batch order every epoch. The released recipe counteracts this with a low constant LR and frozen early layers.
 
 \begin{figure}[t]
   \centering
-  \GenFigure[width=\linewidth]{curves_fidip}{per-epoch training loss, Val400 AP (and domain loss) for the FiDIP and fine-tune retrains, all seeds}
-  \caption{Retrain curves: training loss and Val400 AP per epoch for all seeds, with the Val400-selected epoch marked. Test100 was never evaluated per epoch.}
+  \GenFigure[width=0.92\linewidth]{curves_fidip}{per-epoch training loss, Val400 AP (and domain loss) for the FiDIP and fine-tune retrains, all seeds}
+  \caption{Retrain curves: per-epoch training loss, Val400 loss and Val400 AP for all seeds. Test100 was never evaluated per epoch.}
   \label{fig:curves}
 \end{figure}
-
-\interp{Does Val400 AP plateau or fall while the training loss keeps decreasing (overfitting)? Is it still rising at the last epoch (underfitting, which would argue for the paper's longer schedule)? How does the domain loss behave at $\lambda=5{\cdot}10^{-4}$?}
