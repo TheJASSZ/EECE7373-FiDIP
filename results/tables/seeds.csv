@@ -1,0 +1,28 @@
+config,label,split,split_role,clean_test,n_runs,run_ids,AP,AP50,AP75,AR,AR50,AR75,AP_80_95,AP_std,AP50_std,AP75_std,AR_std,AR50_std,AR75_std,AP_80_95_std,AP_fixed
+rel_fidip_w48,FiDIP HRNet-W48 (released),val400,selection,False,1,R001_fidip-w48_released,90.3648,98.8424,95.7869,91.8892,99.4962,96.4736,79.1742,,,,,,,,90.3648
+rel_fidip_w48,FiDIP HRNet-W48 (released),test100,clean test (reporting only),True,1,R001_fidip-w48_released,93.6050,98.5248,98.5248,94.6000,99.0000,99.0000,86.2254,,,,,,,,94.9891
+rel_fidip_mobile,FiDIP MobileNetV2 (released),val400,selection,False,1,R002_fidip-mobilenet_released,68.1793,95.2791,77.3895,76.9018,96.9773,84.3829,37.9549,,,,,,,,68.1793
+rel_fidip_mobile,FiDIP MobileNetV2 (released),test100,clean test (reporting only),True,1,R002_fidip-mobilenet_released,79.1367,98.9604,89.3352,84.1000,99.0000,92.0000,54.7062,,,,,,,,79.8414
+mmp_hrnet_base,HRNet-W48 DARK 384 (MMPose control),val400,selection,False,1,R101_mmp-hrnetw48_base_s1,91.5180,98.8549,95.7214,92.7456,99.4962,96.9773,81.5659,,,,,,,,91.5180
+mmp_vitl256_base,ViTPose-L 256 (MMPose),val400,selection,False,1,R102_mmp-vitpose-l256_base_s1,92.8146,98.8399,96.7341,94.1310,99.4962,97.4811,84.8161,,,,,,,,92.8146
+mmp_hrnet_lr2e4,"HRNet-W48 DARK 384, LR 2e-4",val400,selection,False,1,R106_mmp-hrnetw48_lr2e-4_s1,91.4307,98.8269,95.7899,92.5945,99.4962,96.4736,81.8504,,,,,,,,91.4307
+mmp_vitl256_lr2e4,"ViTPose-L 256, LR 2e-4",val400,selection,False,1,R108_mmp-vitpose-l256_lr2e-4_s1,92.5799,98.8574,96.8257,93.8539,99.4962,97.4811,84.6957,,,,,,,,92.5799
+zs_hrnet,"HRNet-W48 COCO, zero-shot",val400,selection,False,1,R181_mmp-hrnetw48_zeroshot_s0,86.4626,98.9224,92.7515,88.3123,99.4962,93.9547,71.6390,,,,,,,,86.4626
+zs_vitl256,"ViTPose-L 256 COCO, zero-shot",val400,selection,False,1,R182_mmp-vitpose-l256_zeroshot_s0,88.2123,98.8599,94.7665,90.4030,99.4962,95.4660,74.7936,,,,,,,,88.2123
+zs_vitl384,"ViTPose-L 384 COCO, zero-shot",val400,selection,False,1,R183_mmp-vitpose-l384_zeroshot_s0,86.2993,97.8099,93.6581,89.4458,98.9924,94.9622,70.8689,,,,,,,,86.2993
+zs_vith256,"ViTPose-H 256 COCO, zero-shot",val400,selection,False,1,R184_mmp-vitpose-h256_zeroshot_s0,88.8080,98.8777,94.6262,90.9068,99.7481,95.4660,75.8427,,,,,,,,88.8080
+zs_vith384,"ViTPose-H 384 COCO, zero-shot",val400,selection,False,1,R185_mmp-vitpose-h384_zeroshot_s0,87.4438,98.8541,94.5281,90.3778,99.4962,95.4660,73.0316,,,,,,,,87.4438
+smoke,MMPose smoke runs (2 epochs),val400,selection,False,2,R190_mmp-hrnetw48_smoke_s1;R191_mmp-vitpose-l384_smoke_s1,90.3022,98.8809,95.7663,91.9647,99.3703,96.5995,79.2495,0.8145,0.0409,0.0181,1.1755,0.1781,0.5343,2.4396,90.3022
+rt_fidip,"FiDIP retrain, $\lambda=5\cdot10^{-4}$",val400,selection,False,3,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,90.5120,98.8474,95.7807,91.8892,99.4962,96.7254,79.6347,0.1279,0.0109,0.0230,0.1745,0.0000,0.2519,0.1806,90.5120
+rt_fidip,"FiDIP retrain, $\lambda=5\cdot10^{-4}$",test100,clean test (reporting only),True,3,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,93.5525,98.4719,98.4719,94.6000,99.0000,99.0000,86.1733,0.4237,0.0508,0.0508,0.5196,0.0000,0.0000,1.0687,95.1085
+mmp_vitl256_lr5e5,"ViTPose-L 256, LR 5e-5",val400,selection,False,1,R109_mmp-vitpose-l256_lr5e-5_s1,92.5973,98.8224,96.7063,93.9547,99.4962,97.4811,84.3151,,,,,,,,92.5973
+mmp_vith256_base,ViTPose-H 256 (MMPose),val400,selection,False,1,R105_mmp-vitpose-h256_base_s1,93.1655,98.8428,97.6219,94.5088,99.7481,98.2368,85.2627,,,,,,,,93.1655
+mmp_vith384_base,ViTPose-H 384 (MMPose),val400,selection,False,1,R104_mmp-vitpose-h384_base_s1,93.2742,98.8553,96.6634,94.6851,99.7481,97.4811,85.8105,,,,,,,,93.2742
+repro_smoke,FiDIP retrain smoke (repro),val400,selection,False,1,R009_fidip-w48_smoke_s1,88.1078,98.9002,93.8320,89.7985,99.7481,94.7103,74.7143,,,,,,,,88.1078
+rt_lam1e4,"FiDIP retrain, lambda 1e-4",val400,selection,False,1,R016_fidip-w48_lambda1e-4_s1,91.0190,98.8499,96.7869,92.3426,99.4962,97.2292,80.3178,,,,,,,,91.0190
+rt_lam2e3,"FiDIP retrain, lambda 2e-3",val400,selection,False,1,R017_fidip-w48_lambda2e-3_s1,89.6698,98.9149,95.8261,91.2343,99.4962,96.7254,77.8483,,,,,,,,89.6698
+rt_lam1e2,"FiDIP retrain, lambda 1e-2",val400,selection,False,1,R018_fidip-w48_lambda1e-2_s1,85.7774,98.8949,92.6650,87.7582,99.4962,93.9547,70.0200,,,,,,,,85.7774
+mmp_vitl384_base,ViTPose-L 384 (MMPose),val400,selection,False,1,R103_mmp-vitpose-l384_base_s1,92.7729,98.8374,96.6484,94.1562,99.4962,97.4811,84.7793,,,,,,,,92.7729
+mmp_hrnet_lr5e5,"HRNet-W48 DARK 384, LR 5e-5",val400,selection,False,1,R107_mmp-hrnetw48_lr5e-5_s1,91.6945,98.8749,96.7335,92.8212,99.4962,97.2292,81.7324,,,,,,,,91.6945
+mmp_vitl256_realonly,"ViTPose-L 256, real only",val400,selection,False,1,R120_mmp-vitpose-l256_realonly_s1,92.2363,98.8074,96.7686,93.7783,99.4962,97.7330,83.4389,,,,,,,,92.2363
+mmp_vitl256_rot180,"ViTPose-L 256, rotation $\pm$180",val400,selection,False,1,R121_mmp-vitpose-l256_rot180_s1,92.5824,98.8274,96.7269,94.0050,99.4962,97.7330,84.2885,,,,,,,,92.5824

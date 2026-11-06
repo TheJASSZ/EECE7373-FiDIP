@@ -1,0 +1,97 @@
+model,key,run_ids,group,n,median_err_pct,pck@0.05,pck@0.1
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,"Head (nose, eyes, ears)",1985,0.892472,90.7809,96.9773
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,Shoulders,794,2.10905,86.7758,97.4811
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,Elbows,794,1.54476,85.5164,94.9622
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,Wrists,792,1.35319,88.6364,93.6869
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,Hips,794,5.29341,47.4811,85.5164
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,Knees,794,2.40908,75.5668,88.1612
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,Ankles,788,2.14239,81.7259,90.2284
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,All,6741,1.7817,81.4864,93.2354
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,"Head (nose, eyes, ears)",1985,1.71378,83.2746,92.2922
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Shoulders,794,2.94067,74.5592,91.8136
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Elbows,794,2.73416,70.7809,85.0126
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Wrists,792,2.33039,77.2727,86.1111
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Hips,794,6.87004,33.6272,71.1587
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Knees,794,4.48771,52.8967,71.0327
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Ankles,788,3.71225,59.3909,75.1269
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,All,6741,2.93184,67.8534,83.6523
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,"Head (nose, eyes, ears)",1985,0.840243,90.932,96.9773
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,Shoulders,794,2.06184,89.4207,97.9849
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,Elbows,794,1.51859,86.7758,95.0882
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,Wrists,792,1.24953,89.2677,94.1919
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,Hips,794,3.71979,64.6096,91.0579
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,Knees,794,2.37065,77.7078,89.2947
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,Ankles,788,1.99106,82.6142,91.1168
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,All,6741,1.66449,84.4385,94.259
+ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,"Head (nose, eyes, ears)",1985,0.917225,91.335,97.0781
+ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,Shoulders,794,2.04889,89.7985,98.2368
+ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,Elbows,794,1.53497,86.9018,95.5919
+ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,Wrists,792,1.22589,89.899,95.0758
+ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,Hips,794,3.56451,68.6398,94.0806
+ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,Knees,794,2.28307,80.6045,92.6952
+ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,Ankles,788,1.98912,83.7563,94.1624
+ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,All,6741,1.69348,85.6401,95.5941
+"HRNet-W48 DARK 384, LR 2e-4",mmp_hrnet_lr2e4,R106_mmp-hrnetw48_lr2e-4_s1,"Head (nose, eyes, ears)",1985,0.867797,90.7809,97.0781
+"HRNet-W48 DARK 384, LR 2e-4",mmp_hrnet_lr2e4,R106_mmp-hrnetw48_lr2e-4_s1,Shoulders,794,2.08153,88.7909,97.733
+"HRNet-W48 DARK 384, LR 2e-4",mmp_hrnet_lr2e4,R106_mmp-hrnetw48_lr2e-4_s1,Elbows,794,1.56706,87.6574,94.9622
+"HRNet-W48 DARK 384, LR 2e-4",mmp_hrnet_lr2e4,R106_mmp-hrnetw48_lr2e-4_s1,Wrists,792,1.25434,88.6364,94.8232
+"HRNet-W48 DARK 384, LR 2e-4",mmp_hrnet_lr2e4,R106_mmp-hrnetw48_lr2e-4_s1,Hips,794,3.81559,64.6096,89.9244
+"HRNet-W48 DARK 384, LR 2e-4",mmp_hrnet_lr2e4,R106_mmp-hrnetw48_lr2e-4_s1,Knees,794,2.36359,76.7003,87.9093
+"HRNet-W48 DARK 384, LR 2e-4",mmp_hrnet_lr2e4,R106_mmp-hrnetw48_lr2e-4_s1,Ankles,788,2.03908,80.9645,91.1168
+"HRNet-W48 DARK 384, LR 2e-4",mmp_hrnet_lr2e4,R106_mmp-hrnetw48_lr2e-4_s1,All,6741,1.66877,84.038,94.0217
+"ViTPose-L 256, LR 2e-4",mmp_vitl256_lr2e4,R108_mmp-vitpose-l256_lr2e-4_s1,"Head (nose, eyes, ears)",1985,0.939627,91.2846,96.9773
+"ViTPose-L 256, LR 2e-4",mmp_vitl256_lr2e4,R108_mmp-vitpose-l256_lr2e-4_s1,Shoulders,794,2.11635,88.9169,97.9849
+"ViTPose-L 256, LR 2e-4",mmp_vitl256_lr2e4,R108_mmp-vitpose-l256_lr2e-4_s1,Elbows,794,1.50193,87.6574,95.466
+"ViTPose-L 256, LR 2e-4",mmp_vitl256_lr2e4,R108_mmp-vitpose-l256_lr2e-4_s1,Wrists,792,1.30973,89.899,94.9495
+"ViTPose-L 256, LR 2e-4",mmp_vitl256_lr2e4,R108_mmp-vitpose-l256_lr2e-4_s1,Hips,794,3.64542,68.7657,93.9547
+"ViTPose-L 256, LR 2e-4",mmp_vitl256_lr2e4,R108_mmp-vitpose-l256_lr2e-4_s1,Knees,794,2.30861,80.2267,92.4433
+"ViTPose-L 256, LR 2e-4",mmp_vitl256_lr2e4,R108_mmp-vitpose-l256_lr2e-4_s1,Ankles,788,2.0426,82.4873,93.401
+"ViTPose-L 256, LR 2e-4",mmp_vitl256_lr2e4,R108_mmp-vitpose-l256_lr2e-4_s1,All,6741,1.70882,85.4324,95.3716
+"HRNet-W48 COCO, zero-shot",zs_hrnet,R181_mmp-hrnetw48_zeroshot_s0,"Head (nose, eyes, ears)",1985,0.820018,86.8514,94.2569
+"HRNet-W48 COCO, zero-shot",zs_hrnet,R181_mmp-hrnetw48_zeroshot_s0,Shoulders,794,2.14641,85.7683,96.4736
+"HRNet-W48 COCO, zero-shot",zs_hrnet,R181_mmp-hrnetw48_zeroshot_s0,Elbows,794,1.5781,83.7531,92.4433
+"HRNet-W48 COCO, zero-shot",zs_hrnet,R181_mmp-hrnetw48_zeroshot_s0,Wrists,792,1.18421,87.5,92.298
+"HRNet-W48 COCO, zero-shot",zs_hrnet,R181_mmp-hrnetw48_zeroshot_s0,Hips,794,4.51576,55.9194,86.9018
+"HRNet-W48 COCO, zero-shot",zs_hrnet,R181_mmp-hrnetw48_zeroshot_s0,Knees,794,2.54937,72.5441,83.7531
+"HRNet-W48 COCO, zero-shot",zs_hrnet,R181_mmp-hrnetw48_zeroshot_s0,Ankles,788,2.34596,77.0305,87.4365
+"HRNet-W48 COCO, zero-shot",zs_hrnet,R181_mmp-hrnetw48_zeroshot_s0,All,6741,1.78024,79.9585,91.1734
+"ViTPose-L 256 COCO, zero-shot",zs_vitl256,R182_mmp-vitpose-l256_zeroshot_s0,"Head (nose, eyes, ears)",1985,0.888314,86.5491,94.4081
+"ViTPose-L 256 COCO, zero-shot",zs_vitl256,R182_mmp-vitpose-l256_zeroshot_s0,Shoulders,794,2.22413,85.5164,97.9849
+"ViTPose-L 256 COCO, zero-shot",zs_vitl256,R182_mmp-vitpose-l256_zeroshot_s0,Elbows,794,1.59696,85.6423,94.4584
+"ViTPose-L 256 COCO, zero-shot",zs_vitl256,R182_mmp-vitpose-l256_zeroshot_s0,Wrists,792,1.27273,89.6465,94.4444
+"ViTPose-L 256 COCO, zero-shot",zs_vitl256,R182_mmp-vitpose-l256_zeroshot_s0,Hips,794,4.39975,56.5491,88.2872
+"ViTPose-L 256 COCO, zero-shot",zs_vitl256,R182_mmp-vitpose-l256_zeroshot_s0,Knees,794,2.49586,76.5743,89.0428
+"ViTPose-L 256 COCO, zero-shot",zs_vitl256,R182_mmp-vitpose-l256_zeroshot_s0,Ankles,788,2.14238,79.6954,90.736
+"ViTPose-L 256 COCO, zero-shot",zs_vitl256,R182_mmp-vitpose-l256_zeroshot_s0,All,6741,1.79685,81.1749,93.0574
+"ViTPose-L 384 COCO, zero-shot",zs_vitl384,R183_mmp-vitpose-l384_zeroshot_s0,"Head (nose, eyes, ears)",1985,0.886946,85.7935,93.8035
+"ViTPose-L 384 COCO, zero-shot",zs_vitl384,R183_mmp-vitpose-l384_zeroshot_s0,Shoulders,794,2.07019,84.6348,96.7254
+"ViTPose-L 384 COCO, zero-shot",zs_vitl384,R183_mmp-vitpose-l384_zeroshot_s0,Elbows,794,1.66659,84.8866,94.0806
+"ViTPose-L 384 COCO, zero-shot",zs_vitl384,R183_mmp-vitpose-l384_zeroshot_s0,Wrists,792,1.30422,88.7626,93.4343
+"ViTPose-L 384 COCO, zero-shot",zs_vitl384,R183_mmp-vitpose-l384_zeroshot_s0,Hips,794,4.68893,54.4081,88.665
+"ViTPose-L 384 COCO, zero-shot",zs_vitl384,R183_mmp-vitpose-l384_zeroshot_s0,Knees,794,2.42806,75.9446,88.0353
+"ViTPose-L 384 COCO, zero-shot",zs_vitl384,R183_mmp-vitpose-l384_zeroshot_s0,Ankles,788,2.22556,78.0457,89.7208
+"ViTPose-L 384 COCO, zero-shot",zs_vitl384,R183_mmp-vitpose-l384_zeroshot_s0,All,6741,1.78368,80.1365,92.375
+"ViTPose-H 256 COCO, zero-shot",zs_vith256,R184_mmp-vitpose-h256_zeroshot_s0,"Head (nose, eyes, ears)",1985,0.905263,87.1033,94.8111
+"ViTPose-H 256 COCO, zero-shot",zs_vith256,R184_mmp-vitpose-h256_zeroshot_s0,Shoulders,794,2.22584,85.3904,98.1108
+"ViTPose-H 256 COCO, zero-shot",zs_vith256,R184_mmp-vitpose-h256_zeroshot_s0,Elbows,794,1.53709,86.9018,95.3401
+"ViTPose-H 256 COCO, zero-shot",zs_vith256,R184_mmp-vitpose-h256_zeroshot_s0,Wrists,792,1.1993,89.6465,94.4444
+"ViTPose-H 256 COCO, zero-shot",zs_vith256,R184_mmp-vitpose-h256_zeroshot_s0,Hips,794,4.31506,58.1864,89.5466
+"ViTPose-H 256 COCO, zero-shot",zs_vith256,R184_mmp-vitpose-h256_zeroshot_s0,Knees,794,2.44653,79.8489,90.1763
+"ViTPose-H 256 COCO, zero-shot",zs_vith256,R184_mmp-vitpose-h256_zeroshot_s0,Ankles,788,2.15031,81.7259,92.5127
+"ViTPose-H 256 COCO, zero-shot",zs_vith256,R184_mmp-vitpose-h256_zeroshot_s0,All,6741,1.76273,82.2875,93.7843
+"ViTPose-H 384 COCO, zero-shot",zs_vith384,R185_mmp-vitpose-h384_zeroshot_s0,"Head (nose, eyes, ears)",1985,0.880123,86.3476,94.2065
+"ViTPose-H 384 COCO, zero-shot",zs_vith384,R185_mmp-vitpose-h384_zeroshot_s0,Shoulders,794,2.17335,85.2645,97.6071
+"ViTPose-H 384 COCO, zero-shot",zs_vith384,R185_mmp-vitpose-h384_zeroshot_s0,Elbows,794,1.61432,86.1461,94.5844
+"ViTPose-H 384 COCO, zero-shot",zs_vith384,R185_mmp-vitpose-h384_zeroshot_s0,Wrists,792,1.25778,89.6465,93.6869
+"ViTPose-H 384 COCO, zero-shot",zs_vith384,R185_mmp-vitpose-h384_zeroshot_s0,Hips,794,4.47074,56.0453,88.2872
+"ViTPose-H 384 COCO, zero-shot",zs_vith384,R185_mmp-vitpose-h384_zeroshot_s0,Knees,794,2.38535,77.8338,90.6801
+"ViTPose-H 384 COCO, zero-shot",zs_vith384,R185_mmp-vitpose-h384_zeroshot_s0,Ankles,788,2.1707,81.4721,91.4975
+"ViTPose-H 384 COCO, zero-shot",zs_vith384,R185_mmp-vitpose-h384_zeroshot_s0,All,6741,1.73975,81.4419,93.1613
+"ViTPose-L 256, LR 5e-5",mmp_vitl256_lr5e5,R109_mmp-vitpose-l256_lr5e-5_s1,"Head (nose, eyes, ears)",1985,0.918842,91.2846,96.927
+"ViTPose-L 256, LR 5e-5",mmp_vitl256_lr5e5,R109_mmp-vitpose-l256_lr5e-5_s1,Shoulders,794,2.05063,89.4207,98.2368
+"ViTPose-L 256, LR 5e-5",mmp_vitl256_lr5e5,R109_mmp-vitpose-l256_lr5e-5_s1,Elbows,794,1.53808,87.4055,95.466
+"ViTPose-L 256, LR 5e-5",mmp_vitl256_lr5e5,R109_mmp-vitpose-l256_lr5e-5_s1,Wrists,792,1.26291,89.899,95.3283
+"ViTPose-L 256, LR 5e-5",mmp_vitl256_lr5e5,R109_mmp-vitpose-l256_lr5e-5_s1,Hips,794,3.62335,68.3879,93.9547
+"ViTPose-L 256, LR 5e-5",mmp_vitl256_lr5e5,R109_mmp-vitpose-l256_lr5e-5_s1,Knees,794,2.21271,80.3526,92.3174
+"ViTPose-L 256, LR 5e-5",mmp_vitl256_lr5e5,R109_mmp-vitpose-l256_lr5e-5_s1,Ankles,788,2.00913,82.9949,93.2741
+"ViTPose-L 256, LR 5e-5",mmp_vitl256_lr5e5,R109_mmp-vitpose-l256_lr5e-5_s1,All,6741,1.68675,85.4918,95.4013

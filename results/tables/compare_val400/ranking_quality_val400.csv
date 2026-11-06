@@ -1,0 +1,13 @@
+model,key,run_id,spearman_score_oks,AP_oracle_paper,AP_paper,ranking_loss_paper,AP_oracle_fixed,AP_fixed,ranking_loss_fixed
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,0.779946,0.912871,0.903648,0.00922299,0.912871,0.903648,0.00922299
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,0.285565,0.765347,0.681793,0.0835539,0.765347,0.681793,0.0835539
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,0.772804,0.923762,0.91518,0.00858257,0.923762,0.91518,0.00858257
+ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,0.711274,0.937624,0.928146,0.00947824,0.937624,0.928146,0.00947824
+"HRNet-W48 DARK 384, LR 2e-4",mmp_hrnet_lr2e4,R106_mmp-hrnetw48_lr2e-4_s1,0.763344,0.922772,0.914307,0.00846561,0.922772,0.914307,0.00846561
+"ViTPose-L 256, LR 2e-4",mmp_vitl256_lr2e4,R108_mmp-vitpose-l256_lr2e-4_s1,0.756668,0.933663,0.925799,0.00786472,0.933663,0.925799,0.00786472
+"HRNet-W48 COCO, zero-shot",zs_hrnet,R181_mmp-hrnetw48_zeroshot_s0,0.753081,0.878218,0.864626,0.0135921,0.878218,0.864626,0.0135921
+"ViTPose-L 256 COCO, zero-shot",zs_vitl256,R182_mmp-vitpose-l256_zeroshot_s0,0.679174,0.89901,0.882123,0.0168865,0.89901,0.882123,0.0168865
+"ViTPose-L 384 COCO, zero-shot",zs_vitl384,R183_mmp-vitpose-l384_zeroshot_s0,0.532457,0.888119,0.862993,0.0251263,0.888119,0.862993,0.0251263
+"ViTPose-H 256 COCO, zero-shot",zs_vith256,R184_mmp-vitpose-h256_zeroshot_s0,0.690309,0.90396,0.88808,0.0158805,0.90396,0.88808,0.0158805
+"ViTPose-H 384 COCO, zero-shot",zs_vith384,R185_mmp-vitpose-h384_zeroshot_s0,0.498129,0.89901,0.874438,0.0245721,0.89901,0.874438,0.0245721
+"ViTPose-L 256, LR 5e-5",mmp_vitl256_lr5e5,R109_mmp-vitpose-l256_lr5e-5_s1,0.72085,0.935644,0.925973,0.00967038,0.935644,0.925973,0.00967038

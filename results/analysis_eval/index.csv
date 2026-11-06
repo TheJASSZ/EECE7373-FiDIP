@@ -1,0 +1,54 @@
+run_id,split,status,AP,AP_fixed,AP_80_95,n_images,n_pred,n_dropped,n_missing,warnings,pred
+R001_fidip-w48_released,test100,up to date,0.9360499387537228,0.9498914174403281,0.8622535597555939,100,,,,,/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_test100.json
+R001_fidip-w48_released,test100_clean,up to date (derived),0.9281152807721177,0.9489068976972054,0.8576514119355052,95,,,,,/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_test100.json
+R001_fidip-w48_released,val400,up to date,0.9036482959506116,0.9036482959506116,0.7917420339313144,397,,,,,/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_val400.json
+R001_fidip-w48_released,validate500,up to date,0.909194793843946,0.9115412644086544,0.802143112361231,500,,,,,/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_validate500.json
+R001_fidip-w48_released,validate_infant,up to date,0.9214716348094663,0.9363580093744985,0.8478485039653595,100,,,,,/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_validate_infant.json
+R002_fidip-mobilenet_released,test100,up to date,0.7913672548801193,0.7984142898736294,0.5470620370309399,100,,,,,/scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/preds_test100.json
+R002_fidip-mobilenet_released,test100_clean,up to date (derived),0.7785071242092251,0.7873733826155808,0.5309030098050607,95,,,,,/scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/preds_test100.json
+R002_fidip-mobilenet_released,val400,up to date,0.6817926565960256,0.6817926565960256,0.3795487776102618,397,,,,,/scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/preds_val400.json
+R002_fidip-mobilenet_released,validate_infant,up to date,0.7774221481997483,0.7862033485539406,0.536101518198735,100,,,,,/scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/preds_validate_infant.json
+R009_fidip-w48_smoke_s1,val400_best,up to date,0.881077755566983,0.881077755566983,0.7471426419114986,397,,,,,/scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/preds_val400_best.json
+R009_fidip-w48_smoke_s1,val400_final,up to date,0.8810789959594786,0.8810789959594786,0.7471457428927377,397,,,,,/scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/preds_val400_final.json
+R010_fidip-w48_lambda5e-4_s1,test100_best,up to date,0.9385246229896564,0.953344744382947,0.8685887851969132,100,,,,,/scratch/purohitham.v/fidip/runs/R010_fidip-w48_lambda5e-4_s1/preds_test100_best.json
+R010_fidip-w48_lambda5e-4_s1,test100_clean_best,evaluated (derived),0.9306503262578744,0.9515826957966802,0.8639890256498963,95,,,,,/scratch/purohitham.v/fidip/runs/R010_fidip-w48_lambda5e-4_s1/preds_test100_best.json
+R010_fidip-w48_lambda5e-4_s1,test100_final,up to date,0.9385246229896564,0.953344744382947,0.8685887851969132,100,,,,,/scratch/purohitham.v/fidip/runs/R010_fidip-w48_lambda5e-4_s1/preds_test100_final.json
+R010_fidip-w48_lambda5e-4_s1,test100_clean_final,evaluated (derived),0.9306503262578744,0.9515826957966802,0.8639890256498963,95,,,,,/scratch/purohitham.v/fidip/runs/R010_fidip-w48_lambda5e-4_s1/preds_test100_final.json
+R010_fidip-w48_lambda5e-4_s1,val400_best,up to date,0.9063038725271655,0.9063038725271655,0.7983659137548146,397,,,,,/scratch/purohitham.v/fidip/runs/R010_fidip-w48_lambda5e-4_s1/preds_val400_best.json
+R010_fidip-w48_lambda5e-4_s1,val400_final,up to date,0.9063038725271655,0.9063038725271655,0.7983659137548146,397,,,,,/scratch/purohitham.v/fidip/runs/R010_fidip-w48_lambda5e-4_s1/preds_val400_final.json
+R011_fidip-w48_lambda5e-4_s2,test100_best,up to date,0.937371937701582,0.9541581111578746,0.8671922204915787,100,,,,,/scratch/purohitham.v/fidip/runs/R011_fidip-w48_lambda5e-4_s2/preds_test100_best.json
+R011_fidip-w48_lambda5e-4_s2,test100_clean_best,evaluated (derived),0.9304751695660809,0.9528836106048211,0.8652707795691887,95,,,,,/scratch/purohitham.v/fidip/runs/R011_fidip-w48_lambda5e-4_s2/preds_test100_best.json
+R011_fidip-w48_lambda5e-4_s2,test100_final,up to date,0.9340508034634684,0.9498352433888849,0.8587408700448095,100,,,,,/scratch/purohitham.v/fidip/runs/R011_fidip-w48_lambda5e-4_s2/preds_test100_final.json
+R011_fidip-w48_lambda5e-4_s2,test100_clean_final,evaluated (derived),0.9270785626505199,0.9494013129156325,0.8567792622802861,95,,,,,/scratch/purohitham.v/fidip/runs/R011_fidip-w48_lambda5e-4_s2/preds_test100_final.json
+R011_fidip-w48_lambda5e-4_s2,val400_best,up to date,0.9037629252304068,0.9037629252304068,0.7948834339857483,397,,,,,/scratch/purohitham.v/fidip/runs/R011_fidip-w48_lambda5e-4_s2/preds_val400_best.json
+R011_fidip-w48_lambda5e-4_s2,val400_final,up to date,0.9004775323319021,0.9004775323319021,0.7892330642238711,397,,,,,/scratch/purohitham.v/fidip/runs/R011_fidip-w48_lambda5e-4_s2/preds_val400_final.json
+R012_fidip-w48_lambda5e-4_s3,test100_best,up to date,0.9306784129708837,0.9457526338234492,0.849418804704437,100,,,,,/scratch/purohitham.v/fidip/runs/R012_fidip-w48_lambda5e-4_s3/preds_test100_best.json
+R012_fidip-w48_lambda5e-4_s3,test100_clean_best,evaluated (derived),0.923637502375226,0.9448440738798602,0.8469259602111237,95,,,,,/scratch/purohitham.v/fidip/runs/R012_fidip-w48_lambda5e-4_s3/preds_test100_best.json
+R012_fidip-w48_lambda5e-4_s3,test100_final,up to date,0.9288445305886266,0.9441170068992975,0.8451311284517643,100,,,,,/scratch/purohitham.v/fidip/runs/R012_fidip-w48_lambda5e-4_s3/preds_test100_final.json
+R012_fidip-w48_lambda5e-4_s3,test100_clean_final,evaluated (derived),0.9218241851384801,0.9432503127153822,0.8427053299644909,95,,,,,/scratch/purohitham.v/fidip/runs/R012_fidip-w48_lambda5e-4_s3/preds_test100_final.json
+R012_fidip-w48_lambda5e-4_s3,val400_best,up to date,0.9052920458851014,0.9052920458851014,0.7957930168583001,397,,,,,/scratch/purohitham.v/fidip/runs/R012_fidip-w48_lambda5e-4_s3/preds_val400_best.json
+R012_fidip-w48_lambda5e-4_s3,val400_final,up to date,0.904755403584895,0.904755403584895,0.797062889909664,397,,,,,/scratch/purohitham.v/fidip/runs/R012_fidip-w48_lambda5e-4_s3/preds_val400_final.json
+R016_fidip-w48_lambda1e-4_s1,val400_best,evaluated,0.9101895639568303,0.9101895639568303,0.8031775709941597,397,397,0,0,,/scratch/purohitham.v/fidip/runs/R016_fidip-w48_lambda1e-4_s1/preds_val400_best.json
+R016_fidip-w48_lambda1e-4_s1,val400_final,evaluated,0.9101578225780471,0.9101578225780471,0.8030717134367719,397,397,0,0,,/scratch/purohitham.v/fidip/runs/R016_fidip-w48_lambda1e-4_s1/preds_val400_final.json
+R017_fidip-w48_lambda2e-3_s1,val400_best,evaluated,0.8966984019147654,0.8966984019147654,0.7784828205545407,397,397,0,0,,/scratch/purohitham.v/fidip/runs/R017_fidip-w48_lambda2e-3_s1/preds_val400_best.json
+R017_fidip-w48_lambda2e-3_s1,val400_final,evaluated,0.896700377725538,0.896700377725538,0.7784877600814719,397,397,0,0,,/scratch/purohitham.v/fidip/runs/R017_fidip-w48_lambda2e-3_s1/preds_val400_final.json
+R018_fidip-w48_lambda1e-2_s1,val400_best,evaluated,0.8577744275914915,0.8577744275914915,0.7001998331430184,397,397,0,0,,/scratch/purohitham.v/fidip/runs/R018_fidip-w48_lambda1e-2_s1/preds_val400_best.json
+R018_fidip-w48_lambda1e-2_s1,val400_final,evaluated,0.8384354620554652,0.8384354620554652,0.6548911697538635,397,397,0,0,,/scratch/purohitham.v/fidip/runs/R018_fidip-w48_lambda1e-2_s1/preds_val400_final.json
+R101_mmp-hrnetw48_base_s1,val400,up to date,0.9151798107352281,0.9151798107352281,0.815658746001487,397,,,,,/scratch/purohitham.v/fidip/runs/R101_mmp-hrnetw48_base_s1/preds_val400.json
+R101_mmp-hrnetw48_base_s1,val400_noflip,up to date,0.9093682885504263,0.9093682885504263,0.7986303541911246,397,,,,,/scratch/purohitham.v/fidip/runs/R101_mmp-hrnetw48_base_s1/preds_val400_noflip.json
+R102_mmp-vitpose-l256_base_s1,val400,up to date,0.9281455229487086,0.9281455229487086,0.8481609902588296,397,,,,,/scratch/purohitham.v/fidip/runs/R102_mmp-vitpose-l256_base_s1/preds_val400.json
+R102_mmp-vitpose-l256_base_s1,val400_noflip,up to date,0.9226297508764878,0.9226297508764878,0.8352609874601133,397,,,,,/scratch/purohitham.v/fidip/runs/R102_mmp-vitpose-l256_base_s1/preds_val400_noflip.json
+R103_mmp-vitpose-l384_base_s1,val400,evaluated,0.9277294313651135,0.9277294313651135,0.8477933825927407,397,397,0,0,,/scratch/purohitham.v/fidip/runs/R103_mmp-vitpose-l384_base_s1/preds_val400.json
+R106_mmp-hrnetw48_lr2e-4_s1,val400,up to date,0.9143066677380384,0.9143066677380384,0.818503936517818,397,,,,,/scratch/purohitham.v/fidip/runs/R106_mmp-hrnetw48_lr2e-4_s1/preds_val400.json
+R107_mmp-hrnetw48_lr5e-5_s1,val400,evaluated,0.9169447643164182,0.9169447643164182,0.8173239966724687,397,397,0,0,,/scratch/purohitham.v/fidip/runs/R107_mmp-hrnetw48_lr5e-5_s1/preds_val400.json
+R108_mmp-vitpose-l256_lr2e-4_s1,val400,up to date,0.9257986425852044,0.9257986425852044,0.8469571172799197,397,,,,,/scratch/purohitham.v/fidip/runs/R108_mmp-vitpose-l256_lr2e-4_s1/preds_val400.json
+R109_mmp-vitpose-l256_lr5e-5_s1,val400,up to date,0.9259731848724224,0.9259731848724224,0.843150516466751,397,,,,,/scratch/purohitham.v/fidip/runs/R109_mmp-vitpose-l256_lr5e-5_s1/preds_val400.json
+R120_mmp-vitpose-l256_realonly_s1,val400,up to date,0.9223625057890803,0.9223625057890803,0.8343885121968606,397,,,,,/scratch/purohitham.v/fidip/runs/R120_mmp-vitpose-l256_realonly_s1/preds_val400.json
+R121_mmp-vitpose-l256_rot180_s1,val400,up to date,0.925824486977687,0.925824486977687,0.8428853091387356,397,,,,,/scratch/purohitham.v/fidip/runs/R121_mmp-vitpose-l256_rot180_s1/preds_val400.json
+R181_mmp-hrnetw48_zeroshot_s0,val400,up to date,0.8646257089032887,0.8646257089032887,0.7163896263090536,397,,,,,/scratch/purohitham.v/fidip/runs/R181_mmp-hrnetw48_zeroshot_s0/preds_val400.json
+R182_mmp-vitpose-l256_zeroshot_s0,val400,up to date,0.8821234240703832,0.8821234240703832,0.7479355471360484,397,,,,,/scratch/purohitham.v/fidip/runs/R182_mmp-vitpose-l256_zeroshot_s0/preds_val400.json
+R183_mmp-vitpose-l384_zeroshot_s0,val400,up to date,0.8629925524272792,0.8629925524272792,0.7086886870705535,397,,,,,/scratch/purohitham.v/fidip/runs/R183_mmp-vitpose-l384_zeroshot_s0/preds_val400.json
+R184_mmp-vitpose-h256_zeroshot_s0,val400,up to date,0.8880798809570499,0.8880798809570499,0.7584268044118327,397,,,,,/scratch/purohitham.v/fidip/runs/R184_mmp-vitpose-h256_zeroshot_s0/preds_val400.json
+R185_mmp-vitpose-h384_zeroshot_s0,val400,up to date,0.8744377894539405,0.8744377894539405,0.7303159451249143,397,,,,,/scratch/purohitham.v/fidip/runs/R185_mmp-vitpose-h384_zeroshot_s0/preds_val400.json
+R190_mmp-hrnetw48_smoke_s1,val400,up to date,0.8972627441743578,0.8972627441743578,0.7752440844137389,397,,,,,/scratch/purohitham.v/fidip/runs/R190_mmp-hrnetw48_smoke_s1/preds_val400.json
+R191_mmp-vitpose-l384_smoke_s1,val400,up to date,0.9087815282283127,0.9087815282283127,0.8097456968038996,397,,,,,/scratch/purohitham.v/fidip/runs/R191_mmp-vitpose-l384_smoke_s1/preds_val400.json

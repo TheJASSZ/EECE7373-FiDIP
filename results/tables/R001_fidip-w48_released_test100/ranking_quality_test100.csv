@@ -1,0 +1,2 @@
+model,key,run_id,spearman_score_oks,AP_oracle_paper,AP_paper,ranking_loss_paper,AP_oracle_fixed,AP_fixed,ranking_loss_fixed
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,0.658926,0.943134,0.93605,0.0070839,0.955446,0.949891,0.00555413

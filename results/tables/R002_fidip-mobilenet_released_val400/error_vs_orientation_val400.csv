@@ -1,0 +1,7 @@
+model,key,abs_angle_bin,n,mean_err_norm,ci_lo,ci_hi
+FiDIP MobileNetV2 (released),released,0-30,166,0.0611022,0.0538834,0.068911
+FiDIP MobileNetV2 (released),released,30-60,57,0.0676153,0.0553596,0.0801553
+FiDIP MobileNetV2 (released),released,60-90,107,0.0709956,0.0578793,0.0870575
+FiDIP MobileNetV2 (released),released,90-120,51,0.0789951,0.0638389,0.0956958
+FiDIP MobileNetV2 (released),released,120-150,11,0.0969158,0.0640338,0.134748
+FiDIP MobileNetV2 (released),released,150-180,5,0.096397,0.0393289,0.169384

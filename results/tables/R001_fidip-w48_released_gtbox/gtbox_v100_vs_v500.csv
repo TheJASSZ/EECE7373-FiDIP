@@ -1,0 +1,6 @@
+pred_boxes,gt,pred,run_id,AP_paper,AP_fixed,AP_80_95_fixed,mean_oks,n_dropped
+v100 boxes,v100 GT,/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_test100.json,R001_fidip-w48_released,0.93605,0.949891,0.874729,0.953404,0
+v100 boxes,v500 GT,/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_test100.json,R001_fidip-w48_released,0.925371,0.939928,0.852519,0.949467,0
+v500 boxes,v100 GT,/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_validate500.json,R001_fidip-w48_released,0.927192,0.9437,0.85925,0.953105,400
+v500 boxes,v500 GT,/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_validate500.json,R001_fidip-w48_released,0.920406,0.937093,0.842732,0.94912,400
+box-area ratio v100/v500,stats,,median/min/max in AP_paper/AP_fixed/AP_80_95_fixed,1.11857,0.897294,1.42224,,100

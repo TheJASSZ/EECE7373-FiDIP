@@ -1,0 +1,3 @@
+group,run,run_id,source,n_epochs,best_epoch,best_val_AP,final_epoch,final_val_AP,val_set,train_loss_col,gap_final_val_minus_train,train_loss_first,train_loss_last,val_loss_min_epoch
+HRNet-W48 smoke,HRNet-W48 smoke#s1,R190_mmp-hrnetw48_smoke_s1,20261105_205243/vis_data/scalars.json,2,2,0.89849,2,0.89849,,train_loss,,0.000941599,0.000802248,
+ViTPose-L 384 smoke,ViTPose-L 384 smoke#s1,R191_mmp-vitpose-l384_smoke_s1,20261105_205437/vis_data/scalars.json,2,2,0.911914,2,0.911914,,train_loss,,0.00110172,0.000864642,

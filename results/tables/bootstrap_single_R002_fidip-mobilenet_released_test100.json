@@ -1,0 +1,70 @@
+{
+  "mode": "single",
+  "protocol": "paper",
+  "gt": "/scratch/purohitham.v/fidip/data/splits/test100.json",
+  "n_images": 100,
+  "B": 10000,
+  "seed": 0,
+  "file": "/scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/preds_test100.json",
+  "run_id": "R002_fidip-mobilenet_released",
+  "observed": {
+    "AP": 0.7913672548801193,
+    "AP50": 0.9896039603960395,
+    "AP75": 0.8933522987303966,
+    "AP_80_95": 0.5470620370309399,
+    "AR": 0.841,
+    "AR50": 0.99,
+    "AR75": 0.92
+  },
+  "boot_ci95": {
+    "AP": [
+      0.7426311527080718,
+      0.8381689923782609
+    ],
+    "AP50": [
+      0.9685148514851485,
+      1.0
+    ],
+    "AP75": [
+      0.8159743280208742,
+      0.9610423917808912
+    ],
+    "AP_80_95": [
+      0.4711933332504915,
+      0.630648857647525
+    ],
+    "AR": [
+      0.799,
+      0.8780000000000001
+    ],
+    "AR50": [
+      0.97,
+      1.0
+    ],
+    "AR75": [
+      0.86,
+      0.97
+    ]
+  },
+  "boot_se": {
+    "AP": 0.024239747653911615,
+    "AP50": 0.01044171265064062,
+    "AP75": 0.03574169732798934,
+    "AP_80_95": 0.04031245302672535,
+    "AR": 0.01992274836412481,
+    "AR50": 0.009951626122712248,
+    "AR75": 0.027202215719569694
+  },
+  "self_check": {
+    "max_abs_diff_vs_cocoeval": 0.0,
+    "passed": true
+  },
+  "settings": {
+    "evaluator": "eval/eval_coco.py v1.0",
+    "area_rule": "gt",
+    "ci": "percentile",
+    "pycocotools": "2.0.8",
+    "numpy": "1.26.4",
+    "python": "3.12.16"
+  }
+}

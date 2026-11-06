@@ -1,0 +1,13 @@
+a,b,factor,category,n,mean_delta_oks,ci_lo,ci_hi,share_of_total_gain
+rel_fidip_w48,mmp_hrnet_base,inplane,upright,198,0.00612972,0.00166243,0.0105033,0.470613
+rel_fidip_w48,mmp_hrnet_base,inplane,sideways,190,0.00749731,0.00329172,0.0118147,0.552354
+rel_fidip_w48,mmp_hrnet_base,inplane,inverted,9,-0.0065811,-0.0290616,0.0115297,-0.0229667
+rel_fidip_w48,mmp_hrnet_base,view,front,246,0.0043936,0.0010997,0.00797685,0.419096
+rel_fidip_w48,mmp_hrnet_base,view,back,116,0.0106483,0.00451689,0.0174905,0.478957
+rel_fidip_w48,mmp_hrnet_base,view,profile,35,0.00751186,-0.00118557,0.0173639,0.101947
+rel_fidip_w48,mmp_hrnet_base,occ_bin,0,281,0.00462719,0.00211092,0.00703125,0.504176
+rel_fidip_w48,mmp_hrnet_base,occ_bin,1,31,0.00847389,0.000239854,0.0179253,0.10186
+rel_fidip_w48,mmp_hrnet_base,occ_bin,≥2,85,0.0119531,0.00135055,0.0225842,0.393964
+rel_fidip_w48,mmp_hrnet_base,scale_bin,small,133,0.0067483,0.00023384,0.0132842,0.34802
+rel_fidip_w48,mmp_hrnet_base,scale_bin,medium,132,0.0057891,0.000962065,0.0106939,0.296308
+rel_fidip_w48,mmp_hrnet_base,scale_bin,large,132,0.00694893,0.00340363,0.0107546,0.355672

@@ -1,0 +1,5 @@
+model,key,visibility,n_joints,mean_err_norm,ci_lo,ci_hi,pck@0.05,pck@0.1
+FiDIP HRNet-W48 (released),rel_fidip_w48,v=1 (occluded),13,0.0673512,0.0491197,0.0848249,0.461538,0.846154
+FiDIP HRNet-W48 (released),rel_fidip_w48,v=2 (visible),1687,0.0306356,0.0287775,0.0325991,0.834618,0.944873
+FiDIP MobileNetV2 (released),rel_fidip_mobile,v=1 (occluded),13,0.130157,0.0692479,0.224072,0.153846,0.538462
+FiDIP MobileNetV2 (released),rel_fidip_mobile,v=2 (visible),1687,0.0534656,0.0495281,0.0576142,0.713693,0.875519

@@ -1,0 +1,21 @@
+model,key,run_ids,protocol,oks_thr,AP_mean,AP_min,AP_max,n_runs
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,paper,0.50,98.9604,98.9604,98.9604,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,paper,0.55,96.302,96.302,96.302,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,paper,0.60,96.302,96.302,96.302,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,paper,0.65,96.302,96.302,96.302,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,paper,0.70,95.3407,95.3407,95.3407,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,paper,0.75,89.3352,89.3352,89.3352,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,paper,0.80,80.7751,80.7751,80.7751,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,paper,0.85,74.3508,74.3508,74.3508,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,paper,0.90,50.1329,50.1329,50.1329,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,paper,0.95,13.5659,13.5659,13.5659,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,fixed,0.50,100,100,100,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,fixed,0.55,97.3182,97.3182,97.3182,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,fixed,0.60,97.3182,97.3182,97.3182,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,fixed,0.65,97.3182,97.3182,97.3182,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,fixed,0.70,96.3459,96.3459,96.3459,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,fixed,0.75,90.313,90.313,90.313,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,fixed,0.80,81.7054,81.7054,81.7054,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,fixed,0.85,74.3965,74.3965,74.3965,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,fixed,0.90,50.1329,50.1329,50.1329,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,fixed,0.95,13.5659,13.5659,13.5659,1

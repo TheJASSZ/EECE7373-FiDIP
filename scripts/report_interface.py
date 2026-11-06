@@ -480,19 +480,28 @@ class ReportInterface:
             if last_stream is not None and stream != last_stream:
                 rows.append("\\midrule")
             last_stream = stream
-            ref = cmean if stream == "improve" else rmean
-            d = None if (r["val400_AP"] is None or ref is None or r["role"] in ("control", "released")) else r["val400_AP"] - ref
-            outcome = {"released": "reproduction target", "retrain": "reproduction", "control": "control",
-                       "zeroshot": "zero-shot reference"}.get(r["role"])
+            gcfg = self.cfg.get(r["config"].split("_noflip")[0], {}) if r.get("config") else {}
+            bkey = gcfg.get("baseline")              # Delta vs the config's own baseline when it has one
+            if bkey and self.group(bkey):
+                ref = c.config_summary(self.group(bkey), "val400")["AP"]
+            else:
+                ref = cmean if stream == "improve" else rmean
+            d = None if (r["val400_AP"] is None or ref is None or r["role"] in ("control", "released", "retrain", "failed")) \
+                else r["val400_AP"] - ref
+            outcome = gcfg.get("outcome") or {"released": "reproduction target", "retrain": "reproduction",
+                                              "control": "control", "zeroshot": "zero-shot reference",
+                                              "failed": "failed"}.get(r["role"])
             if outcome is None:
-                outcome = TBD if d is None else ("better than control" if d > 0 else "not better")
+                what = "baseline" if bkey else "control"
+                outcome = TBD if d is None else (f"above {what}" if d > 0 else f"not above {what}")
             nums = sorted({x[:4] for x in r["run_ids"]})
             idtxt = (nums[0] if len(nums) == 1 else f"{nums[0]}--{nums[-1]}") if nums else "---"
             rows.append([idtxt, stream, tex(r["what_changed"] or ""), str(r["n_runs"]), pm(r["val400_AP"], r["val400_AP_std"]),
                          v(signed(d)) if d is not None else "---", pm(r["test100_AP"], r["test100_AP_std"])
                          if r["test100_reported"] else "---", outcome])
         self._tabular(p, ["Every attempt (chronological by RUN_ID), Val400 selection; Test100 only for reproduction targets / "
-                          "pre-registered.", "Delta Val400: improve rows vs the MMPose control mean, repro rows vs released FiDIP."],
+                          "pre-registered.", "Delta Val400: vs the configuration's own baseline (configs.json 'baseline'); "
+                          "otherwise improve rows vs the MMPose control, repro rows vs released FiDIP."],
                       "@{}lllcccc l@{}",
                       ["Run ID(s) & Stream & Change vs.\\ control & Seeds & Val400 AP & $\\Delta$ Val400 & Test100 AP & Outcome\\\\"],
                       rows or [[TBD] * 8])

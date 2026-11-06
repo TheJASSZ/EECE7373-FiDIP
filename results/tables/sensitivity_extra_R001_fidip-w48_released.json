@@ -1,0 +1,9 @@
+{
+ "run_id": "R001_fidip-w48_released",
+ "val400_AP_const_area": 0.9890896089332888,
+ "val400_AP_wh_area": 0.9036482959506116,
+ "val400_const_area_value": 2443298.4755617115,
+ "test100_AP_xtcocotools": 0.9498914174403281,
+ "test100_AP_eval_coco_paper": 0.9360499387537228,
+ "test100_AP_eval_coco_fixed": 0.9498914174403281
+}

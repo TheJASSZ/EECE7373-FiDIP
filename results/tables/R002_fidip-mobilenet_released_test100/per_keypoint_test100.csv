@@ -1,0 +1,18 @@
+model,key,run_ids,joint,n,mean_err_norm,ci_lo,ci_hi,pck@0.05,pck@0.1,pck@0.2
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,nose,100,0.0173284,0.0145319,0.0208261,0.99,0.99,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,left_eye,100,0.0169434,0.0140893,0.0202897,0.97,0.99,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,right_eye,100,0.0171384,0.0141711,0.0205964,0.95,1,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,left_ear,100,0.0290434,0.0227786,0.0360661,0.88,0.95,0.99
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,right_ear,100,0.0339667,0.026153,0.0436464,0.86,0.93,0.98
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,left_shoulder,100,0.0392825,0.0329901,0.0468264,0.78,0.95,0.99
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,right_shoulder,100,0.0393834,0.0337388,0.0461081,0.73,0.93,1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,left_elbow,100,0.0603439,0.042405,0.0825711,0.71,0.86,0.93
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,right_elbow,100,0.0568163,0.0450049,0.0712262,0.66,0.83,0.94
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,left_wrist,100,0.0751056,0.0494633,0.107173,0.68,0.87,0.9
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,right_wrist,100,0.0541128,0.0388892,0.0730169,0.73,0.9,0.94
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,left_hip,100,0.0917668,0.075972,0.109689,0.34,0.69,0.91
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,right_hip,100,0.0862982,0.0745821,0.0997135,0.33,0.7,0.95
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,left_knee,100,0.092637,0.0659915,0.123127,0.59,0.75,0.89
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,right_knee,100,0.0608694,0.0460866,0.0787762,0.69,0.88,0.95
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,left_ankle,100,0.0787745,0.0600389,0.103315,0.53,0.8,0.92
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,right_ankle,100,0.0690753,0.0516528,0.0891441,0.64,0.82,0.91

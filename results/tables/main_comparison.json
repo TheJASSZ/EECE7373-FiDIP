@@ -1,0 +1,79 @@
+[
+ {
+  "model": "DarkPose + FiDIP (paper)",
+  "role": "published",
+  "run_ids": [],
+  "n_runs": null,
+  "test100_AP": 93.6,
+  "test100_AP_std": null,
+  "test100_AP50": 98.5,
+  "test100_AP75": 98.5,
+  "test100_AR": 94.6,
+  "test100_AP_80_95": 86.25,
+  "test100_AP_fixed": null,
+  "val400_AP": null,
+  "eval": "published (paper protocol)"
+ },
+ {
+  "model": "FiDIP HRNet-W48 (released)",
+  "role": "released",
+  "run_ids": [
+   "R001_fidip-w48_released"
+  ],
+  "n_runs": 1,
+  "test100_AP": 93.60499387537227,
+  "test100_AP_std": null,
+  "test100_AP_ci_lo": 89.76715175218408,
+  "test100_AP_ci_hi": 96.26934481654199,
+  "test100_AP50": 98.52475247524751,
+  "test100_AP75": 98.52475247524751,
+  "test100_AR": 94.6,
+  "test100_AP_80_95": 86.2253559755594,
+  "test100_AP_fixed": 94.9891417440328,
+  "test100_clean_AP": 92.81152807721178,
+  "val400_AP": 90.36482959506115,
+  "eval": "eval_coco.py v1 (paper protocol; GT boxes; rescored)"
+ },
+ {
+  "model": "FiDIP MobileNetV2 (released)",
+  "role": "released",
+  "run_ids": [
+   "R002_fidip-mobilenet_released"
+  ],
+  "n_runs": 1,
+  "test100_AP": 79.13672548801193,
+  "test100_AP_std": null,
+  "test100_AP_ci_lo": 74.26311527080718,
+  "test100_AP_ci_hi": 83.81689923782609,
+  "test100_AP50": 98.96039603960395,
+  "test100_AP75": 89.33522987303965,
+  "test100_AR": 84.1,
+  "test100_AP_80_95": 54.70620370309399,
+  "test100_AP_fixed": 79.84142898736295,
+  "test100_clean_AP": 77.8507124209225,
+  "val400_AP": 68.17926565960256,
+  "eval": "eval_coco.py v1 (paper protocol; GT boxes; rescored)"
+ },
+ {
+  "model": "FiDIP retrain, $\\lambda=5\\cdot10^{-4}$",
+  "role": "retrain",
+  "run_ids": [
+   "R010_fidip-w48_lambda5e-4_s1",
+   "R011_fidip-w48_lambda5e-4_s2",
+   "R012_fidip-w48_lambda5e-4_s3"
+  ],
+  "n_runs": 3,
+  "test100_AP": 93.55249912207073,
+  "test100_AP_std": 0.4236645063264531,
+  "test100_AP_ci_lo": null,
+  "test100_AP_ci_hi": null,
+  "test100_AP50": 98.47194719471946,
+  "test100_AP75": 98.47194719471946,
+  "test100_AR": 94.59999999999998,
+  "test100_AP_80_95": 86.17332701309763,
+  "test100_AP_fixed": 95.10851631214236,
+  "test100_clean_AP": 92.82543327330605,
+  "val400_AP": 90.51196145475579,
+  "eval": "eval_coco.py v1 (paper protocol; GT boxes; rescored)"
+ }
+]

@@ -1,0 +1,58 @@
+{
+  "manifest": {
+    "split": "test100",
+    "gt": "/scratch/purohitham.v/fidip/data/splits/test100.json",
+    "models": [
+      {
+        "key": "released",
+        "label": "FiDIP HRNet-W48 (released)",
+        "slot": 1,
+        "runs": [
+          {
+            "run_id": "R001_fidip-w48_released",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R001_fidip-w48_released/per_image_test100.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R001_fidip-w48_released/metrics_test100.json"
+          }
+        ]
+      }
+    ],
+    "focus": [
+      "released"
+    ],
+    "published": {
+      "label": "FiDIP (paper)",
+      "AP": 0.936,
+      "AP50": 0.985,
+      "AP75": 0.985,
+      "AR": 0.946
+    },
+    "posture": "/scratch/purohitham.v/fidip/data/raw/syrip_for_train/syrip/annotations/person_keypoints_validate_infant.json",
+    "leak_ids": [
+      7,
+      20,
+      42,
+      46,
+      50
+    ]
+  },
+  "figures": [
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/ap_vs_oks_threshold_test100.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/ap_vs_oks_threshold_test100.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/oks_distribution_test100.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/oks_distribution_test100.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/per_keypoint_error_test100.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/per_keypoint_error_test100.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/failure_taxonomy_test100.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/failure_taxonomy_test100.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/error_vs_orientation_test100.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/error_vs_orientation_test100.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/score_vs_oks_test100.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/score_vs_oks_test100.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/leak_effect_test100.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/test100/leak_effect_test100.png"
+  ],
+  "scale_tertiles_sqrt_area_px": [
+    406.86677120587194,
+    656.0546891811872
+  ]
+}

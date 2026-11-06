@@ -1,0 +1,41 @@
+key,value,run_ids,metrics_file,protocol,split
+rel.fidip.test.ap,93.6,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100.json,paper,test100
+rel.fidip.test.ap50,98.5,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100.json,paper,test100
+rel.fidip.test.ap75,98.5,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100.json,paper,test100
+rel.fidip.test.ar,94.6,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100.json,paper,test100
+rel.fidip.test.apstrict,86.2,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100.json,paper,test100
+rel.fidip.test.ap.fixed,95.0,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100.json,fixed,test100
+rel.fidip.test.ar.fixed,95.6,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100.json,fixed,test100
+rel.fidip.test.diffpub,$+0.0$,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100.json,paper,test100
+rel.fidip.test0rank,51,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100.json,paper,test100
+rel.fidip.test.clean.ap,92.8,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100_clean.json,paper,test100_clean
+rel.fidip.test.ap.upstream,93.6,R001_fidip-w48_released,runs/R001_fidip-w48_released/metrics_upstream_test100.txt,paper (upstream code),test100
+rel.fidip.val.ap,90.4,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_val400.json,paper,val400
+rel.mobile.test.ap,79.1,R002_fidip-mobilenet_released,results/analysis_eval/R002_fidip-mobilenet_released/metrics_test100.json,paper,test100
+rel.mobile.val.ap,68.2,R002_fidip-mobilenet_released,results/analysis_eval/R002_fidip-mobilenet_released/metrics_val400.json,paper,val400
+rt.fidip.test.ap.mean,93.6,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,,paper,test100
+rt.fidip.test.ap.sd,0.4,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,,paper,test100
+rt.fidip.val.ap.mean,90.5,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,,paper,val400
+rt.fidip.val.ap.sd,0.1,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,,paper,val400
+rt.fidip.test.ap.final.mean,93.4,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,metrics_test100_final.json,paper,test100
+rt.fidip.test.ap.final.sd,0.5,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,metrics_test100_final.json,paper,test100
+rt.seeds,3,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,results/configs.json,,
+imp.control.name,HRNet-W48 DARK 384 (MMPose control),R101_mmp-hrnetw48_base_s1,results/configs.json,,
+imp.control.val.ap.mean,91.5,R101_mmp-hrnetw48_base_s1,,paper,val400
+imp.control.val.ap.sd,---,R101_mmp-hrnetw48_base_s1,,paper,val400
+boot.n,10000,,bootstrap_ci.py,,
+att.n,26,,results/tables/attempts.csv,,
+att.nbetter,10,R101_mmp-hrnetw48_base_s1,results/tables/attempts.csv,paper,val400
+sens.id0.delta,$+1.4$,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100.json,fixed-paper,test100
+sens.id0.min,0.9,R001_fidip-w48_released,results/tables/R001_fidip-w48_released_test100/id0_rank_sensitivity_R001_fidip-w48_released.csv,fixed-paper over test0 ranks,test100
+sens.id0.max,2.0,R001_fidip-w48_released,results/tables/R001_fidip-w48_released_test100/id0_rank_sensitivity_R001_fidip-w48_released.csv,fixed-paper over test0 ranks,test100
+sens.test11.ap,92.1,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_validate_infant.json,paper,"test100 GT, syrip_for_train images"
+sens.clean.delta,$-0.8$,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100_clean.json,paper,test100_clean - test100
+sens.box.v100.ap,93.6,R001_fidip-w48_released,results/tables/R001_fidip-w48_released_gtbox/gtbox_v100_vs_v500.csv,paper,test100 (v100 GT)
+sens.box.v500.ap,92.0,R001_fidip-w48_released,results/tables/R001_fidip-w48_released_gtbox/gtbox_v100_vs_v500.csv,paper,test100 ids (v500 GT)
+data.boxratio.pct,12,,results/tables/R001_fidip-w48_released_gtbox/gtbox_v100_vs_v500.csv,,test100 ids
+sens.area.const.ap,98.9,R001_fidip-w48_released,results/tables/sensitivity_extra_R001_fidip-w48_released.json,paper,val400 (constant area)
+sens.xtcoco.delta,$+1.4$,R001_fidip-w48_released,results/tables/sensitivity_extra_R001_fidip-w48_released.json,xtcocotools - paper,test100
+vt.n,5,R001_fidip-w48_released;R002_fidip-mobilenet_released;R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,results/tables/per_run.csv,paper,val400+test100
+vt.gap.mean,$+4.7$,R001_fidip-w48_released;R002_fidip-mobilenet_released;R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,results/tables/per_run.csv,paper,test100-val400
+vt.spearman,0.70,R001_fidip-w48_released;R002_fidip-mobilenet_released;R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,results/tables/per_run.csv,paper,

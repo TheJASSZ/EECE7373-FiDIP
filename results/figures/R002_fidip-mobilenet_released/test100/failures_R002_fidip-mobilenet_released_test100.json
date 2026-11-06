@@ -1,0 +1,42 @@
+{
+  "L/R swap": {
+    "n": 5,
+    "mean_oks": 0.6569229061480764,
+    "shown": [
+      "test53.jpg",
+      "test10.jpg",
+      "test41.jpg",
+      "test49.jpg"
+    ]
+  },
+  "occlusion (\u22652 v=1)": {
+    "n": 4,
+    "mean_oks": 0.8894841601572807,
+    "shown": [
+      "test76.jpg",
+      "test90.jpg",
+      "test78.jpg",
+      "test73.jpg"
+    ]
+  },
+  "unusual orientation": {
+    "n": 73,
+    "mean_oks": 0.8881804931233082,
+    "shown": [
+      "test55.jpg",
+      "test33.jpg",
+      "test26.jpg",
+      "test25.jpg"
+    ]
+  },
+  "small scale": {
+    "n": 34,
+    "mean_oks": 0.9006645493930512,
+    "shown": [
+      "test23.jpg",
+      "test47.jpg",
+      "test6.jpg",
+      "test5.jpg"
+    ]
+  }
+}

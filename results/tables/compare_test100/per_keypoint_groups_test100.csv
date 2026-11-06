@@ -1,0 +1,17 @@
+model,key,run_ids,group,n,median_err_pct,pck@0.05,pck@0.1
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,"Head (nose, eyes, ears)",500,0.819452,95.8,98.6
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,Shoulders,200,2.26499,90.5,99.5
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,Elbows,200,1.68091,82,94
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,Wrists,200,1.27061,88.5,92.5
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,Hips,200,5.25602,46.5,83
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,Knees,200,2.16375,82,94.5
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,Ankles,200,2.39925,78,92.5
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,All,1700,1.7893,83.1765,94.4118
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,"Head (nose, eyes, ears)",500,1.4769,93,97.2
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Shoulders,200,3.11656,75.5,94
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Elbows,200,3.08684,68.5,84.5
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Wrists,200,2.70169,70.5,88.5
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Hips,200,7.19815,33.5,69.5
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Knees,200,3.58118,64,81.5
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Ankles,200,4.23413,58.5,81
+FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,All,1700,2.82297,70.9412,87.2941

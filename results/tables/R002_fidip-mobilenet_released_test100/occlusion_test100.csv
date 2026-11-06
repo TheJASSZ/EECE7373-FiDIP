@@ -1,0 +1,3 @@
+model,key,visibility,n_joints,mean_err_norm,ci_lo,ci_hi,pck@0.05,pck@0.1
+FiDIP MobileNetV2 (released),released,v=1 (occluded),13,0.130157,0.0692479,0.224072,0.153846,0.538462
+FiDIP MobileNetV2 (released),released,v=2 (visible),1687,0.0534656,0.0495281,0.0576142,0.713693,0.875519

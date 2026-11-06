@@ -1,0 +1,15 @@
+model,key,factor,category,n_images,mean_1_minus_oks,ci_lo,ci_hi,frac_oks_lt_0.85,deficit_share
+FiDIP HRNet-W48 (released),released,inplane,upright,198,0.0548998,0.0451555,0.0659765,0.0757576,0.418586
+FiDIP HRNet-W48 (released),released,inplane,sideways,190,0.0761352,0.0641604,0.0898558,0.121053,0.557041
+FiDIP HRNet-W48 (released),released,inplane,inverted,9,0.0703277,0.0378669,0.108703,0.222222,0.0243735
+FiDIP HRNet-W48 (released),released,view,front,246,0.0487434,0.040999,0.0577425,0.0528455,0.461742
+FiDIP HRNet-W48 (released),released,view,back,116,0.0971897,0.0827522,0.113259,0.215517,0.434137
+FiDIP HRNet-W48 (released),released,view,profile,35,0.0772543,0.0434943,0.132622,0.0571429,0.104121
+FiDIP HRNet-W48 (released),released,occ_bin,0,281,0.0419601,0.0353075,0.0508964,0.0355872,0.454037
+FiDIP HRNet-W48 (released),released,occ_bin,1,31,0.0710369,0.0571944,0.085244,0.0322581,0.0847996
+FiDIP HRNet-W48 (released),released,occ_bin,≥2,85,0.140893,0.119667,0.163509,0.341176,0.461164
+FiDIP HRNet-W48 (released),released,scale_bin,small,133,0.0860235,0.0679596,0.107223,0.150376,0.440572
+FiDIP HRNet-W48 (released),released,scale_bin,medium,132,0.0603416,0.0497129,0.071307,0.0909091,0.306718
+FiDIP HRNet-W48 (released),released,scale_bin,large,132,0.0497165,0.0404375,0.0606849,0.0606061,0.25271
+FiDIP HRNet-W48 (released),released,lr_swap,no,393,0.0637944,0.0559886,0.0725785,,
+FiDIP HRNet-W48 (released),released,lr_swap,yes,4,0.224396,0.117838,0.379373,,

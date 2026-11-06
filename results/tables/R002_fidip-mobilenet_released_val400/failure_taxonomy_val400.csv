@@ -1,0 +1,15 @@
+model,key,factor,category,n_images,mean_1_minus_oks,ci_lo,ci_hi,frac_oks_lt_0.85,deficit_share
+FiDIP MobileNetV2 (released),released,inplane,upright,198,0.130421,0.113098,0.149021,0.287879,0.453085
+FiDIP MobileNetV2 (released),released,inplane,sideways,190,0.153741,0.135424,0.173564,0.378947,0.512523
+FiDIP MobileNetV2 (released),released,inplane,inverted,9,0.217792,0.123132,0.325427,0.555556,0.0343916
+FiDIP MobileNetV2 (released),released,view,front,246,0.124115,0.108472,0.141142,0.268293,0.535706
+FiDIP MobileNetV2 (released),released,view,back,116,0.187094,0.161949,0.211277,0.482759,0.380791
+FiDIP MobileNetV2 (released),released,view,profile,35,0.135976,0.0962831,0.193242,0.342857,0.0835027
+FiDIP MobileNetV2 (released),released,occ_bin,0,281,0.107628,0.0949537,0.122345,0.217082,0.530642
+FiDIP MobileNetV2 (released),released,occ_bin,1,31,0.171529,0.134893,0.208932,0.483871,0.0932973
+FiDIP MobileNetV2 (released),released,occ_bin,≥2,85,0.252157,0.219574,0.28643,0.682353,0.376061
+FiDIP MobileNetV2 (released),released,scale_bin,small,133,0.174783,0.15105,0.201505,0.488722,0.407868
+FiDIP MobileNetV2 (released),released,scale_bin,medium,132,0.134145,0.113236,0.1575,0.280303,0.310682
+FiDIP MobileNetV2 (released),released,scale_bin,large,132,0.121523,0.100563,0.143942,0.242424,0.28145
+FiDIP MobileNetV2 (released),released,lr_swap,no,381,0.13176,0.119523,0.145258,,
+FiDIP MobileNetV2 (released),released,lr_swap,yes,16,0.424605,0.345117,0.501586,,

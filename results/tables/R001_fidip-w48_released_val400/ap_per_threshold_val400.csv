@@ -1,0 +1,21 @@
+model,key,run_ids,protocol,oks_thr,AP_mean,AP_min,AP_max,n_runs
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,paper,0.50,98.8424,98.8424,98.8424,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,paper,0.55,98.8424,98.8424,98.8424,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,paper,0.60,98.8303,98.8303,98.8303,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,paper,0.65,97.8321,97.8321,97.8321,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,paper,0.70,96.8174,96.8174,96.8174,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,paper,0.75,95.7869,95.7869,95.7869,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,paper,0.80,92.7528,92.7528,92.7528,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,paper,0.85,88.4108,88.4108,88.4108,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,paper,0.90,77.8753,77.8753,77.8753,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,paper,0.95,57.6579,57.6579,57.6579,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,fixed,0.50,98.8424,98.8424,98.8424,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,fixed,0.55,98.8424,98.8424,98.8424,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,fixed,0.60,98.8303,98.8303,98.8303,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,fixed,0.65,97.8321,97.8321,97.8321,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,fixed,0.70,96.8174,96.8174,96.8174,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,fixed,0.75,95.7869,95.7869,95.7869,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,fixed,0.80,92.7528,92.7528,92.7528,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,fixed,0.85,88.4108,88.4108,88.4108,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,fixed,0.90,77.8753,77.8753,77.8753,1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,fixed,0.95,57.6579,57.6579,57.6579,1

@@ -1,0 +1,25 @@
+model,key,visibility,n_joints,mean_err_norm,ci_lo,ci_hi,pck@0.05,pck@0.1
+FiDIP HRNet-W48 (released),rel_fidip_w48,v=1 (occluded),335,0.127508,0.115121,0.140777,0.277612,0.58806
+FiDIP HRNet-W48 (released),rel_fidip_w48,v=2 (visible),6406,0.0313113,0.0300928,0.0326737,0.84296,0.950359
+FiDIP MobileNetV2 (released),rel_fidip_mobile,v=1 (occluded),335,0.211054,0.188283,0.233991,0.173134,0.4
+FiDIP MobileNetV2 (released),rel_fidip_mobile,v=2 (visible),6406,0.0609505,0.0585319,0.0634371,0.704964,0.859351
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,v=1 (occluded),335,0.116721,0.105316,0.128304,0.313433,0.608955
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,v=2 (visible),6406,0.0284618,0.027306,0.0297024,0.872151,0.960037
+ViTPose-L 256 (MMPose),mmp_vitl256_base,v=1 (occluded),335,0.10304,0.0924971,0.114017,0.337313,0.650746
+ViTPose-L 256 (MMPose),mmp_vitl256_base,v=2 (visible),6406,0.0267109,0.0256368,0.0278886,0.883547,0.971901
+"HRNet-W48 DARK 384, LR 2e-4",mmp_hrnet_lr2e4,v=1 (occluded),335,0.121137,0.10913,0.133561,0.304478,0.60597
+"HRNet-W48 DARK 384, LR 2e-4",mmp_hrnet_lr2e4,v=2 (visible),6406,0.0289709,0.0277533,0.0302268,0.868405,0.957696
+"ViTPose-L 256, LR 2e-4",mmp_vitl256_lr2e4,v=1 (occluded),335,0.106446,0.0952871,0.11799,0.349254,0.641791
+"ViTPose-L 256, LR 2e-4",mmp_vitl256_lr2e4,v=2 (visible),6406,0.0272405,0.0261665,0.0283787,0.880737,0.970028
+"HRNet-W48 COCO, zero-shot",zs_hrnet,v=1 (occluded),335,0.170592,0.154999,0.185951,0.164179,0.408955
+"HRNet-W48 COCO, zero-shot",zs_hrnet,v=2 (visible),6406,0.0336665,0.0322705,0.0351213,0.832813,0.938027
+"ViTPose-L 256 COCO, zero-shot",zs_vitl256,v=1 (occluded),335,0.141423,0.129286,0.154641,0.220896,0.468657
+"ViTPose-L 256 COCO, zero-shot",zs_vitl256,v=2 (visible),6406,0.0310035,0.0297366,0.0323137,0.842648,0.95473
+"ViTPose-L 384 COCO, zero-shot",zs_vitl384,v=1 (occluded),335,0.160679,0.146161,0.17551,0.176119,0.432836
+"ViTPose-L 384 COCO, zero-shot",zs_vitl384,v=2 (visible),6406,0.0321626,0.030846,0.0335418,0.834062,0.949422
+"ViTPose-H 256 COCO, zero-shot",zs_vith256,v=1 (occluded),335,0.136234,0.123613,0.14955,0.238806,0.513433
+"ViTPose-H 256 COCO, zero-shot",zs_vith256,v=2 (visible),6406,0.0294604,0.0283342,0.0307321,0.853419,0.960037
+"ViTPose-H 384 COCO, zero-shot",zs_vith384,v=1 (occluded),335,0.145663,0.131474,0.159957,0.21791,0.471642
+"ViTPose-H 384 COCO, zero-shot",zs_vith384,v=2 (visible),6406,0.0302909,0.029082,0.0315451,0.845613,0.955667
+"ViTPose-L 256, LR 5e-5",mmp_vitl256_lr5e5,v=1 (occluded),335,0.10573,0.0951195,0.117266,0.343284,0.647761
+"ViTPose-L 256, LR 5e-5",mmp_vitl256_lr5e5,v=2 (visible),6406,0.0268207,0.0257624,0.027975,0.881673,0.970028

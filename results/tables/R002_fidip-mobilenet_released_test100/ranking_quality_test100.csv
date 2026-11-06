@@ -1,0 +1,2 @@
+model,key,run_id,spearman_score_oks,AP_oracle_paper,AP_paper,ranking_loss_paper,AP_oracle_fixed,AP_fixed,ranking_loss_fixed
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,0.206529,0.840908,0.791367,0.0495406,0.849505,0.798414,0.0510907

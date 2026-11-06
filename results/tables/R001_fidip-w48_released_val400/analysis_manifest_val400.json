@@ -1,0 +1,48 @@
+{
+  "manifest": {
+    "split": "val400",
+    "gt": "/scratch/purohitham.v/fidip/data/splits/val400.json",
+    "models": [
+      {
+        "key": "released",
+        "label": "FiDIP HRNet-W48 (released)",
+        "slot": 1,
+        "runs": [
+          {
+            "run_id": "R001_fidip-w48_released",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R001_fidip-w48_released/per_image_val400.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R001_fidip-w48_released/metrics_val400.json"
+          }
+        ]
+      }
+    ],
+    "focus": [
+      "released"
+    ],
+    "published": {
+      "label": "FiDIP (paper)",
+      "AP": 0.936,
+      "AP50": 0.985,
+      "AP75": 0.985,
+      "AR": 0.946
+    }
+  },
+  "figures": [
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/val400/ap_vs_oks_threshold_val400.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/val400/ap_vs_oks_threshold_val400.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/val400/oks_distribution_val400.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/val400/oks_distribution_val400.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/val400/per_keypoint_error_val400.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/val400/per_keypoint_error_val400.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/val400/failure_taxonomy_val400.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/val400/failure_taxonomy_val400.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/val400/error_vs_orientation_val400.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/val400/error_vs_orientation_val400.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/val400/score_vs_oks_val400.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/R001_fidip-w48_released/val400/score_vs_oks_val400.png"
+  ],
+  "scale_tertiles_sqrt_area_px": [
+    340.3938894868708,
+    451.3402264367758
+  ]
+}

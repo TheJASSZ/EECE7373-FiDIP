@@ -1,0 +1,9 @@
+model,key,run_ids,group,n,median_err_pct,pck@0.05,pck@0.1
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,"Head (nose, eyes, ears)",1985,0.892472,90.7809,96.9773
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,Shoulders,794,2.10905,86.7758,97.4811
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,Elbows,794,1.54476,85.5164,94.9622
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,Wrists,792,1.35319,88.6364,93.6869
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,Hips,794,5.29341,47.4811,85.5164
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,Knees,794,2.40908,75.5668,88.1612
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,Ankles,788,2.14239,81.7259,90.2284
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,All,6741,1.7817,81.4864,93.2354

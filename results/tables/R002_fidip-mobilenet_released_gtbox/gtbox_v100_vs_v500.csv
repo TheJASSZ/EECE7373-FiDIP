@@ -1,0 +1,4 @@
+pred_boxes,gt,pred,run_id,AP_paper,AP_fixed,AP_80_95_fixed,mean_oks,n_dropped
+v100 boxes,v100 GT,/scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/preds_test100.json,R002_fidip-mobilenet_released,0.791367,0.798414,0.549502,0.897927,0
+v100 boxes,v500 GT,/scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/preds_test100.json,R002_fidip-mobilenet_released,0.765663,0.774429,0.503834,0.890978,0
+box-area ratio v100/v500,stats,,median/min/max in AP_paper/AP_fixed/AP_80_95_fixed,1.11857,0.897294,1.42224,,100

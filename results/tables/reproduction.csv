@@ -1,0 +1,8 @@
+row,source,protocol,n_runs,run_ids,AP,AP50,AP75,AR,AR50,AR75,AP_80_95,test100_AP_fixed,val400_AP,AP_std,AP_ci_lo,AP_ci_hi,test100_clean_AP,val400_AP_std
+DarkPose + FiDIP (paper),"github.com/ostadabbas/Infant-Pose-Estimation README @ a76b4f4 (Test100, GT boxes)",paper,,,93.6000,98.5000,98.5000,94.6000,99.0000,99.0000,,,,,,,,
+DarkPose + Finetune (paper),"github.com/ostadabbas/Infant-Pose-Estimation README @ a76b4f4 (Test100, GT boxes)",paper,,,92.7000,98.5000,98.5000,93.9000,99.0000,99.0000,,,,,,,,
+"DarkPose, no fine-tuning (paper)","github.com/ostadabbas/Infant-Pose-Estimation README @ a76b4f4 (Test100, GT boxes)",paper,,,88.5000,98.5000,98.5000,90.0000,99.0000,99.0000,,,,,,,,
+FiDIP HRNet-W48 (released),eval/eval_coco.py,paper,1,R001_fidip-w48_released,93.6050,98.5248,98.5248,94.6000,99.0000,99.0000,86.2254,94.9891,90.3648,,89.7672,96.2693,92.8115,
+FiDIP MobileNetV2 (released),eval/eval_coco.py,paper,1,R002_fidip-mobilenet_released,79.1367,98.9604,89.3352,84.1000,99.0000,92.0000,54.7062,79.8414,68.1793,,74.2631,83.8169,77.8507,
+"FiDIP retrain, $\lambda=5\cdot10^{-4}$",eval/eval_coco.py,paper,3,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,93.5525,98.4719,98.4719,94.6000,99.0000,99.0000,86.1733,95.1085,90.5120,0.4237,,,92.8254,0.1279
+"Fine-tune retrain, $\lambda=0$",eval/eval_coco.py,paper,0,,,,,,,,,,,,,,,

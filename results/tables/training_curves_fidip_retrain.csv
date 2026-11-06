@@ -1,0 +1,4 @@
+group,run,run_id,source,n_epochs,best_epoch,best_val_AP,final_epoch,final_val_AP,val_set,train_loss_col,gap_final_val_minus_train,train_loss_first,train_loss_last,val_loss_min_epoch
+FiDIP lambda=5e-4,FiDIP lambda=5e-4@4#s1,R010_fidip-w48_lambda5e-4_s1,epochs.csv,20,20,0.906323,20,0.906323,val400,train_mse,0.000101495,0.000453494,0.000280682,16
+FiDIP lambda=5e-4,FiDIP lambda=5e-4@4#s2,R011_fidip-w48_lambda5e-4_s2,epochs.csv,20,19,0.903763,20,0.900477,val400,train_mse,9.77295e-05,0.000454516,0.00028089,13
+FiDIP lambda=5e-4,FiDIP lambda=5e-4@4#s3,R012_fidip-w48_lambda5e-4_s3,epochs.csv,20,18,0.905286,20,0.90476,val400,train_mse,0.000102273,0.000445389,0.000276578,10

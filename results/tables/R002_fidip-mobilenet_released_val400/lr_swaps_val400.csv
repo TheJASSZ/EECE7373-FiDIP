@@ -1,0 +1,2 @@
+model,key,run_ids,n_images_with_swap,images,n_eyes,n_ears,n_shoulders,n_elbows,n_wrists,n_hips,n_knees,n_ankles
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,16,test107.jpg;test142.jpg;test150.jpg;test177.jpg;test182.jpg;test184.jpg;test223.jpg;test254.jpg;test273.jpg;test276.jpg;test308.jpg;test322.jpg;test336.jpg;test360.jpg;test447.jpg;test497.jpg,1,5,3,2,1,1,6,6

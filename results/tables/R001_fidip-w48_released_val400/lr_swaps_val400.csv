@@ -1,0 +1,2 @@
+model,key,run_ids,n_images_with_swap,images,n_eyes,n_ears,n_shoulders,n_elbows,n_wrists,n_hips,n_knees,n_ankles
+FiDIP HRNet-W48 (released),released,R001_fidip-w48_released,4,test142.jpg;test160.jpg;test322.jpg;test360.jpg,1,3,0,0,0,0,0,0

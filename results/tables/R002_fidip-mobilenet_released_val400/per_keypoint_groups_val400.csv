@@ -1,0 +1,9 @@
+model,key,run_ids,group,n,median_err_pct,pck@0.05,pck@0.1
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,"Head (nose, eyes, ears)",1985,1.71378,83.2746,92.2922
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,Shoulders,794,2.94067,74.5592,91.8136
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,Elbows,794,2.73416,70.7809,85.0126
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,Wrists,792,2.33039,77.2727,86.1111
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,Hips,794,6.87004,33.6272,71.1587
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,Knees,794,4.48771,52.8967,71.0327
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,Ankles,788,3.71225,59.3909,75.1269
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,All,6741,2.93184,67.8534,83.6523

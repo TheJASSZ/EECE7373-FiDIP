@@ -43,7 +43,8 @@
     "R102_mmp-vitpose-l256_base_s1"
    ],
    "what_changed": "backbone HRNet-W48 -> ViTPose-L (UDP, 256x192), same recipe",
-   "hypothesis": "a stronger COCO-pretrained transformer prior localises infant joints better"
+   "hypothesis": "a stronger COCO-pretrained transformer prior localises infant joints better",
+   "baseline_for_delta": "mmp_hrnet_base"
   },
   "mmp_hrnet_lr2e4": {
    "label": "HRNet-W48 DARK 384, LR 2e-4",
@@ -189,7 +190,8 @@
     "R105_mmp-vitpose-h256_base_s1"
    ],
    "what_changed": "backbone -> ViTPose-H (UDP, 256x192), same recipe",
-   "hypothesis": "a larger ViT prior helps further"
+   "hypothesis": "a larger ViT prior helps further",
+   "baseline_for_delta": "mmp_hrnet_base"
   },
   "mmp_vith384_base": {
    "label": "ViTPose-H 384 (MMPose)",
@@ -200,7 +202,8 @@
     "R104_mmp-vitpose-h384_base_s1"
    ],
    "what_changed": "backbone -> ViTPose-H (UDP, 384x288), same recipe",
-   "hypothesis": "higher input resolution helps the strict OKS thresholds"
+   "hypothesis": "higher input resolution helps the strict OKS thresholds",
+   "baseline_for_delta": "mmp_hrnet_base"
   },
   "repro_smoke": {
    "label": "FiDIP retrain smoke (repro)",
@@ -212,6 +215,114 @@
    ],
    "what_changed": "pipeline check only",
    "hypothesis": "none"
+  },
+  "rt_lam1e4": {
+   "label": "FiDIP retrain, lambda 1e-4",
+   "role": "ablation",
+   "slot": 0,
+   "macro": "RtLam1E4",
+   "run_ids": [
+    "R016_fidip-w48_lambda1e-4_s1"
+   ],
+   "what_changed": "domain-adaptation weight lambda 5e-4 -> 1e-4 (1 seed)",
+   "hypothesis": "the DA weight matters",
+   "factor": "FiDIP $\\lambda$",
+   "setting": "1e-4",
+   "baseline": "rt_fidip"
+  },
+  "rt_lam2e3": {
+   "label": "FiDIP retrain, lambda 2e-3",
+   "role": "ablation",
+   "slot": 0,
+   "macro": "RtLam2E3",
+   "run_ids": [
+    "R017_fidip-w48_lambda2e-3_s1"
+   ],
+   "what_changed": "domain-adaptation weight lambda 5e-4 -> 2e-3 (1 seed)",
+   "hypothesis": "the DA weight matters",
+   "factor": "FiDIP $\\lambda$",
+   "setting": "2e-3",
+   "baseline": "rt_fidip"
+  },
+  "rt_lam1e2": {
+   "label": "FiDIP retrain, lambda 1e-2",
+   "role": "ablation",
+   "slot": 0,
+   "macro": "RtLam1E2",
+   "run_ids": [
+    "R018_fidip-w48_lambda1e-2_s1"
+   ],
+   "what_changed": "domain-adaptation weight lambda 5e-4 -> 1e-2 (1 seed)",
+   "hypothesis": "the DA weight matters",
+   "factor": "FiDIP $\\lambda$",
+   "setting": "1e-2",
+   "baseline": "rt_fidip"
+  },
+  "mmp_vitl384_base": {
+   "label": "ViTPose-L 384 (MMPose)",
+   "role": "candidate",
+   "slot": 0,
+   "macro": "MmpVitLThree",
+   "run_ids": [
+    "R103_mmp-vitpose-l384_base_s1"
+   ],
+   "what_changed": "backbone -> ViTPose-L (UDP, 384x288), same recipe",
+   "hypothesis": "higher input resolution helps the strict OKS thresholds",
+   "baseline_for_delta": "mmp_hrnet_base"
+  },
+  "mmp_hrnet_lr5e5": {
+   "label": "HRNet-W48 DARK 384, LR 5e-5",
+   "role": "hparam",
+   "slot": 0,
+   "macro": "MmpHRNetLrFive",
+   "run_ids": [
+    "R107_mmp-hrnetw48_lr5e-5_s1"
+   ],
+   "what_changed": "control with LR 1e-4 -> 5e-5",
+   "hypothesis": "lower LR preserves the COCO prior",
+   "factor": "Learning rate",
+   "setting": "5e-5 (default 1e-4)",
+   "baseline": "mmp_hrnet_base"
+  },
+  "mmp_vitl256_realonly": {
+   "label": "ViTPose-L 256, real only",
+   "role": "ablation",
+   "slot": 0,
+   "macro": "MmpVitLReal",
+   "run_ids": [
+    "R120_mmp-vitpose-l256_realonly_s1"
+   ],
+   "what_changed": "train on the 200 real images only (no synthetic)",
+   "hypothesis": "synthetic SyRIP images help",
+   "factor": "Training data",
+   "setting": "real only (200)",
+   "baseline": "mmp_vitl256_base"
+  },
+  "mmp_vitl256_rot180": {
+   "label": "ViTPose-L 256, rotation $\\pm$180",
+   "role": "ablation",
+   "slot": 0,
+   "macro": "MmpVitLRot",
+   "run_ids": [
+    "R121_mmp-vitpose-l256_rot180_s1"
+   ],
+   "what_changed": "rotation augmentation up to 180 degrees",
+   "hypothesis": "infants appear at any in-plane angle",
+   "factor": "Rotation aug.",
+   "setting": "up to $\\pm$180$^\\circ$",
+   "baseline": "mmp_vitl256_base"
+  },
+  "rt_ft_attempt1": {
+   "label": "Fine-tune retrain, attempt 1",
+   "role": "failed",
+   "slot": 0,
+   "macro": "RtFTFail",
+   "run_ids": [
+    "R013-R015_fidip-w48_lambda0_attempt1"
+   ],
+   "what_changed": "lambda = 0 retrain, first submission",
+   "hypothesis": "-",
+   "outcome": "failed: yacs type error (LAMBDA float vs int); resubmitted"
   }
  }
 }

@@ -1,0 +1,7 @@
+model,key,abs_angle_bin,n,mean_err_norm,ci_lo,ci_hi
+FiDIP HRNet-W48 (released),released,0-30,28,0.0243508,0.0193388,0.0318171
+FiDIP HRNet-W48 (released),released,30-60,14,0.029959,0.0242499,0.0366461
+FiDIP HRNet-W48 (released),released,60-90,29,0.0324598,0.0270642,0.0395426
+FiDIP HRNet-W48 (released),released,90-120,26,0.0370031,0.0317566,0.0427222
+FiDIP HRNet-W48 (released),released,120-150,1,0.0230644,0.0230644,0.0230644
+FiDIP HRNet-W48 (released),released,150-180,2,0.0319536,0.0260802,0.037827

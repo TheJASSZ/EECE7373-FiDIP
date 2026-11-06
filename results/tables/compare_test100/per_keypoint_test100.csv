@@ -1,0 +1,18 @@
+model,key,run_ids,joint,n,mean_err_norm,ci_lo,ci_hi,pck@0.05,pck@0.1,pck@0.2
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,nose,100,0.00925003,0.00777442,0.0108149,1,1,1
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,left_eye,100,0.00778204,0.0066167,0.00897525,1,1,1
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,right_eye,100,0.00945893,0.00786877,0.0112301,1,1,1
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,left_ear,100,0.0250274,0.0185881,0.0326662,0.88,0.95,0.99
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,right_ear,100,0.0210767,0.016656,0.0261106,0.91,0.98,1
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,left_shoulder,100,0.0268441,0.0231771,0.0309533,0.89,0.99,1
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,right_shoulder,100,0.0257876,0.022446,0.0291404,0.92,1,1
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,left_elbow,100,0.030919,0.0234804,0.0390795,0.82,0.93,0.99
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,right_elbow,100,0.030859,0.0248385,0.0377345,0.82,0.95,1
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,left_wrist,100,0.0340375,0.022767,0.0481254,0.85,0.9,0.96
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,right_wrist,100,0.0254651,0.0192078,0.0331121,0.92,0.95,0.99
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,left_hip,100,0.0596558,0.0516593,0.068322,0.5,0.85,0.99
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,right_hip,100,0.0679275,0.0598663,0.0764278,0.43,0.81,1
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,left_knee,100,0.0375456,0.0292419,0.0474603,0.78,0.94,0.98
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,right_knee,100,0.0334809,0.0260743,0.0428636,0.86,0.95,0.98
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,left_ankle,100,0.045258,0.0352053,0.0569079,0.74,0.91,0.97
+FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,right_ankle,100,0.035203,0.0281206,0.0429441,0.82,0.94,1

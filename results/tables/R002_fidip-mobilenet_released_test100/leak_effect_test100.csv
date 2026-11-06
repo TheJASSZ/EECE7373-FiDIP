@@ -1,0 +1,2 @@
+model,key,run_ids,n_leak,n_rest,mean_oks_leak,mean_oks_rest,diff,diff_ci_lo,diff_ci_hi,leak_ids,per_image_oks_leak
+FiDIP MobileNetV2 (released),released,R002_fidip-mobilenet_released,5,95,0.946271,0.895382,0.0508882,0.0268883,0.0768504,7;20;42;46;50,0.969;0.9358;0.9722;0.935;0.9194
