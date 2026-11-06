@@ -26,6 +26,7 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 | D15 | 11-05 21:07 | **Val400 = 397 images.** Ids 207/217/222 dropped as duplicates (exact md5) or near-duplicates (dHash ≤ 10 and pose-OKS ≥ 0.85, rule fixed in advance) of Test100 images. | Without this, the selection set would contain Test100 images. That leaks test information into model selection. |
 | D16 | 11-05 21:07 | **Official Test100 stays as shipped (primary).** Also report **Test100-clean** (95 images, minus {7, 20, 42, 46, 50}) as a sensitivity check. | The official training set contains 4 byte-identical copies and 1 near-copy of Test100 images. Keeping the official set preserves comparability with 93.6; the clean subset shows whether memorization affects conclusions. |
 | D17 | 11-05 21:07 | **Train on SyRIP.zip `200R_1000S` labels, not syrip_for_train.zip's train JSON.** Score test images from SyRIP.zip. D7 revised: `train_pre_infant` **is** shipped, so PRE_EPOCH 10 uses the real adult set. | syrip_for_train (2024) has identical image bytes but MINI-RGBD labels on all 1000 synthetic entries (median 191 px off), and its test11.jpg is a copy of test24.jpg. Optional attempt R020 quantifies what training on the README-literal labels costs. |
+| D18 | 11-06 01:05 | **Stagger agents and economize tokens.** The report worker only gets bounded tasks until results are final. An hourly heartbeat resumes workers stopped by usage limits. | All four parallel workers hit the 5-hour API usage cap together (~22:xx on 11-05). Slurm jobs survived, but orchestration stalled until a human came back. |
 
 ---
 
@@ -253,3 +254,35 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - improve: rebuild its pre-21:02 derived split copies, and use only `train_infant.json`;
   - analysis: Test100-clean subset, the cost of the test11 defect, whether leaked images score higher;
   - report: all six hygiene findings for §3/§7.
+
+### 2026-11-06 01:03 EST — Usage-limit interruption; released checkpoints reproduce the paper exactly; screening so far
+- **What failed:** around 22:xx EST on 11-05, all four workers stopped together with an API usage limit (5-hour cap, reset 00:30). Four parallel Opus agents used up the window in about 2.5 h. Slurm jobs already submitted kept running.
+  - **Lesson / decision D18:** stagger the agents. The report worker gets only bounded tasks until results are final.
+  - Every worker is told to save tokens: background waits, small log tails, concise notes.
+  - An hourly heartbeat (session cron at :23) now resumes workers stopped by a limit. This answers the human's question "Will you resume automatically?"
+- **Human asked:** whether work resumes automatically, how long until done, and what % remains.
+- **Reproduction results** (upstream test script, GT boxes, flip):
+
+| Run | Split | AP | AP50 | AP75 | AR |
+|---|---|---|---|---|---|
+| **R001** released `hrnet_fidip.pth` | **Test100** | **0.936** | **0.985** | **0.985** | **0.946** |
+| R001 | syrip_for_train's `validate_infant` (test11 defect) | 0.921 | | | |
+| R001 | Val400 | 0.904 | | | |
+| R001 | validate500 | 0.909 | | | |
+| R002 released `mobile_fidip.pth` | Test100 | 0.791 | | | |
+
+  - R001's Test100 numbers are an **exact match** with the published 93.6 / 98.5 / 98.5 / 94.6.
+  - R002's 0.791 compares with a published 79.2. On Val400 it gets 0.682.
+  - The validate_infant result means the paper's 93.6 was computed on correct images, so the test11 defect came later (the 2024 zip).
+- **Improve screening** (Val400, `eval_coco` paper protocol; no Test100):
+
+| Model | Zero-shot | Fine-tuned |
+|---|---|---|
+| HRNet-W48 | 86.46 | 91.52 (R101); lr 2e-4: 91.43 (R106) |
+| ViTPose-L 256 | 88.21 | **92.81** (R102) |
+| ViTPose-L 384 | 86.30 | — |
+| ViTPose-H 256 | 88.81 | — |
+| ViTPose-H 384 | 87.44 | — |
+
+  - For reference, released FiDIP scores 90.4 on Val400.
+  - **Failures:** `im_pack_screenA` ran out of memory packing two ViTPose runs (17 + 23 GB) on a 40 GB A100, and `im_pack_screenB` failed. R103, R104, R105 and R107 are being re-run one per GPU.
