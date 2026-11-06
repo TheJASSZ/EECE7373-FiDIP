@@ -330,3 +330,30 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - The question of whether agents may `scancel` their own pending jobs remains with the human.
 - **D19 adopted by the improve stream:** every sbatch rsyncs `$R/repo` into `$R/snapshots/$SLURM_JOB_ID` and runs from there. `run.json` records the snapshot plus the frozen git head and tree.
 - **D19 casualty:** R108/R109 (ViT-L-256, lr 2e-4 / 5e-5) finished training, but their post-training eval was cut off by an in-place sync at 01:12. They were resubmitted as job 11665220 (resume at epoch 30, eval/finalize only).
+
+### 2026-11-06 06:52 EST — Second usage-limit stop; FiDIP retraining reproduces 93.6; λ = 0 runs failed on a config typo
+- **Interruption:** all three active workers stopped again around 02:45–02:50 EST with the 5-hour usage limit (reset 06:00). The login node was also flaky (ssh exit 255 resets). The queued heartbeats fired after the reset; everyone was resumed at 06:37.
+- **Retrain reproduction** (R010–R012: FiDIP λ = 5e-4, PRE_EPOCH 10 on the shipped adult set, COCO DarkPose init; one packed H200 job 11665025, 18 min). Upstream evaluator, GT boxes, flip, checkpoints selected on Val400 (D1):
+
+| Seed | Test100 AP, best-Val400 checkpoint | Test100 AP, final epoch | Val400 AP |
+|---|---|---|---|
+| s1 | 93.9 | 93.9 | 90.6 |
+| s2 | 93.7 | 93.4 | 90.4 |
+| s3 | 93.1 | 92.9 | 90.5 |
+| **Mean** | **93.6** | | |
+
+  - **The training pipeline reproduces the published 93.6 under a stricter protocol** (no test-set selection).
+  - The released checkpoint scores 90.4 on Val400.
+- **Failure:** R013–R015 (λ = 0) died after 1 min with yacs `Type mismatch (float vs int) for TRAIN.LAMBDA`, because the override must be `0.0`, not `0`. Repro is resubmitting, and may borrow improve's idle slots or the free V100-32GB / A100 nodes because the H200 queue is slow.
+- **Improve screening complete** (MMPose-printed Val400; eval_coco finalization pending for R103–R107):
+
+| Run | Val400 AP |
+|---|---|
+| R103 ViT-L 384 | 92.77 |
+| R104 ViT-H 384 | 92.76 (best checkpoint at epoch 13) |
+| R105 ViT-H 256 | 92.42 |
+| R107 HRNet lr 5e-5 | 91.53 |
+| **R102 ViT-L 256** | **92.81** (eval_coco; best so far) |
+
+  - **Ablations** (eval_coco): real-only (R120) scores 92.24, so synthetic data adds about +0.6. Rotation ±180 (R121) scores 92.58, no gain.
+  - The improve worker is asked for the final table and a pre-registration recommendation.
