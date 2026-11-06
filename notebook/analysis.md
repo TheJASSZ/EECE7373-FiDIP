@@ -177,3 +177,10 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
 - **Rescoring rule = MMPose's `score_mode='bbox_keypoint'`:** `max_abs_diff_file_score_vs_rule` = 0.0 exactly on all 400 instances. 0 score ties, 0 dropped, 0 missing images.
 - MMPose `keypoints.json` carries a `bbox` field. My loader passes only image_id, category_id, keypoints and score to `loadRes`, so every framework takes the same keypoint code path (det area = keypoint extent).
 - Training curves from MMPose logs (job 11659701): `analyze.py curves` reads `vis_data/scalars.json`. Train lines are keyed by `epoch`; val lines use `step`, which equals the epoch. MMPose logs no validation loss, so for MMPose runs the over/underfitting evidence is train loss + Val400 AP/AR per epoch. Model colours can now be pinned (`label@slot`).
+
+### 2026-11-05 21:03 EST: which released checkpoint R001 is
+- `$R/models/PROVENANCE.txt` (repro): `hrnet_fidip.pth`, sha256 `bfbf9df2…5d07`, Drive id `19tBMoVS8wTza7VqVfPc6KBQ_POPAEIqb`, file date 2022-01-13. It comes from the README's **FiDIP_models** folder, the original release.
+- The README's "new FiDIP model trained on the expanded SyRIP dataset" is a different Drive file (`1UHQC63m…`) and was not downloaded. So the contamination worry above (training on Val400) does **not** apply to R001, assuming the original release was trained on the official 200R+1000S set.
+- **Caveat for the report.** Upstream's training loop keeps `model_best` by AP on `DATASET.TEST_SET = validate_infant`, which is Test100 in syrip_for_train (D1). The released checkpoint may therefore be the best-on-Test100 epoch, and its Test100 AP (and the paper's 93.6) would be optimistic relative to a Val400-selected model.
+  - Our retrains select on Val400, so a released-vs-retrain gap of a few tenths could be selection bias, not a reproduction failure.
+  - I'll quantify what I can: Test100 minus Val400 AP for the released model vs our retrains.
