@@ -165,3 +165,12 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
   - Detector path: test0 mean conf 0.46 with the detector box vs 0.87 with the GT box. Box quality matters, a point for the report.
   - Single image and an 8-frame video also worked.
   - The Streamlit AppTest failed only because FIDIP_MODEL was not exported for that step. Fixed; rerunning as job 11665018.
+
+### 2026-11-06 01:20–01:30 EST — demo rerun: second env bug (pyarrow vs numpy)
+- Demo job 11665018 rerun:
+  - `gpu_test.py` with warm-up: L40S, capability 8.9, 4096² fp32 matmul in 3.1 ms (45 TFLOP/s), GPU OK.
+  - All `demo.py` modes OK again.
+  - The Streamlit AppTest then failed with `ImportError: pyarrow requires NumPy 2.0 or newer, found 1.26.4`. streamlit 1.39 pulled pyarrow 26.0.1, while upstream needs numpy 1.26.4.
+  - Fix: pin `pyarrow==17.0.0` in `build_env_fidip.sbatch` and rebuild (job 11665101). Upstream code never imports pyarrow, and the retrain jobs had not started yet.
+  - Demo rerun queued as job 11665103 (`afterok:11665101`). My first chained submission used `afterok` on the failed job, which can never be satisfied; I cancelled it immediately.
+- Overlays copied to `results/figures/demo/{test100_gt,detector}/` (2 MB) and checked by eye (test38: crouching infant, skeleton aligned, left = blue, right = orange).
