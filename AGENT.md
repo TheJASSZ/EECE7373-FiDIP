@@ -23,6 +23,9 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 | D12 | 11-05 20:12 | **Add one paper-recipe attempt** (Adam 1e-3, 100 epochs, batch 64, λ = 5e-4) next to the yaml recipe. | The paper (arXiv v5) and the released yaml disagree: lr 1e-3/100 ep/batch 64/λ 5e-4 vs 1e-4/20 ep/batch 20/λ 0. |
 | D13 | 11-05 20:52 | **An improvement claim counts only if it holds under both evaluation protocols.** The headline uses `paper`, comparable with 93.6. The paired-bootstrap CI must exclude 0 under both `paper` and `fixed`. Report test0's score rank for every model. | Verified on the real Test100 GT: at realistic accuracy, `paper` vs `fixed` differ by 0.8–2.1 AP depending only on where test0's confidence ranks. A one-image artifact is about as large as the gains we expect. |
 | D14 | 11-05 20:53 | **GPU slot policy:**<br>• repro and improve each get ≤ 2 running / ≤ 4 submitted on `gpu`, and ≤ 1 / ≤ 2 on `sharing`<br>• analysis uses CPU partitions only<br>• job-name prefixes `rp_` / `im_` / `an_`<br>• pack several runs per GPU job<br>• idle slots may be borrowed<br>• repro's core-points runs have priority | Shared per-user QOS caps (gpu 4 running / 8 submitted / 4 GPUs / 8 h; sharing 2 / 4 / 2 / 1 h). Without a policy the bonus screening could starve the reproduction runs. |
+| D15 | 11-05 21:07 | **Val400 = 397 images.** Ids 207/217/222 dropped as duplicates (exact md5) or near-duplicates (dHash ≤ 10 and pose-OKS ≥ 0.85, rule fixed in advance) of Test100 images. | Without this, the selection set would contain Test100 images. That leaks test information into model selection. |
+| D16 | 11-05 21:07 | **Official Test100 stays as shipped (primary).** Also report **Test100-clean** (95 images, minus {7, 20, 42, 46, 50}) as a sensitivity check. | The official training set contains 4 byte-identical copies and 1 near-copy of Test100 images. Keeping the official set preserves comparability with 93.6; the clean subset shows whether memorization affects conclusions. |
+| D17 | 11-05 21:07 | **Train on SyRIP.zip `200R_1000S` labels, not syrip_for_train.zip's train JSON.** Score test images from SyRIP.zip. D7 revised: `train_pre_infant` **is** shipped, so PRE_EPOCH 10 uses the real adult set. | syrip_for_train (2024) has identical image bytes but MINI-RGBD labels on all 1000 synthetic entries (median 191 px off), and its test11.jpg is a copy of test24.jpg. Optional attempt R020 quantifies what training on the README-literal labels costs. |
 
 ---
 
@@ -231,3 +234,22 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - mmpose 1.3.2 imports mmdet unconditionally (`rtmo_head.py`), so mmdet must be installed even with GT boxes.
   - mmpretrain's pos-embed auto-resize fails for ViTPose's non-square 16×12 grid, so the resize is done offline (committed script + SHA256 requested).
 - **Data-integrity follow-up:** the improve worker never touched `$R/data/raw`. Its only write under `$R/data` was a temporary `improve_splits` dir (20:46), since moved to `$R/mmpose_data/splits`. The 20:08 'flatten' of `raw/SyRIP/SyRIP` is still unexplained. It predates both other streams' data writes and most likely came from the repro worker's own unzip job; verification was requested.
+
+### 2026-11-05 21:07 EST — Splits final; six dataset-hygiene findings (D15–D17)
+- **Repro worker finished data prep at 21:02:55** (`$R/data/SPLITS_READY`, `$R/data/splits/VERIFY.txt`). Assertions passed: area = w×h, ids as shipped, Test100 ⊂ validate500, Val400 ∩ Test100 = ∅ by id/name/md5. Full SHA256s are in MANIFEST §3.
+- **Findings:**
+  1. Three Val400 images duplicate Test100 images and were removed (D15).
+  2. **The official split leaks**: 4 Test100 images are byte-identical to training images, and 1 is a near-copy (D16).
+  3. syrip_for_train.zip's train JSON puts MINI-RGBD labels on SyRIP's synthetic images (D17).
+  4. Its `validate_infant/test11.jpg` is a copy of `test24.jpg`.
+  5. 300 unannotated real images sit in SyRIP.zip's train folder, 199 of them identical to validate500 images. Only JSON-listed images are used.
+  6. `train_pre_infant` is shipped after all (2029 + 2028), so D7's substitute isn't needed.
+  - Also: `test489.jpg` is PNG bytes (decodes fine).
+- **Raw data integrity:** all 7666 zip members are verified (name/size/CRC32 plus 120 md5 samples).
+  - The 20:08 'flatten' of `raw/SyRIP/SyRIP` is **not explained**. The repro worker's first job started at 20:10:26. The improve and analysis workers deny touching it, and the orchestrator's own unzip had been killed earlier. The full verification shows no content change, so the impact is nil.
+- **Checkpoints:** downloaded from Drive without quota problems; all strict-load clean. Env `$R/envs/fidip` is ready.
+- **Environment trap:** `~/.local/lib/python3.12` leaked into the env, so `PYTHONNOUSERSITE=1` is now required (SKILL.md updated; improve and analysis told).
+- **Relays:**
+  - improve: rebuild its pre-21:02 derived split copies, and use only `train_infant.json`;
+  - analysis: Test100-clean subset, the cost of the test11 defect, whether leaked images score higher;
+  - report: all six hygiene findings for §3/§7.

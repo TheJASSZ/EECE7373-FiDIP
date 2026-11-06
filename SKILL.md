@@ -35,6 +35,7 @@ conda activate /scratch/purohitham.v/fidip/envs/fidip     # upstream FiDIP code 
 conda activate /scratch/purohitham.v/fidip/envs/mmpose    # improvement experiments (MMPose)
 ```
 Exact package lists are exported to `envs/*.yml` / `envs/*-pip-freeze.txt` in the repo.
+**Always `export PYTHONNOUSERSITE=1`.** Otherwise `~/.local/lib/python3.x` (transformers, datasets, absl …) leaks into every conda env of the same Python version. The fidip env sets it as a conda env var; set it in every sbatch script as well.
 
 ## Partitions (from `sinfo`, 2026-11-05)
 | Partition | Time limit | GPUs | Use it for |
