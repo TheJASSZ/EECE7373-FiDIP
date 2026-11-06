@@ -374,7 +374,9 @@ def build(c, a):
             dd = r["delta"].get(r.get("metric", "AP"), r["delta"]["AP"])
             boots.append(OrderedDict(
                 file=os.path.relpath(p, REPO) if p.startswith(REPO) else p,
-                name=r.get("name") or f"{r['a']['label']} vs {r['b']['label']}", mode=r.get("mode"),
+                name=(r.get("name") or f"{r['a']['label']} vs {r['b']['label']}")
+                + (" (Test100-clean)" if "test100_clean" in str(r.get("gt") or d.get("gt") or "") else ""),
+                mode=r.get("mode"),
                 protocol=r.get("protocol"), metric=r.get("metric", "AP"), n_images=r.get("n_images"), B=r.get("B"),
                 a_label=r["a"]["label"], a_run_ids=r["a"].get("run_ids"), a_mean=pct(r["a"]["mean"]["AP"]),
                 a_std=pct(r["a"]["std_across_runs"]["AP"]), b_label=r["b"]["label"], b_run_ids=r["b"].get("run_ids"),

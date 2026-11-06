@@ -243,3 +243,21 @@
 | `\RelMobileTestAPCiHi` | 83.8 | test100 bootstrap: R002_fidip-mobilenet_released |
 | `\RelMobileValAPCiLo` | 65.1 | val400 bootstrap: R002_fidip-mobilenet_released |
 | `\RelMobileValAPCiHi` | 71.6 | val400 bootstrap: R002_fidip-mobilenet_released |
+| `\BootFiDIPRetrainVsReleasedDelta` | -0.05 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsReleasedCiLo` | -0.67 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsReleasedCiHi` | 0.65 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsReleasedP` | 0.5322 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsReleasedPHolm` | 0.5322 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsReleasedFixedDelta` | 0.12 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsReleasedFixedCiLo` | -0.61 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsReleasedFixedCiHi` | 0.72 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsReleasedRobust` | no | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanDelta` | 0.01 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanCiLo` | -0.66 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanCiHi` | 0.73 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanP` | 0.4822 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanPHolm` | 0.4822 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanFixedDelta` | 0.09 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanFixedCiLo` | -0.59 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanFixedCiHi` | 0.79 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanRobust` | no | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |

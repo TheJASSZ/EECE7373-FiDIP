@@ -181,8 +181,9 @@ class ReportInterface:
                 self.set(f"{prefix}.test.ap.final.mean", pct1(mu), ids, "metrics_test100_final.json", "paper", "test100")
                 self.set(f"{prefix}.test.ap.final.sd", pct1(sd) if sd is not None else "---", ids,
                          "metrics_test100_final.json", "paper", "test100")
-            if g.get("run_ids"):
-                self.set("rt.seeds", str(len(g["run_ids"])), g["run_ids"], "results/configs.json", "", "")
+            have = [r for r in g.get("run_ids", []) if (r, "val400") in c.metrics or (r, "test100") in c.metrics]
+            if gkey == "rt_fidip" and have:          # seeds that actually have results (FiDIP arm)
+                self.set("rt.seeds", str(len(have)), have, "results/analysis_eval", "", "")
             if g.get("epochs"):
                 self.set("rt.epochs", str(g["epochs"]), g["run_ids"], "results/configs.json", "", "")
         b = self._boot("rt_fidip", "rt_ft")
@@ -229,6 +230,8 @@ class ReportInterface:
         if not ga or not gb:
             return None
         for b in self.t.get("bootstrap_summary", []):
+            if "Test100-clean" in str(b.get("name")):     # headline keys use the official Test100 contrast
+                continue
             ia, ib = set(b.get("a_run_ids") or []), set(b.get("b_run_ids") or [])
             if ia and ib and ia <= set(ga["run_ids"]) and ib <= set(gb["run_ids"]):
                 return {"delta": b["delta"], "ci_lo": b["ci_lo"], "ci_hi": b["ci_hi"],

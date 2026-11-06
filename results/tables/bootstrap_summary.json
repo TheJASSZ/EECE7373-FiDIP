@@ -1,1 +1,80 @@
-[]
+[
+ {
+  "file": "results/tables/bootstrap_retrain_fidip_vs_ft_test100.json",
+  "name": "FiDIP retrain vs released",
+  "mode": "multiseed",
+  "protocol": "paper",
+  "metric": "AP",
+  "n_images": 100,
+  "B": 10000,
+  "a_label": "FiDIP lambda 5e-4 retrain",
+  "a_run_ids": [
+   "R010_fidip-w48_lambda5e-4_s1",
+   "R011_fidip-w48_lambda5e-4_s2",
+   "R012_fidip-w48_lambda5e-4_s3"
+  ],
+  "a_mean": 93.55249912207073,
+  "a_std": 0.4236645063264531,
+  "b_label": "FiDIP released",
+  "b_run_ids": [
+   "R001_fidip-w48_released"
+  ],
+  "b_mean": 93.60499387537227,
+  "b_std": null,
+  "delta": -0.05249475330154629,
+  "ci_lo": -0.6726935616850669,
+  "ci_hi": 0.6478632596512559,
+  "p_one_sided": 0.5322467753224678,
+  "p_holm": 0.5322467753224678,
+  "seed_pairs_a_gt_b": 0.6666666666666666,
+  "images_win_tie_loss": "61/0/39",
+  "sens_protocol": "fixed",
+  "sens_delta": 0.11937456810954261,
+  "sens_ci_lo": -0.6051484233169091,
+  "sens_ci_hi": 0.7155683922113745,
+  "sens_p_holm": 0.45325467453254675,
+  "robust_both_protocols": false,
+  "robust_claim": false,
+  "gt": "/scratch/purohitham.v/fidip/data/splits/test100.json",
+  "self_check_passed": true
+ },
+ {
+  "file": "results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json",
+  "name": "FiDIP retrain vs released (Test100-clean)",
+  "mode": "multiseed",
+  "protocol": "paper",
+  "metric": "AP",
+  "n_images": 95,
+  "B": 10000,
+  "a_label": "FiDIP lambda 5e-4 retrain",
+  "a_run_ids": [
+   "R010_fidip-w48_lambda5e-4_s1",
+   "R011_fidip-w48_lambda5e-4_s2",
+   "R012_fidip-w48_lambda5e-4_s3"
+  ],
+  "a_mean": 92.82543327330605,
+  "a_std": 0.39992514151320924,
+  "b_label": "FiDIP released",
+  "b_run_ids": [
+   "R001_fidip-w48_released"
+  ],
+  "b_mean": 92.81152807721178,
+  "b_std": null,
+  "delta": 0.013905196094277095,
+  "ci_lo": -0.6582285517852154,
+  "ci_hi": 0.7327642639004749,
+  "p_one_sided": 0.4821517848215178,
+  "p_holm": 0.4821517848215178,
+  "seed_pairs_a_gt_b": 0.6666666666666666,
+  "images_win_tie_loss": "58/0/37",
+  "sens_protocol": "fixed",
+  "sens_delta": 0.08632290632484274,
+  "sens_ci_lo": -0.5934014313147404,
+  "sens_ci_hi": 0.7889042498262944,
+  "sens_p_holm": 0.41575842415758424,
+  "robust_both_protocols": false,
+  "robust_claim": false,
+  "gt": "/scratch/purohitham.v/fidip/analysis/splits_derived/test100_clean.json",
+  "self_check_passed": true
+ }
+]

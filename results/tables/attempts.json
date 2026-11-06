@@ -60,7 +60,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 4,
@@ -81,7 +81,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 5,
@@ -102,7 +102,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 6,
@@ -123,7 +123,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 7,
@@ -144,7 +144,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 8,
@@ -165,7 +165,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 9,
@@ -186,7 +186,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 10,
@@ -207,7 +207,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 11,
@@ -228,7 +228,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 12,
@@ -317,7 +317,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 16,
@@ -338,7 +338,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 17,
@@ -359,7 +359,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 18,
@@ -464,7 +464,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 23,
@@ -485,7 +485,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 24,
@@ -506,7 +506,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 25,
@@ -527,7 +527,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 26,

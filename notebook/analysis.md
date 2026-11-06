@@ -235,3 +235,23 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
   - Val400 AP, the selection metric, rises to about 90.0 by epoch 9 and then creeps to 90.4–90.6. The best epochs are 20 / 19 / 18 of 20, and the final-minus-best gap is ≤ 0.33 AP. There is no overfitting in AP within the 20-epoch budget.
   - The LR is a constant 1e-4 (the yaml's LR steps at 40/200 are never reached). More epochs alone would add at most a few tenths. A late LR decay, or stronger augmentation to narrow the loss gap, is the more promising lever. The flat Val400 MSE while AP still improves also shows heatmap MSE is a poor proxy for keypoint AP.
 - R013–R015 (λ = 0) failed upstream and are being resubmitted by repro. Their table rows stay `\tbd`.
+
+### 2026-11-06 07:10 EST: retrain vs released bootstrap, attempts table, report interface refresh
+- Contrast spec `results/contrasts/retrain_fidip_vs_ft.json`, declared under PREREGISTRATION repro-1. Runner: `scripts/analysis/run_contrasts.sh`. It skips contrasts whose predictions are missing; rerun when R013–R015 exist so Holm covers the full family.
+- **FiDIP retrain (R010–R012, seed-averaged) vs released R001**, B = 10000, job 11671218:
+  - Test100: ΔAP −0.05 [−0.67, +0.65], p(A>B) = 0.53; `fixed` +0.12 [−0.61, +0.72]; per-image OKS wins/ties/losses 61/0/39.
+  - Test100-clean: +0.01 [−0.66, +0.73].
+  - The Val400-selected retrain is indistinguishable from the released checkpoint. Note the CI half-width is about 0.7 AP for a 3-seed vs 1-run paired contrast on 100 images; that is the detection limit for any claimed improvement.
+- **Attempts table** (`report/generated/tab_attempts.tex`, 28 runs, chronological):
+  - Δ Val400 is relative to each configuration's own baseline (`configs.json`: λ sweep vs the λ=5e-4 retrain mean; LR, data and rotation ablations vs their backbone's base run; candidates vs the MMPose HRNet control).
+  - Val400 (single seeds unless noted):
+    - control HRNet-W48 91.5;
+    - ViTPose-L 256 92.8 (+1.3); ViTPose-L 384 92.8; ViTPose-H 256 93.2 (+1.6); ViTPose-H 384 93.3 (+1.8);
+    - real-only ViTPose-L 92.2 (−0.6 vs real + synthetic); rotation ±180 92.6 (−0.2);
+    - LR variants within ±0.2;
+    - λ sweep: 1e-4 91.0 (+0.5), 2e-3 89.7 (−0.8), 1e-2 85.8 (−4.7);
+    - zero-shot COCO models 86.3–88.8.
+  - The failed first λ=0 submission is listed as failed.
+  - Every single-seed Δ under ±1.7 is inside the single-model bootstrap CI of Val400 AP ([88.7, 92.1] for R001), so only the ViTPose-H gap approaches significance pending seeds.
+- `numbers.tex`: 40/87 keys set (rest `\tbd`: λ=0 arm, finalists, ensemble, compute). `provenance.csv` lists RUN_ID + metrics file + protocol + split for each. Regeneration is idempotent (identical md5 on rerun).
+- Fixes: snapshots now include `results/contrasts`; `rt.seeds` counts only seeds with results; the clean-split contrast is labelled and never used for headline keys.

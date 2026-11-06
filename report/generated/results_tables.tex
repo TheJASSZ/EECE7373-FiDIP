@@ -243,6 +243,24 @@
 \newcommand{\RelMobileTestAPCiHi}{83.8}  % test100 bootstrap: R002_fidip-mobilenet_released
 \newcommand{\RelMobileValAPCiLo}{65.1}  % val400 bootstrap: R002_fidip-mobilenet_released
 \newcommand{\RelMobileValAPCiHi}{71.6}  % val400 bootstrap: R002_fidip-mobilenet_released
+\newcommand{\BootFiDIPRetrainVsReleasedDelta}{-0.05}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100.json
+\newcommand{\BootFiDIPRetrainVsReleasedCiLo}{-0.67}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100.json
+\newcommand{\BootFiDIPRetrainVsReleasedCiHi}{0.65}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100.json
+\newcommand{\BootFiDIPRetrainVsReleasedP}{0.5322}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100.json
+\newcommand{\BootFiDIPRetrainVsReleasedPHolm}{0.5322}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100.json
+\newcommand{\BootFiDIPRetrainVsReleasedFixedDelta}{0.12}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100.json
+\newcommand{\BootFiDIPRetrainVsReleasedFixedCiLo}{-0.61}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100.json
+\newcommand{\BootFiDIPRetrainVsReleasedFixedCiHi}{0.72}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100.json
+\newcommand{\BootFiDIPRetrainVsReleasedRobust}{no}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100.json
+\newcommand{\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanDelta}{0.01}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json
+\newcommand{\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanCiLo}{-0.66}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json
+\newcommand{\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanCiHi}{0.73}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json
+\newcommand{\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanP}{0.4822}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json
+\newcommand{\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanPHolm}{0.4822}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json
+\newcommand{\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanFixedDelta}{0.09}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json
+\newcommand{\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanFixedCiLo}{-0.59}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json
+\newcommand{\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanFixedCiHi}{0.79}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json
+\newcommand{\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanRobust}{no}  % results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json
 
 \begin{table}[t]
 \centering
@@ -316,6 +334,21 @@ FiDIP retrain, \$\textbackslash{}lambda=5\textbackslash{}cdot10^{-4}\$ & 3 & 93.
 26 & Fine-tune retrain, attempt 1 & lambda = 0 retrain, first submission & 1 & -- & withheld \\
 27 & HRNet-W48 DARK 384 (MMPose control) [noflip] & test-time: noflip & 1 & 90.9 & withheld \\
 28 & ViTPose-L 256 (MMPose) [noflip] & test-time: noflip & 1 & 92.3 & withheld \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Paired image-level bootstrap ($B$ resamples) of $\Delta$AP on Test100 (paper protocol; one-sided $p$ for $H_1$: A $>$ B, Holm-adjusted over the declared contrasts), the same contrast under the fixed protocol, and whether the 95\% CI excludes 0 under both (D13). Last column: per-image OKS wins/ties/losses.}
+\label{tab:boot}
+\begin{tabular}{lrrrrrcr}
+\toprule
+Contrast & $\Delta$AP & 95\% CI & $p$ & $p_{\mathrm{Holm}}$ & fixed: $\Delta$ [CI] & robust & W/T/L \\
+\midrule
+FiDIP retrain vs released & -0.05 & [-0.67, +0.65] & 0.5322 & 0.5322 & +0.12 [-0.61, +0.72] & no & 61/0/39 \\
+FiDIP retrain vs released (Test100-clean) & +0.01 & [-0.66, +0.73] & 0.4822 & 0.4822 & +0.09 [-0.59, +0.79] & no & 58/0/37 \\
 \bottomrule
 \end{tabular}
 \end{table}

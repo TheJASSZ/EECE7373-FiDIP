@@ -1,0 +1,391 @@
+{
+  "mode": "contrasts",
+  "protocol": "paper",
+  "metric": "AP",
+  "B": 10000,
+  "seed": 0,
+  "alpha": 0.05,
+  "n_contrasts": 1,
+  "correction": "Holm step-down over the declared contrasts",
+  "contrasts": [
+    {
+      "mode": "multiseed",
+      "protocol": "paper",
+      "gt": "/scratch/purohitham.v/fidip/analysis/splits_derived/test100_clean.json",
+      "n_images": 95,
+      "B": 10000,
+      "seed": 0,
+      "metric": "AP",
+      "a": {
+        "label": "FiDIP lambda 5e-4 retrain",
+        "n_runs": 3,
+        "files": [
+          "/scratch/purohitham.v/fidip/runs/R010_fidip-w48_lambda5e-4_s1/preds_test100_best.json",
+          "/scratch/purohitham.v/fidip/runs/R011_fidip-w48_lambda5e-4_s2/preds_test100_best.json",
+          "/scratch/purohitham.v/fidip/runs/R012_fidip-w48_lambda5e-4_s3/preds_test100_best.json"
+        ],
+        "run_ids": [
+          "R010_fidip-w48_lambda5e-4_s1",
+          "R011_fidip-w48_lambda5e-4_s2",
+          "R012_fidip-w48_lambda5e-4_s3"
+        ],
+        "mean": {
+          "AP": 0.9282543327330605,
+          "AP50": 0.9746048289039431,
+          "AP75": 0.9746048289039431,
+          "AP_80_95": 0.8587285884767363,
+          "AR": 0.9466666666666667,
+          "AR50": 0.9894736842105263,
+          "AR75": 0.9894736842105263
+        },
+        "std_across_runs": {
+          "AP": 0.0039992514151320924,
+          "AP50": 0.0005926253989658973,
+          "AP75": 0.0005926253989658973,
+          "AP_80_95": 0.010241447591018726,
+          "AR": 0.00486189700370214,
+          "AR50": 0.0,
+          "AR75": 0.0
+        },
+        "per_run_AP": [
+          0.9306503262578744,
+          0.9304751695660809,
+          0.923637502375226
+        ],
+        "boot_ci95": {
+          "AP": [
+            0.8895516364888917,
+            0.9622216881643318
+          ],
+          "AP50": [
+            0.9421573736321,
+            1.0
+          ],
+          "AP75": [
+            0.9421573736321,
+            1.0
+          ],
+          "AP_80_95": [
+            0.8052820528959224,
+            0.9071364429356421
+          ],
+          "AR": [
+            0.9185877192982456,
+            0.968421052631579
+          ],
+          "AR50": [
+            0.968421052631579,
+            1.0
+          ],
+          "AR75": [
+            0.968421052631579,
+            1.0
+          ]
+        },
+        "self_check": [
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          }
+        ]
+      },
+      "b": {
+        "label": "FiDIP released",
+        "n_runs": 1,
+        "files": [
+          "/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_test100.json"
+        ],
+        "run_ids": [
+          "R001_fidip-w48_released"
+        ],
+        "mean": {
+          "AP": 0.9281152807721177,
+          "AP50": 0.9750911933298595,
+          "AP75": 0.9750911933298595,
+          "AP_80_95": 0.8576514119355052,
+          "AR": 0.9463157894736842,
+          "AR50": 0.9894736842105263,
+          "AR75": 0.9894736842105263
+        },
+        "std_across_runs": {
+          "AP": null,
+          "AP50": null,
+          "AP75": null,
+          "AP_80_95": null,
+          "AR": null,
+          "AR50": null,
+          "AR75": null
+        },
+        "per_run_AP": [
+          0.9281152807721177
+        ],
+        "boot_ci95": {
+          "AP": [
+            0.8908322920537625,
+            0.9616134881042431
+          ],
+          "AP50": [
+            0.9435122459614382,
+            1.0
+          ],
+          "AP75": [
+            0.9435122459614382,
+            1.0
+          ],
+          "AP_80_95": [
+            0.8048618514551187,
+            0.9057193817435377
+          ],
+          "AR": [
+            0.9178947368421053,
+            0.968421052631579
+          ],
+          "AR50": [
+            0.968421052631579,
+            1.0
+          ],
+          "AR75": [
+            0.968421052631579,
+            1.0
+          ]
+        },
+        "self_check": [
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          }
+        ]
+      },
+      "delta": {
+        "AP": {
+          "observed": 0.00013905196094277095,
+          "boot_mean": 0.00021712361328404914,
+          "boot_se": 0.0035616431375474376,
+          "ci95": [
+            -0.006582285517852155,
+            0.007327642639004749
+          ],
+          "frac_boot_a_gt_b": 0.5179
+        },
+        "AP50": {
+          "observed": -0.00048636442591643014,
+          "boot_mean": -0.0004612923397602829,
+          "boot_se": 0.0005796010086395928,
+          "ci95": [
+            -0.001980198019801871,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0172
+        },
+        "AP75": {
+          "observed": -0.00048636442591643014,
+          "boot_mean": -0.0004612923397602829,
+          "boot_se": 0.0005796010086395928,
+          "ci95": [
+            -0.001980198019801871,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0172
+        },
+        "AP_80_95": {
+          "observed": 0.001077176541231073,
+          "boot_mean": 0.0012347475428505536,
+          "boot_se": 0.008818441311698755,
+          "ci95": [
+            -0.015547100539739388,
+            0.01887369143796034
+          ],
+          "frac_boot_a_gt_b": 0.5477
+        },
+        "AR": {
+          "observed": 0.000350877192982435,
+          "boot_mean": 0.00039610526315789603,
+          "boot_se": 0.003161748225271425,
+          "ci95": [
+            -0.005614035087719407,
+            0.006666666666666599
+          ],
+          "frac_boot_a_gt_b": 0.5381
+        },
+        "AR50": {
+          "observed": 0.0,
+          "boot_mean": 1.1102230246251566e-20,
+          "boot_se": 2.4826334625581878e-18,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0003
+        },
+        "AR75": {
+          "observed": 0.0,
+          "boot_mean": 1.1102230246251566e-20,
+          "boot_se": 2.4826334625581878e-18,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0003
+        }
+      },
+      "p_one_sided_a_gt_b": 0.4821517848215178,
+      "p_one_sided_b_gt_a": 0.517948205179482,
+      "p_two_sided": 0.9643035696430357,
+      "seed_pairs_a_gt_b": 0.6666666666666666,
+      "all_a_runs_gt_all_b_runs": false,
+      "per_image_consistency": {
+        "n_images": 95,
+        "wins": 58,
+        "ties": 0,
+        "losses": 37,
+        "mean_delta_oks": 0.0011154026005907583,
+        "median_delta_oks": 0.0006518334230718459,
+        "sign_test_p_two_sided": 0.03960823767054589,
+        "wilcoxon_p_two_sided": 0.0683756719476091
+      },
+      "sensitivity": {
+        "protocol": "fixed",
+        "delta": {
+          "AP": {
+            "observed": 0.0008632290632484274,
+            "boot_mean": 0.0008328375490071102,
+            "boot_se": 0.00356470850631129,
+            "ci95": [
+              -0.005934014313147404,
+              0.007889042498262944
+            ],
+            "frac_boot_a_gt_b": 0.5843
+          },
+          "AP50": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AP75": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AP_80_95": {
+            "observed": 0.0021580726581212906,
+            "boot_mean": 0.0020820938725177774,
+            "boot_se": 0.008911771265778226,
+            "ci95": [
+              -0.014835035782868456,
+              0.019722606245657463
+            ],
+            "frac_boot_a_gt_b": 0.5843
+          },
+          "AR": {
+            "observed": 0.00035087719298254605,
+            "boot_mean": 0.0003961052631578952,
+            "boot_se": 0.0031617482252714276,
+            "ci95": [
+              -0.0056140350877195155,
+              0.00666666666666671
+            ],
+            "frac_boot_a_gt_b": 0.5373
+          },
+          "AR50": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AR75": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          }
+        },
+        "p_one_sided_a_gt_b": 0.41575842415758424,
+        "p_one_sided_b_gt_a": 0.5843415658434157,
+        "p_two_sided": 0.8315168483151685,
+        "a_mean": {
+          "AP": 0.9497701267604538,
+          "AP50": 1.0,
+          "AP75": 1.0,
+          "AP_80_95": 0.8744253169011346,
+          "AR": 0.9571929824561404,
+          "AR50": 1.0,
+          "AR75": 1.0
+        },
+        "b_mean": {
+          "AP": 0.9489068976972054,
+          "AP50": 1.0,
+          "AP75": 1.0,
+          "AP_80_95": 0.8722672442430133,
+          "AR": 0.9568421052631578,
+          "AR50": 1.0,
+          "AR75": 1.0
+        },
+        "self_check": [
+          [
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            }
+          ],
+          [
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            }
+          ]
+        ],
+        "p_holm": 0.41575842415758424,
+        "reject_h0_holm": false
+      },
+      "a_gt_b_robust_both_protocols": false,
+      "ci_excludes_zero_both_protocols": false,
+      "name": "FiDIP retrain vs released",
+      "hypothesis": "our Val400-selected retrain is not worse than the released checkpoint",
+      "p_holm": 0.4821517848215178,
+      "reject_h0_holm": false,
+      "robust_claim": false
+    }
+  ],
+  "settings": {
+    "evaluator": "eval/eval_coco.py v1.0",
+    "area_rule": "gt",
+    "ci": "percentile",
+    "pycocotools": "2.0.8",
+    "numpy": "1.26.4",
+    "python": "3.12.16"
+  }
+}
