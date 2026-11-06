@@ -37,11 +37,13 @@ import sys
 from collections import OrderedDict, defaultdict
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SPLITS = ("test100", "val400", "validate500", "test100_clean")
-CLEAN = {"test100": True, "val400": False, "validate500": False, "test100_clean": True}
+SPLITS = ("test100", "val400", "validate500", "test100_clean", "validate_infant")
+CLEAN = {"test100": True, "val400": False, "validate500": False, "test100_clean": True, "validate_infant": False}
+TESTLIKE = ("test100", "test100_clean", "validate500", "validate_infant")   # gated like Test100
 SPLIT_ROLE = {"test100": "clean test (reporting only)", "val400": "selection",
               "validate500": "NOT clean (contains Val400)",
-              "test100_clean": "sensitivity: Test100 minus 5 exact/near copies of training images"}
+              "test100_clean": "sensitivity: Test100 minus 5 exact/near copies of training images",
+              "validate_infant": "sensitivity: Test100 GT on syrip_for_train images (defective test11)"}
 METRICS = ("AP", "AP50", "AP75", "AR", "AR50", "AR75", "AP_80_95")
 # Published numbers: upstream README @ a76b4f4, "Generality of our FiDIP method ... SyRIP Test100".
 PUBLISHED = OrderedDict([
@@ -197,7 +199,7 @@ class Collector:
 
     def config_summary(self, g, split, protocol="paper"):
         rids = [r for r in g["run_ids"] if (r, split) in self.metrics]
-        if split in ("test100", "test100_clean"):
+        if split in TESTLIKE:
             rids = [r for r in rids if self.test_allowed(r, g)]
         out = OrderedDict(n_runs=len(rids), run_ids=rids)
         for m in METRICS:
@@ -237,7 +239,7 @@ def build(c, a):
         for sp in SPLITS:
             if (rid, sp) not in c.metrics:
                 continue
-            if sp in ("test100", "test100_clean") and not c.test_allowed(rid, g):
+            if sp in TESTLIKE and not c.test_allowed(rid, g):
                 row["test100_note"] = "withheld (not pre-registered)"
                 continue
             d, src, p = c.metrics[(rid, sp)]
@@ -536,6 +538,16 @@ def main(argv=None):
         f.write("| Macro | Value | Provenance |\n|---|---|---|\n")
         for n, v, p in macros:
             f.write(f"| `\\{n}` | {v} | {p} |\n")
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import report_interface
+        info = report_interface.run(c, tables, REPO, a.tables, os.path.dirname(a.tex),
+                                    os.path.join(REPO, "results", "figures"),
+                                    os.path.join(REPO, "report", "figures", "generated"))
+        print(f"[collect] report interface: {info['numbers_set']} values for {info['numbers_keys']} documented keys; "
+              f"tables {info['tables']}; figures {sorted(info['figures'])}")
+    except FileNotFoundError as e:
+        print(f"[collect] report interface skipped: {e}")
     print(f"[collect] {len(c.run_meta)} runs ({len(c.unregistered)} unregistered), {len(c.groups)} configs, "
           f"{len(c.metrics)} metric files, {len(tables['bootstrap_summary'])} bootstrap results, prereg={sorted(c.prereg)}")
     print(f"  -> {a.tables}/*.csv|json, {a.tex}")

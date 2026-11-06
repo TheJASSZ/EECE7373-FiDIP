@@ -602,6 +602,20 @@ def cmd_models(a):
     p, rows = fig_per_keypoint(models, focus, os.path.join(out, f"per_keypoint_error_{split}"))
     written += p
     write_csv(os.path.join(tabs, f"per_keypoint_{split}.csv"), rows)
+    groups = [("Head (nose, eyes, ears)", [0, 1, 2, 3, 4]), ("Shoulders", [5, 6]), ("Elbows", [7, 8]),
+              ("Wrists", [9, 10]), ("Hips", [11, 12]), ("Knees", [13, 14]), ("Ankles", [15, 16]),
+              ("All", list(range(17)))]
+    grows = []
+    for m in models:
+        errs = np.stack([m.kpt_err(k) for k in m.keys])
+        for gname, idx in groups:
+            e = errs[:, idx].ravel()
+            e = e[np.isfinite(e)]
+            grows.append({"model": m.label, "key": m.key, "run_ids": m.run_ids, "group": gname, "n": int(e.size),
+                          "median_err_pct": 100 * float(np.median(e)) if e.size else None,
+                          "pck@0.05": 100 * float(np.mean(e < 0.05)) if e.size else None,
+                          "pck@0.1": 100 * float(np.mean(e < 0.1)) if e.size else None})
+    write_csv(os.path.join(tabs, f"per_keypoint_groups_{split}.csv"), grows)
     posture = load_posture(man.get("posture"))
     ann, per_model, (q1, q2) = taxonomy_table(models, posture)
     if posture:
@@ -648,6 +662,7 @@ def cmd_models(a):
             if k in per_model[m.key]:
                 r[f"oks_{m.key}"] = per_model[m.key][k]["oks"]
                 r[f"swaps_{m.key}"] = per_model[m.key][k]["swapped_pairs"]
+                r[f"mirror_gain_{m.key}"] = per_model[m.key][k]["full_swap_gain"]
         img_rows.append(r)
     write_csv(os.path.join(tabs, f"per_image_taxonomy_{split}.csv"), img_rows)
     for pa, pb in man.get("pairs", []):
@@ -881,6 +896,12 @@ def cmd_gtbox(a):
                          "AP_paper": o["metrics"]["AP"], "AP_fixed": o["metrics_fixed"]["AP"],
                          "AP_80_95_fixed": o["metrics_fixed"]["AP_80_95"], "mean_oks": o["oks"]["mean"],
                          "n_dropped": o["pred"]["n_dropped_not_in_gt"]})
+    a1 = {x["image_id"]: x for x in v100["annotations"]}
+    a5 = {x["image_id"]: x for x in sub500["annotations"]}
+    ratio = [(a1[i]["bbox"][2] * a1[i]["bbox"][3]) / (a5[i]["bbox"][2] * a5[i]["bbox"][3]) for i in a1 if i in a5]
+    rows.append({"pred_boxes": "box-area ratio v100/v500", "gt": "stats", "pred": "",
+                 "AP_paper": float(np.median(ratio)), "AP_fixed": float(np.min(ratio)), "AP_80_95_fixed": float(np.max(ratio)),
+                 "mean_oks": None, "n_dropped": len(ratio), "run_id": "median/min/max in AP_paper/AP_fixed/AP_80_95_fixed"})
     write_csv(os.path.join(a.tables, "gtbox_v100_vs_v500.csv"), rows)
     for r in rows:
         print(f"{r['pred_boxes']:11s} x {r['gt']:8s}: AP paper {100 * r['AP_paper']:.2f}  fixed {100 * r['AP_fixed']:.2f}"
