@@ -28,7 +28,7 @@ Status values:
 | # | Requirement (guide section) | Where satisfied | Status |
 |---|---|---|---|
 | G0.1 | Passwordless SSH to Explorer (Part 0.1) | verified 2026-11-05; SKILL.md | ☑ |
-| G0.2 | `.env` in `.gitignore` before creation; agent told never to print/commit secrets (Part 0.2) | `.gitignore`, `CLAUDE.md` | ☑ (project level) |
+| G0.2 | `.env` in `.gitignore` before creation; agent told never to print/commit secrets (Part 0.2) | `.gitignore`, project `CLAUDE.md`, global `~/.claude/CLAUDE.md` (Secrets rule, added 2026-11-05 at the human's request) | ☑ |
 | G0.3a | `SKILL.md`: connection facts, directory layout, exact sbatch/squeue/sacct commands, **active runs**, guardrails | `SKILL.md` (keep Active runs current) | ◐ |
 | G0.3b | `AGENT.md`: what was asked, what the agent did, experiments, hypotheses, dead ends, direction changes | `AGENT.md` + `notebook/*.md` | ◐ |
 | G0.3c | `MANIFEST.md`: datasets, checkpoints + paths on /scratch, configs, run behind the final numbers, **reproducible from this file alone** | `MANIFEST.md` (needs exact reproduce commands) | ◐ |

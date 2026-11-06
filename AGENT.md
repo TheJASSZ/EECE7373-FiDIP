@@ -127,3 +127,12 @@ The literature-scan Explore agent is still running. Its findings will be forward
 - The guide's `gpu_test.py`, `demo.py`, `streamlit_demo.py` and `fidip_simple.yml` aren't in upstream.
 - A GitHub code search for them only surfaced classmates' public forks, whose notes say the files exist nowhere public.
 - We **did not open or use any other student's repository**. We implement these files ourselves from the guide's documented interface.
+
+### 2026-11-05 20:25 EST — Global secrets rule
+- **Human asked:** "Yes please add it globally", i.e. the STUDENT_GUIDE Part 0.2 recommendation.
+- Created `~/.claude/CLAUDE.md` with the course's Secrets rule. The file didn't exist before. The rule says:
+  - read credentials from `.env`;
+  - never print or commit it;
+  - add `.env` to `.gitignore` before creating it;
+  - pass secrets via stdin/env vars, not CLI args.
+- This applies to every Claude Code project on this machine. The project-level `CLAUDE.md` already has the same rule.
