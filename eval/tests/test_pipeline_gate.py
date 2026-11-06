@@ -17,3 +17,7 @@ def test_gate():
     assert not apl.test_allowed("R016_fidip-w48_lam0.001_s1", reg, pre)[0]
     assert not apl.test_allowed("R031_vitpose-h_s1", reg, pre)[0]
     assert not apl.test_allowed("R040_mmpose-hrnet-w48_retrainlike_s1", {}, set())[0]
+
+
+def test_validate500_is_gated_like_test100():
+    assert "validate500" in apl.TEST_LIKE and "test100" in apl.TEST_LIKE and "val400" not in apl.TEST_LIKE

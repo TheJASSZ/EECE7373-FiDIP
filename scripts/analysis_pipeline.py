@@ -5,9 +5,9 @@
       Evaluate every $R/runs/<RUN_ID>/preds_<split>.json with eval/eval_coco.py, writing
       $R/analysis/eval/<RUN_ID>/{metrics,per_image}_<split>.json plus index.csv.
       - Skips files whose (pred sha256, GT sha256, evaluator version) are unchanged.
-      - Test100 is evaluated only for released/retrain reproduction targets and RUN_IDs listed
-        in results/PREREGISTRATION.md (decision D1). Other Test100 files are skipped and listed
-        as 'withheld', so nobody can peek.
+      - Test100 (and validate500, which contains it) is evaluated only for released/retrain
+        reproduction targets and RUN_IDs listed in results/PREREGISTRATION.md (decision D1). Other
+        such files are skipped and listed as 'withheld', so nobody can peek.
   python scripts/analysis_pipeline.py bootstrap --spec SPEC.json --gt test100 --out NAME
       Run bootstrap_ci.py contrasts on a declared spec, writing $R/analysis/bootstrap/bootstrap_<NAME>.json.
 
@@ -31,6 +31,7 @@ import eval_coco as ev  # noqa: E402
 
 R = os.environ.get("R", "/scratch/purohitham.v/fidip")
 RUN_RE = re.compile(r"\bR\d{3}[A-Za-z0-9_.\-]*")
+TEST_LIKE = ("test100", "validate100", "validate500")
 
 
 def sha(p):
@@ -86,7 +87,8 @@ def cmd_eval_all(a):
             row["status"] = f"no GT {gt}"
             rows.append(row)
             continue
-        if split in ("test100", "validate100"):
+        # validate500 contains Test100, so it is gated exactly like Test100 (no back door to Test100 numbers)
+        if split in TEST_LIKE:
             ok, why = test_allowed(run_id, reg, pre)
             if not ok:
                 row["status"] = why
