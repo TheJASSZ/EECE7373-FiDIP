@@ -111,7 +111,8 @@ def main():
     with open(osp.join(rd, 'val_curve.json'), 'w') as f:
         json.dump(curve, f, indent=1)
 
-    git = json.load(open(GIT_INFO)) if osp.isfile(GIT_INFO) else {}
+    gi = osp.join(rd, 'git_info.json') if osp.isfile(osp.join(rd, 'git_info.json')) else GIT_INFO
+    git = json.load(open(gi)) if osp.isfile(gi) else {}
     m = {}
     mp = osp.join(rd, 'metrics_val400.json')
     if osp.isfile(mp):
@@ -130,6 +131,7 @@ def main():
         config_resolved_sha256=sha256(osp.join(rd, 'config.py')),
         git_head=git.get('git_head'), git_tree=git.get('git_tree'), git_dirty=git.get('dirty'),
         git_dirty_files=git.get('dirty_files'), git_synced_at=git.get('synced_at'),
+        code_snapshot=os.environ.get('REPO'),
         init_checkpoint=cfg.get('load_from'),
         init_checkpoint_sha256=sha256(cfg.load_from) if cfg.get('load_from') else None,
         max_epochs=cfg.train_cfg.get('max_epochs'), batch_size=cfg.train_dataloader.batch_size,

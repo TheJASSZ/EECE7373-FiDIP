@@ -10,7 +10,7 @@
 set -euo pipefail
 RUN_ID=$1; CONFIG=$2; SEED=$3; CFG_OPTS=${4:-}
 R=/scratch/purohitham.v/fidip
-REPO=$R/repo
+REPO=${REPO:-$R/repo}   # sbatch exports REPO=$R/snapshots/<job> (D19)
 RUN_DIR=$R/runs/$RUN_ID
 export PYTHONHASHSEED=$SEED
 STARTED=$(date -Is)

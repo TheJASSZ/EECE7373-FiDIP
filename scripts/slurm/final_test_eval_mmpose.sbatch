@@ -16,7 +16,10 @@
 set -euo pipefail
 : "${RUN_ID:?set RUN_ID}"
 R=/scratch/purohitham.v/fidip
-REPO=$R/repo
+# D19: run from a per-job code snapshot (a concurrent sync must never rewrite scripts under a running job)
+SNAP=$R/snapshots/${SLURM_JOB_ID:-manual_$$}
+mkdir -p $SNAP && rsync -a --exclude=.git $R/repo/ $SNAP/ || { echo "D19 snapshot failed"; exit 1; }
+export REPO=$SNAP
 RUN_DIR=$R/runs/$RUN_ID
 PREREG=$REPO/results/PREREGISTRATION.md
 grep -E "^\|.*${RUN_ID}" $PREREG >/dev/null || { echo "REFUSED: $RUN_ID not in $PREREG"; exit 2; }
@@ -34,7 +37,7 @@ echo "run=$RUN_ID ckpt=$CKPT job=${SLURM_JOB_ID:-} node=$(hostname) start=$(date
 echo "$SHA  $CKPT" | sha256sum -c -
 cd $R/mmpose
 python $REPO/mmpose_exps/tools/eval_ckpt.py $RUN_DIR/config.py $CKPT --split test100 \
-  --out-dir $RUN_DIR --run-id $RUN_ID
+  --out-dir $RUN_DIR --run-id $RUN_ID --prereg $PREREG
 python $REPO/eval/eval_coco.py --gt $R/data/splits/test100.json --pred $RUN_DIR/preds_test100.json \
   --out $RUN_DIR/metrics_test100.json --per-image $RUN_DIR/per_image_test100.json --run-id $RUN_ID
 echo "done $(date -Is)"

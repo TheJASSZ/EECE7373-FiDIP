@@ -9,6 +9,10 @@
 #SBATCH --output=/scratch/purohitham.v/fidip/slurm_logs/%x_%j.out
 set -euo pipefail
 R=/scratch/purohitham.v/fidip
+# D19: run from a per-job code snapshot (a concurrent sync must never rewrite scripts under a running job)
+SNAP=$R/snapshots/${SLURM_JOB_ID:-manual_$$}
+mkdir -p $SNAP && rsync -a --exclude=.git $R/repo/ $SNAP/ || { echo "D19 snapshot failed"; exit 1; }
+export REPO=$SNAP
 module load miniconda3/25.9.1
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate $R/envs/mmpose
@@ -16,7 +20,7 @@ export PYTHONNOUSERSITE=1   # never let ~/.local site-packages shadow the env (o
 M=$R/models/mmpose
 for n in td-hm_ViTPose-large_8xb64-210e_coco-256x192-53609f55_20230314 \
          td-hm_ViTPose-huge_8xb64-210e_coco-256x192-e32adcd4_20230314; do
-  python $R/repo/mmpose_exps/tools/resize_vit_pos_embed.py $M/$n.pth $M/derived/${n}_posembed24x18.pth \
+  python $REPO/mmpose_exps/tools/resize_vit_pos_embed.py $M/$n.pth $M/derived/${n}_posembed24x18.pth \
     --src-grid 16 12 --dst-grid 24 18
 done
 (cd $M/derived && sha256sum *.pth | tee SHA256SUMS)

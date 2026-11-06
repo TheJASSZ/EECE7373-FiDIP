@@ -17,7 +17,10 @@
 set -uo pipefail
 : "${RUNS:?set RUNS}"
 R=/scratch/purohitham.v/fidip
-REPO=$R/repo
+# D19: run from a per-job code snapshot (a concurrent sync must never rewrite scripts under a running job)
+SNAP=$R/snapshots/${SLURM_JOB_ID:-manual_$$}
+mkdir -p $SNAP && rsync -a --exclude=.git $R/repo/ $SNAP/ || { echo "D19 snapshot failed"; exit 1; }
+export REPO=$SNAP
 module load miniconda3/25.9.1 cuda/12.1.1
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate $R/envs/mmpose
