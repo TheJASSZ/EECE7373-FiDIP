@@ -95,18 +95,18 @@ bash scripts/sync_results.sh
 - All reported metrics come from `eval/eval_coco.py`.
 
 ## Active runs
-Snapshot as of 2026-11-06 06:38 EST. Refresh with `ssh explorer 'squeue -u $USER'`. Every finished run is listed in `results/registry.csv` and the per-stream notebooks.
+Snapshot as of 2026-11-06 07:33 EST. Refresh with `ssh explorer 'squeue -u $USER'`.
 
 | Job ID | Name | Partition / GPU | Purpose | State |
 |---|---|---|---|---|
-| 11665029 | rp_R016-R018 | gpu / h200 | λ sweep {1e-4, 2e-3, 1e-2} (Val400 only) | pending (priority) |
-| 11665030 | rp_R019-R020 | gpu / h200 | paper recipe; README-literal labels (Val400 only) | pending (priority) |
-| (to resubmit) | rp_R013-R015 | gpu | λ = 0 retrains, 3 seeds. The first attempt (11665026) failed on a yacs type error | repro is fixing it |
+| 11671810 | rp_R021-R023 | gpu / h200 | plain fine-tune control (PRE_EPOCH 0, λ 0.0), 3 seeds (repro-3) | running |
+| 11671549 | im_pack_confA_s2-s3 | gpu / h200 (moved from a100, D22) | HRNet R131 + R132 (arm A) | pending |
+| 11671553 | im_pack_confA_s4-s5 | gpu / h200 (moved from a100, D22) | HRNet R133 + R134 (arm A) | pending |
+| 11671548 | im_pack_confH_s2-s4 | gpu / h200 (moved from a100, D22) | ViT-H-256 R136–R138, back-to-back (arm B) | pending |
+| 11671556 | im_pack_confAB_s6s5 | sharing / l40s | HRNet R135 + ViT-H R139 | running |
+| 11671737 | im_R140 | sharing / l40s | ViT-H-256 R140 (arm B, s6) | running |
 
-Recently finished:
-- 11665025 R010–R012: completed, 18 min on H200.
-- All improve screening and ablation jobs completed (screenA2/B2, ablL256, eval_noflip, finL256, lrL256).
-- The demo and Streamlit health-check jobs completed.
+**Next:** once all ten of R131–R140 have finalized, run one `final_test_eval_mmpose.sbatch` over R101, R105 and R131–R140, then `ensemble_mmpose.sbatch` (R141), then the analysis refresh and contrasts C1–C4 (MANIFEST §10).
 
 ## Guardrails
 - No training or evaluation on login nodes. Use `sbatch`/`srun`. **Login nodes kill heavy processes:** an `unzip` of the 313 MB SyRIP.zip was `Killed` (2026-11-05). Only `curl`/`wget` downloads and light file operations are safe there.
