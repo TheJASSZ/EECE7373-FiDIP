@@ -175,3 +175,16 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
   - Demo rerun queued as job 11665103 (`afterok:11665101`). My first chained submission used `afterok` on the failed job, which can never be satisfied; I cancelled it immediately.
 - Overlays copied to `results/figures/demo/{test100_gt,detector}/` (2 MB) and checked by eye (test38: crouching infant, skeleton aligned, left = blue, right = orange).
 - Likely root cause of the missing `time_end` in R001/R002 run.json (21:10 entry): the old `sync_to_cluster.sh` extracted the tar *in place*, and bash reads scripts incrementally. A sync by another stream during job 11659813 could truncate and rewrite `eval_upstream.sh` under the running bash, which then hits EOF before the last line. The orchestrator's new sync (commit 6caddd9, staged unpack + atomic rename) removes this. My scripts also stamp the end time after every split now.
+
+### 2026-11-06 01:30–01:40 EST — demo verified (STUDENT_GUIDE Part 6), retrains waiting on H200
+- Job 11665103 (sharing L40S, 1 min 48 s, env with pyarrow 17):
+  - `gpu_test.py` OK.
+  - All `tools/demo.py` modes OK.
+  - **Streamlit AppTest OK:** `table rows 17, mean conf 0.866, above-threshold at 0.30 = 17 / 17, at 0.95 = 6 / 17`. The slider changes the result.
+  - The live-server check first failed: `curl localhost:8599` went through the compute-node HTTP proxy (squid on xfer-00, ERR_ACCESS_DENIED). Fixed with `curl --noproxy '*'`.
+  - Job 11665259 (CPU): `health: ok`, `<title>Streamlit</title>`.
+  - How to verify: `scripts/test_streamlit_demo.py` (AppTest drives the server-side-path input and the slider, since AppTest cannot simulate file uploads), plus a background `streamlit run --server.headless true` and `curl --noproxy '*' localhost:8599/_stcore/health`.
+- Env exports had been silently reverted: a push from another stream overwrote `$R/repo/envs/fidip-pip-freeze.txt` (mtime 20:47 = the local copy) after my rebuild wrote it. Exports now go to `$R/envs/` (outside the synced tree) and are copied into the repo; the freeze shows pyarrow 17.0.0. Lesson: never write outputs into `$R/repo`.
+- R010–R012 (11665025) and R013–R015 (11665026) are still PENDING (Priority; H200 contention; estimates slide 01:24 → 01:34, and 02:41 for the second).
+  - `--test-only` probes: H200 with a smaller CPU/mem request → 02:07; A100-80GB (`--constraint=a100@80g`) → 02:42; sharing H100 → 03:43; sharing A100 → 02:46.
+  - Kept as submitted.
