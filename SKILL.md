@@ -95,21 +95,18 @@ bash scripts/sync_results.sh
 - All reported metrics come from `eval/eval_coco.py`.
 
 ## Active runs
-Snapshot as of 2026-11-06 01:26 EST. Refresh with `ssh explorer 'squeue -u $USER'`. Every job ID, and every finished run, is listed in the per-stream notebooks and `results/registry.csv`.
+Snapshot as of 2026-11-06 06:38 EST. Refresh with `ssh explorer 'squeue -u $USER'`. Every finished run is listed in `results/registry.csv` and the per-stream notebooks.
 
 | Job ID | Name | Partition / GPU | Purpose | State |
 |---|---|---|---|---|
-| 11665025 | rp_R010-R012 | gpu / h200 | FiDIP λ = 5e-4 retrain, 3 seeds packed | pending (nodes reserved/drained) |
-| 11665026 | rp_R013-R015 | gpu / h200 | FiDIP λ = 0 (fine-tune) retrain, 3 seeds | pending (priority) |
-| 11665029 | rp_R016-R018 | gpu / h200 | λ sweep {1e-4, 2e-3, 1e-2} (Val400 only) | pending (dependency) |
-| 11665030 | rp_R019-R020 | gpu / h200 | paper recipe; README-literal labels (Val400 only) | pending (dependency) |
-| 11665101 | rp_build_env_fidip | short / CPU | env rebuild (pyarrow pin for Streamlit) | running |
-| 11665103 | rp_demo | sharing / l40s | demo CLI + Streamlit headless test | pending (dependency) |
-| 11664861 | im_pack_screenA2 | gpu / a100 | re-run ViTPose-L384 / H384 screening (after the OOM) | running (d1029) |
-| 11664862 | im_pack_screenB2 | sharing / l40s | re-run ViTPose-H256 / HRNet lr 5e-5 screening | pending (dependency) |
-| 11664863 | im_pack_lrL256 | sharing / l40s | ViTPose-L256 LR screening | running (d4042) |
-| 11664928 | im_pack_ablL256 | gpu / a100 | ablations on ViTPose-L256 | pending (priority) |
-| 11664935 | im_eval_noflip | gpu / a100 | flip-TTA ablation (eval only) | pending (dependency) |
+| 11665029 | rp_R016-R018 | gpu / h200 | λ sweep {1e-4, 2e-3, 1e-2} (Val400 only) | pending (priority) |
+| 11665030 | rp_R019-R020 | gpu / h200 | paper recipe; README-literal labels (Val400 only) | pending (priority) |
+| (to resubmit) | rp_R013-R015 | gpu | λ = 0 retrains, 3 seeds. The first attempt (11665026) failed on a yacs type error | repro is fixing it |
+
+Recently finished:
+- 11665025 R010–R012: completed, 18 min on H200.
+- All improve screening and ablation jobs completed (screenA2/B2, ablL256, eval_noflip, finL256, lrL256).
+- The demo and Streamlit health-check jobs completed.
 
 ## Guardrails
 - No training or evaluation on login nodes. Use `sbatch`/`srun`. **Login nodes kill heavy processes:** an `unzip` of the 313 MB SyRIP.zip was `Killed` (2026-11-05). Only `curl`/`wget` downloads and light file operations are safe there.
