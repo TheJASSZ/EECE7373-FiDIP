@@ -10,8 +10,13 @@ from __future__ import print_function
 
 import numpy as np
 
-from .cpu_nms import cpu_nms
-from .gpu_nms import gpu_nms
+# [EECE7373 patch P1] The compiled box-NMS extensions are optional: SyRIP evaluation only calls the
+# pure-python oks_nms/soft_oks_nms below, so `cd lib && make` is not required.
+try:
+    from .cpu_nms import cpu_nms
+    from .gpu_nms import gpu_nms
+except ImportError:
+    cpu_nms = gpu_nms = None
 
 
 def py_nms_wrapper(thresh):
