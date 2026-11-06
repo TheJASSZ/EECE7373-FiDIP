@@ -17,6 +17,7 @@ REPO=$R/repo
 module load miniconda3/25.9.1 cuda/12.1.1
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate $R/envs/mmpose
+export PYTHONNOUSERSITE=1   # never let ~/.local site-packages shadow the env (orchestrator note)
 # TF32 tensor-core matmuls for every IMPROVE run and eval (cuDNN convs already default to TF32 in
 # PyTorch 2.1, so this puts the ViT matmuls on the same footing as HRNet's convs). In run.json.
 export TORCH_ALLOW_TF32_CUBLAS_OVERRIDE=${TORCH_ALLOW_TF32_CUBLAS_OVERRIDE:-1}

@@ -26,6 +26,7 @@ if [ ! -x "$ENV/bin/python" ]; then
   conda create -y -p "$ENV" --override-channels -c conda-forge python=3.10 pip
 fi
 conda activate "$ENV"
+export PYTHONNOUSERSITE=1   # never let ~/.local site-packages shadow the env (orchestrator note)
 python -V
 
 PIP="python -m pip install --no-input"

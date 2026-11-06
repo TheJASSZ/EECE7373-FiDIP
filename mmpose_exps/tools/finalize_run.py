@@ -123,6 +123,7 @@ def main():
         partition=os.environ.get('SLURM_JOB_PARTITION'), node=socket.gethostname(),
         gpu=gpu_name(), seed=args.seed,
         tf32_cublas_override=os.environ.get('TORCH_ALLOW_TF32_CUBLAS_OVERRIDE'),
+        pythonnousersite=os.environ.get('PYTHONNOUSERSITE'),
         config='mmpose_exps/configs/' + args.config_name,
         config_src=osp.abspath(args.config), config_src_sha256=sha256(args.config),
         config_resolved=osp.join(rd, 'config.py'),

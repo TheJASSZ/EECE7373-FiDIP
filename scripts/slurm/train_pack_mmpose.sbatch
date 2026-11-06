@@ -21,6 +21,7 @@ REPO=$R/repo
 module load miniconda3/25.9.1 cuda/12.1.1
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate $R/envs/mmpose
+export PYTHONNOUSERSITE=1   # never let ~/.local site-packages shadow the env (orchestrator note)
 export TORCH_ALLOW_TF32_CUBLAS_OVERRIDE=${TORCH_ALLOW_TF32_CUBLAS_OVERRIDE:-1}
 export PYTHONPATH=$REPO/mmpose_exps:${PYTHONPATH:-}
 nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv,noheader

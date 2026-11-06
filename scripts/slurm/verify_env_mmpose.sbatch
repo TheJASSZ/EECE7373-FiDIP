@@ -15,6 +15,7 @@ R=/scratch/purohitham.v/fidip
 module load miniconda3/25.9.1 cuda/12.1.1
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate $R/envs/mmpose
+export PYTHONNOUSERSITE=1   # never let ~/.local site-packages shadow the env (orchestrator note)
 nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv
 C=$R/repo/mmpose_exps/configs
 mkdir -p $R/logs/verify
