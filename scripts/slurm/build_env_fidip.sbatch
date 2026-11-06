@@ -51,8 +51,8 @@ print('torchvision', torchvision.__version__, 'numpy', numpy.__version__, 'cv2',
 print('arch list', torch.cuda.get_arch_list())
 EOF
 
-mkdir -p "$REPO/envs"
-python -m pip freeze --all > "$REPO/envs/fidip-pip-freeze.txt"
-conda env export -p "$ENV" --no-builds | sed '/^prefix:/d' > "$REPO/envs/fidip.yml"
+# exports go OUTSIDE the synced tree ($R/repo is overwritten by every push); copy them into the repo's envs/
+python -m pip freeze --all > "$R/envs/fidip-pip-freeze.txt"
+conda env export -p "$ENV" --no-builds | sed '/^prefix:/d' > "$R/envs/fidip.yml"
 echo "network check (compute node):"; curl -sS -o /dev/null -w "drive.google.com %{http_code}\n" https://drive.google.com || true
 echo "done at $(date)"

@@ -42,6 +42,6 @@ $PY tools/demo.py --cfg $CFG --model $M --video $D/in/clip.mp4 --output $D/clip_
 export FIDIP_MODEL=$M FIDIP_CFG=$CFG
 echo "== streamlit AppTest"; $PY $R/repo/scripts/test_streamlit_demo.py $D/in/$(ls $D/in | grep jpg | head -1) $R/data/splits/test100.json
 echo "== streamlit run + health"; FIDIP_MODEL=$M $R/envs/fidip/bin/streamlit run tools/streamlit_demo.py --server.headless true --server.port 8599 > $D/streamlit_server.log 2>&1 &
-SP=$!; for i in $(seq 1 30); do sleep 2; h=$(curl -s localhost:8599/_stcore/health || true); [[ $h == ok ]] && break; done
-echo "health: $h"; curl -s localhost:8599 | grep -o "<title>[^<]*</title>" || true; kill $SP
+SP=$!; for i in $(seq 1 30); do sleep 2; h=$(curl -s --noproxy '*' localhost:8599/_stcore/health || true); [[ $h == ok ]] && break; done
+echo "health: $h"; curl -s --noproxy '*' localhost:8599 | grep -o "<title>[^<]*</title>" || true; kill $SP
 ls -la $D/test100_gt $D/detector
