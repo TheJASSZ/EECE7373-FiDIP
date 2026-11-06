@@ -91,13 +91,20 @@ def main():
 
     if cfg.TEST.MODEL_FILE:
         logger.info('=> loading model from {}'.format(cfg.TEST.MODEL_FILE))
-        model_p.load_state_dict(torch.load(cfg.TEST.MODEL_FILE), strict=False)
+        # [EECE7373 patch P3] upstream loaded with strict=False, which silently loads nothing when the
+        # keys carry a DataParallel 'module.' prefix. Strip that prefix if present, then load strictly.
+        state = torch.load(cfg.TEST.MODEL_FILE, map_location='cpu', weights_only=False)
+        if len(state) and all(k.startswith('module.') for k in state):
+            logger.info('=> stripping DataParallel "module." prefix from {} keys'.format(len(state)))
+            state = {k[len('module.'):]: v for k, v in state.items()}
+        model_p.load_state_dict(state, strict=True)
+        logger.info('=> loaded {} tensors strictly'.format(len(state)))
     else:
         model_state_file = os.path.join(
             final_output_dir, 'final_state.pth'
         )
         logger.info('=> loading model from {}'.format(model_state_file))
-        model_p.load_state_dict(torch.load(model_state_file))
+        model_p.load_state_dict(torch.load(model_state_file, map_location='cpu', weights_only=False))
 
     model_p = torch.nn.DataParallel(model_p, device_ids=cfg.GPUS).cuda()
 

@@ -99,7 +99,7 @@ def main():
 
     if cfg.TRAIN.CHECKPOINT:
         logger.info('=> loading model from {}'.format(cfg.TRAIN.CHECKPOINT))
-        model_p.load_state_dict(torch.load(cfg.TRAIN.CHECKPOINT))
+        model_p.load_state_dict(torch.load(cfg.TRAIN.CHECKPOINT, map_location='cpu', weights_only=False))  # [EECE7373 patch P3]
 
 
     # copy model file
@@ -212,7 +212,7 @@ def main():
 
     if cfg.AUTO_RESUME and os.path.exists(checkpoint_file):
         logger.info("=> loading checkpoint '{}'".format(checkpoint_file))
-        checkpoint = torch.load(checkpoint_file)
+        checkpoint = torch.load(checkpoint_file, map_location='cpu', weights_only=False)  # [EECE7373 patch P3]
         begin_epoch = checkpoint['epoch']
         best_perf = checkpoint['perf']
         last_epoch = checkpoint['epoch']
