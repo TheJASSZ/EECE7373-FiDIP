@@ -149,6 +149,17 @@ class Collector:
             g = self.groups.setdefault(k, {"key": k, "label": k, "run_ids": [], "role": row.get("stream") or "other",
                                            "what_changed": row.get("variant", ""), "hypothesis": row.get("notes", "")})
             g["run_ids"].append(rid)
+        self.single_ci = {}      # (run_id, split) -> (lo, hi) in percent, from bootstrap_ci.py single
+        for p in glob.glob(os.path.join(a.tables, "bootstrap_*.json")):
+            try:
+                d = json.load(open(p))
+            except (OSError, json.JSONDecodeError):
+                continue
+            if isinstance(d, dict) and d.get("mode") == "single" and d.get("run_id"):
+                sp = next((x for x in SPLITS if x in os.path.basename(str(d.get("gt")))), None)
+                if sp:
+                    lo, hi = d["boot_ci95"]["AP"]
+                    self.single_ci[(d["run_id"], sp)] = (100 * lo, 100 * hi, p)
         self.metrics = {}
         for rid in self.run_meta:
             for sp in SPLITS:
@@ -262,10 +273,11 @@ def build(c, a):
         if g.get("role") not in ("released", "retrain"):
             continue
         t, tf, v = c.config_summary(g, "test100"), c.config_summary(g, "test100", "fixed"), c.config_summary(g, "val400")
+        ci = c.single_ci.get((t["run_ids"][0], "test100")) if t["n_runs"] == 1 else None
         repro.append(OrderedDict(row=g.get("label"), source="eval/eval_coco.py", protocol="paper",
                                  n_runs=t["n_runs"], run_ids=t["run_ids"], **{m: t[m] for m in METRICS},
-                                 AP_std=t["AP_std"], test100_AP_fixed=tf["AP"], val400_AP=v["AP"],
-                                 val400_AP_std=v["AP_std"]))
+                                 AP_std=t["AP_std"], AP_ci_lo=ci[0] if ci else None, AP_ci_hi=ci[1] if ci else None,
+                                 test100_AP_fixed=tf["AP"], val400_AP=v["AP"], val400_AP_std=v["AP_std"]))
     tables["reproduction"] = repro
 
     # ---- main comparison: published, released, control, best candidate(s), ensembles (clean Test100 only)
@@ -283,8 +295,11 @@ def build(c, a):
         if not t["n_runs"]:
             continue
         tf, v = c.config_summary(g, "test100", "fixed"), c.config_summary(g, "val400")
+        ci = c.single_ci.get((t["run_ids"][0], "test100")) if t["n_runs"] == 1 else None
         main.append(OrderedDict(model=g.get("label"), role=g.get("role"), run_ids=t["run_ids"], n_runs=t["n_runs"],
-                                test100_AP=t["AP"], test100_AP_std=t["AP_std"], test100_AP50=t["AP50"],
+                                test100_AP=t["AP"], test100_AP_std=t["AP_std"],
+                                test100_AP_ci_lo=ci[0] if ci else None, test100_AP_ci_hi=ci[1] if ci else None,
+                                test100_AP50=t["AP50"],
                                 test100_AP75=t["AP75"], test100_AR=t["AR"], test100_AP_80_95=t["AP_80_95"],
                                 test100_AP_fixed=tf["AP"], val400_AP=v["AP"],
                                 eval="eval_coco.py v1 (paper protocol; GT boxes; rescored)"))
@@ -363,6 +378,15 @@ def latex(c, tables, a):
                     if s["n_runs"] > 1:
                         mac(f"{base} {tag} AP std", f1(s["AP_std"], 2), prov)
                         mac(f"{base} {tag} n runs", str(s["n_runs"]), prov)
+    for (rid, sp), (lo, hi, src) in sorted(c.single_ci.items()):
+        g = next((g for g in c.groups.values() if rid in g["run_ids"]), None)
+        if g is None or (sp == "test100" and not c.test_allowed(rid, g)):
+            continue
+        tag = {"test100": "Test", "val400": "Val"}.get(sp)
+        if tag and len(g["run_ids"]) == 1:
+            base = g.get("macro") or g["key"]
+            mac(f"{base} {tag} AP ci lo", f1(lo), f"{sp} bootstrap: {rid}")
+            mac(f"{base} {tag} AP ci hi", f1(hi), f"{sp} bootstrap: {rid}")
     for b in tables["bootstrap_summary"]:
         nm = b["name"]
         mac(f"Boot {nm} delta", f1(b["delta"], 2), b["file"])
