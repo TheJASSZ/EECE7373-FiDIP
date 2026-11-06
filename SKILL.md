@@ -47,8 +47,11 @@ Request a GPU with `--gres=gpu:h200:1` (or `a100:1`, `v100-sxm2:1`). Templates: 
 
 ## Common operations
 ```bash
-# sync code to the cluster (from the local repo root). NEVER --delete: compiled libs (nms *.so) live only on the cluster copy
-rsync -az --exclude-from=.rsyncignore ./ explorer:/scratch/purohitham.v/fidip/repo/
+# sync code to the cluster: tar-over-ssh (macOS openrsync is incompatible with the cluster's rsync 3.2.5).
+# Never deletes remote files, because compiled libs and other build products live only in the cluster copy.
+bash scripts/sync_to_cluster.sh
+# pull small run artifacts (run.json, metrics/preds JSON, logs, PNGs; never checkpoints) -> results/cluster_runs/
+bash scripts/sync_results.sh
 # submit
 ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch scripts/slurm/<job>.sbatch'
 # chain short jobs
@@ -76,7 +79,7 @@ bash scripts/sync_results.sh
 | — | (login node, pid 687507) | explorer-02 | SyRIP download + unzip | running (started 19:54 EST) | `$R/data/downloads/download.log` |
 
 ## Guardrails
-- No training or evaluation on login nodes. Use `sbatch`/`srun`. Downloads and unzips are OK there.
+- No training or evaluation on login nodes. Use `sbatch`/`srun`. **Login nodes kill heavy processes:** an `unzip` of the 313 MB SyRIP.zip was `Killed` (2026-11-05). Only `curl`/`wget` downloads and light file operations are safe there.
 - **Confirm with the human before `scancel`** on any job that has run for more than 30 minutes.
 - Never tune on Test100 (validate100).
 - Never put big data in `/home` or `/projects`.
