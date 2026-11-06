@@ -3,9 +3,9 @@
 # changed test-time setting (e.g. flip-TTA off). Writes preds_val400<TAG>.json and
 # metrics_val400<TAG>.json (eval/eval_coco.py) next to the run's other files.
 # Required env: RUN_ID, TAG (e.g. _noflip). Optional: EVAL_ARGS (e.g. "--no-flip").
-#SBATCH --job-name=eval_val400_mmpose
+#SBATCH --job-name=im_eval_val400_mmpose
 #SBATCH --partition=sharing
-#SBATCH --gres=gpu:a100:1
+#SBATCH --gres=gpu:l40s:1
 #SBATCH --time=00:30:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G

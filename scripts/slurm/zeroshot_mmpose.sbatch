@@ -3,9 +3,9 @@
 # config's own `load_from`, with that config's test pipeline (GT boxes, flip test). This checks the
 # eval path end to end and gives the "COCO model without fine-tune" reference on Val400.
 # Required env: PAIRS="RUN_ID:repo/relative/config.py RUN_ID:config.py ..."
-#SBATCH --job-name=zeroshot_mmpose
-#SBATCH --partition=gpu
-#SBATCH --gres=gpu:h200:1
+#SBATCH --job-name=im_zeroshot_mmpose
+#SBATCH --partition=sharing
+#SBATCH --gres=gpu:l40s:1
 #SBATCH --time=00:40:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=48G

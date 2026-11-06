@@ -3,7 +3,7 @@
 # and a timed train step per config. Submit with e.g.
 #   sbatch -p gpu --gres=gpu:h200:1 verify_env_mmpose.sbatch      (sm_90)
 #   sbatch -p sharing --gres=gpu:a100:1 verify_env_mmpose.sbatch  (sm_80)
-#SBATCH --job-name=verify_env_mmpose
+#SBATCH --job-name=im_verify_env_mmpose
 #SBATCH --partition=sharing
 #SBATCH --gres=gpu:a100:1
 #SBATCH --time=00:30:00

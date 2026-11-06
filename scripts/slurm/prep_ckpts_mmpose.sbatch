@@ -1,7 +1,7 @@
 #!/bin/bash
 # Derive the 384x288 ViTPose checkpoints: resize backbone.pos_embed 16x12 -> 24x18 (bicubic) for
 # ViTPose-L and ViTPose-H (see mmpose_exps/tools/resize_vit_pos_embed.py for why). CPU only.
-#SBATCH --job-name=prep_ckpts_mmpose
+#SBATCH --job-name=im_prep_ckpts_mmpose
 #SBATCH --partition=short
 #SBATCH --time=00:30:00
 #SBATCH --cpus-per-task=2

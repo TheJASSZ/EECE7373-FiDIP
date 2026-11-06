@@ -6,9 +6,9 @@
 #     verifies its SHA256 against run.json before running;
 #   * writes preds_test100.json and metrics_test100.json (eval/eval_coco.py, paper + fixed).
 # Required env: RUN_ID.   sbatch --export=ALL,RUN_ID=R1xx_... scripts/slurm/final_test_eval_mmpose.sbatch
-#SBATCH --job-name=final_test_mmpose
+#SBATCH --job-name=im_final_test_mmpose
 #SBATCH --partition=sharing
-#SBATCH --gres=gpu:a100:1
+#SBATCH --gres=gpu:l40s:1
 #SBATCH --time=00:30:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G

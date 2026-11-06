@@ -3,7 +3,7 @@
 # and record their SHA256. URLs and published COCO val2017 AP (person detector boxes, AP_H 56) are
 # copied verbatim from the mmpose v1.3.2 model-zoo metafiles:
 #   configs/body_2d_keypoint/topdown_heatmap/coco/{vitpose_coco,hrnet_dark_coco,hrnet_udp_coco}.yml
-#SBATCH --job-name=get_ckpts_mmpose
+#SBATCH --job-name=im_get_ckpts_mmpose
 #SBATCH --partition=short
 #SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=2

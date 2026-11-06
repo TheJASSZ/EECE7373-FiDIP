@@ -1,7 +1,7 @@
 #!/bin/bash
 # Build the MMPose 1.x prefix env at $R/envs/mmpose and clone the matching mmpose source tree.
 # CPU-only job (no GPU needed to install wheels). Idempotent: re-running skips finished steps.
-#SBATCH --job-name=build_env_mmpose
+#SBATCH --job-name=im_build_env_mmpose
 #SBATCH --partition=short
 #SBATCH --time=02:00:00
 #SBATCH --cpus-per-task=4

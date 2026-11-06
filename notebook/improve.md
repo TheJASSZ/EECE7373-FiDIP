@@ -104,3 +104,55 @@ Newest entries at the bottom. Timestamps in EST.
   - The subsets now go to **`$R/mmpose_data/splits/`**. The base config uses absolute `ann_file` paths for them; every other path still reads `$R/data/splits/*.json` and the REPRO image roots `$R/data/syrip/images/<split>/` (read-only).
   - For the record, the check in 11659492 against the then-current splits: real200 = 200 images (0 syn), syn1000 = 1000 (all syn), val400 = 400, test100 = 100; **0 missing images** in `syrip/images/{train_infant,val400,test100}`.
 - **Cancelled smoke jobs:** 11659495 (R190) and 11659496 (R191) had been running 46 s and 62 s. I cancelled them because their configs pointed at the old subset path, and deleted their partial run dirs. They will be relaunched under the same RUN_IDs.
+
+### 2026-11-05 20:52 EST — Slurm QOS limits (per user; every stream shares purohitham.v)
+- From `sacctmgr show qos`:
+  | partition | running jobs | submitted jobs | GPUs | walltime |
+  |---|---|---|---|---|
+  | `sharing` | 2 | 4 | 2 | 1 h |
+  | `gpu` | 4 | 8 | 4 | 8 h |
+- The R191 smoke run (11659558) is pending with `QOSMaxJobsPerUserLimit` while R190 (11659557, L40S d4047) and the H100 verify (11659526, d4041) run.
+- Consequence: at most about 6 concurrent GPU jobs for the whole project, so I'll keep about 2-4 IMPROVE jobs in flight. Heads-up sent to the orchestrator.
+
+### 2026-11-05 20:54 EST — GPU budget policy D14 adopted; scancel blocked; SKILL-ready GPU notes
+- **D14 (orchestrator) IMPROVE share:**
+  - `gpu`: ≤2 running, ≤4 submitted. `sharing`: ≤1 running, ≤2 submitted.
+  - Job names prefixed `im_`. Several fine-tunes are packed into one GPU job where memory allows.
+  - Target A100/L40S/A6000 explicitly. REPRO's R001/R002 evals and R010-R015 have priority.
+- **Transient overshoot, reported honestly.** At adoption IMPROVE had 2 running on `sharing` (R190 smoke 11659557, H100 verify 11659526) and one pending (R191 smoke 11659558), plus one pending H200 verify on `gpu` (11659317).
+  - I tried to `scancel` the two pending, never-started jobs (11659317, 11659558; both <30 min old). **The Claude Code permission classifier denied it ("Interfere With Workloads").** I did not work around that.
+  - Both are short (~1-4 min each) and useful: R191 is the ViT-L-384 pipeline smoke, and 11659317 documents sm_90. They will run as-is. No new `sharing` submissions until they drain.
+- **SKILL-relevant GPU facts (for SKILL.md):**
+  - mmcv 2.1.0 (cu121/torch2.1 wheel) has **no sm_90 kernels**: `mmcv.ops.nms` on H100/H200 → `RuntimeError: CUDA error: no kernel image is available for execution on the device`. torch 2.1.2+cu121 itself supports sm_90 (`get_arch_list` ends at `sm_90`).
+  - The ops are verified OK on **A100 (sm_80)** and **L40S (sm_89)**; A6000 (sm_86) gets the same wheel kernels. So for the MMPose env use `--gres=gpu:a100:1` (gpu partition) or `--gres=gpu:l40s:1` / `gpu:a6000:1` (sharing); avoid `h100`/`h200`.
+  - Measured memory (fp32/TF32, batch 32): HRNet-W48 384x288 14.4 GB; ViTPose-L 384x288 ~24 GB; ViTPose-H 384x288 44.6 GB. The last does not fit a 48 GB L40S (44.4 GB usable), so it needs an A100-80GB.
+  - Per-user QOS: `sharing` 2 running / 4 submitted / 2 GPUs / 1 h; `gpu` 4 / 8 / 4 GPUs / 8 h. Check with `sacctmgr show qos`.
+  - mmpose 1.3.2 needs `mmdet` installed even for GT-box top-down (unconditional import in `mmpose/models/heads/hybrid_heads/rtmo_head.py:9`). mmdet 3.3.0 works with mmcv 2.1.0.
+  - ViTPose at 384x288: mmpretrain 1.2.0 cannot auto-resize the non-square 16x12 `pos_embed` (`int(sqrt(192))=13` → assertion). The procedure lives in committed `mmpose_exps/tools/resize_vit_pos_embed.py`, run by `scripts/slurm/prep_ckpts_mmpose.sbatch` (job 11659247): bicubic, `align_corners=False`, 16x12 → 24x18, cls slot kept.
+    - L: SHA256 `627f26a2c948b301dc012114145f834b9dddf41ce3aa639f7cb509727eb6ab6f`
+    - H: SHA256 `f8c4b2df396ec054a7857f497289913176cd00e919fd992266a97e0f72a0e712`
+    - A sidecar `<file>.json` next to each derived checkpoint records source SHA, grids, mode and destination SHA.
+
+### 2026-11-05 20:59 EST — Smoke tests passed (2 epochs each, `sharing` L40S): full pipeline validated
+- **R190_mmp-hrnetw48_smoke_s1**: job 11659557, d4047 L40S, 4m15s.
+  - Train 0.37-0.40 s/iter at batch 32 (data 0.03-0.06 s), 14.8 GB; Val400 pass about 4 s.
+  - MMPose Val400 AP 0.8917 (ep 1), 0.8985 (ep 2); selected `best_coco_AP_epoch_2.pth` (SHA256 e578ff9a…).
+  - **eval_coco.py Val400 (paper = fixed):** AP 89.8, AP50 98.9, AP75 95.8, AR 91.2, AP@OKS .80/.85/.90/.95 = 92.9/87.4/77.0/53.1 (AP_80_95 77.6). Mean OKS 0.933. Identical to MMPose's printed 0.8985 (Val400 has no id-0 GT).
+- **R191_mmp-vitpose-l384_smoke_s1**: job 11659558, d4042 L40S, 4m12s.
+  - Train 0.67 s/iter at batch 32, 25.4 GB; the resized-pos_embed checkpoint loads and trains (Val400 AP 0.899 after one epoch).
+  - The logged `lr` is the layer-0 group (base_lr x 0.8^25), as intended.
+  - MMPose Val400 AP 0.8995 (ep 1), 0.9119 (ep 2).
+  - **eval_coco.py Val400:** AP 91.2, AP50 98.9, AP75 96.7, AR 92.8, AP@.80/.85/.90/.95 = 93.4/91.2/81.4/58.1 (AP_80_95 81.0). Mean OKS 0.940.
+- **What the smokes verify:**
+  - CombinedDataset 1:1 mix, GT-box Val400 eval with flip, `save_best`, resolved config dump.
+  - `eval_ckpt.py` pred dump (COCO results with `image_id`, `keypoints`, `score`, `bbox`), then `eval_coco.py`.
+  - `finalize_run.py`: run.json with job/node/GPU/seed/TF32/git head+tree+dirty/init+selected ckpt SHA256; registry row.
+- Smoke rows are appended to `results/registry.csv` marked "pipeline check only". They are not candidates, and their Val400 predates SPLITS_READY.
+- **H100 verify (11659526, d4041, sm_90, TF32):** mmcv ops fail (`no kernel image`, as on H200); all model train steps OK.
+  - HRNet b32 0.175 s; ViT-L-256 b64 0.195 s; ViT-L-384 b64 0.49 s (47.7 GB); ViT-H-256 b64 0.37 s; ViT-H-384 b32 0.49 s (44.6 GB); ViT-H-384 b64 OOM on 80 GB.
+  - Not used for runs (D14).
+- **Pipeline changes since:**
+  - Per-run body factored into `scripts/run_one_mmpose.sh`, called by `train_mmpose.sbatch` (one run) and the new `train_pack_mmpose.sbatch` (several runs on one GPU, staggered starts, `nvidia-smi` per-process memory log every 60 s at `$R/logs/pack/<job>_gpu.csv`, `pack_info.json` per run).
+  - All job names carry the `im_` prefix.
+  - Finalized runs drop the resumable `epoch_*.pth` (optimizer state: 765 MB HRNet, ~3.7 GB ViT-L) and keep `best_*.pth`.
+  - run.json gains `throughput` (median s/iter, data s/iter, max memory).

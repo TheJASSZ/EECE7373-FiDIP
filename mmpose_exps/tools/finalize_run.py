@@ -54,6 +54,22 @@ def val_curve(run_dir):
     return [dict(epoch=e, **rows[e]) for e in sorted(rows)]
 
 
+def train_stats(run_dir):
+    """Median s/iter, data s/iter and max GPU memory (MB) from mmengine's train scalars."""
+    t, d, mem = [], [], []
+    for p in sorted(glob.glob(osp.join(run_dir, '2*', 'vis_data', 'scalars.json'))):
+        with open(p) as f:
+            for ln in f:
+                r = json.loads(ln)
+                if 'loss' in r and 'time' in r:
+                    t.append(r['time']); d.append(r.get('data_time', 0.0)); mem.append(r.get('memory', 0))
+    if not t:
+        return {}
+    med = lambda v: sorted(v)[len(v) // 2]
+    return dict(train_s_per_iter_median=round(med(t), 4), data_s_per_iter_median=round(med(d), 4),
+                max_memory_MB=max(mem), n_logged_iters=len(t))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('run_dir')
@@ -122,6 +138,7 @@ def main():
         best_epoch=best_epoch, checkpoint=best_ckpt,
         checkpoint_sha256=sha256(best_ckpt) if best_ckpt else None,
         val400_mmpose_best=max(curve, key=lambda r: r['coco/AP']) if curve else None,
+        throughput=train_stats(rd),
         val400_eval_coco=m, started=args.started,
         finished=time.strftime('%Y-%m-%dT%H:%M:%S%z'))
     with open(osp.join(rd, 'run.json'), 'w') as f:

@@ -3,7 +3,7 @@
 # (by images[].is_synthetic) into $R/mmpose_data/splits ($R/data is REPRO-owned, read-only for us),
 # then check that every image of every split
 # used by the configs exists. CPU only, seconds.
-#SBATCH --job-name=prep_data_mmpose
+#SBATCH --job-name=im_prep_data_mmpose
 #SBATCH --partition=short
 #SBATCH --time=00:15:00
 #SBATCH --cpus-per-task=1
