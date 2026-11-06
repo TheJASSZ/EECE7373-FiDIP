@@ -220,3 +220,7 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
 | 1e-2 | R018 | 85.78 (5) | 83.84 (oscillates 82–85) | 6.09e-4 | 5.99e-4 |
 - **Outcome vs hypothesis:** as predicted, large λ hurts. At λ ≥ 2e-3 the −λ·BCE term outweighs the ~3e-4 heatmap MSE: train MSE rises with λ, and at 1e-2 Val400 AP peaks at epoch 5 and then degrades.
 - Not predicted: **λ = 1e-4 beats the official 5e-4 by 0.5 AP** (single seed, about 4× the 3-seed sd of 0.13). This needs λ = 0 (R013–R015, pending) and more seeds before any claim. Test100 was not touched for the sweep.
+- `eval/eval_coco.py` on the released preds (job 11671085, `scripts/eval_coco_repro.sh`) equals the upstream prints.
+  - R001: Test100 paper **93.60** / fixed 94.99; Val400 90.36; validate500 90.92 / 91.15; validate_infant 92.15 / 93.64.
+  - R002: Test100 79.14 / 79.84; Val400 68.18; validate_infant 77.74 / 78.62.
+  - Our λ = 5e-4 retrains match the released model on Val400 (90.51 ± 0.13 vs 90.36).
