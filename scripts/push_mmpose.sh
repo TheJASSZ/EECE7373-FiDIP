@@ -8,7 +8,9 @@ cd "$REPO"
 bash scripts/sync_to_cluster.sh
 HEAD_SHA=$(git rev-parse HEAD)
 TREE_SHA=$(git rev-parse 'HEAD^{tree}')
-DIRTY_FILES=$(git status --porcelain --untracked-files=all -- mmpose_exps scripts eval envs | awk '{print $2}' | tr '\n' ' ')
+# dirty = uncommitted changes in the files the IMPROVE pipeline actually executes
+DIRTY_FILES=$(git status --porcelain --untracked-files=all -- mmpose_exps 'scripts/slurm/*_mmpose.sbatch' \
+  scripts/push_mmpose.sh scripts/launch_mmpose.sh eval/eval_coco.py | awk '{print $2}' | tr '\n' ' ')
 if [ -n "$DIRTY_FILES" ]; then DIRTY=true; else DIRTY=false; fi
 SYNCED_AT=$(date "+%Y-%m-%dT%H:%M:%S%z")
 python3 - "$HEAD_SHA" "$TREE_SHA" "$DIRTY" "$SYNCED_AT" "$DIRTY_FILES" <<'EOF' | ssh -o BatchMode=yes -o ConnectTimeout=15 explorer 'cat > /scratch/purohitham.v/fidip/repo/GIT_INFO_mmpose.json'

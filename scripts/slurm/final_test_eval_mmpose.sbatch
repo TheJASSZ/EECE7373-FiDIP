@@ -27,6 +27,7 @@ conda activate $R/envs/mmpose
 # TF32 tensor-core matmuls for every IMPROVE run and eval (cuDNN convs already default to TF32 in
 # PyTorch 2.1, so this puts the ViT matmuls on the same footing as HRNet's convs). In run.json.
 export TORCH_ALLOW_TF32_CUBLAS_OVERRIDE=${TORCH_ALLOW_TF32_CUBLAS_OVERRIDE:-1}
+export PYTHONPATH=$REPO/mmpose_exps:${PYTHONPATH:-}   # custom modules (mmpose_exps/syrip_da)
 read CKPT SHA < <(python -c "import json;d=json.load(open('$RUN_DIR/run.json'));print(d['checkpoint'],d['checkpoint_sha256'])")
 echo "run=$RUN_ID ckpt=$CKPT job=${SLURM_JOB_ID:-} node=$(hostname) start=$(date -Is)"
 echo "$SHA  $CKPT" | sha256sum -c -

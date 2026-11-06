@@ -29,6 +29,7 @@ conda activate $R/envs/mmpose
 # TF32 tensor-core matmuls for every IMPROVE run and eval (cuDNN convs already default to TF32 in
 # PyTorch 2.1, so this puts the ViT matmuls on the same footing as HRNet's convs). In run.json.
 export TORCH_ALLOW_TF32_CUBLAS_OVERRIDE=${TORCH_ALLOW_TF32_CUBLAS_OVERRIDE:-1}
+export PYTHONPATH=$REPO/mmpose_exps:${PYTHONPATH:-}   # custom modules (mmpose_exps/syrip_da)
 export PYTHONHASHSEED=$SEED
 STARTED=$(date -Is)
 echo "run=$RUN_ID config=$CONFIG seed=$SEED cfg_opts='${CFG_OPTS:-}' job=${SLURM_JOB_ID:-} node=$(hostname) start=$STARTED"

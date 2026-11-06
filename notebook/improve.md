@@ -94,3 +94,13 @@ Newest entries at the bottom. Timestamps in EST.
   - FP32 accumulation is kept. Inference is FP32/TF32 (no AMP).
 - **Data still pending:** REPRO's `make_splits.py` (jobs 11659256/299/351/400) fails `assert ov['val400_x_test100_by_id'] == ov['val400_x_test100_by_file_name'] == ov['val400_x_test100_by_md5'] == 0`. Some Val400/Test100 overlap, likely md5 duplicates (REPRO has a `dups.py`). If so, `val400.json` may still change.
   - I will not start screening until `SPLITS_READY`. Two-epoch **smoke** runs (pipeline check only, no selection) go ahead on the current files.
+
+### 2026-11-05 20:49 EST — Reply to orchestrator: $R/data/raw was not touched by IMPROVE; $R/data is now read-only for me
+- **Q: did an IMPROVE job or command move or modify files under `$R/data/raw` (e.g. the ~20:08 flatten of `raw/SyRIP/SyRIP`)? A: No.**
+  - Every IMPROVE command that touched `$R/data` was read-only: `ls`, `readlink`, `os.path.exists` checks and JSON reads of `$R/data/splits/*.json`.
+  - At 20:08 my only jobs were the env build (11659031, writes `$R/envs/mmpose` and `$R/mmpose`) and the checkpoint download (11659053, writes `$R/models/mmpose`).
+- **One write I did make into `$R/data` (not raw), now undone.** Job **11659492** (`prep_data_mmpose`, 20:46, 29 s) wrote my derived train subsets to `$R/data/improve_splits/{train_real200,train_syn1000,MANIFEST}.json`.
+  - I deleted that directory at about 20:50; `$R/data` again holds only `downloads raw splits syrip`.
+  - The subsets now go to **`$R/mmpose_data/splits/`**. The base config uses absolute `ann_file` paths for them; every other path still reads `$R/data/splits/*.json` and the REPRO image roots `$R/data/syrip/images/<split>/` (read-only).
+  - For the record, the check in 11659492 against the then-current splits: real200 = 200 images (0 syn), syn1000 = 1000 (all syn), val400 = 400, test100 = 100; **0 missing images** in `syrip/images/{train_infant,val400,test100}`.
+- **Cancelled smoke jobs:** 11659495 (R190) and 11659496 (R191) had been running 46 s and 62 s. I cancelled them because their configs pointed at the old subset path, and deleted their partial run dirs. They will be relaunched under the same RUN_IDs.

@@ -61,8 +61,12 @@ data_mode = 'topdown'
 img_train = 'syrip/images/train_infant/'
 img_val400 = 'syrip/images/val400/'
 img_test100 = 'syrip/images/test100/'
-ann_real200 = 'improve_splits/train_real200.json'   # train_infant images with is_synthetic == 0
-ann_syn1000 = 'improve_splits/train_syn1000.json'   # train_infant images with is_synthetic == 1
+# $R/data is owned by the REPRO stream and is read-only here. The two derived train subsets are
+# built by mmpose_exps/tools/make_train_subsets.py into $R/mmpose_data/splits (absolute paths, so
+# mmengine does not join them with data_root).
+derived_root = '/scratch/purohitham.v/fidip/mmpose_data/'
+ann_real200 = derived_root + 'splits/train_real200.json'   # train_infant images, is_synthetic == 0
+ann_syn1000 = derived_root + 'splits/train_syn1000.json'   # train_infant images, is_synthetic == 1
 ann_val400 = 'splits/val400.json'
 ann_test100 = 'splits/test100.json'
 

@@ -6,7 +6,7 @@ categories/info, annotations of the kept images only) plus a manifest with count
 Used by the 1:1 real:synthetic mix (CombinedDataset, sample_ratio_factor=[5, 1]) and by the
 real-only ablation. Nothing about Val400/Test100 is read here.
 
-Usage: python make_train_subsets.py $R/data/splits/train_infant.json $R/data/improve_splits
+Usage: python make_train_subsets.py $R/data/splits/train_infant.json $R/mmpose_data/splits
 """
 import argparse
 import hashlib
