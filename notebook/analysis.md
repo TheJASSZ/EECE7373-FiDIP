@@ -44,7 +44,7 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
 - Over/underfitting curves from `epochs.csv`.
 - An attempts table (`results/tables/attempts.csv` + LaTeX).
 
-### 2026-11-05 20:40 EST: `eval/eval_coco.py` v1.0 built and committed (c6eb701), plus the id-0 artifact pinned down
+### 2026-11-05 20:19 EST: `eval/eval_coco.py` v1.0 built and committed (c6eb701), plus the id-0 artifact pinned down
 **What I built.** `eval/eval_coco.py`, 24 pytest tests (`eval/tests/`), and `eval/README.md`. The pipeline:
 - GT checks, including a guard that refuses constant areas.
 - Robust prediction loading across 12 encodings.
@@ -84,3 +84,46 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
 **Surprises.**
 - A clean mock "Test100" with noise σ = 0.025·sqrt(area) already reproduces the published pattern exactly: AP50 = AP75 = 98.2 and AR50 = AR75 = 99.0 under `paper`, against 100/100 under `fixed`.
 - xtcocotools has silently fixed what pycocotools still gets wrong.
+
+### 2026-11-05 20:44 EST: statistics, ensembling, figures, tables and the cluster pipeline (commits 7745e6c, cfc7c00, 802f9bb, bee2d8a)
+**What I built**
+- `eval/bootstrap_ci.py`: modes `paired`, `multiseed` (with optional `--hierarchical`), `contrasts` (Holm) and `single`. The fast path reads COCOeval's own per-image matches (`evalImgs`) and re-implements only `accumulate()`, vectorised.
+- `eval/ensemble_preds.py`: mean or confidence-weighted coordinate averaging, computed as x0 + Σw(xi − x0)/Σw so an ensemble of identical files is bit-exact. Multi-person images are matched by GT box or by keypoint centroid, never by GT keypoints.
+- `eval/taxonomy.py`: L/R swap per pair plus the whole-body mirror, in-plane torso angle, a front/back/profile view proxy, occlusion count and scale.
+- `eval/analyze.py`, with subcommands `models`, `splits`, `curves` and `gtbox` (figures and tables listed in `eval/README.md`).
+- `eval/visualize.py`: gallery, failures, compare.
+- `eval/plot_style.py`: the shared figure style.
+- `scripts/analysis_pipeline.py`, `scripts/slurm/analysis.sbatch`, `scripts/pull_analysis.sh`, `scripts/collect_results.py`.
+
+**How I verified it**
+- 58 pytest tests, passing locally (numpy 2.4.4) and on the cluster in `$R/envs/analysis` (job 11659381: numpy 1.26.4, pycocotools 2.0.8, the same as the fidip env; 57 passed then, before the gate test was added).
+- Bootstrap fast path:
+  - Bit-identical to COCOeval on the full set for the paper protocol with ids from 1 and from 0, and for the fixed protocol. The mock includes multi-person images, missing predictions, near-duplicate detections and score ties.
+  - Equal to 1e-12 to COCOeval run on 8 explicitly duplicated (resampled) datasets.
+  - Every bootstrap output records `self_check.max_abs_diff_vs_cocoeval` (0.0 so far).
+  - Speed: B = 10000 paired on 100 images takes about 2 s.
+- Holm adjustment checked against a hand computation. With identical files, Δ = 0, CI = [0, 0] and p = 1. A clear improvement gives p < 0.01, and with common noise every image wins.
+- Taxonomy, on constructed poses: rotation bins at ±30/90/100/150/180°; the view sign is rotation-invariant and flips under mirroring; a wrist swap is detected alone; a full mirror flags all 8 pairs; small jitter and an unresolvable (coincident) GT pair are not flagged.
+- Ensembling: identical inputs give identical outputs and metrics. Independent noise improves mean OKS. Both multi-person matchers keep persons apart.
+- Figures: I rendered every one on a realistic mock (rotated, mirrored and occluded anatomical pose; 3 models, one with 3 seeds) and looked at each PNG. Fixes from that inspection:
+  - colliding titles and labels;
+  - in-plot annotations moved into legends;
+  - a 2×3 taxonomy grid;
+  - square, grey-padded crops;
+  - neutral colours for splits, so slot colours keep meaning "model".
+- Palette checked with the dataviz validator on a white surface:
+  - 8 slots pass the adjacent-pair checks: worst CVD ΔE 9.1 (protan), normal-vision 19.6.
+  - Only slots 1–3 pass all-pairs (9.2 / 24.0), so all-pairs figures colour at most 3 models and grey the rest.
+  - Slots 3–5 have < 3:1 contrast, so every figure has a legend or direct labels.
+- `collect_results.py` tested on the mock registry, pre-registration, configs and bootstrap. Fixes from that test:
+  - Macro names keep their camel case (`\PaperFiDIPAP`).
+  - Duplicate macros are de-duplicated.
+  - The paper's implied AP_.80:.95 prints as 86.25. It is exactly 345/4, and 1-decimal round-half-even would print 86.2, not the 86.3 quoted earlier.
+  - The bootstrap summary was renamed to avoid a glob collision with its own output.
+- Test100 gate (`analysis_pipeline.test_allowed`, unit-tested): Test100 predictions are evaluated only for released or `_retrain` runs and pre-registered RUN_IDs. The λ sweep and MMPose screening are withheld.
+
+**New input from repro.** The syrip_for_train copy of validate100 has GT `images[].posture` labels: supine 43, prone 41, sitting 11, standing 5.
+- `analyze.py` now takes `"posture": <json>` in the manifest. With it, the taxonomy and error-vs-orientation figures use the GT posture instead of the geometric proxy.
+- It also writes `view_proxy_vs_posture_<split>.csv`, which validates the proxy on Test100 so it can be trusted on Val400 (no labels there).
+
+**Waiting on:** `$R/data/SPLITS_READY`, the fidip env (job 11659313), the released checkpoints, and R001 predictions.
