@@ -28,6 +28,10 @@ for split in ("test100", "val400"):
          "published": {"label": "FiDIP (paper)", "AP": 0.936, "AP50": 0.985, "AP75": 0.985, "AR": 0.946}}
     if split == "test100":
         m["posture"] = post
+        import os
+        vp = "/scratch/purohitham.v/fidip/analysis/splits_derived/README.json"
+        if os.path.exists(vp):
+            m["leak_ids"] = json.load(open(vp))["test100_noleak"]["excluded_test_ids"]
     json.dump(m, open(f"{out}/{rid}_{split}.json", "w"), indent=1)
 PY
 

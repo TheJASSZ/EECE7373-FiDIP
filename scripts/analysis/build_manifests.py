@@ -81,6 +81,9 @@ def main(argv=None):
         if split == "test100":
             man["posture"] = os.path.join(R, "data", "raw", "syrip_for_train", "syrip", "annotations",
                                           "person_keypoints_validate_infant.json")
+            vp = os.path.join(R, "analysis", "splits_derived", "README.json")
+            if os.path.exists(vp):
+                man["leak_ids"] = json.load(open(vp))["test100_noleak"]["excluded_test_ids"]
         p = os.path.join(a.out, f"compare_{split}.json")
         json.dump(man, open(p, "w"), indent=1)
         print(f"{p}: {len(models)} configs, focus={man['focus']}")

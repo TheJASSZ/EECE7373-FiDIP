@@ -596,6 +596,23 @@ def cmd_models(a):
     write_csv(os.path.join(tabs, f"lr_swaps_{split}.csv"), swap_rows(models, per_model))
     write_csv(os.path.join(tabs, f"occlusion_{split}.csv"), occlusion_rows(models))
     write_csv(os.path.join(tabs, f"ranking_quality_{split}.csv"), ranking_quality(models, man.get("gt")))
+    leak = set(int(x) for x in man.get("leak_ids", []))
+    if leak:          # memorisation check: images that are copies of training images vs the rest
+        lrows = []
+        for m in models:
+            o_in = [m.oks(k) for k in m.keys if k[0] in leak]
+            o_out = [m.oks(k) for k in m.keys if k[0] not in leak]
+            mu_in, mu_out = (float(np.mean(o_in)) if o_in else None), (float(np.mean(o_out)) if o_out else None)
+            rng = np.random.default_rng(RNG_SEED)
+            diffs = [] if not (o_in and o_out) else [
+                np.mean(rng.choice(o_in, len(o_in))) - np.mean(rng.choice(o_out, len(o_out))) for _ in range(B_CI)]
+            lrows.append({"model": m.label, "key": m.key, "run_ids": m.run_ids, "n_leak": len(o_in),
+                          "n_rest": len(o_out), "mean_oks_leak": mu_in, "mean_oks_rest": mu_out,
+                          "diff": None if mu_in is None or mu_out is None else mu_in - mu_out,
+                          "diff_ci_lo": float(np.percentile(diffs, 2.5)) if diffs else None,
+                          "diff_ci_hi": float(np.percentile(diffs, 97.5)) if diffs else None,
+                          "leak_ids": sorted(leak), "per_image_oks_leak": [round(x, 4) for x in o_in]})
+        write_csv(os.path.join(tabs, f"leak_effect_{split}.csv"), lrows)
     img_rows = []
     for k in models[0].keys:
         r = dict(image_id=k[0], file_name=models[0].rec(k)["file_name"],
