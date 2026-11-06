@@ -185,3 +185,22 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - 87f5689 → e8373c4
 - Workers now also record the tree SHA (`HEAD^{tree}`) in `run.json`, because tree SHAs survive message rewrites.
 - **Self-correction:** the preserved commit times showed that four of my AGENT.md headers and decision rows (and the SKILL.md snapshot) had **estimated** times (20:25/20:30/20:40) where the real times were 20:08–20:13. I corrected them to match the git commit times and added a rule to `CLAUDE.md`: always take timestamps from `date`, never estimate.
+
+### 2026-11-05 20:19 EST — Unified evaluator v1.0 ready; cross-framework metric trap
+- The analysis worker committed `eval/eval_coco.py` v1.0 (`c6eb701`, 24 pytest tests pass).
+- **Outputs:**
+  - `metrics`: paper protocol, rescored. This is the headline.
+  - `metrics_fixed`: id-0 artifact removed.
+  - `metrics_original_scores`.
+  - Per-OKS-threshold AP, and `AP_80_95`.
+  - Per-keypoint error / √(w·h) and PCK@.05/.1/.2.
+  - Per-image OKS.
+- **Finding:** MMPose 1.3.2's `CocoMetric` uses **xtcocotools 1.14.3**. It initialises `dtm = -1` and tests `dtm >= 0` (cocoapi PR #332), so it **does not** have the id-0 artifact. pycocotools 2.0.8/2.0.11 still does.
+  - So MMPose-printed Test100 AP equals our `fixed` protocol, about 1 AP above paper-comparable numbers for identical predictions.
+  - Comparing MMPose's own printout with 93.6 would have silently inflated our improvement by about 1 AP.
+  - This confirms D2: only `eval_coco.py` numbers are compared across frameworks. Relayed to the improve worker.
+  - Val400 is unaffected because it contains no id 0.
+- **Test100 ceiling under the paper protocol** (unit-tested):
+  - AR ≤ 0.99.
+  - A perfect model gets per-threshold AP of 0.980–0.990, depending on how test0's score ranks.
+  - The published AP50 = AP75 = 98.5 therefore means FiDIP is already perfect at OKS 0.5/0.75 on the 99 matchable images. All headroom is at OKS ≥ 0.8.
