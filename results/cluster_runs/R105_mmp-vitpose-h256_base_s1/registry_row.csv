@@ -1,0 +1,1 @@
+R105_mmp-vitpose-h256_base_s1,11670941,improve,mmp-vitpose-h256,base,1,mmpose_exps/configs/syrip_vitpose-h_udp-256x192.py,7e68cfe385a9/tree:660d19205730,sharing,NVIDIA L40S,done,93.17,,/scratch/purohitham.v/fidip/runs/R105_mmp-vitpose-h256_base_s1/best_coco_AP_epoch_14.pth,245cd63856d39cb8a7feb3f4e0aaa3f3c6d267588f93813f11dd3cce8a627a04,

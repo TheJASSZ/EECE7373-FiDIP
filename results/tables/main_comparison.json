@@ -99,6 +99,114 @@
   "eval": "eval_coco.py v1 (paper protocol; GT boxes; rescored)"
  },
  {
+  "model": "ViTPose-H 256 (MMPose)",
+  "role": "candidate",
+  "run_ids": [
+   "R105_mmp-vitpose-h256_base_s1"
+  ],
+  "n_runs": 1,
+  "test100_AP": 94.68984937012421,
+  "test100_AP_std": null,
+  "test100_AP_ci_lo": null,
+  "test100_AP_ci_hi": null,
+  "test100_AP50": 98.1089108910891,
+  "test100_AP75": 98.1089108910891,
+  "test100_AR": 96.1,
+  "test100_AP_80_95": 89.56125708867685,
+  "test100_AP_fixed": 96.7457014281284,
+  "test100_clean_AP": 93.94947541797993,
+  "val400_AP": 93.16554892492842,
+  "eval": "eval_coco.py v1 (paper protocol; GT boxes; rescored)"
+ },
+ {
+  "model": "HRNet-W48 DARK 384 (arm A)",
+  "role": "control",
+  "run_ids": [
+   "R131_mmp-hrnetw48_conf_s2",
+   "R132_mmp-hrnetw48_conf_s3",
+   "R133_mmp-hrnetw48_conf_s4",
+   "R134_mmp-hrnetw48_conf_s5",
+   "R135_mmp-hrnetw48_conf_s6"
+  ],
+  "n_runs": 5,
+  "test100_AP": 93.56103389021094,
+  "test100_AP_std": 0.2185534643456235,
+  "test100_AP_ci_lo": null,
+  "test100_AP_ci_hi": null,
+  "test100_AP50": 98.47722772277227,
+  "test100_AP75": 98.22173140390962,
+  "test100_AR": 94.61999999999999,
+  "test100_AP_80_95": 86.25061722108455,
+  "test100_AP_fixed": 95.02080176375323,
+  "test100_clean_AP": 92.68603145114952,
+  "val400_AP": 91.57361947370386,
+  "eval": "eval_coco.py v1 (paper protocol; GT boxes; rescored)"
+ },
+ {
+  "model": "ViTPose-H 256 (arm B)",
+  "role": "final",
+  "run_ids": [
+   "R136_mmp-vitpose-h256_conf_s2",
+   "R137_mmp-vitpose-h256_conf_s3",
+   "R138_mmp-vitpose-h256_conf_s4",
+   "R139_mmp-vitpose-h256_conf_s5",
+   "R140_mmp-vitpose-h256_conf_s6"
+  ],
+  "n_runs": 5,
+  "test100_AP": 95.17434449119455,
+  "test100_AP_std": 0.11547943094566794,
+  "test100_AP_ci_lo": null,
+  "test100_AP_ci_hi": null,
+  "test100_AP50": 98.23366336633663,
+  "test100_AP75": 98.23366336633663,
+  "test100_AR": 96.39999999999999,
+  "test100_AP_80_95": 90.58536617848138,
+  "test100_AP_fixed": 96.95253279059587,
+  "test100_clean_AP": 94.39114032575826,
+  "val400_AP": 92.88489192221903,
+  "eval": "eval_coco.py v1 (paper protocol; GT boxes; rescored)"
+ },
+ {
+  "model": "ViTPose-H 256, 5-seed ensemble",
+  "role": "ensemble",
+  "run_ids": [
+   "R141_mmp-vitpose-h256_ens5"
+  ],
+  "n_runs": 1,
+  "test100_AP": 95.69891740539347,
+  "test100_AP_std": null,
+  "test100_AP_ci_lo": null,
+  "test100_AP_ci_hi": null,
+  "test100_AP50": 98.24752475247523,
+  "test100_AP75": 98.24752475247523,
+  "test100_AR": 96.80000000000003,
+  "test100_AP_80_95": 91.87600638477078,
+  "test100_AP_fixed": 97.38956443095742,
+  "test100_clean_AP": 94.96602511011643,
+  "val400_AP": 92.86552821112237,
+  "eval": "eval_coco.py v1 (paper protocol; GT boxes; rescored)"
+ },
+ {
+  "model": "DarkPose HRNet-W48 (COCO only, released)",
+  "role": "released",
+  "run_ids": [
+   "R003_darkpose-w48-coco_released"
+  ],
+  "n_runs": 1,
+  "test100_AP": 88.45686073271506,
+  "test100_AP_std": null,
+  "test100_AP_ci_lo": null,
+  "test100_AP_ci_hi": null,
+  "test100_AP50": 98.48514851485149,
+  "test100_AP75": 98.48514851485149,
+  "test100_AR": 90.0,
+  "test100_AP_80_95": 73.4144290595104,
+  "test100_AP_fixed": 89.91537204842402,
+  "test100_clean_AP": 88.14059742932379,
+  "val400_AP": 86.52319722168568,
+  "eval": "eval_coco.py v1 (paper protocol; GT boxes; rescored)"
+ },
+ {
   "model": "Plain fine-tune retrain (no pre-stage, lambda 0)",
   "role": "retrain",
   "run_ids": [

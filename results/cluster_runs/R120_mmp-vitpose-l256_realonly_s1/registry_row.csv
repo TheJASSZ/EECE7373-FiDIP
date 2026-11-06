@@ -1,0 +1,1 @@
+R120_mmp-vitpose-l256_realonly_s1,11664928,improve,mmp-vitpose-l256,realonly,1,mmpose_exps/configs/syrip_vitpose-l_udp-256x192_realonly.py,7e68cfe385a9/tree:660d19205730,gpu,NVIDIA A100-SXM4-80GB,done,92.24,,/scratch/purohitham.v/fidip/runs/R120_mmp-vitpose-l256_realonly_s1/best_coco_AP_epoch_8.pth,bdda2814c5463733d8370283825adaa24fb2dc2545ff195027f8df0211c037db,

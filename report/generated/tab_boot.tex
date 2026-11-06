@@ -4,11 +4,21 @@
 \toprule
 Contrast & $\Delta$AP & 95\% CI & $p$ & $p_{\mathrm{Holm}}$ & fixed: $\Delta$ [CI] & robust & W/T/L\\
 \midrule
+C1: arm B vs released FiDIP & $+1.6$ & [$+0.4$, $+2.8$] & 0.004 & 0.007 & $+2.0$ [$+1.0$, $+2.9$] & yes & 70/0/30\\
+C2: arm B vs arm A & $+1.6$ & [$+0.6$, $+2.8$] & 0.003 & 0.007 & $+1.9$ [$+1.0$, $+2.9$] & yes & 60/0/40\\
+C3: arm B vs FiDIP retrain & $+1.6$ & [$+0.6$, $+2.7$] & 0.002 & 0.007 & $+1.8$ [$+1.1$, $+2.8$] & yes & 74/0/26\\
+C4: arm B ensemble vs released FiDIP & $+2.1$ & [$+0.9$, $+3.3$] & $<$0.001 & 0.004 & $+2.4$ [$+1.5$, $+3.4$] & yes & 74/0/26\\
 FiDIP retrain vs fine-tune & $-0.0$ & [$-0.3$, $+0.2$] & 0.681 & 1.000 & $+0.0$ [$-0.3$, $+0.2$] & no & 27/0/73\\
 FiDIP retrain vs released & $-0.1$ & [$-0.7$, $+0.6$] & 0.532 & 1.000 & $+0.1$ [$-0.6$, $+0.7$] & no & 61/0/39\\
 FiDIP retrain vs plain fine-tune (no pre-stage) & $-0.1$ & [$-0.4$, $+0.1$] & 0.842 & 1.000 & $+0.0$ [$-0.3$, $+0.3$] & no & 27/0/73\\
 FiDIP retrain vs fine-tune (Test100-clean) & $-0.0$ & [$-0.3$, $+0.2$] & 0.501 & 1.000 & $+0.0$ [$-0.2$, $+0.3$] & no & 24/0/71\\
 FiDIP retrain vs released (Test100-clean) & $+0.0$ & [$-0.7$, $+0.7$] & 0.482 & 1.000 & $+0.1$ [$-0.6$, $+0.8$] & no & 58/0/37\\
 FiDIP retrain vs plain fine-tune (no pre-stage) (Test100-clean) & $-0.1$ & [$-0.4$, $+0.2$] & 0.790 & 1.000 & $+0.0$ [$-0.3$, $+0.4$] & no & 25/0/70\\
+S1: arm A vs released FiDIP & $-0.0$ & [$-0.8$, $+0.7$] & 0.566 & 0.566 & $+0.0$ [$-0.7$, $+0.7$] & no & 66/0/34\\
+S2: R105 (arm B s1) vs released FiDIP & $+1.1$ & [$-0.3$, $+2.5$] & 0.052 & 0.157 & $+1.8$ [$+0.7$, $+2.8$] & no & 74/0/26\\
+S3: R101 (arm A s1) vs released FiDIP & $+0.3$ & [$-0.6$, $+1.2$] & 0.269 & 0.537 & $+0.4$ [$-0.6$, $+1.2$] & no & 68/0/32\\
+S1: arm A vs released FiDIP (Test100-clean) & $-0.1$ & [$-0.9$, $+0.6$] & 0.643 & 0.663 & $-0.1$ [$-0.8$, $+0.6$] & no & 63/0/32\\
+S2: R105 (arm B s1) vs released FiDIP (Test100-clean) & $+1.1$ & [$-0.3$, $+2.6$] & 0.056 & 0.168 & $+1.7$ [$+0.8$, $+2.8$] & no & 70/0/25\\
+S3: R101 (arm A s1) vs released FiDIP (Test100-clean) & $+0.2$ & [$-0.7$, $+1.1$] & 0.332 & 0.663 & $+0.2$ [$-0.7$, $+1.1$] & no & 65/0/30\\
 \bottomrule
 \end{tabular}

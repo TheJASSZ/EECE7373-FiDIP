@@ -1,0 +1,49 @@
+{
+ "checkpoints": {
+  "eval": {
+   "path": "/scratch/purohitham.v/fidip/models/hrnet_fidip.pth",
+   "sha256": "bfbf9df225674614652d5dbdd066daf71c9b9d7f3c31976b7ed33bb96af55d07"
+  }
+ },
+ "commands": [
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/models/hrnet_fidip.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET test100 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/upstream_eval/test100/output LOG_DIR /scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/upstream_eval/test100/log",
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/models/hrnet_fidip.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET validate_infant OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/upstream_eval/validate_infant/output LOG_DIR /scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/upstream_eval/validate_infant/log",
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/models/hrnet_fidip.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/upstream_eval/val400/output LOG_DIR /scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/upstream_eval/val400/log",
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/models/hrnet_fidip.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET validate500 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/upstream_eval/validate500/output LOG_DIR /scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/upstream_eval/validate500/log"
+ ],
+ "eval_seconds_test100": 24,
+ "eval_seconds_val400": 16,
+ "eval_seconds_validate500": 19,
+ "eval_seconds_validate_infant": 11,
+ "git_pushed": {
+  "dirty_any": true,
+  "dirty_repro_paths": [
+   " M scripts/analysis/build_manifests.py",
+   " M scripts/analysis/run_released.sh",
+   " M scripts/analysis_pipeline.py",
+   " M scripts/collect_results.py",
+   " M scripts/slurm/analysis.sbatch",
+   " M scripts/slurm/build_env_analysis.sbatch",
+   " M scripts/slurm/crosscheck_impls.sbatch",
+   " M scripts/slurm/eval_tests.sbatch"
+  ],
+  "head": "947c6a13221b1ba2939bd6c527bc56904bf82a3f",
+  "pushed_at": "2026-11-05T21:07:26-0500",
+  "tree": "491c25b1aaadc0962e7cfee2a64cc1d313a0c64c"
+ },
+ "gpu": [
+  "n/a ([Errno 2] No such file or directory: 'nvidia-smi')"
+ ],
+ "note": "time_end backfilled from the slurm log (final stamp line did not take effect in job 11659813)",
+ "run_id": "R001_fidip-w48_released",
+ "slurm": {
+  "gpus": null,
+  "job_id": null,
+  "job_name": null,
+  "node": null,
+  "partition": null
+ },
+ "time_end": "2026-11-05T21:08:59-0500",
+ "time_start": "2026-11-05T21:07:48-0500",
+ "upstream_code_sha256": "7561f21d1f45839fe7fe9588f0fd41edffcaebcce1d9e0580c668b86c1e3ed12"
+}

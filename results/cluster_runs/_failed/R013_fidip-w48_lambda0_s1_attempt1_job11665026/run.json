@@ -1,0 +1,37 @@
+{
+ "cfg": "experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml",
+ "checkpoints": {
+  "init_coco": {
+   "path": "/scratch/purohitham.v/fidip/models/coco/w48_384x288.pth",
+   "sha256": "c730334eef7c47f051f694949ad2f213526723e46a7781178deb0fc90a93635c"
+  }
+ },
+ "commands": [
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/train_adaptive_model_hrnet.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TRAIN.CHECKPOINT /scratch/purohitham.v/fidip/models/coco/w48_384x288.pth TRAIN.PRE_EPOCH 10 TRAIN.LAMBDA 0 DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TRAIN_SET train_infant DATASET.TRAIN_PRE_SET train_pre_infant DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R013_fidip-w48_lambda0_s1/output LOG_DIR /scratch/purohitham.v/fidip/runs/R013_fidip-w48_lambda0_s1/log WORKERS 8 DEBUG.DEBUG False SEED 1 "
+ ],
+ "git_pushed": {
+  "dirty_any": true,
+  "dirty_repro_paths": [],
+  "head": "605798e8f7092ad6d38a0f49993e4df4a5439d62",
+  "pushed_at": "2026-11-06T01:22:54-0500",
+  "tree": "8eff00626010d2aa4717a116b1702016c0785427"
+ },
+ "gpu": [
+  "NVIDIA H200, 143771 MiB, 570.86.15"
+ ],
+ "lambda": 0,
+ "run_id": "R013_fidip-w48_lambda0_s1",
+ "seed": 1,
+ "selection": "model_best.pth = best Val400 AP (DATASET.TEST_SET val400); final_state.pth = last epoch",
+ "slurm": {
+  "gpus": "0",
+  "job_id": "11665026",
+  "job_name": "rp_R013-R015",
+  "node": "d4054",
+  "partition": "gpu"
+ },
+ "time_start": "2026-11-06T05:45:47-0500",
+ "train_exit_code": 1,
+ "train_seconds": 4,
+ "upstream_code_sha256": "bba6ef0751f3dbc7a662f1f4840c25bf1b07f9bcb563d0671919156a2d802857"
+}

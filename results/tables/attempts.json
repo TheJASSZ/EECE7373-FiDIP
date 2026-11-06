@@ -55,11 +55,11 @@
   "val400_AP": 91.51798107352282,
   "val400_AP_std": null,
   "val400_AP_80_95": 81.5658746001487,
-  "test100_AP": null,
+  "test100_AP": 93.89896204367648,
   "test100_AP_std": null,
-  "test100_AP_fixed": null,
-  "test100_reported": false,
-  "test100_rule": "withheld: selection on Val400 only",
+  "test100_AP_fixed": 95.34391406760622,
+  "test100_reported": true,
+  "test100_rule": "pre-registered",
   "status": "done"
  },
  {
@@ -333,11 +333,11 @@
   "val400_AP": 93.16554892492842,
   "val400_AP_std": null,
   "val400_AP_80_95": 85.26273023423957,
-  "test100_AP": null,
+  "test100_AP": 94.68984937012421,
   "test100_AP_std": null,
-  "test100_AP_fixed": null,
-  "test100_reported": false,
-  "test100_rule": "withheld: selection on Val400 only",
+  "test100_AP_fixed": 96.7457014281284,
+  "test100_reported": true,
+  "test100_rule": "pre-registered",
   "status": "done"
  },
  {
@@ -557,17 +557,23 @@
   "role": "control",
   "what_changed": "pre-registered control, 5 fresh seeds s2-s6",
   "hypothesis": "control arm of imp-1",
-  "n_runs": 0,
-  "run_ids": [],
-  "val400_AP": null,
-  "val400_AP_std": null,
-  "val400_AP_80_95": null,
-  "test100_AP": null,
-  "test100_AP_std": null,
-  "test100_AP_fixed": null,
-  "test100_reported": false,
-  "test100_rule": "withheld: selection on Val400 only",
-  "status": ""
+  "n_runs": 5,
+  "run_ids": [
+   "R131_mmp-hrnetw48_conf_s2",
+   "R132_mmp-hrnetw48_conf_s3",
+   "R133_mmp-hrnetw48_conf_s4",
+   "R134_mmp-hrnetw48_conf_s5",
+   "R135_mmp-hrnetw48_conf_s6"
+  ],
+  "val400_AP": 91.57361947370386,
+  "val400_AP_std": 0.11080182945315306,
+  "val400_AP_80_95": 81.5740333871193,
+  "test100_AP": 93.56103389021094,
+  "test100_AP_std": 0.2185534643456235,
+  "test100_AP_fixed": 95.02080176375323,
+  "test100_reported": true,
+  "test100_rule": "pre-registered",
+  "status": "unregistered"
  },
  {
   "attempt": 28,
@@ -576,18 +582,22 @@
   "role": "final",
   "what_changed": "pre-registered treatment: backbone ViTPose-H 256x192, same recipe as arm A, 5 fresh seeds s2-s6",
   "hypothesis": "H1: Test100 AP > 93.6 and C1 CI excludes 0 under both protocols",
-  "n_runs": 1,
+  "n_runs": 5,
   "run_ids": [
+   "R136_mmp-vitpose-h256_conf_s2",
+   "R137_mmp-vitpose-h256_conf_s3",
+   "R138_mmp-vitpose-h256_conf_s4",
+   "R139_mmp-vitpose-h256_conf_s5",
    "R140_mmp-vitpose-h256_conf_s6"
   ],
-  "val400_AP": 92.86594806597128,
-  "val400_AP_std": null,
-  "val400_AP_80_95": 84.70891243163081,
-  "test100_AP": null,
-  "test100_AP_std": null,
-  "test100_AP_fixed": null,
-  "test100_reported": false,
-  "test100_rule": "withheld: selection on Val400 only",
+  "val400_AP": 92.88489192221903,
+  "val400_AP_std": 0.07594890311120667,
+  "val400_AP_80_95": 84.7542379560148,
+  "test100_AP": 95.17434449119455,
+  "test100_AP_std": 0.11547943094566794,
+  "test100_AP_fixed": 96.95253279059587,
+  "test100_reported": true,
+  "test100_rule": "pre-registered",
   "status": "unregistered"
  },
  {
@@ -597,17 +607,19 @@
   "role": "ensemble",
   "what_changed": "mean of the 5 arm-B predictions (eval/ensemble_preds.py)",
   "hypothesis": "secondary (imp-3, C4)",
-  "n_runs": 0,
-  "run_ids": [],
-  "val400_AP": null,
+  "n_runs": 1,
+  "run_ids": [
+   "R141_mmp-vitpose-h256_ens5"
+  ],
+  "val400_AP": 92.86552821112237,
   "val400_AP_std": null,
-  "val400_AP_80_95": null,
-  "test100_AP": null,
+  "val400_AP_80_95": 84.7074105338009,
+  "test100_AP": 95.69891740539347,
   "test100_AP_std": null,
-  "test100_AP_fixed": null,
-  "test100_reported": false,
-  "test100_rule": "withheld: selection on Val400 only",
-  "status": ""
+  "test100_AP_fixed": 97.38956443095742,
+  "test100_reported": true,
+  "test100_rule": "pre-registered",
+  "status": "unregistered"
  },
  {
   "attempt": 30,
@@ -620,15 +632,15 @@
   "run_ids": [
    "R003_darkpose-w48-coco_released"
   ],
-  "val400_AP": null,
+  "val400_AP": 86.52319722168568,
   "val400_AP_std": null,
-  "val400_AP_80_95": null,
-  "test100_AP": null,
+  "val400_AP_80_95": 71.24096288114171,
+  "test100_AP": 88.45686073271506,
   "test100_AP_std": null,
-  "test100_AP_fixed": null,
-  "test100_reported": false,
+  "test100_AP_fixed": 89.91537204842402,
+  "test100_reported": true,
   "test100_rule": "released/retrain (reproduction target)",
-  "status": ""
+  "status": "unregistered"
  },
  {
   "attempt": 31,
@@ -655,11 +667,11 @@
  },
  {
   "attempt": 32,
-  "config": "DarkPose_FiDIP_HRNet_W48_384x288_retrain_fidip_w48_paperrecipe",
-  "label": "DarkPose_FiDIP_HRNet_W48_384x288_retrain_fidip_w48_paperrecipe",
-  "role": "repro",
-  "what_changed": "fidip-w48_paperrecipe",
-  "hypothesis": "eval_coco paper protocol (upstream-printed in parentheses); lambda=0.0005 seed=1; best Val400 epoch 10, final epoch 100: Val400 AP 89.80 (89.80); Test100 final n/a (Val400-only run) (); Test100 fixed protocol best/final /; train 1895s on NVIDIA H200",
+  "config": "rt_paperrecipe",
+  "label": "FiDIP retrain, paper recipe",
+  "role": "hparam",
+  "what_changed": "paper recipe: Adam lr 1e-3, 100 epochs, batch 64, lambda 5e-4 (1 seed)",
+  "hypothesis": "the paper's recipe (not the released yaml) explains the published numbers",
   "n_runs": 1,
   "run_ids": [
    "R019_fidip-w48_paperrecipe_s1"
@@ -676,11 +688,11 @@
  },
  {
   "attempt": 33,
-  "config": "DarkPose_FiDIP_HRNet_W48_384x288_retrain_fidip_w48_readme_literal_labels",
-  "label": "DarkPose_FiDIP_HRNet_W48_384x288_retrain_fidip_w48_readme_literal_labels",
-  "role": "repro",
-  "what_changed": "fidip-w48_readme-literal-labels",
-  "hypothesis": "eval_coco paper protocol (upstream-printed in parentheses); lambda=0.0005 seed=1; best Val400 epoch 12, final epoch 20: Val400 AP 89.16 (89.16); Test100 final n/a (Val400-only run) (); Test100 fixed protocol best/final /; train 741s on NVIDIA H200",
+  "config": "rt_readme_labels",
+  "label": "FiDIP retrain, README-literal labels",
+  "role": "ablation",
+  "what_changed": "train on syrip_for_train.zip train_infant.json (MINI-RGBD labels on the synthetic images), 1 seed",
+  "hypothesis": "the README's training labels cost accuracy",
   "n_runs": 1,
   "run_ids": [
    "R020_fidip-w48_readme-literal-labels_s1"
@@ -697,11 +709,11 @@
  },
  {
   "attempt": 34,
-  "config": "R122_mmp-vitpose-h256_realonly_s1",
-  "label": "R122_mmp-vitpose-h256_realonly_s1",
-  "role": "other",
-  "what_changed": "",
-  "hypothesis": "metrics found; no registry row",
+  "config": "mmp_vith256_realonly",
+  "label": "ViTPose-H 256, real only",
+  "role": "ablation",
+  "what_changed": "train on the 200 real images only (no synthetic), ViTPose-H 256",
+  "hypothesis": "synthetic SyRIP images still help the selected backbone",
   "n_runs": 1,
   "run_ids": [
    "R122_mmp-vitpose-h256_realonly_s1"

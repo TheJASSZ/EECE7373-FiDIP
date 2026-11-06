@@ -1,0 +1,23 @@
+{
+ "note": "MMPose CocoMetric (xtcocotools, no id-0 artifact). Bookkeeping only; reported numbers come from eval/eval_coco.py on preds_val400.json",
+ "run_id": "R121_mmp-vitpose-l256_rot180_s1",
+ "split": "val400",
+ "ann_file": "/scratch/purohitham.v/fidip/data/splits/val400.json",
+ "checkpoint": "/scratch/purohitham.v/fidip/runs/R121_mmp-vitpose-l256_rot180_s1/best_coco_AP_epoch_30.pth",
+ "config": "/scratch/purohitham.v/fidip/runs/R121_mmp-vitpose-l256_rot180_s1/config.py",
+ "flip_test": true,
+ "cfg_options": null,
+ "seconds": 15.0,
+ "metrics": {
+  "coco/AP": 0.925824486977687,
+  "coco/AP .5": 0.9882738273827384,
+  "coco/AP .75": 0.9672692066242988,
+  "coco/AP (M)": -1.0,
+  "coco/AP (L)": 0.925824486977687,
+  "coco/AR": 0.940050377833753,
+  "coco/AR .5": 0.9949622166246851,
+  "coco/AR .75": 0.9773299748110831,
+  "coco/AR (M)": -1.0,
+  "coco/AR (L)": 0.940050377833753
+ }
+}

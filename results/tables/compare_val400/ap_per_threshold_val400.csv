@@ -19,6 +19,16 @@ FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,pape
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,paper,0.85,49.9425,49.9425,49.9425,1
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,paper,0.90,30.7284,30.7284,30.7284,1
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,paper,0.95,8.92379,8.92379,8.92379,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,paper,0.50,98.9199,98.9199,98.9199,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,paper,0.55,97.8983,97.8983,97.8983,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,paper,0.60,97.8807,97.8807,97.8807,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,paper,0.65,96.8872,96.8872,96.8872,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,paper,0.70,94.8527,94.8527,94.8527,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,paper,0.75,93.8294,93.8294,93.8294,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,paper,0.80,90.6645,90.6645,90.6645,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,paper,0.85,82.0098,82.0098,82.0098,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,paper,0.90,68.1165,68.1165,68.1165,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,paper,0.95,44.1731,44.1731,44.1731,1
 "FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,paper,0.50,98.8474,98.8349,98.8549,3
 "FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,paper,0.55,98.8405,98.8142,98.8549,3
 "FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,paper,0.60,98.1768,97.8238,98.845,3
@@ -39,6 +49,26 @@ FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,pape
 "Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,paper,0.85,89.4539,89.3235,89.5529,3
 "Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,paper,0.90,79.1656,78.839,79.4381,3
 "Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,paper,0.95,58.0163,57.3518,58.4818,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,paper,0.50,98.8549,98.8424,98.8624,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,paper,0.55,98.8549,98.8424,98.8624,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,paper,0.60,98.8498,98.8386,98.858,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,paper,0.65,97.8367,97.7998,97.8585,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,paper,0.70,97.1336,96.8042,97.7856,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,paper,0.75,96.1323,95.7931,96.8009,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,paper,0.80,94.042,93.7146,94.6558,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,paper,0.85,89.4563,89.2264,89.5764,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,paper,0.90,79.15,79.0223,79.2774,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,paper,0.95,58.8142,56.424,60.33,3
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,paper,0.50,98.8684,98.8549,98.8849,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,paper,0.55,98.8684,98.8549,98.8849,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,paper,0.60,98.8622,98.8487,98.8849,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,paper,0.65,98.8499,98.8277,98.8697,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,paper,0.70,97.8373,97.7979,97.8619,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,paper,0.75,96.1538,95.7486,96.7248,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,paper,0.80,94.0703,93.6145,94.6869,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,paper,0.85,90.5554,90.5053,90.6308,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,paper,0.90,83.0388,82.4667,84.0692,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,paper,0.95,58.6316,57.8663,60.2786,5
 ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,paper,0.50,98.8399,98.8399,98.8399,1
 ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,paper,0.55,98.8231,98.8231,98.8231,1
 ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,paper,0.60,98.8231,98.8231,98.8231,1
@@ -79,16 +109,26 @@ ViTPose-L 384 (MMPose),mmp_vitl384_base,R103_mmp-vitpose-l384_base_s1,paper,0.80
 ViTPose-L 384 (MMPose),mmp_vitl384_base,R103_mmp-vitpose-l384_base_s1,paper,0.85,92.276,92.276,92.276,1
 ViTPose-L 384 (MMPose),mmp_vitl384_base,R103_mmp-vitpose-l384_base_s1,paper,0.90,88.1303,88.1303,88.1303,1
 ViTPose-L 384 (MMPose),mmp_vitl384_base,R103_mmp-vitpose-l384_base_s1,paper,0.95,63.0789,63.0789,63.0789,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,paper,0.50,98.8578,98.8578,98.8578,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,paper,0.55,98.8178,98.8178,98.8178,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,paper,0.60,98.8178,98.8178,98.8178,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,paper,0.65,98.8067,98.8067,98.8067,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,paper,0.70,97.8214,97.8214,97.8214,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,paper,0.75,96.7024,96.7024,96.7024,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,paper,0.80,95.3586,95.3586,95.3586,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,paper,0.85,92.1934,92.1934,92.1934,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,paper,0.90,86.4505,86.4505,86.4505,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,paper,0.95,64.8332,64.8332,64.8332,1
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,paper,0.50,98.8583,98.8478,98.8727,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,paper,0.55,98.8205,98.7924,98.8727,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,paper,0.60,98.8114,98.7924,98.8274,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,paper,0.65,98.6062,97.8305,98.8159,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,paper,0.70,97.8171,97.8002,97.8331,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,paper,0.75,96.9185,96.6736,97.7741,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,paper,0.80,95.1053,94.5065,95.6525,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,paper,0.85,91.4917,91.2452,92.1934,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,paper,0.90,86.4472,86.27,86.6452,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,paper,0.95,65.9727,64.8332,67.2057,5
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,paper,0.50,98.8578,98.8578,98.8578,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,paper,0.55,98.8114,98.8114,98.8114,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,paper,0.60,98.8114,98.8114,98.8114,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,paper,0.65,98.7998,98.7998,98.7998,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,paper,0.70,97.817,97.817,97.817,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,paper,0.75,96.7282,96.7282,96.7282,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,paper,0.80,94.4961,94.4961,94.4961,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,paper,0.85,91.3623,91.3623,91.3623,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,paper,0.90,86.387,86.387,86.387,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,paper,0.95,66.5842,66.5842,66.5842,1
 HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,paper,0.50,98.8549,98.8549,98.8549,1
 HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,paper,0.55,98.8549,98.8549,98.8549,1
 HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,paper,0.60,98.8549,98.8549,98.8549,1
@@ -259,6 +299,16 @@ FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,fixe
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,fixed,0.85,49.9425,49.9425,49.9425,1
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,fixed,0.90,30.7284,30.7284,30.7284,1
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,fixed,0.95,8.92379,8.92379,8.92379,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,fixed,0.50,98.9199,98.9199,98.9199,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,fixed,0.55,97.8983,97.8983,97.8983,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,fixed,0.60,97.8807,97.8807,97.8807,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,fixed,0.65,96.8872,96.8872,96.8872,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,fixed,0.70,94.8527,94.8527,94.8527,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,fixed,0.75,93.8294,93.8294,93.8294,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,fixed,0.80,90.6645,90.6645,90.6645,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,fixed,0.85,82.0098,82.0098,82.0098,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,fixed,0.90,68.1165,68.1165,68.1165,1
+"DarkPose HRNet-W48 (COCO only, released)",zs_darkpose,R003_darkpose-w48-coco_released,fixed,0.95,44.1731,44.1731,44.1731,1
 "FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,fixed,0.50,98.8474,98.8349,98.8549,3
 "FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,fixed,0.55,98.8405,98.8142,98.8549,3
 "FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,fixed,0.60,98.1768,97.8238,98.845,3
@@ -279,6 +329,26 @@ FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,fixe
 "Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,fixed,0.85,89.4539,89.3235,89.5529,3
 "Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,fixed,0.90,79.1656,78.839,79.4381,3
 "Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,fixed,0.95,58.0163,57.3518,58.4818,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,fixed,0.50,98.8549,98.8424,98.8624,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,fixed,0.55,98.8549,98.8424,98.8624,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,fixed,0.60,98.8498,98.8386,98.858,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,fixed,0.65,97.8367,97.7998,97.8585,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,fixed,0.70,97.1336,96.8042,97.7856,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,fixed,0.75,96.1323,95.7931,96.8009,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,fixed,0.80,94.042,93.7146,94.6558,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,fixed,0.85,89.4563,89.2264,89.5764,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,fixed,0.90,79.15,79.0223,79.2774,3
+"Plain fine-tune retrain (no pre-stage, lambda 0)",rt_ftnp,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,fixed,0.95,58.8142,56.424,60.33,3
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,fixed,0.50,98.8684,98.8549,98.8849,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,fixed,0.55,98.8684,98.8549,98.8849,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,fixed,0.60,98.8622,98.8487,98.8849,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,fixed,0.65,98.8499,98.8277,98.8697,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,fixed,0.70,97.8373,97.7979,97.8619,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,fixed,0.75,96.1538,95.7486,96.7248,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,fixed,0.80,94.0703,93.6145,94.6869,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,fixed,0.85,90.5554,90.5053,90.6308,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,fixed,0.90,83.0388,82.4667,84.0692,5
+HRNet-W48 DARK 384 (arm A),arm_a,R131_mmp-hrnetw48_conf_s2;R132_mmp-hrnetw48_conf_s3;R133_mmp-hrnetw48_conf_s4;R134_mmp-hrnetw48_conf_s5;R135_mmp-hrnetw48_conf_s6,fixed,0.95,58.6316,57.8663,60.2786,5
 ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,fixed,0.50,98.8399,98.8399,98.8399,1
 ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,fixed,0.55,98.8231,98.8231,98.8231,1
 ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,fixed,0.60,98.8231,98.8231,98.8231,1
@@ -319,16 +389,26 @@ ViTPose-L 384 (MMPose),mmp_vitl384_base,R103_mmp-vitpose-l384_base_s1,fixed,0.80
 ViTPose-L 384 (MMPose),mmp_vitl384_base,R103_mmp-vitpose-l384_base_s1,fixed,0.85,92.276,92.276,92.276,1
 ViTPose-L 384 (MMPose),mmp_vitl384_base,R103_mmp-vitpose-l384_base_s1,fixed,0.90,88.1303,88.1303,88.1303,1
 ViTPose-L 384 (MMPose),mmp_vitl384_base,R103_mmp-vitpose-l384_base_s1,fixed,0.95,63.0789,63.0789,63.0789,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,fixed,0.50,98.8578,98.8578,98.8578,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,fixed,0.55,98.8178,98.8178,98.8178,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,fixed,0.60,98.8178,98.8178,98.8178,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,fixed,0.65,98.8067,98.8067,98.8067,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,fixed,0.70,97.8214,97.8214,97.8214,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,fixed,0.75,96.7024,96.7024,96.7024,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,fixed,0.80,95.3586,95.3586,95.3586,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,fixed,0.85,92.1934,92.1934,92.1934,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,fixed,0.90,86.4505,86.4505,86.4505,1
-ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,fixed,0.95,64.8332,64.8332,64.8332,1
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,fixed,0.50,98.8583,98.8478,98.8727,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,fixed,0.55,98.8205,98.7924,98.8727,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,fixed,0.60,98.8114,98.7924,98.8274,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,fixed,0.65,98.6062,97.8305,98.8159,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,fixed,0.70,97.8171,97.8002,97.8331,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,fixed,0.75,96.9185,96.6736,97.7741,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,fixed,0.80,95.1053,94.5065,95.6525,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,fixed,0.85,91.4917,91.2452,92.1934,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,fixed,0.90,86.4472,86.27,86.6452,5
+ViTPose-H 256 (arm B),arm_b,R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3;R138_mmp-vitpose-h256_conf_s4;R139_mmp-vitpose-h256_conf_s5;R140_mmp-vitpose-h256_conf_s6,fixed,0.95,65.9727,64.8332,67.2057,5
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,fixed,0.50,98.8578,98.8578,98.8578,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,fixed,0.55,98.8114,98.8114,98.8114,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,fixed,0.60,98.8114,98.8114,98.8114,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,fixed,0.65,98.7998,98.7998,98.7998,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,fixed,0.70,97.817,97.817,97.817,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,fixed,0.75,96.7282,96.7282,96.7282,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,fixed,0.80,94.4961,94.4961,94.4961,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,fixed,0.85,91.3623,91.3623,91.3623,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,fixed,0.90,86.387,86.387,86.387,1
+"ViTPose-H 256, 5-seed ensemble",ens_b,R141_mmp-vitpose-h256_ens5,fixed,0.95,66.5842,66.5842,66.5842,1
 HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,fixed,0.50,98.8549,98.8549,98.8549,1
 HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,fixed,0.55,98.8549,98.8549,98.8549,1
 HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,fixed,0.60,98.8549,98.8549,98.8549,1

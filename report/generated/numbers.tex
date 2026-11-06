@@ -34,8 +34,8 @@
 \setres{rel.fidip.test0rank}{51}                   % R001: rank of test0's score among the 100 Test100 detections (D13)
 \setres{rel.mobile.test.ap}{79.1}                  % R002 mobile_fidip.pth, Test100 AP (published: 79.2)
 \setres{rel.mobile.val.ap}{68.2}                   % R002 Val400 AP
-\setres{zs.darkpose.test.ap}{\tbd}                 % COCO DarkPose W48 384x288, no infant training, Test100 AP (published: 88.5)
-\setres{zs.darkpose.val.ap}{\tbd}                  % ... Val400 AP
+\setres{zs.darkpose.test.ap}{88.5}                 % COCO DarkPose W48 384x288, no infant training, Test100 AP (published: 88.5)
+\setres{zs.darkpose.val.ap}{86.5}                  % ... Val400 AP
 
 % ---- Retraining with the released recipe (+ TRAIN.CHECKPOINT = COCO DarkPose), Val400 selection
 \setres{rt.seeds}{3}                               % number of seeds per arm (e.g. 3)
@@ -57,42 +57,42 @@
 
 % ---- Improvement study (MMPose; all selection on Val400) ------------------------------------
 \setres{imp.control.name}{HRNet-W48 DARK 384 (arm A)} % control, e.g. HRNet-W48 DARK 384$\times$288 (MMPose)
-\setres{imp.control.val.ap.mean}{\tbd}             % control Val400 AP mean over seeds
-\setres{imp.control.val.ap.sd}{\tbd}
+\setres{imp.control.val.ap.mean}{91.6}             % control Val400 AP mean over seeds
+\setres{imp.control.val.ap.sd}{0.1}
 \setres{best.name}{ViTPose-H 256 (arm B)}          % final pre-registered configuration, short name
 \setres{best.input}{256$\times$192}                % input size, e.g. 384$\times$288
 \setres{best.flip}{yes}                            % flip test at inference: yes / no
 \setres{best.ckptrule}{best Val400 coco/AP epoch per seed} % checkpoint rule, e.g. "best Val400 AP epoch"
-\setres{best.seeds}{\tbd}                          % number of seeds evaluated on Test100
+\setres{best.seeds}{5}                             % number of seeds evaluated on Test100
 \setres{best.prereg.commit}{\texttt{72f9449}}      % commit that registered it in results/PREREGISTRATION.md
 \setres{best.val.ap.mean}{92.9}                    % Val400 AP mean over seeds
-\setres{best.val.ap.sd}{\tbd}
-\setres{best.test.ap.mean}{\tbd}                   % Test100 AP mean over seeds (paper protocol)  <- headline
-\setres{best.test.ap.sd}{\tbd}
-\setres{best.test.ap50}{\tbd}                      % seed means
-\setres{best.test.ap75}{\tbd}
-\setres{best.test.ar}{\tbd}
-\setres{best.test.apstrict}{\tbd}                  % AP_80_95, seed mean
-\setres{best.test.ap.fixed}{\tbd}                  % Test100 AP mean, `fixed` protocol
-\setres{best.vs.published}{\tbd}                   % best.test.ap.mean - 93.6, signed
-\setres{best.delta.ap}{\tbd}                       % vs released FiDIP (R001) on the same 100 images, signed
-\setres{best.delta.ci.lo}{\tbd}                    % 95% paired image-bootstrap CI (seed-averaged), signed
-\setres{best.delta.ci.hi}{\tbd}
-\setres{best.delta.p}{\tbd}                        % one-sided p (Holm-adjusted if several contrasts)
+\setres{best.val.ap.sd}{0.1}
+\setres{best.test.ap.mean}{95.2}                   % Test100 AP mean over seeds (paper protocol)  <- headline
+\setres{best.test.ap.sd}{0.1}
+\setres{best.test.ap50}{98.2}                      % seed means
+\setres{best.test.ap75}{98.2}
+\setres{best.test.ar}{96.4}
+\setres{best.test.apstrict}{90.6}                  % AP_80_95, seed mean
+\setres{best.test.ap.fixed}{97.0}                  % Test100 AP mean, `fixed` protocol
+\setres{best.vs.published}{$+1.6$}                 % best.test.ap.mean - 93.6, signed
+\setres{best.delta.ap}{$+1.6$}                     % vs released FiDIP (R001) on the same 100 images, signed
+\setres{best.delta.ci.lo}{$+0.4$}                  % 95% paired image-bootstrap CI (seed-averaged), signed
+\setres{best.delta.ci.hi}{$+2.8$}
+\setres{best.delta.p}{0.007}                       % one-sided p (Holm-adjusted if several contrasts)
 \setres{best.delta.apstrict}{\tbd}                 % Delta AP_80_95 vs R001, signed
-\setres{best.delta.fixed}{\tbd}                    % same contrast under the `fixed` protocol, signed (D13)
-\setres{best.delta.fixed.ci.lo}{\tbd}              % its 95% CI, signed
-\setres{best.delta.fixed.ci.hi}{\tbd}
-\setres{best.robust}{\tbd}                         % "yes" iff the CI excludes 0 under BOTH protocols (D13), else "no"
-\setres{best.test.clean.ap}{\tbd}                  % Test100-clean AP, seed mean (D16)
-\setres{best.test0rank}{\tbd}                      % rank of test0's score (seed 1 or median over seeds)
+\setres{best.delta.fixed}{$+2.0$}                  % same contrast under the `fixed` protocol, signed (D13)
+\setres{best.delta.fixed.ci.lo}{$+1.0$}            % its 95% CI, signed
+\setres{best.delta.fixed.ci.hi}{$+2.9$}
+\setres{best.robust}{yes}                          % "yes" iff the CI excludes 0 under BOTH protocols (D13), else "no"
+\setres{best.test.clean.ap}{94.4}                  % Test100-clean AP, seed mean (D16)
+\setres{best.test0rank}{15}                        % rank of test0's score (seed 1 or median over seeds)
 \setres{boot.n}{10000}                             % bootstrap resamples (bootstrap_ci.py default 10000)
-\setres{ens.name}{\tbd}                            % optional pre-registered ensemble (secondary claim); "none" if not run
-\setres{ens.test.ap}{\tbd}
-\setres{ens.delta.ci.lo}{\tbd}
-\setres{ens.delta.ci.hi}{\tbd}
+\setres{ens.name}{ViTPose-H 256, 5-seed ensemble}  % optional pre-registered ensemble (secondary claim); "none" if not run
+\setres{ens.test.ap}{95.7}
+\setres{ens.delta.ci.lo}{$+0.9$}
+\setres{ens.delta.ci.hi}{$+3.3$}
 \setres{att.n}{37}                                 % number of rows in tab_attempts
-\setres{att.nbetter}{\tbd}                         % attempts whose Val400 AP beats the control's mean
+\setres{att.nbetter}{16}                           % attempts whose Val400 AP beats the control's mean
 
 % ---- Evaluation-condition sensitivity (D8, D10) ---------------------------------------------
 \setres{sens.id0.delta}{$+1.4$}                    % R001: AP(fixed) - AP(paper) on Test100, signed
@@ -107,9 +107,9 @@
 \setres{data.boxratio.pct}{12}                     % median % by which validate100 boxes exceed validate500 boxes (e.g. 12)
 
 % ---- Val400 vs Test100 -------------------------------------------------------------------------
-\setres{vt.n}{11}                                  % runs with both Val400 and Test100 metrics
-\setres{vt.spearman}{0.11}                         % Spearman rank correlation of Val400 AP vs Test100 AP
-\setres{vt.gap.mean}{$+3.6$}                       % mean (Test100 AP - Val400 AP), signed
+\setres{vt.n}{25}                                  % runs with both Val400 and Test100 metrics
+\setres{vt.spearman}{0.71}                         % Spearman rank correlation of Val400 AP vs Test100 AP
+\setres{vt.gap.mean}{$+2.8$}                       % mean (Test100 AP - Val400 AP), signed
 
 % ---- Compute -------------------------------------------------------------------------------------
 \setres{comp.gpuh}{\tbd}                           % total GPU-hours (sacct elapsed x GPUs), all streams

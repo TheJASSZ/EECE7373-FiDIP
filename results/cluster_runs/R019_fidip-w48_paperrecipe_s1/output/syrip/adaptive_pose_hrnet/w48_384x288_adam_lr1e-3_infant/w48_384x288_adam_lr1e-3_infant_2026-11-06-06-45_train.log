@@ -1,0 +1,1158 @@
+2026-11-06 06:45:33,356 Namespace(cfg='experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml', opts=['TRAIN.CHECKPOINT', '/scratch/purohitham.v/fidip/models/coco/w48_384x288.pth', 'TRAIN.PRE_EPOCH', '10', 'TRAIN.LAMBDA', '0.0005', 'DATASET.ROOT', '/scratch/purohitham.v/fidip/data/syrip/', 'DATASET.TRAIN_SET', 'train_infant', 'DATASET.TRAIN_PRE_SET', 'train_pre_infant', 'DATASET.TEST_SET', 'val400', 'OUTPUT_DIR', '/scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output', 'LOG_DIR', '/scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/log', 'WORKERS', '8', 'DEBUG.DEBUG', 'False', 'SEED', '1', 'TRAIN.LR', '0.001', 'TRAIN.END_EPOCH', '100', 'TRAIN.BATCH_SIZE_PER_GPU', '64'], modelDir='', logDir='', dataDir='', prevModelDir='')
+2026-11-06 06:45:33,356 AUTO_RESUME: True
+CUDNN:
+  BENCHMARK: True
+  DETERMINISTIC: False
+  ENABLED: True
+DATASET:
+  COLOR_RGB: True
+  DATASET: syrip
+  DATA_FORMAT: jpg
+  FLIP: True
+  HYBRID_JOINTS_TYPE: 
+  NUM_JOINTS_HALF_BODY: 8
+  PROB_HALF_BODY: 0.3
+  ROOT: /scratch/purohitham.v/fidip/data/syrip/
+  ROT_FACTOR: 45
+  SCALE_FACTOR: 0.35
+  SELECT_DATA: False
+  TEST_SET: val400
+  TRAIN_PRE_SET: train_pre_infant
+  TRAIN_SET: train_infant
+DATA_DIR: 
+DEBUG:
+  DEBUG: False
+  SAVE_BATCH_IMAGES_GT: True
+  SAVE_BATCH_IMAGES_PRED: True
+  SAVE_HEATMAPS_GT: True
+  SAVE_HEATMAPS_PRED: True
+GPUS: (0,)
+LOG_DIR: /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/log
+LOSS:
+  TOPK: 8
+  USE_DIFFERENT_JOINTS_WEIGHT: False
+  USE_OHKM: False
+  USE_TARGET_WEIGHT: True
+MODEL:
+  EXTRA:
+    FINAL_CONV_KERNEL: 1
+    PRETRAINED_LAYERS: ['conv1', 'bn1', 'conv2', 'bn2', 'layer1', 'transition1', 'stage2', 'transition2', 'stage3', 'transition3', 'stage4']
+    STAGE2:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4]
+      NUM_BRANCHES: 2
+      NUM_CHANNELS: [48, 96]
+      NUM_MODULES: 1
+    STAGE3:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4]
+      NUM_BRANCHES: 3
+      NUM_CHANNELS: [48, 96, 192]
+      NUM_MODULES: 4
+    STAGE4:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4, 4]
+      NUM_BRANCHES: 4
+      NUM_CHANNELS: [48, 96, 192, 384]
+      NUM_MODULES: 3
+  HEATMAP_SIZE: [72, 96]
+  IMAGE_SIZE: [288, 384]
+  INIT_WEIGHTS: True
+  NAME: adaptive_pose_hrnet
+  NUM_JOINTS: 17
+  PRETRAINED: 
+  SIGMA: 3
+  TAG_PER_JOINT: True
+  TARGET_TYPE: gaussian
+OUTPUT_DIR: /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output
+PIN_MEMORY: True
+PRINT_FREQ: 20
+RANK: 0
+SEED: 1
+TEST:
+  BATCH_SIZE_PER_GPU: 16
+  BBOX_THRE: 1.0
+  BLUR_KERNEL: 11
+  COCO_BBOX_FILE: data/coco/person_detection_results/COCO_val2017_detections_AP_H_56_person.json
+  FLIP_TEST: True
+  IMAGE_THRE: 0.0
+  IN_VIS_THRE: 0.2
+  MODEL_FILE: models/coco/w48_384×288.pth
+  NMS_THRE: 1.0
+  OKS_THRE: 0.9
+  POST_PROCESS: True
+  SOFT_NMS: False
+  USE_GT_BBOX: True
+TRAIN:
+  BATCH_SIZE_PER_GPU: 64
+  BEGIN_EPOCH: 0
+  CHECKPOINT: /scratch/purohitham.v/fidip/models/coco/w48_384x288.pth
+  END_EPOCH: 100
+  GAMMA1: 0.99
+  GAMMA2: 0.0
+  LAMBDA: 0.0005
+  LR: 0.001
+  LR_FACTOR: 0.1
+  LR_STEP: [40, 200]
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPTIMIZER: adam
+  PRE_BATCH_SIZE_PER_GPU: 16
+  PRE_EPOCH: 10
+  RESUME: False
+  SHUFFLE: True
+  WD: 0.0001
+WORKERS: 8
+2026-11-06 06:45:33,361 => seeded python/numpy/torch/cuda RNGs with SEED=1
+2026-11-06 06:45:33,700 => init weights from normal distribution
+2026-11-06 06:45:33,984 => loading model from /scratch/purohitham.v/fidip/models/coco/w48_384x288.pth
+2026-11-06 06:45:34,407 
+Total Parameters: 63,595,745
+----------------------------------------------------------------------------------------------------------------------------------
+Total Multiply Adds (For Convolution and Linear Layers only): 32.881839752197266 GFLOPs
+----------------------------------------------------------------------------------------------------------------------------------
+Number of Layers
+Conv2d : 293 layers   BatchNorm2d : 292 layers   ReLU : 261 layers   Bottleneck : 4 layers   BasicBlock : 104 layers   Upsample : 28 layers   HighResolutionModule : 8 layers   
+2026-11-06 06:45:35,562 => classes: ['__background__', 'person']
+2026-11-06 06:45:35,562 => num_images: 4057
+2026-11-06 06:45:35,712 => load 3904 samples
+2026-11-06 06:45:35,733 => classes: ['__background__', 'person']
+2026-11-06 06:45:35,733 => num_images: 1200
+2026-11-06 06:45:35,777 => load 1200 samples
+2026-11-06 06:45:35,785 => classes: ['__background__', 'person']
+2026-11-06 06:45:35,785 => num_images: 397
+2026-11-06 06:45:35,803 => load 397 samples
+2026-11-06 06:45:37,364 Epoch: [0][0/244]	Accuracy_d: 0.375 (0.375)	Loss_d: 0.68105 (0.68105)
+2026-11-06 06:45:38,187 Epoch: [0][20/244]	Accuracy_d: 0.8125 (0.8720238095238095)	Loss_d: 0.38358 (0.33881)
+2026-11-06 06:45:38,988 Epoch: [0][40/244]	Accuracy_d: 0.9375 (0.8780487804878049)	Loss_d: 0.22682 (0.31140)
+2026-11-06 06:45:39,780 Epoch: [0][60/244]	Accuracy_d: 0.9375 (0.8862704918032787)	Loss_d: 0.17844 (0.29169)
+2026-11-06 06:45:40,496 Epoch: [0][80/244]	Accuracy_d: 1.0 (0.8927469135802469)	Loss_d: 0.08322 (0.28265)
+2026-11-06 06:45:41,209 Epoch: [0][100/244]	Accuracy_d: 0.8125 (0.8966584158415841)	Loss_d: 0.49695 (0.27143)
+2026-11-06 06:45:42,105 Epoch: [0][120/244]	Accuracy_d: 0.9375 (0.9018595041322314)	Loss_d: 0.20178 (0.26434)
+2026-11-06 06:45:42,825 Epoch: [0][140/244]	Accuracy_d: 0.9375 (0.898936170212766)	Loss_d: 0.26710 (0.26914)
+2026-11-06 06:45:43,516 Epoch: [0][160/244]	Accuracy_d: 1.0 (0.9029503105590062)	Loss_d: 0.10522 (0.25947)
+2026-11-06 06:45:44,332 Epoch: [0][180/244]	Accuracy_d: 0.875 (0.9026243093922652)	Loss_d: 0.25492 (0.25991)
+2026-11-06 06:45:45,101 Epoch: [0][200/244]	Accuracy_d: 0.875 (0.9045398009950248)	Loss_d: 0.22390 (0.25796)
+2026-11-06 06:45:45,896 Epoch: [0][220/244]	Accuracy_d: 0.8125 (0.9066742081447964)	Loss_d: 0.54006 (0.25634)
+2026-11-06 06:45:46,595 Epoch: [0][240/244]	Accuracy_d: 1.0 (0.9061203319502075)	Loss_d: 0.04585 (0.25759)
+2026-11-06 06:45:47,147 Epoch: [1][0/244]	Accuracy_d: 0.875 (0.9058673469387755)	Loss_d: 0.44637 (0.25785)
+2026-11-06 06:45:47,847 Epoch: [1][20/244]	Accuracy_d: 0.875 (0.9044811320754716)	Loss_d: 0.19531 (0.25540)
+2026-11-06 06:45:48,520 Epoch: [1][40/244]	Accuracy_d: 0.8125 (0.9021929824561403)	Loss_d: 0.41329 (0.25845)
+2026-11-06 06:45:49,185 Epoch: [1][60/244]	Accuracy_d: 1.0 (0.9049180327868852)	Loss_d: 0.09444 (0.25321)
+2026-11-06 06:45:50,129 Epoch: [1][80/244]	Accuracy_d: 1.0 (0.9059615384615385)	Loss_d: 0.15843 (0.24978)
+2026-11-06 06:45:51,229 Epoch: [1][100/244]	Accuracy_d: 0.8125 (0.9045289855072464)	Loss_d: 0.36005 (0.25352)
+2026-11-06 06:45:52,285 Epoch: [1][120/244]	Accuracy_d: 0.9375 (0.9039383561643836)	Loss_d: 0.32484 (0.25297)
+2026-11-06 06:45:53,391 Epoch: [1][140/244]	Accuracy_d: 1.0 (0.9053571428571429)	Loss_d: 0.10629 (0.25005)
+2026-11-06 06:45:54,474 Epoch: [1][160/244]	Accuracy_d: 0.875 (0.9067901234567901)	Loss_d: 0.22750 (0.24778)
+2026-11-06 06:45:55,532 Epoch: [1][180/244]	Accuracy_d: 0.875 (0.9064705882352941)	Loss_d: 0.16277 (0.24777)
+2026-11-06 06:45:56,615 Epoch: [1][200/244]	Accuracy_d: 1.0 (0.9053370786516854)	Loss_d: 0.06310 (0.24945)
+2026-11-06 06:45:57,670 Epoch: [1][220/244]	Accuracy_d: 0.9375 (0.907258064516129)	Loss_d: 0.29358 (0.24621)
+2026-11-06 06:45:58,622 Epoch: [1][240/244]	Accuracy_d: 0.8125 (0.9074742268041237)	Loss_d: 0.48328 (0.24585)
+2026-11-06 06:45:59,409 Epoch: [2][0/244]	Accuracy_d: 0.9375 (0.9072085889570553)	Loss_d: 0.20331 (0.24637)
+2026-11-06 06:46:00,486 Epoch: [2][20/244]	Accuracy_d: 0.8125 (0.9076620825147348)	Loss_d: 0.31714 (0.24417)
+2026-11-06 06:46:01,543 Epoch: [2][40/244]	Accuracy_d: 0.875 (0.9078449905482041)	Loss_d: 0.17066 (0.24276)
+2026-11-06 06:46:02,577 Epoch: [2][60/244]	Accuracy_d: 0.9375 (0.9076730418943534)	Loss_d: 0.17866 (0.24367)
+2026-11-06 06:46:03,554 Epoch: [2][80/244]	Accuracy_d: 0.875 (0.9080623901581723)	Loss_d: 0.33981 (0.24240)
+2026-11-06 06:46:04,592 Epoch: [2][100/244]	Accuracy_d: 0.9375 (0.9085314091680815)	Loss_d: 0.16760 (0.24077)
+2026-11-06 06:46:05,625 Epoch: [2][120/244]	Accuracy_d: 1.0 (0.9094827586206896)	Loss_d: 0.11765 (0.23871)
+2026-11-06 06:46:06,355 Epoch: [2][140/244]	Accuracy_d: 0.875 (0.910472972972973)	Loss_d: 0.36887 (0.23623)
+2026-11-06 06:46:07,268 Epoch: [2][160/244]	Accuracy_d: 0.9375 (0.9107280431432974)	Loss_d: 0.09460 (0.23528)
+2026-11-06 06:46:08,032 Epoch: [2][180/244]	Accuracy_d: 0.9375 (0.9105941704035875)	Loss_d: 0.17173 (0.23538)
+2026-11-06 06:46:08,803 Epoch: [2][200/244]	Accuracy_d: 0.8125 (0.9108309143686503)	Loss_d: 0.50721 (0.23443)
+2026-11-06 06:46:10,048 Epoch: [2][220/244]	Accuracy_d: 0.9375 (0.9111424541607899)	Loss_d: 0.09772 (0.23328)
+2026-11-06 06:46:10,971 Epoch: [2][240/244]	Accuracy_d: 0.9375 (0.9117798353909465)	Loss_d: 0.15187 (0.23256)
+2026-11-06 06:46:11,580 Epoch: [3][0/244]	Accuracy_d: 0.875 (0.9117496589358799)	Loss_d: 0.35578 (0.23256)
+2026-11-06 06:46:13,049 Epoch: [3][20/244]	Accuracy_d: 1.0 (0.9123505976095617)	Loss_d: 0.07390 (0.23107)
+2026-11-06 06:46:14,521 Epoch: [3][40/244]	Accuracy_d: 0.9375 (0.9123544631306598)	Loss_d: 0.12396 (0.23190)
+2026-11-06 06:46:15,996 Epoch: [3][60/244]	Accuracy_d: 0.875 (0.9126733921815889)	Loss_d: 0.21358 (0.23098)
+2026-11-06 06:46:17,259 Epoch: [3][80/244]	Accuracy_d: 1.0 (0.9130535055350554)	Loss_d: 0.04809 (0.23037)
+2026-11-06 06:46:18,733 Epoch: [3][100/244]	Accuracy_d: 1.0 (0.913640456182473)	Loss_d: 0.06846 (0.22891)
+2026-11-06 06:46:20,205 Epoch: [3][120/244]	Accuracy_d: 1.0 (0.9137602579132473)	Loss_d: 0.06760 (0.22852)
+2026-11-06 06:46:21,678 Epoch: [3][140/244]	Accuracy_d: 1.0 (0.9144473081328751)	Loss_d: 0.05296 (0.22663)
+2026-11-06 06:46:23,153 Epoch: [3][160/244]	Accuracy_d: 1.0 (0.9146136618141097)	Loss_d: 0.06106 (0.22594)
+2026-11-06 06:46:24,624 Epoch: [3][180/244]	Accuracy_d: 0.875 (0.9142250821467689)	Loss_d: 0.45253 (0.22704)
+2026-11-06 06:46:26,092 Epoch: [3][200/244]	Accuracy_d: 1.0 (0.9145230439442658)	Loss_d: 0.05651 (0.22592)
+2026-11-06 06:46:27,323 Epoch: [3][220/244]	Accuracy_d: 0.9375 (0.9143494228751312)	Loss_d: 0.24115 (0.22550)
+2026-11-06 06:46:28,347 Epoch: [3][240/244]	Accuracy_d: 1.0 (0.9147610483042138)	Loss_d: 0.06091 (0.22458)
+2026-11-06 06:46:29,099 Epoch: [4][0/244]	Accuracy_d: 1.0 (0.914982088024565)	Loss_d: 0.10494 (0.22428)
+2026-11-06 06:46:30,569 Epoch: [4][20/244]	Accuracy_d: 0.875 (0.9148696088264794)	Loss_d: 0.23255 (0.22421)
+2026-11-06 06:46:32,040 Epoch: [4][40/244]	Accuracy_d: 0.9375 (0.9142699115044248)	Loss_d: 0.11125 (0.22517)
+2026-11-06 06:46:33,512 Epoch: [4][60/244]	Accuracy_d: 1.0 (0.914175506268081)	Loss_d: 0.14687 (0.22507)
+2026-11-06 06:46:34,987 Epoch: [4][80/244]	Accuracy_d: 0.9375 (0.9145577105014191)	Loss_d: 0.16394 (0.22414)
+2026-11-06 06:46:36,460 Epoch: [4][100/244]	Accuracy_d: 1.0 (0.9152739090064995)	Loss_d: 0.08471 (0.22258)
+2026-11-06 06:46:37,927 Epoch: [4][120/244]	Accuracy_d: 0.875 (0.9155082041932543)	Loss_d: 0.41575 (0.22184)
+2026-11-06 06:46:39,395 Epoch: [4][140/244]	Accuracy_d: 0.8125 (0.9153983885407341)	Loss_d: 0.94268 (0.22250)
+2026-11-06 06:46:40,864 Epoch: [4][160/244]	Accuracy_d: 0.875 (0.9154573438874231)	Loss_d: 0.18724 (0.22188)
+2026-11-06 06:46:42,335 Epoch: [4][180/244]	Accuracy_d: 1.0 (0.9157303370786517)	Loss_d: 0.05665 (0.22106)
+2026-11-06 06:46:43,801 Epoch: [4][200/244]	Accuracy_d: 0.8125 (0.91535683942226)	Loss_d: 0.26692 (0.22151)
+2026-11-06 06:46:45,266 Epoch: [4][220/244]	Accuracy_d: 0.9375 (0.9156746031746031)	Loss_d: 0.11418 (0.22085)
+2026-11-06 06:46:46,217 Epoch: [4][240/244]	Accuracy_d: 0.75 (0.9150575184880855)	Loss_d: 0.60040 (0.22163)
+2026-11-06 06:46:46,965 Epoch: [5][0/244]	Accuracy_d: 0.9375 (0.9152334152334153)	Loss_d: 0.15362 (0.22128)
+2026-11-06 06:46:48,440 Epoch: [5][20/244]	Accuracy_d: 0.8125 (0.9150886381950041)	Loss_d: 0.29924 (0.22094)
+2026-11-06 06:46:49,907 Epoch: [5][40/244]	Accuracy_d: 0.875 (0.9157910388580491)	Loss_d: 0.17894 (0.21966)
+2026-11-06 06:46:51,375 Epoch: [5][60/244]	Accuracy_d: 1.0 (0.9159836065573771)	Loss_d: 0.10144 (0.21928)
+2026-11-06 06:46:52,848 Epoch: [5][80/244]	Accuracy_d: 0.9375 (0.9158820138355112)	Loss_d: 0.08082 (0.22044)
+2026-11-06 06:46:54,317 Epoch: [5][100/244]	Accuracy_d: 1.0 (0.916493186979561)	Loss_d: 0.06318 (0.21965)
+2026-11-06 06:46:55,790 Epoch: [5][120/244]	Accuracy_d: 0.9375 (0.9165268456375839)	Loss_d: 0.07778 (0.21924)
+2026-11-06 06:46:57,255 Epoch: [5][140/244]	Accuracy_d: 0.9375 (0.9166054371785451)	Loss_d: 0.12438 (0.21839)
+2026-11-06 06:46:58,727 Epoch: [5][160/244]	Accuracy_d: 0.9375 (0.916908037653874)	Loss_d: 0.25760 (0.21770)
+2026-11-06 06:47:00,199 Epoch: [5][180/244]	Accuracy_d: 1.0 (0.9171573875802997)	Loss_d: 0.06069 (0.21704)
+2026-11-06 06:47:01,669 Epoch: [5][200/244]	Accuracy_d: 0.9375 (0.9172237860661506)	Loss_d: 0.31374 (0.21670)
+2026-11-06 06:47:03,135 Epoch: [5][220/244]	Accuracy_d: 0.9375 (0.9174184594031922)	Loss_d: 0.18702 (0.21600)
+2026-11-06 06:47:04,208 Epoch: [5][240/244]	Accuracy_d: 0.8125 (0.9172655715263518)	Loss_d: 0.46907 (0.21602)
+2026-11-06 06:47:04,926 Epoch: [6][0/244]	Accuracy_d: 0.875 (0.9172354948805461)	Loss_d: 0.15485 (0.21598)
+2026-11-06 06:47:06,396 Epoch: [6][20/244]	Accuracy_d: 1.0 (0.9177188552188552)	Loss_d: 0.03889 (0.21527)
+2026-11-06 06:47:07,868 Epoch: [6][40/244]	Accuracy_d: 0.875 (0.9176079734219269)	Loss_d: 0.34715 (0.21528)
+2026-11-06 06:47:09,335 Epoch: [6][60/244]	Accuracy_d: 1.0 (0.9179918032786886)	Loss_d: 0.06792 (0.21443)
+2026-11-06 06:47:10,807 Epoch: [6][80/244]	Accuracy_d: 1.0 (0.9182847896440129)	Loss_d: 0.04045 (0.21390)
+2026-11-06 06:47:12,277 Epoch: [6][100/244]	Accuracy_d: 1.0 (0.9183306709265175)	Loss_d: 0.06373 (0.21350)
+2026-11-06 06:47:13,744 Epoch: [6][120/244]	Accuracy_d: 0.875 (0.9183359621451104)	Loss_d: 0.19707 (0.21336)
+2026-11-06 06:47:15,211 Epoch: [6][140/244]	Accuracy_d: 1.0 (0.9186915887850468)	Loss_d: 0.03763 (0.21267)
+2026-11-06 06:47:16,679 Epoch: [6][160/244]	Accuracy_d: 0.9375 (0.9188846153846154)	Loss_d: 0.14923 (0.21213)
+2026-11-06 06:47:18,151 Epoch: [6][180/244]	Accuracy_d: 1.0 (0.9189969604863222)	Loss_d: 0.07858 (0.21216)
+2026-11-06 06:47:19,622 Epoch: [6][200/244]	Accuracy_d: 0.9375 (0.9194819819819819)	Loss_d: 0.16870 (0.21096)
+2026-11-06 06:47:21,082 Epoch: [6][220/244]	Accuracy_d: 0.8125 (0.9195103857566765)	Loss_d: 0.37315 (0.21097)
+2026-11-06 06:47:21,874 Epoch: [6][240/244]	Accuracy_d: 1.0 (0.9197580645161291)	Loss_d: 0.04838 (0.21019)
+2026-11-06 06:47:22,587 Epoch: [7][0/244]	Accuracy_d: 0.875 (0.9198727325921592)	Loss_d: 0.27434 (0.20994)
+2026-11-06 06:47:24,054 Epoch: [7][20/244]	Accuracy_d: 0.875 (0.9200404858299596)	Loss_d: 0.26131 (0.20974)
+2026-11-06 06:47:25,523 Epoch: [7][40/244]	Accuracy_d: 0.9375 (0.9199899942824471)	Loss_d: 0.12652 (0.20974)
+2026-11-06 06:47:26,990 Epoch: [7][60/244]	Accuracy_d: 0.9375 (0.9202232899943471)	Loss_d: 0.15410 (0.20945)
+2026-11-06 06:47:28,460 Epoch: [7][80/244]	Accuracy_d: 1.0 (0.9202417551704863)	Loss_d: 0.06127 (0.20906)
+2026-11-06 06:47:29,927 Epoch: [7][100/244]	Accuracy_d: 0.875 (0.9203634604754007)	Loss_d: 0.26677 (0.20863)
+2026-11-06 06:47:31,392 Epoch: [7][120/244]	Accuracy_d: 0.9375 (0.9205166757791142)	Loss_d: 0.49719 (0.20845)
+2026-11-06 06:47:32,860 Epoch: [7][140/244]	Accuracy_d: 1.0 (0.9206665765278529)	Loss_d: 0.03392 (0.20800)
+2026-11-06 06:47:34,327 Epoch: [7][160/244]	Accuracy_d: 0.9375 (0.9209135901551632)	Loss_d: 0.07662 (0.20742)
+2026-11-06 06:47:35,796 Epoch: [7][180/244]	Accuracy_d: 1.0 (0.920857596611964)	Loss_d: 0.10120 (0.20727)
+2026-11-06 06:47:37,266 Epoch: [7][200/244]	Accuracy_d: 1.0 (0.9207700366684127)	Loss_d: 0.05940 (0.20747)
+2026-11-06 06:47:38,735 Epoch: [7][220/244]	Accuracy_d: 0.875 (0.9208462934162779)	Loss_d: 0.62752 (0.20784)
+2026-11-06 06:47:39,915 Epoch: [7][240/244]	Accuracy_d: 0.9375 (0.9207606464853771)	Loss_d: 0.12799 (0.20786)
+2026-11-06 06:47:40,468 Epoch: [8][0/244]	Accuracy_d: 0.875 (0.9206989247311828)	Loss_d: 0.23697 (0.20794)
+2026-11-06 06:47:41,937 Epoch: [8][20/244]	Accuracy_d: 0.875 (0.9208058793715155)	Loss_d: 0.25280 (0.20752)
+2026-11-06 06:47:43,410 Epoch: [8][40/244]	Accuracy_d: 1.0 (0.9208793276467637)	Loss_d: 0.06281 (0.20738)
+2026-11-06 06:47:44,880 Epoch: [8][60/244]	Accuracy_d: 0.875 (0.920889220069548)	Loss_d: 0.36603 (0.20770)
+2026-11-06 06:47:46,352 Epoch: [8][80/244]	Accuracy_d: 0.8125 (0.9207759468765372)	Loss_d: 0.31951 (0.20780)
+2026-11-06 06:47:47,824 Epoch: [8][100/244]	Accuracy_d: 1.0 (0.9206953239162202)	Loss_d: 0.10953 (0.20794)
+2026-11-06 06:47:49,298 Epoch: [8][120/244]	Accuracy_d: 0.9375 (0.9210082006753497)	Loss_d: 0.19597 (0.20719)
+2026-11-06 06:47:50,767 Epoch: [8][140/244]	Accuracy_d: 0.875 (0.9209866220735786)	Loss_d: 0.37657 (0.20738)
+2026-11-06 06:47:52,236 Epoch: [8][160/244]	Accuracy_d: 1.0 (0.9212020823473734)	Loss_d: 0.14323 (0.20682)
+2026-11-06 06:47:53,711 Epoch: [8][180/244]	Accuracy_d: 0.9375 (0.9210911861228317)	Loss_d: 0.20606 (0.20663)
+2026-11-06 06:47:55,180 Epoch: [8][200/244]	Accuracy_d: 0.875 (0.9214758476544357)	Loss_d: 0.27293 (0.20585)
+2026-11-06 06:47:56,654 Epoch: [8][220/244]	Accuracy_d: 0.9375 (0.9212206626783249)	Loss_d: 0.41932 (0.20614)
+2026-11-06 06:47:57,955 Epoch: [8][240/244]	Accuracy_d: 1.0 (0.9213406292749658)	Loss_d: 0.03483 (0.20593)
+2026-11-06 06:47:58,520 Epoch: [9][0/244]	Accuracy_d: 1.0 (0.9213700500682749)	Loss_d: 0.10385 (0.20582)
+2026-11-06 06:47:59,984 Epoch: [9][20/244]	Accuracy_d: 0.9375 (0.9215155615696887)	Loss_d: 0.13335 (0.20549)
+2026-11-06 06:48:01,454 Epoch: [9][40/244]	Accuracy_d: 0.9375 (0.9217702279839071)	Loss_d: 0.11534 (0.20490)
+2026-11-06 06:48:02,923 Epoch: [9][60/244]	Accuracy_d: 1.0 (0.9219373061586177)	Loss_d: 0.05957 (0.20489)
+2026-11-06 06:48:04,394 Epoch: [9][80/244]	Accuracy_d: 0.875 (0.9220191040843215)	Loss_d: 0.24633 (0.20464)
+2026-11-06 06:48:05,864 Epoch: [9][100/244]	Accuracy_d: 0.875 (0.9221538963865912)	Loss_d: 0.24548 (0.20398)
+2026-11-06 06:48:07,333 Epoch: [9][120/244]	Accuracy_d: 0.875 (0.9223133362106172)	Loss_d: 0.32073 (0.20403)
+2026-11-06 06:48:08,800 Epoch: [9][140/244]	Accuracy_d: 0.75 (0.922068891741549)	Loss_d: 0.55063 (0.20459)
+2026-11-06 06:48:10,276 Epoch: [9][160/244]	Accuracy_d: 0.9375 (0.9222528638099279)	Loss_d: 0.14994 (0.20435)
+2026-11-06 06:48:11,738 Epoch: [9][180/244]	Accuracy_d: 0.875 (0.9223811527135044)	Loss_d: 0.32511 (0.20419)
+2026-11-06 06:48:13,207 Epoch: [9][200/244]	Accuracy_d: 1.0 (0.9223508552357113)	Loss_d: 0.05063 (0.20418)
+2026-11-06 06:48:14,674 Epoch: [9][220/244]	Accuracy_d: 0.9375 (0.9224762101779065)	Loss_d: 0.12566 (0.20409)
+2026-11-06 06:48:16,059 Epoch: [9][240/244]	Accuracy_d: 1.0 (0.9225995075913008)	Loss_d: 0.07831 (0.20360)
+2026-11-06 06:48:20,830 Epoch: [0][0/32]	Accuracy_d 0.546875 (0.9220028641571195)	Loss_d_2 1.8747007846832275	Time 4.603s (4.603s)	Data 1.645s (1.645s)	Loss_p -0.00040 (-0.00040)	Loss_d 1.94725 (0.20645)	Accuracy_p 0.818 (0.818)
+2026-11-06 06:48:30,293 Epoch: [0][20/32]	Accuracy_d 0.375 (0.9048880744849446)	Loss_d_2 0.772633969783783	Time 0.430s (0.670s)	Data 0.000s (0.079s)	Loss_p 0.00000 (-0.00030)	Loss_d 0.83157 (0.25277)	Accuracy_p 0.871 (0.843)
+2026-11-06 06:48:35,660 Test: [0/25]	Time 0.495 (0.495)	Loss 0.0004 (0.0004)	Accuracy 0.904 (0.904)
+2026-11-06 06:48:38,500 Test: [20/25]	Time 0.147 (0.160)	Loss 0.0004 (0.0004)	Accuracy 0.872 (0.873)
+2026-11-06 06:48:40,262 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:48:40,641 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:48:40,641 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:48:40,641 | adaptive... | 0.877 | 0.989 | 0.938 | -1.000 | 0.877 | 0.893 | 0.995 | 0.950 | -1.000 | 0.893 |
+2026-11-06 06:48:40,732 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:48:44,950 Epoch: [1][0/32]	Accuracy_d 0.6875 (0.9222330196399345)	Loss_d_2 0.6373066902160645	Time 1.986s (1.986s)	Data 1.565s (1.565s)	Loss_p 0.00012 (-0.00017)	Loss_d 0.65414 (0.26081)	Accuracy_p 0.848 (0.847)
+2026-11-06 06:48:54,010 Epoch: [1][20/32]	Accuracy_d 0.59375 (0.9106576862123613)	Loss_d_2 0.672298789024353	Time 0.467s (0.526s)	Data 0.000s (0.075s)	Loss_p 0.00001 (-0.00010)	Loss_d 0.67576 (0.27484)	Accuracy_p 0.891 (0.859)
+2026-11-06 06:48:59,147 Test: [0/25]	Time 0.495 (0.495)	Loss 0.0004 (0.0004)	Accuracy 0.882 (0.882)
+2026-11-06 06:49:02,080 Test: [20/25]	Time 0.148 (0.165)	Loss 0.0004 (0.0004)	Accuracy 0.887 (0.872)
+2026-11-06 06:49:02,715 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:49:03,004 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:49:03,004 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:49:03,004 | adaptive... | 0.885 | 0.989 | 0.958 | -1.000 | 0.885 | 0.901 | 0.995 | 0.962 | -1.000 | 0.901 |
+2026-11-06 06:49:03,010 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:49:07,021 Epoch: [2][0/32]	Accuracy_d 0.59375 (0.9220795826513911)	Loss_d_2 0.7105734348297119	Time 1.799s (1.799s)	Data 1.215s (1.215s)	Loss_p 0.00006 (-0.00008)	Loss_d 0.71954 (0.28241)	Accuracy_p 0.850 (0.862)
+2026-11-06 06:49:17,818 Epoch: [2][20/32]	Accuracy_d 0.53125 (0.9084538431061807)	Loss_d_2 0.6789488792419434	Time 0.528s (0.600s)	Data 0.000s (0.058s)	Loss_p -0.00003 (-0.00006)	Loss_d 0.68323 (0.29488)	Accuracy_p 0.913 (0.870)
+2026-11-06 06:49:23,857 Test: [0/25]	Time 0.529 (0.529)	Loss 0.0004 (0.0004)	Accuracy 0.897 (0.897)
+2026-11-06 06:49:26,657 Test: [20/25]	Time 0.142 (0.161)	Loss 0.0004 (0.0004)	Accuracy 0.887 (0.885)
+2026-11-06 06:49:27,246 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:49:27,518 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:49:27,518 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:49:27,519 | adaptive... | 0.893 | 0.989 | 0.958 | -1.000 | 0.893 | 0.907 | 0.995 | 0.965 | -1.000 | 0.907 |
+2026-11-06 06:49:27,525 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:49:31,207 Epoch: [3][0/32]	Accuracy_d 0.578125 (0.9220540098199672)	Loss_d_2 0.6747106313705444	Time 1.399s (1.399s)	Data 1.094s (1.094s)	Loss_p 0.00004 (-0.00005)	Loss_d 0.67711 (0.30117)	Accuracy_p 0.874 (0.872)
+2026-11-06 06:49:39,384 Epoch: [3][20/32]	Accuracy_d 0.5625 (0.909568145800317)	Loss_d_2 0.6732374429702759	Time 0.502s (0.456s)	Data 0.000s (0.052s)	Loss_p -0.00005 (-0.00005)	Loss_d 0.67412 (0.31196)	Accuracy_p 0.912 (0.878)
+2026-11-06 06:49:45,272 Test: [0/25]	Time 0.527 (0.527)	Loss 0.0004 (0.0004)	Accuracy 0.904 (0.904)
+2026-11-06 06:49:48,079 Test: [20/25]	Time 0.144 (0.159)	Loss 0.0004 (0.0004)	Accuracy 0.884 (0.889)
+2026-11-06 06:49:48,677 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:49:48,948 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:49:48,949 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:49:48,949 | adaptive... | 0.903 | 0.989 | 0.957 | -1.000 | 0.903 | 0.914 | 0.992 | 0.965 | -1.000 | 0.914 |
+2026-11-06 06:49:48,955 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:49:52,765 Epoch: [4][0/32]	Accuracy_d 0.453125 (0.9218494271685761)	Loss_d_2 0.7009502649307251	Time 1.505s (1.505s)	Data 1.194s (1.194s)	Loss_p -0.00003 (-0.00005)	Loss_d 0.70281 (0.31780)	Accuracy_p 0.903 (0.880)
+2026-11-06 06:50:00,235 Epoch: [4][20/32]	Accuracy_d 0.640625 (0.9102862519809826)	Loss_d_2 0.6754926443099976	Time 0.337s (0.427s)	Data 0.000s (0.057s)	Loss_p -0.00006 (-0.00005)	Loss_d 0.67843 (0.32770)	Accuracy_p 0.923 (0.884)
+2026-11-06 06:50:06,202 Test: [0/25]	Time 0.513 (0.513)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 06:50:09,055 Test: [20/25]	Time 0.130 (0.162)	Loss 0.0004 (0.0004)	Accuracy 0.872 (0.890)
+2026-11-06 06:50:09,666 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:50:09,943 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:50:09,944 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:50:09,944 | adaptive... | 0.901 | 0.989 | 0.958 | -1.000 | 0.901 | 0.916 | 0.995 | 0.967 | -1.000 | 0.916 |
+2026-11-06 06:50:09,952 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:50:13,265 Epoch: [5][0/32]	Accuracy_d 0.5 (0.9219261456628478)	Loss_d_2 0.69017493724823	Time 1.627s (1.627s)	Data 1.149s (1.149s)	Loss_p -0.00004 (-0.00005)	Loss_d 0.69311 (0.33278)	Accuracy_p 0.906 (0.886)
+2026-11-06 06:50:22,797 Epoch: [5][20/32]	Accuracy_d 0.65625 (0.9103853011093502)	Loss_d_2 0.6609882116317749	Time 0.447s (0.531s)	Data 0.000s (0.055s)	Loss_p -0.00007 (-0.00005)	Loss_d 0.66304 (0.34176)	Accuracy_p 0.921 (0.889)
+2026-11-06 06:50:26,896 Test: [0/25]	Time 0.522 (0.522)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 06:50:29,792 Test: [20/25]	Time 0.126 (0.165)	Loss 0.0004 (0.0004)	Accuracy 0.899 (0.889)
+2026-11-06 06:50:30,417 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:50:30,691 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:50:30,691 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:50:30,691 | adaptive... | 0.903 | 0.989 | 0.958 | -1.000 | 0.903 | 0.916 | 0.995 | 0.965 | -1.000 | 0.916 |
+2026-11-06 06:50:30,696 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:50:34,546 Epoch: [6][0/32]	Accuracy_d 0.59375 (0.9220795826513911)	Loss_d_2 0.6991624236106873	Time 1.737s (1.737s)	Data 1.280s (1.280s)	Loss_p -0.00003 (-0.00005)	Loss_d 0.70279 (0.34634)	Accuracy_p 0.899 (0.890)
+2026-11-06 06:50:44,827 Epoch: [6][20/32]	Accuracy_d 0.5625 (0.9099891045958796)	Loss_d_2 0.6747626662254333	Time 0.508s (0.572s)	Data 0.000s (0.061s)	Loss_p -0.00009 (-0.00005)	Loss_d 0.67819 (0.35476)	Accuracy_p 0.934 (0.893)
+2026-11-06 06:50:49,953 Test: [0/25]	Time 0.469 (0.469)	Loss 0.0004 (0.0004)	Accuracy 0.919 (0.919)
+2026-11-06 06:50:51,990 Test: [20/25]	Time 0.095 (0.120)	Loss 0.0004 (0.0004)	Accuracy 0.888 (0.887)
+2026-11-06 06:50:52,424 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:50:52,720 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:50:52,720 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:50:52,720 | adaptive... | 0.901 | 0.989 | 0.958 | -1.000 | 0.901 | 0.915 | 0.995 | 0.970 | -1.000 | 0.915 |
+2026-11-06 06:50:52,737 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:50:56,929 Epoch: [7][0/32]	Accuracy_d 0.5 (0.9219261456628478)	Loss_d_2 0.6811717748641968	Time 2.018s (2.018s)	Data 1.436s (1.436s)	Loss_p -0.00005 (-0.00005)	Loss_d 0.68353 (0.35924)	Accuracy_p 0.917 (0.894)
+2026-11-06 06:51:06,999 Epoch: [7][20/32]	Accuracy_d 0.59375 (0.9101129160063391)	Loss_d_2 0.6505395770072937	Time 0.501s (0.576s)	Data 0.000s (0.069s)	Loss_p -0.00011 (-0.00005)	Loss_d 0.65455 (0.36679)	Accuracy_p 0.948 (0.897)
+2026-11-06 06:51:12,830 Test: [0/25]	Time 0.517 (0.517)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+2026-11-06 06:51:15,198 Test: [20/25]	Time 0.099 (0.138)	Loss 0.0004 (0.0004)	Accuracy 0.884 (0.890)
+2026-11-06 06:51:15,653 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:51:15,935 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:51:15,935 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:51:15,936 | adaptive... | 0.903 | 0.989 | 0.968 | -1.000 | 0.903 | 0.917 | 0.995 | 0.975 | -1.000 | 0.917 |
+2026-11-06 06:51:15,969 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:51:20,702 Epoch: [8][0/32]	Accuracy_d 0.546875 (0.9220028641571195)	Loss_d_2 0.6641274690628052	Time 2.211s (2.211s)	Data 1.857s (1.857s)	Loss_p -0.00002 (-0.00005)	Loss_d 0.66701 (0.37096)	Accuracy_p 0.909 (0.897)
+2026-11-06 06:51:31,493 Epoch: [8][20/32]	Accuracy_d 0.484375 (0.9099643423137876)	Loss_d_2 0.6647754907608032	Time 0.628s (0.619s)	Data 0.000s (0.089s)	Loss_p -0.00008 (-0.00005)	Loss_d 0.67023 (0.37812)	Accuracy_p 0.929 (0.900)
+2026-11-06 06:51:37,811 Test: [0/25]	Time 0.540 (0.540)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 06:51:40,612 Test: [20/25]	Time 0.140 (0.161)	Loss 0.0004 (0.0004)	Accuracy 0.883 (0.890)
+2026-11-06 06:51:41,212 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:51:41,482 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:51:41,482 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:51:41,482 | adaptive... | 0.903 | 0.989 | 0.958 | -1.000 | 0.903 | 0.917 | 0.995 | 0.967 | -1.000 | 0.917 |
+2026-11-06 06:51:41,487 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:51:44,752 Epoch: [9][0/32]	Accuracy_d 0.53125 (0.9219772913256956)	Loss_d_2 0.6742174625396729	Time 1.689s (1.689s)	Data 1.238s (1.238s)	Loss_p -0.00003 (-0.00005)	Loss_d 0.67900 (0.38174)	Accuracy_p 0.898 (0.900)
+2026-11-06 06:51:52,082 Epoch: [9][20/32]	Accuracy_d 0.671875 (0.9103357765451664)	Loss_d_2 0.6406385898590088	Time 0.500s (0.429s)	Data 0.000s (0.059s)	Loss_p -0.00010 (-0.00006)	Loss_d 0.65380 (0.38843)	Accuracy_p 0.957 (0.903)
+2026-11-06 06:51:57,946 Test: [0/25]	Time 0.540 (0.540)	Loss 0.0004 (0.0004)	Accuracy 0.904 (0.904)
+2026-11-06 06:52:00,725 Test: [20/25]	Time 0.147 (0.159)	Loss 0.0004 (0.0004)	Accuracy 0.894 (0.890)
+2026-11-06 06:52:01,328 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:52:01,608 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:52:01,608 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:52:01,608 | adaptive... | 0.907 | 0.989 | 0.968 | -1.000 | 0.907 | 0.920 | 0.997 | 0.972 | -1.000 | 0.920 |
+2026-11-06 06:52:01,612 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:52:05,797 Epoch: [10][0/32]	Accuracy_d 0.5625 (0.9220284369885434)	Loss_d_2 0.680419385433197	Time 1.730s (1.730s)	Data 1.175s (1.175s)	Loss_p -0.00005 (-0.00006)	Loss_d 0.68555 (0.39179)	Accuracy_p 0.917 (0.903)
+2026-11-06 06:52:13,555 Epoch: [10][20/32]	Accuracy_d 0.421875 (0.9095186212361331)	Loss_d_2 0.7263725996017456	Time 0.297s (0.452s)	Data 0.000s (0.056s)	Loss_p -0.00014 (-0.00006)	Loss_d 0.74543 (0.39830)	Accuracy_p 0.948 (0.905)
+2026-11-06 06:52:18,627 Test: [0/25]	Time 0.550 (0.550)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 06:52:21,479 Test: [20/25]	Time 0.140 (0.164)	Loss 0.0004 (0.0004)	Accuracy 0.887 (0.890)
+2026-11-06 06:52:22,070 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:52:22,345 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:52:22,345 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:52:22,345 | adaptive... | 0.906 | 0.989 | 0.968 | -1.000 | 0.906 | 0.921 | 0.995 | 0.977 | -1.000 | 0.921 |
+2026-11-06 06:52:22,350 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:52:25,634 Epoch: [11][0/32]	Accuracy_d 0.640625 (0.9221563011456628)	Loss_d_2 0.6655772924423218	Time 1.695s (1.695s)	Data 1.174s (1.174s)	Loss_p -0.00005 (-0.00006)	Loss_d 0.67018 (0.40142)	Accuracy_p 0.909 (0.906)
+2026-11-06 06:52:35,424 Epoch: [11][20/32]	Accuracy_d 0.609375 (0.9067700079239303)	Loss_d_2 0.6327285766601562	Time 0.382s (0.547s)	Data 0.000s (0.056s)	Loss_p -0.00009 (-0.00006)	Loss_d 0.64907 (0.40841)	Accuracy_p 0.945 (0.908)
+2026-11-06 06:52:40,452 Test: [0/25]	Time 0.711 (0.711)	Loss 0.0004 (0.0004)	Accuracy 0.897 (0.897)
+2026-11-06 06:52:42,873 Test: [20/25]	Time 0.141 (0.149)	Loss 0.0004 (0.0004)	Accuracy 0.879 (0.887)
+2026-11-06 06:52:43,473 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:52:43,757 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:52:43,757 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:52:43,757 | adaptive... | 0.903 | 0.989 | 0.958 | -1.000 | 0.903 | 0.917 | 0.995 | 0.967 | -1.000 | 0.917 |
+2026-11-06 06:52:43,762 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:52:47,239 Epoch: [12][0/32]	Accuracy_d 0.625 (0.9221307283142389)	Loss_d_2 0.6524732112884521	Time 1.878s (1.878s)	Data 1.352s (1.352s)	Loss_p -0.00009 (-0.00006)	Loss_d 0.65459 (0.41089)	Accuracy_p 0.935 (0.908)
+2026-11-06 06:52:57,349 Epoch: [12][20/32]	Accuracy_d 0.359375 (0.9086024167987322)	Loss_d_2 0.7762743234634399	Time 0.501s (0.571s)	Data 0.000s (0.065s)	Loss_p -0.00017 (-0.00007)	Loss_d 0.80304 (0.41737)	Accuracy_p 0.938 (0.910)
+2026-11-06 06:53:03,115 Test: [0/25]	Time 0.605 (0.605)	Loss 0.0004 (0.0004)	Accuracy 0.897 (0.897)
+2026-11-06 06:53:05,869 Test: [20/25]	Time 0.141 (0.162)	Loss 0.0004 (0.0004)	Accuracy 0.890 (0.889)
+2026-11-06 06:53:06,382 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:53:06,655 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:53:06,655 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:53:06,655 | adaptive... | 0.900 | 0.988 | 0.948 | -1.000 | 0.900 | 0.914 | 0.995 | 0.960 | -1.000 | 0.914 |
+2026-11-06 06:53:06,659 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:53:12,624 Epoch: [13][0/32]	Accuracy_d 0.515625 (0.9219517184942717)	Loss_d_2 0.6982389688491821	Time 2.211s (2.211s)	Data 1.732s (1.732s)	Loss_p -0.00008 (-0.00007)	Loss_d 0.71478 (0.42096)	Accuracy_p 0.933 (0.910)
+2026-11-06 06:53:22,933 Epoch: [13][20/32]	Accuracy_d 0.546875 (0.9051852218700476)	Loss_d_2 0.6506595611572266	Time 0.577s (0.596s)	Data 0.000s (0.083s)	Loss_p -0.00013 (-0.00007)	Loss_d 0.66530 (0.42762)	Accuracy_p 0.963 (0.912)
+2026-11-06 06:53:28,879 Test: [0/25]	Time 0.513 (0.513)	Loss 0.0004 (0.0004)	Accuracy 0.893 (0.893)
+2026-11-06 06:53:31,663 Test: [20/25]	Time 0.144 (0.158)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.883)
+2026-11-06 06:53:32,255 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:53:32,640 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:53:32,641 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:53:32,641 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.913 | 0.995 | 0.967 | -1.000 | 0.913 |
+2026-11-06 06:53:32,644 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:53:35,892 Epoch: [14][0/32]	Accuracy_d 0.46875 (0.921875)	Loss_d_2 0.7985870242118835	Time 1.707s (1.707s)	Data 1.266s (1.266s)	Loss_p -0.00016 (-0.00007)	Loss_d 0.80455 (0.43043)	Accuracy_p 0.943 (0.912)
+2026-11-06 06:53:43,993 Epoch: [14][20/32]	Accuracy_d 0.625 (0.9073890649762282)	Loss_d_2 0.6777856349945068	Time 0.459s (0.467s)	Data 0.000s (0.061s)	Loss_p -0.00014 (-0.00008)	Loss_d 0.69027 (0.43688)	Accuracy_p 0.954 (0.913)
+2026-11-06 06:53:49,885 Test: [0/25]	Time 0.533 (0.533)	Loss 0.0004 (0.0004)	Accuracy 0.890 (0.890)
+2026-11-06 06:53:52,782 Test: [20/25]	Time 0.127 (0.164)	Loss 0.0004 (0.0004)	Accuracy 0.890 (0.883)
+2026-11-06 06:53:53,416 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:53:53,695 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:53:53,696 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:53:53,696 | adaptive... | 0.899 | 0.989 | 0.968 | -1.000 | 0.899 | 0.913 | 0.992 | 0.972 | -1.000 | 0.913 |
+2026-11-06 06:53:53,699 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:53:56,993 Epoch: [15][0/32]	Accuracy_d 0.703125 (0.9222585924713584)	Loss_d_2 0.6130902171134949	Time 1.762s (1.762s)	Data 1.210s (1.210s)	Loss_p -0.00004 (-0.00008)	Loss_d 0.61712 (0.43893)	Accuracy_p 0.917 (0.914)
+2026-11-06 06:54:05,072 Epoch: [15][20/32]	Accuracy_d 0.28125 (0.9082062202852615)	Loss_d_2 0.7836139798164368	Time 0.297s (0.469s)	Data 0.000s (0.058s)	Loss_p -0.00018 (-0.00008)	Loss_d 0.80296 (0.44423)	Accuracy_p 0.953 (0.915)
+2026-11-06 06:54:09,932 Test: [0/25]	Time 0.550 (0.550)	Loss 0.0004 (0.0004)	Accuracy 0.893 (0.893)
+2026-11-06 06:54:12,786 Test: [20/25]	Time 0.145 (0.163)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.888)
+2026-11-06 06:54:13,420 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:54:13,701 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:54:13,701 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:54:13,701 | adaptive... | 0.900 | 0.989 | 0.958 | -1.000 | 0.900 | 0.915 | 0.995 | 0.967 | -1.000 | 0.915 |
+2026-11-06 06:54:13,704 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:54:17,076 Epoch: [16][0/32]	Accuracy_d 0.625 (0.9221307283142389)	Loss_d_2 0.657343864440918	Time 1.667s (1.667s)	Data 1.152s (1.152s)	Loss_p -0.00009 (-0.00008)	Loss_d 0.66358 (0.44684)	Accuracy_p 0.944 (0.915)
+2026-11-06 06:54:26,748 Epoch: [16][20/32]	Accuracy_d 0.328125 (0.9077109746434231)	Loss_d_2 0.7479482889175415	Time 0.434s (0.540s)	Data 0.000s (0.055s)	Loss_p -0.00015 (-0.00008)	Loss_d 0.76214 (0.45154)	Accuracy_p 0.948 (0.916)
+2026-11-06 06:54:31,636 Test: [0/25]	Time 0.730 (0.730)	Loss 0.0004 (0.0004)	Accuracy 0.904 (0.904)
+2026-11-06 06:54:34,035 Test: [20/25]	Time 0.144 (0.150)	Loss 0.0004 (0.0004)	Accuracy 0.892 (0.887)
+2026-11-06 06:54:34,634 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:54:34,914 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:54:34,914 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:54:34,914 | adaptive... | 0.902 | 0.989 | 0.958 | -1.000 | 0.902 | 0.916 | 0.995 | 0.967 | -1.000 | 0.916 |
+2026-11-06 06:54:34,918 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:54:38,142 Epoch: [17][0/32]	Accuracy_d 0.53125 (0.9219772913256956)	Loss_d_2 0.6727777719497681	Time 1.683s (1.683s)	Data 1.149s (1.149s)	Loss_p -0.00007 (-0.00008)	Loss_d 0.67774 (0.45389)	Accuracy_p 0.919 (0.917)
+2026-11-06 06:54:48,399 Epoch: [17][20/32]	Accuracy_d 0.625 (0.9116234152139461)	Loss_d_2 0.6793593168258667	Time 0.501s (0.569s)	Data 0.000s (0.055s)	Loss_p -0.00015 (-0.00008)	Loss_d 0.68264 (0.45767)	Accuracy_p 0.960 (0.918)
+2026-11-06 06:54:54,294 Test: [0/25]	Time 0.530 (0.530)	Loss 0.0004 (0.0004)	Accuracy 0.897 (0.897)
+2026-11-06 06:54:57,025 Test: [20/25]	Time 0.142 (0.158)	Loss 0.0004 (0.0004)	Accuracy 0.907 (0.888)
+2026-11-06 06:54:57,655 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:54:57,926 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:54:57,926 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:54:57,926 | adaptive... | 0.903 | 0.989 | 0.958 | -1.000 | 0.903 | 0.917 | 0.992 | 0.970 | -1.000 | 0.917 |
+2026-11-06 06:54:57,929 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:55:01,888 Epoch: [18][0/32]	Accuracy_d 0.5 (0.9219261456628478)	Loss_d_2 0.7129379510879517	Time 1.708s (1.708s)	Data 1.213s (1.213s)	Loss_p -0.00012 (-0.00008)	Loss_d 0.71895 (0.46000)	Accuracy_p 0.931 (0.918)
+2026-11-06 06:55:12,006 Epoch: [18][20/32]	Accuracy_d 0.6875 (0.9096671949286846)	Loss_d_2 0.6495829820632935	Time 0.511s (0.563s)	Data 0.000s (0.058s)	Loss_p -0.00013 (-0.00009)	Loss_d 0.65327 (0.46389)	Accuracy_p 0.951 (0.919)
+2026-11-06 06:55:17,991 Test: [0/25]	Time 0.506 (0.506)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 06:55:20,792 Test: [20/25]	Time 0.141 (0.160)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.886)
+2026-11-06 06:55:21,386 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:55:21,659 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:55:21,659 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:55:21,660 | adaptive... | 0.903 | 0.989 | 0.958 | -1.000 | 0.903 | 0.917 | 0.995 | 0.967 | -1.000 | 0.917 |
+2026-11-06 06:55:21,663 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:55:24,895 Epoch: [19][0/32]	Accuracy_d 0.59375 (0.9220795826513911)	Loss_d_2 0.6632020473480225	Time 1.611s (1.611s)	Data 1.198s (1.198s)	Loss_p -0.00008 (-0.00009)	Loss_d 0.66665 (0.46578)	Accuracy_p 0.934 (0.920)
+2026-11-06 06:55:32,944 Epoch: [19][20/32]	Accuracy_d 0.484375 (0.9096176703645008)	Loss_d_2 0.6821727156639099	Time 0.510s (0.460s)	Data 0.000s (0.057s)	Loss_p -0.00013 (-0.00009)	Loss_d 0.68655 (0.46943)	Accuracy_p 0.949 (0.921)
+2026-11-06 06:55:38,876 Test: [0/25]	Time 0.478 (0.478)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 06:55:41,761 Test: [20/25]	Time 0.143 (0.161)	Loss 0.0004 (0.0004)	Accuracy 0.903 (0.891)
+2026-11-06 06:55:42,357 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:55:42,637 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:55:42,637 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:55:42,637 | adaptive... | 0.903 | 0.989 | 0.968 | -1.000 | 0.903 | 0.917 | 0.995 | 0.972 | -1.000 | 0.917 |
+2026-11-06 06:55:42,641 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:55:45,737 Epoch: [20][0/32]	Accuracy_d 0.59375 (0.9220795826513911)	Loss_d_2 0.6533958911895752	Time 1.548s (1.548s)	Data 1.066s (1.066s)	Loss_p -0.00012 (-0.00009)	Loss_d 0.65942 (0.47134)	Accuracy_p 0.950 (0.921)
+2026-11-06 06:55:53,744 Epoch: [20][20/32]	Accuracy_d 0.546875 (0.9122919968304279)	Loss_d_2 0.7000202536582947	Time 0.284s (0.455s)	Data 0.000s (0.051s)	Loss_p -0.00017 (-0.00009)	Loss_d 0.70190 (0.47432)	Accuracy_p 0.959 (0.922)
+2026-11-06 06:55:59,009 Test: [0/25]	Time 0.527 (0.527)	Loss 0.0004 (0.0004)	Accuracy 0.904 (0.904)
+2026-11-06 06:56:01,801 Test: [20/25]	Time 0.129 (0.159)	Loss 0.0004 (0.0004)	Accuracy 0.884 (0.889)
+2026-11-06 06:56:02,412 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:56:02,688 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:56:02,688 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:56:02,688 | adaptive... | 0.900 | 0.988 | 0.967 | -1.000 | 0.900 | 0.916 | 0.995 | 0.972 | -1.000 | 0.916 |
+2026-11-06 06:56:02,694 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:56:06,173 Epoch: [21][0/32]	Accuracy_d 0.40625 (0.9217727086743044)	Loss_d_2 0.7140761613845825	Time 1.683s (1.683s)	Data 1.179s (1.179s)	Loss_p -0.00009 (-0.00009)	Loss_d 0.72584 (0.47645)	Accuracy_p 0.916 (0.922)
+2026-11-06 06:56:15,866 Epoch: [21][20/32]	Accuracy_d 0.578125 (0.9111776941362916)	Loss_d_2 0.6271366477012634	Time 0.445s (0.542s)	Data 0.000s (0.056s)	Loss_p -0.00009 (-0.00009)	Loss_d 0.63635 (0.47914)	Accuracy_p 0.937 (0.923)
+2026-11-06 06:56:20,250 Test: [0/25]	Time 0.521 (0.521)	Loss 0.0004 (0.0004)	Accuracy 0.904 (0.904)
+2026-11-06 06:56:23,091 Test: [20/25]	Time 0.148 (0.163)	Loss 0.0004 (0.0004)	Accuracy 0.896 (0.891)
+2026-11-06 06:56:23,690 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:56:23,972 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:56:23,973 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:56:23,973 | adaptive... | 0.901 | 0.988 | 0.958 | -1.000 | 0.901 | 0.917 | 0.995 | 0.970 | -1.000 | 0.917 |
+2026-11-06 06:56:23,977 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:56:27,663 Epoch: [22][0/32]	Accuracy_d 0.46875 (0.921875)	Loss_d_2 0.7763317227363586	Time 2.097s (2.097s)	Data 1.499s (1.499s)	Loss_p -0.00014 (-0.00009)	Loss_d 0.79402 (0.48151)	Accuracy_p 0.931 (0.923)
+2026-11-06 06:56:37,652 Epoch: [22][20/32]	Accuracy_d 0.65625 (0.9102367274167987)	Loss_d_2 0.6427072286605835	Time 0.501s (0.576s)	Data 0.000s (0.072s)	Loss_p -0.00013 (-0.00009)	Loss_d 0.65021 (0.48484)	Accuracy_p 0.954 (0.924)
+2026-11-06 06:56:42,762 Test: [0/25]	Time 0.511 (0.511)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 06:56:45,032 Test: [20/25]	Time 0.092 (0.135)	Loss 0.0004 (0.0004)	Accuracy 0.895 (0.890)
+2026-11-06 06:56:45,474 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:56:45,776 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:56:45,776 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:56:45,776 | adaptive... | 0.901 | 0.989 | 0.958 | -1.000 | 0.901 | 0.916 | 0.995 | 0.967 | -1.000 | 0.916 |
+2026-11-06 06:56:45,843 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:56:49,100 Epoch: [23][0/32]	Accuracy_d 0.359375 (0.9216959901800328)	Loss_d_2 0.8265515565872192	Time 1.610s (1.610s)	Data 1.148s (1.148s)	Loss_p -0.00018 (-0.00009)	Loss_d 0.84657 (0.48716)	Accuracy_p 0.938 (0.924)
+2026-11-06 06:56:59,280 Epoch: [23][20/32]	Accuracy_d 0.734375 (0.9082309825673535)	Loss_d_2 0.5525842905044556	Time 0.507s (0.561s)	Data 0.000s (0.055s)	Loss_p -0.00011 (-0.00009)	Loss_d 0.56388 (0.49036)	Accuracy_p 0.965 (0.925)
+2026-11-06 06:57:05,495 Test: [0/25]	Time 0.758 (0.758)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 06:57:08,224 Test: [20/25]	Time 0.113 (0.167)	Loss 0.0004 (0.0004)	Accuracy 0.884 (0.888)
+2026-11-06 06:57:08,779 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:57:09,062 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:57:09,062 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:57:09,062 | adaptive... | 0.902 | 0.988 | 0.967 | -1.000 | 0.902 | 0.917 | 0.995 | 0.972 | -1.000 | 0.917 |
+2026-11-06 06:57:09,067 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:57:11,975 Epoch: [24][0/32]	Accuracy_d 0.375 (0.9217215630114566)	Loss_d_2 0.8850526809692383	Time 1.352s (1.352s)	Data 1.050s (1.050s)	Loss_p -0.00019 (-0.00009)	Loss_d 0.90793 (0.49207)	Accuracy_p 0.930 (0.925)
+2026-11-06 06:57:21,806 Epoch: [24][20/32]	Accuracy_d 0.703125 (0.9050366481774961)	Loss_d_2 0.6029511094093323	Time 0.548s (0.532s)	Data 0.000s (0.050s)	Loss_p -0.00010 (-0.00010)	Loss_d 0.61603 (0.49662)	Accuracy_p 0.958 (0.926)
+2026-11-06 06:57:27,825 Test: [0/25]	Time 0.576 (0.576)	Loss 0.0004 (0.0004)	Accuracy 0.904 (0.904)
+2026-11-06 06:57:30,625 Test: [20/25]	Time 0.140 (0.163)	Loss 0.0004 (0.0004)	Accuracy 0.891 (0.886)
+2026-11-06 06:57:31,223 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:57:31,603 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:57:31,603 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:57:31,603 | adaptive... | 0.902 | 0.989 | 0.958 | -1.000 | 0.902 | 0.916 | 0.995 | 0.970 | -1.000 | 0.916 |
+2026-11-06 06:57:31,606 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:57:34,890 Epoch: [25][0/32]	Accuracy_d 0.546875 (0.9220028641571195)	Loss_d_2 0.6934212446212769	Time 1.726s (1.726s)	Data 1.283s (1.283s)	Loss_p -0.00010 (-0.00010)	Loss_d 0.69639 (0.49770)	Accuracy_p 0.937 (0.926)
+2026-11-06 06:57:42,973 Epoch: [25][20/32]	Accuracy_d 0.59375 (0.9055318938193344)	Loss_d_2 0.6626038551330566	Time 0.506s (0.467s)	Data 0.000s (0.061s)	Loss_p -0.00015 (-0.00010)	Loss_d 0.67670 (0.50211)	Accuracy_p 0.962 (0.927)
+2026-11-06 06:57:48,781 Test: [0/25]	Time 0.519 (0.519)	Loss 0.0004 (0.0004)	Accuracy 0.904 (0.904)
+2026-11-06 06:57:51,570 Test: [20/25]	Time 0.140 (0.158)	Loss 0.0004 (0.0004)	Accuracy 0.903 (0.887)
+2026-11-06 06:57:52,189 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:57:52,487 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:57:52,487 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:57:52,487 | adaptive... | 0.901 | 0.989 | 0.958 | -1.000 | 0.901 | 0.917 | 0.995 | 0.970 | -1.000 | 0.917 |
+2026-11-06 06:57:52,491 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:57:55,931 Epoch: [26][0/32]	Accuracy_d 0.65625 (0.9221818739770867)	Loss_d_2 0.6445359587669373	Time 1.849s (1.849s)	Data 1.300s (1.300s)	Loss_p -0.00010 (-0.00010)	Loss_d 0.64707 (0.50336)	Accuracy_p 0.951 (0.927)
+2026-11-06 06:58:04,180 Epoch: [26][20/32]	Accuracy_d 0.640625 (0.9113262678288431)	Loss_d_2 0.6456699371337891	Time 0.297s (0.481s)	Data 0.000s (0.062s)	Loss_p -0.00014 (-0.00010)	Loss_d 0.65153 (0.50570)	Accuracy_p 0.955 (0.928)
+2026-11-06 06:58:07,839 Test: [0/25]	Time 0.492 (0.492)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 06:58:09,852 Test: [20/25]	Time 0.092 (0.120)	Loss 0.0004 (0.0004)	Accuracy 0.899 (0.888)
+2026-11-06 06:58:10,277 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:58:10,547 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:58:10,547 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:58:10,547 | adaptive... | 0.900 | 0.989 | 0.958 | -1.000 | 0.900 | 0.916 | 0.995 | 0.970 | -1.000 | 0.916 |
+2026-11-06 06:58:10,556 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:58:13,684 Epoch: [27][0/32]	Accuracy_d 0.640625 (0.9221563011456628)	Loss_d_2 0.6417816877365112	Time 1.391s (1.391s)	Data 1.082s (1.082s)	Loss_p -0.00007 (-0.00010)	Loss_d 0.64834 (0.50678)	Accuracy_p 0.929 (0.928)
+2026-11-06 06:58:20,468 Epoch: [27][20/32]	Accuracy_d 0.609375 (0.9081319334389857)	Loss_d_2 0.6727945804595947	Time 0.383s (0.389s)	Data 0.000s (0.052s)	Loss_p -0.00011 (-0.00010)	Loss_d 0.68286 (0.50968)	Accuracy_p 0.933 (0.928)
+2026-11-06 06:58:24,822 Test: [0/25]	Time 0.550 (0.550)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+2026-11-06 06:58:26,702 Test: [20/25]	Time 0.092 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.889)
+2026-11-06 06:58:27,133 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:58:27,457 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:58:27,457 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:58:27,457 | adaptive... | 0.901 | 0.989 | 0.958 | -1.000 | 0.901 | 0.917 | 0.992 | 0.970 | -1.000 | 0.917 |
+2026-11-06 06:58:27,461 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:58:30,564 Epoch: [28][0/32]	Accuracy_d 0.625 (0.9221307283142389)	Loss_d_2 0.6433396935462952	Time 1.476s (1.476s)	Data 1.172s (1.172s)	Loss_p -0.00012 (-0.00010)	Loss_d 0.64782 (0.51089)	Accuracy_p 0.959 (0.929)
+2026-11-06 06:58:37,165 Epoch: [28][20/32]	Accuracy_d 0.53125 (0.9123167591125199)	Loss_d_2 0.6691569089889526	Time 0.399s (0.385s)	Data 0.000s (0.056s)	Loss_p -0.00016 (-0.00010)	Loss_d 0.67724 (0.51281)	Accuracy_p 0.970 (0.929)
+2026-11-06 06:58:41,747 Test: [0/25]	Time 0.549 (0.549)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 06:58:43,655 Test: [20/25]	Time 0.092 (0.119)	Loss 0.0004 (0.0004)	Accuracy 0.906 (0.889)
+2026-11-06 06:58:44,094 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:58:44,366 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:58:44,366 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:58:44,366 | adaptive... | 0.902 | 0.989 | 0.968 | -1.000 | 0.902 | 0.914 | 0.992 | 0.972 | -1.000 | 0.914 |
+2026-11-06 06:58:44,374 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:58:47,611 Epoch: [29][0/32]	Accuracy_d 0.53125 (0.9219772913256956)	Loss_d_2 0.7060659527778625	Time 1.540s (1.540s)	Data 1.230s (1.230s)	Loss_p -0.00013 (-0.00010)	Loss_d 0.71308 (0.51428)	Accuracy_p 0.941 (0.930)
+2026-11-06 06:58:53,466 Epoch: [29][20/32]	Accuracy_d 0.671875 (0.9096424326465927)	Loss_d_2 0.6523963212966919	Time 0.296s (0.352s)	Data 0.000s (0.059s)	Loss_p -0.00015 (-0.00010)	Loss_d 0.65636 (0.51654)	Accuracy_p 0.966 (0.930)
+2026-11-06 06:58:57,133 Test: [0/25]	Time 0.512 (0.512)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 06:58:59,044 Test: [20/25]	Time 0.092 (0.116)	Loss 0.0004 (0.0004)	Accuracy 0.892 (0.884)
+2026-11-06 06:58:59,470 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:58:59,744 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:58:59,744 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:58:59,744 | adaptive... | 0.900 | 0.989 | 0.968 | -1.000 | 0.900 | 0.912 | 0.992 | 0.972 | -1.000 | 0.912 |
+2026-11-06 06:58:59,748 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:59:02,869 Epoch: [30][0/32]	Accuracy_d 0.59375 (0.9220795826513911)	Loss_d_2 0.6598814725875854	Time 1.431s (1.431s)	Data 1.121s (1.121s)	Loss_p -0.00011 (-0.00010)	Loss_d 0.66720 (0.51762)	Accuracy_p 0.944 (0.930)
+2026-11-06 06:59:08,729 Epoch: [30][20/32]	Accuracy_d 0.734375 (0.9142729793977813)	Loss_d_2 0.5970529317855835	Time 0.295s (0.347s)	Data 0.000s (0.054s)	Loss_p -0.00014 (-0.00011)	Loss_d 0.60496 (0.51903)	Accuracy_p 0.971 (0.931)
+2026-11-06 06:59:12,323 Test: [0/25]	Time 0.438 (0.438)	Loss 0.0004 (0.0004)	Accuracy 0.904 (0.904)
+2026-11-06 06:59:14,284 Test: [20/25]	Time 0.092 (0.115)	Loss 0.0004 (0.0004)	Accuracy 0.899 (0.890)
+2026-11-06 06:59:14,708 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:59:14,981 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:59:14,981 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:59:14,981 | adaptive... | 0.902 | 0.989 | 0.968 | -1.000 | 0.902 | 0.916 | 0.992 | 0.972 | -1.000 | 0.916 |
+2026-11-06 06:59:14,985 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:59:17,911 Epoch: [31][0/32]	Accuracy_d 0.296875 (0.9215936988543372)	Loss_d_2 0.8428075313568115	Time 1.404s (1.404s)	Data 1.103s (1.103s)	Loss_p -0.00022 (-0.00011)	Loss_d 0.85303 (0.52012)	Accuracy_p 0.950 (0.931)
+2026-11-06 06:59:23,834 Epoch: [31][20/32]	Accuracy_d 0.6875 (0.9047395007923931)	Loss_d_2 0.6460858583450317	Time 0.296s (0.349s)	Data 0.000s (0.053s)	Loss_p -0.00014 (-0.00011)	Loss_d 0.65430 (0.52346)	Accuracy_p 0.969 (0.932)
+2026-11-06 06:59:27,545 Test: [0/25]	Time 0.533 (0.533)	Loss 0.0004 (0.0004)	Accuracy 0.904 (0.904)
+2026-11-06 06:59:29,448 Test: [20/25]	Time 0.091 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.907 (0.884)
+2026-11-06 06:59:29,883 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:59:30,152 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:59:30,153 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:59:30,153 | adaptive... | 0.898 | 0.989 | 0.968 | -1.000 | 0.898 | 0.913 | 0.995 | 0.972 | -1.000 | 0.913 |
+2026-11-06 06:59:30,156 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:59:33,383 Epoch: [32][0/32]	Accuracy_d 0.671875 (0.9222074468085106)	Loss_d_2 0.6275678873062134	Time 1.444s (1.444s)	Data 1.146s (1.146s)	Loss_p -0.00008 (-0.00011)	Loss_d 0.63229 (0.52433)	Accuracy_p 0.929 (0.932)
+2026-11-06 06:59:39,226 Epoch: [32][20/32]	Accuracy_d 0.515625 (0.9128120047543582)	Loss_d_2 0.7121455669403076	Time 0.295s (0.347s)	Data 0.000s (0.055s)	Loss_p -0.00018 (-0.00011)	Loss_d 0.71805 (0.52595)	Accuracy_p 0.953 (0.932)
+2026-11-06 06:59:42,848 Test: [0/25]	Time 0.455 (0.455)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 06:59:44,772 Test: [20/25]	Time 0.092 (0.115)	Loss 0.0004 (0.0004)	Accuracy 0.896 (0.884)
+2026-11-06 06:59:45,199 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 06:59:45,467 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 06:59:45,467 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 06:59:45,467 | adaptive... | 0.900 | 0.989 | 0.958 | -1.000 | 0.900 | 0.913 | 0.992 | 0.967 | -1.000 | 0.913 |
+2026-11-06 06:59:45,473 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 06:59:48,489 Epoch: [33][0/32]	Accuracy_d 0.390625 (0.9217471358428805)	Loss_d_2 0.74652498960495	Time 1.405s (1.405s)	Data 1.102s (1.102s)	Loss_p -0.00018 (-0.00011)	Loss_d 0.75755 (0.52751)	Accuracy_p 0.960 (0.933)
+2026-11-06 06:59:54,350 Epoch: [33][20/32]	Accuracy_d 0.640625 (0.908651941362916)	Loss_d_2 0.6541261672973633	Time 0.291s (0.346s)	Data 0.000s (0.053s)	Loss_p -0.00018 (-0.00011)	Loss_d 0.66050 (0.52947)	Accuracy_p 0.975 (0.933)
+2026-11-06 06:59:58,022 Test: [0/25]	Time 0.512 (0.512)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 06:59:59,912 Test: [20/25]	Time 0.091 (0.116)	Loss 0.0004 (0.0004)	Accuracy 0.906 (0.889)
+2026-11-06 07:00:00,363 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:00:00,668 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:00:00,669 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:00:00,669 | adaptive... | 0.900 | 0.989 | 0.958 | -1.000 | 0.900 | 0.915 | 0.995 | 0.970 | -1.000 | 0.915 |
+2026-11-06 07:00:00,673 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:00:03,820 Epoch: [34][0/32]	Accuracy_d 0.453125 (0.9218494271685761)	Loss_d_2 0.6962779760360718	Time 1.528s (1.528s)	Data 1.224s (1.224s)	Loss_p -0.00011 (-0.00011)	Loss_d 0.70053 (0.53041)	Accuracy_p 0.933 (0.933)
+2026-11-06 07:00:09,663 Epoch: [34][20/32]	Accuracy_d 0.578125 (0.9112767432646592)	Loss_d_2 0.6842338442802429	Time 0.290s (0.351s)	Data 0.000s (0.059s)	Loss_p -0.00019 (-0.00011)	Loss_d 0.68879 (0.53210)	Accuracy_p 0.973 (0.934)
+2026-11-06 07:00:13,343 Test: [0/25]	Time 0.510 (0.510)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 07:00:15,302 Test: [20/25]	Time 0.091 (0.119)	Loss 0.0004 (0.0004)	Accuracy 0.906 (0.889)
+2026-11-06 07:00:15,751 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:00:16,030 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:00:16,031 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:00:16,031 | adaptive... | 0.901 | 0.989 | 0.958 | -1.000 | 0.901 | 0.916 | 0.995 | 0.970 | -1.000 | 0.916 |
+2026-11-06 07:00:16,036 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:00:19,104 Epoch: [35][0/32]	Accuracy_d 0.59375 (0.9220795826513911)	Loss_d_2 0.6608185768127441	Time 1.414s (1.414s)	Data 1.108s (1.108s)	Loss_p -0.00014 (-0.00011)	Loss_d 0.66314 (0.53290)	Accuracy_p 0.963 (0.934)
+2026-11-06 07:00:25,033 Epoch: [35][20/32]	Accuracy_d 0.65625 (0.9112767432646592)	Loss_d_2 0.6461030840873718	Time 0.297s (0.350s)	Data 0.000s (0.053s)	Loss_p -0.00017 (-0.00011)	Loss_d 0.64923 (0.53449)	Accuracy_p 0.969 (0.935)
+2026-11-06 07:00:28,736 Test: [0/25]	Time 0.520 (0.520)	Loss 0.0004 (0.0004)	Accuracy 0.897 (0.897)
+2026-11-06 07:00:30,624 Test: [20/25]	Time 0.091 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.894 (0.887)
+2026-11-06 07:00:31,057 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:00:31,325 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:00:31,325 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:00:31,325 | adaptive... | 0.899 | 0.989 | 0.957 | -1.000 | 0.899 | 0.912 | 0.995 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:00:31,329 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:00:34,310 Epoch: [36][0/32]	Accuracy_d 0.625 (0.9221307283142389)	Loss_d_2 0.6635640263557434	Time 1.371s (1.371s)	Data 1.074s (1.074s)	Loss_p -0.00011 (-0.00011)	Loss_d 0.66869 (0.53519)	Accuracy_p 0.931 (0.935)
+2026-11-06 07:00:40,141 Epoch: [36][20/32]	Accuracy_d 0.625 (0.9115738906497622)	Loss_d_2 0.6405577659606934	Time 0.296s (0.343s)	Data 0.000s (0.051s)	Loss_p -0.00016 (-0.00011)	Loss_d 0.64532 (0.53670)	Accuracy_p 0.968 (0.935)
+2026-11-06 07:00:43,846 Test: [0/25]	Time 0.528 (0.528)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 07:00:45,812 Test: [20/25]	Time 0.094 (0.120)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.886)
+2026-11-06 07:00:46,293 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:00:46,606 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:00:46,606 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:00:46,606 | adaptive... | 0.900 | 0.989 | 0.958 | -1.000 | 0.900 | 0.913 | 0.995 | 0.967 | -1.000 | 0.913 |
+2026-11-06 07:00:46,638 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:00:51,237 Epoch: [37][0/32]	Accuracy_d 0.515625 (0.9219517184942717)	Loss_d_2 0.6832149028778076	Time 2.414s (2.414s)	Data 2.098s (2.098s)	Loss_p -0.00013 (-0.00011)	Loss_d 0.68958 (0.53747)	Accuracy_p 0.930 (0.935)
+2026-11-06 07:00:57,083 Epoch: [37][20/32]	Accuracy_d 0.53125 (0.9106824484944532)	Loss_d_2 0.6615815162658691	Time 0.296s (0.393s)	Data 0.000s (0.100s)	Loss_p -0.00015 (-0.00011)	Loss_d 0.66667 (0.53899)	Accuracy_p 0.954 (0.936)
+2026-11-06 07:01:00,736 Test: [0/25]	Time 0.504 (0.504)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 07:01:02,631 Test: [20/25]	Time 0.092 (0.115)	Loss 0.0004 (0.0004)	Accuracy 0.907 (0.886)
+2026-11-06 07:01:03,059 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:01:03,438 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:01:03,438 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:01:03,438 | adaptive... | 0.899 | 0.989 | 0.958 | -1.000 | 0.899 | 0.913 | 0.995 | 0.970 | -1.000 | 0.913 |
+2026-11-06 07:01:03,443 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:01:06,501 Epoch: [38][0/32]	Accuracy_d 0.515625 (0.9219517184942717)	Loss_d_2 0.6980962753295898	Time 1.487s (1.487s)	Data 1.184s (1.184s)	Loss_p -0.00014 (-0.00011)	Loss_d 0.70306 (0.53975)	Accuracy_p 0.951 (0.936)
+2026-11-06 07:01:12,360 Epoch: [38][20/32]	Accuracy_d 0.640625 (0.9113757923930269)	Loss_d_2 0.6413508653640747	Time 0.295s (0.350s)	Data 0.000s (0.057s)	Loss_p -0.00015 (-0.00011)	Loss_d 0.64510 (0.54118)	Accuracy_p 0.955 (0.936)
+2026-11-06 07:01:16,053 Test: [0/25]	Time 0.513 (0.513)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 07:01:18,048 Test: [20/25]	Time 0.091 (0.121)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.886)
+2026-11-06 07:01:18,468 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:01:18,744 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:01:18,744 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:01:18,744 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.913 | 0.995 | 0.965 | -1.000 | 0.913 |
+2026-11-06 07:01:18,749 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:01:21,664 Epoch: [39][0/32]	Accuracy_d 0.59375 (0.9220795826513911)	Loss_d_2 0.675519585609436	Time 1.418s (1.418s)	Data 1.118s (1.118s)	Loss_p -0.00015 (-0.00011)	Loss_d 0.68048 (0.54181)	Accuracy_p 0.960 (0.937)
+2026-11-06 07:01:27,529 Epoch: [39][20/32]	Accuracy_d 0.796875 (0.913158676703645)	Loss_d_2 0.5363004207611084	Time 0.296s (0.347s)	Data 0.000s (0.054s)	Loss_p -0.00014 (-0.00012)	Loss_d 0.54364 (0.54277)	Accuracy_p 0.983 (0.937)
+2026-11-06 07:01:31,165 Test: [0/25]	Time 0.473 (0.473)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 07:01:33,073 Test: [20/25]	Time 0.092 (0.115)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.888)
+2026-11-06 07:01:33,539 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:01:33,859 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:01:33,859 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:01:33,859 | adaptive... | 0.899 | 0.989 | 0.958 | -1.000 | 0.899 | 0.913 | 0.992 | 0.962 | -1.000 | 0.913 |
+2026-11-06 07:01:33,895 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:01:38,391 Epoch: [40][0/32]	Accuracy_d 0.734375 (0.9223097381342062)	Loss_d_2 0.5764086842536926	Time 1.927s (1.927s)	Data 1.624s (1.624s)	Loss_p -0.00008 (-0.00012)	Loss_d 0.58648 (0.54302)	Accuracy_p 0.946 (0.937)
+2026-11-06 07:01:44,225 Epoch: [40][20/32]	Accuracy_d 0.71875 (0.9159072900158478)	Loss_d_2 0.5252086520195007	Time 0.297s (0.370s)	Data 0.000s (0.078s)	Loss_p -0.00009 (-0.00012)	Loss_d 0.53633 (0.54318)	Accuracy_p 0.954 (0.938)
+2026-11-06 07:01:47,888 Test: [0/25]	Time 0.502 (0.502)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 07:01:49,873 Test: [20/25]	Time 0.092 (0.119)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.888)
+2026-11-06 07:01:50,299 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:01:50,575 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:01:50,575 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:01:50,575 | adaptive... | 0.901 | 0.989 | 0.957 | -1.000 | 0.901 | 0.912 | 0.992 | 0.962 | -1.000 | 0.912 |
+2026-11-06 07:01:50,581 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:01:53,472 Epoch: [41][0/32]	Accuracy_d 0.421875 (0.9217982815057283)	Loss_d_2 0.7589612007141113	Time 1.313s (1.313s)	Data 1.014s (1.014s)	Loss_p -0.00019 (-0.00012)	Loss_d 0.79549 (0.54376)	Accuracy_p 0.963 (0.938)
+2026-11-06 07:01:59,370 Epoch: [41][20/32]	Accuracy_d 0.828125 (0.9106576862123613)	Loss_d_2 0.460651695728302	Time 0.297s (0.343s)	Data 0.000s (0.049s)	Loss_p -0.00007 (-0.00012)	Loss_d 0.47344 (0.54525)	Accuracy_p 0.962 (0.938)
+2026-11-06 07:02:03,051 Test: [0/25]	Time 0.518 (0.518)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 07:02:04,988 Test: [20/25]	Time 0.092 (0.118)	Loss 0.0004 (0.0004)	Accuracy 0.906 (0.886)
+2026-11-06 07:02:05,426 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:02:05,708 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:02:05,708 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:02:05,708 | adaptive... | 0.897 | 0.989 | 0.958 | -1.000 | 0.897 | 0.910 | 0.992 | 0.962 | -1.000 | 0.910 |
+2026-11-06 07:02:05,716 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:02:08,896 Epoch: [42][0/32]	Accuracy_d 0.71875 (0.9222841653027823)	Loss_d_2 0.5295042991638184	Time 1.471s (1.471s)	Data 1.162s (1.162s)	Loss_p -0.00010 (-0.00012)	Loss_d 0.53567 (0.54520)	Accuracy_p 0.972 (0.938)
+2026-11-06 07:02:14,790 Epoch: [42][20/32]	Accuracy_d 0.53125 (0.9105586370839936)	Loss_d_2 0.6596939563751221	Time 0.297s (0.351s)	Data 0.000s (0.056s)	Loss_p -0.00018 (-0.00012)	Loss_d 0.71058 (0.54693)	Accuracy_p 0.974 (0.939)
+2026-11-06 07:02:18,574 Test: [0/25]	Time 0.653 (0.653)	Loss 0.0004 (0.0004)	Accuracy 0.893 (0.893)
+2026-11-06 07:02:20,468 Test: [20/25]	Time 0.093 (0.122)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.886)
+2026-11-06 07:02:20,929 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:02:21,235 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:02:21,235 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:02:21,235 | adaptive... | 0.901 | 0.989 | 0.958 | -1.000 | 0.901 | 0.912 | 0.995 | 0.965 | -1.000 | 0.912 |
+2026-11-06 07:02:21,279 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:02:26,327 Epoch: [43][0/32]	Accuracy_d 0.625 (0.9221307283142389)	Loss_d_2 0.6199949979782104	Time 2.700s (2.700s)	Data 2.401s (2.401s)	Loss_p -0.00014 (-0.00012)	Loss_d 0.62805 (0.54714)	Accuracy_p 0.967 (0.939)
+2026-11-06 07:02:32,178 Epoch: [43][20/32]	Accuracy_d 0.8125 (0.9166006339144216)	Loss_d_2 0.5310667753219604	Time 0.295s (0.407s)	Data 0.000s (0.115s)	Loss_p -0.00011 (-0.00012)	Loss_d 0.53811 (0.54717)	Accuracy_p 0.978 (0.939)
+2026-11-06 07:02:35,880 Test: [0/25]	Time 0.539 (0.539)	Loss 0.0004 (0.0004)	Accuracy 0.893 (0.893)
+2026-11-06 07:02:37,876 Test: [20/25]	Time 0.091 (0.123)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.887)
+2026-11-06 07:02:38,307 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:02:38,576 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:02:38,576 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:02:38,576 | adaptive... | 0.901 | 0.989 | 0.958 | -1.000 | 0.901 | 0.913 | 0.995 | 0.965 | -1.000 | 0.913 |
+2026-11-06 07:02:38,582 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:02:41,797 Epoch: [44][0/32]	Accuracy_d 0.453125 (0.9218494271685761)	Loss_d_2 0.7511203289031982	Time 1.644s (1.644s)	Data 1.344s (1.344s)	Loss_p -0.00022 (-0.00012)	Loss_d 0.76505 (0.54769)	Accuracy_p 0.971 (0.939)
+2026-11-06 07:02:47,597 Epoch: [44][20/32]	Accuracy_d 0.578125 (0.9069681061806656)	Loss_d_2 0.705902099609375	Time 0.295s (0.354s)	Data 0.000s (0.064s)	Loss_p -0.00020 (-0.00012)	Loss_d 0.71984 (0.55008)	Accuracy_p 0.974 (0.940)
+2026-11-06 07:02:51,297 Test: [0/25]	Time 0.510 (0.510)	Loss 0.0004 (0.0004)	Accuracy 0.897 (0.897)
+2026-11-06 07:02:53,242 Test: [20/25]	Time 0.094 (0.119)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.888)
+2026-11-06 07:02:53,684 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:02:53,965 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:02:53,965 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:02:53,965 | adaptive... | 0.899 | 0.989 | 0.958 | -1.000 | 0.899 | 0.912 | 0.995 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:02:53,984 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:02:56,886 Epoch: [45][0/32]	Accuracy_d 0.53125 (0.9219772913256956)	Loss_d_2 0.6481593251228333	Time 1.328s (1.328s)	Data 1.026s (1.026s)	Loss_p -0.00015 (-0.00012)	Loss_d 0.65908 (0.55076)	Accuracy_p 0.974 (0.940)
+2026-11-06 07:03:02,720 Epoch: [45][20/32]	Accuracy_d 0.71875 (0.9153129952456418)	Loss_d_2 0.5644733905792236	Time 0.296s (0.341s)	Data 0.000s (0.049s)	Loss_p -0.00010 (-0.00012)	Loss_d 0.57020 (0.55107)	Accuracy_p 0.953 (0.940)
+2026-11-06 07:03:06,341 Test: [0/25]	Time 0.472 (0.472)	Loss 0.0004 (0.0004)	Accuracy 0.893 (0.893)
+2026-11-06 07:03:08,278 Test: [20/25]	Time 0.091 (0.116)	Loss 0.0004 (0.0004)	Accuracy 0.906 (0.887)
+2026-11-06 07:03:08,699 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:03:08,969 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:03:08,969 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:03:08,970 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.912 | 0.995 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:03:08,975 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:03:12,070 Epoch: [46][0/32]	Accuracy_d 0.6875 (0.9222330196399345)	Loss_d_2 0.5539226531982422	Time 1.552s (1.552s)	Data 1.157s (1.157s)	Loss_p -0.00011 (-0.00012)	Loss_d 0.55942 (0.55078)	Accuracy_p 0.957 (0.940)
+2026-11-06 07:03:17,899 Epoch: [46][20/32]	Accuracy_d 0.5625 (0.9126881933438986)	Loss_d_2 0.6557532548904419	Time 0.296s (0.352s)	Data 0.000s (0.055s)	Loss_p -0.00016 (-0.00012)	Loss_d 0.66547 (0.55180)	Accuracy_p 0.957 (0.941)
+2026-11-06 07:03:21,581 Test: [0/25]	Time 0.536 (0.536)	Loss 0.0004 (0.0004)	Accuracy 0.890 (0.890)
+2026-11-06 07:03:23,535 Test: [20/25]	Time 0.091 (0.119)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.888)
+2026-11-06 07:03:23,961 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:03:24,231 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:03:24,232 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:03:24,232 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.911 | 0.995 | 0.965 | -1.000 | 0.911 |
+2026-11-06 07:03:24,239 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:03:27,223 Epoch: [47][0/32]	Accuracy_d 0.46875 (0.921875)	Loss_d_2 0.7856996059417725	Time 1.426s (1.426s)	Data 1.119s (1.119s)	Loss_p -0.00019 (-0.00012)	Loss_d 0.80064 (0.55278)	Accuracy_p 0.960 (0.941)
+2026-11-06 07:03:33,065 Epoch: [47][20/32]	Accuracy_d 0.53125 (0.9067452456418383)	Loss_d_2 0.6641450524330139	Time 0.295s (0.346s)	Data 0.000s (0.054s)	Loss_p -0.00017 (-0.00012)	Loss_d 0.66836 (0.55447)	Accuracy_p 0.963 (0.941)
+2026-11-06 07:03:36,744 Test: [0/25]	Time 0.537 (0.537)	Loss 0.0004 (0.0004)	Accuracy 0.890 (0.890)
+2026-11-06 07:03:38,689 Test: [20/25]	Time 0.092 (0.119)	Loss 0.0004 (0.0004)	Accuracy 0.895 (0.887)
+2026-11-06 07:03:39,118 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:03:39,391 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:03:39,391 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:03:39,392 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.912 | 0.995 | 0.965 | -1.000 | 0.912 |
+2026-11-06 07:03:39,395 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:03:42,467 Epoch: [48][0/32]	Accuracy_d 0.59375 (0.9220795826513911)	Loss_d_2 0.6374035477638245	Time 1.441s (1.441s)	Data 1.134s (1.134s)	Loss_p -0.00016 (-0.00012)	Loss_d 0.64064 (0.55496)	Accuracy_p 0.963 (0.941)
+2026-11-06 07:03:48,338 Epoch: [48][20/32]	Accuracy_d 0.734375 (0.9136539223454834)	Loss_d_2 0.5610383749008179	Time 0.296s (0.348s)	Data 0.000s (0.054s)	Loss_p -0.00011 (-0.00012)	Loss_d 0.56642 (0.55562)	Accuracy_p 0.949 (0.942)
+2026-11-06 07:03:52,040 Test: [0/25]	Time 0.513 (0.513)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 07:03:53,955 Test: [20/25]	Time 0.092 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.889)
+2026-11-06 07:03:54,384 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:03:54,659 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:03:54,660 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:03:54,660 | adaptive... | 0.896 | 0.989 | 0.958 | -1.000 | 0.896 | 0.911 | 0.995 | 0.967 | -1.000 | 0.911 |
+2026-11-06 07:03:54,663 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:03:57,614 Epoch: [49][0/32]	Accuracy_d 0.765625 (0.922360883797054)	Loss_d_2 0.5762028098106384	Time 1.369s (1.369s)	Data 1.066s (1.066s)	Loss_p -0.00010 (-0.00012)	Loss_d 0.58187 (0.55584)	Accuracy_p 0.965 (0.942)
+2026-11-06 07:04:03,485 Epoch: [49][20/32]	Accuracy_d 0.8125 (0.9157834786053882)	Loss_d_2 0.5139410495758057	Time 0.296s (0.345s)	Data 0.000s (0.051s)	Loss_p -0.00011 (-0.00012)	Loss_d 0.52179 (0.55609)	Accuracy_p 0.972 (0.942)
+2026-11-06 07:04:07,205 Test: [0/25]	Time 0.528 (0.528)	Loss 0.0004 (0.0004)	Accuracy 0.904 (0.904)
+2026-11-06 07:04:09,137 Test: [20/25]	Time 0.091 (0.120)	Loss 0.0004 (0.0004)	Accuracy 0.910 (0.888)
+2026-11-06 07:04:09,579 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:04:09,849 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:04:09,850 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:04:09,850 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.912 | 0.995 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:04:09,854 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:04:12,818 Epoch: [50][0/32]	Accuracy_d 0.71875 (0.9222841653027823)	Loss_d_2 0.5644091367721558	Time 1.437s (1.437s)	Data 1.135s (1.135s)	Loss_p -0.00009 (-0.00012)	Loss_d 0.57731 (0.55629)	Accuracy_p 0.945 (0.942)
+2026-11-06 07:04:18,758 Epoch: [50][20/32]	Accuracy_d 0.515625 (0.911351030110935)	Loss_d_2 0.7142006754875183	Time 0.295s (0.351s)	Data 0.000s (0.054s)	Loss_p -0.00019 (-0.00012)	Loss_d 0.73072 (0.55732)	Accuracy_p 0.950 (0.942)
+2026-11-06 07:04:22,410 Test: [0/25]	Time 0.496 (0.496)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 07:04:24,318 Test: [20/25]	Time 0.091 (0.116)	Loss 0.0004 (0.0004)	Accuracy 0.910 (0.886)
+2026-11-06 07:04:24,752 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:04:25,022 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:04:25,022 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:04:25,022 | adaptive... | 0.898 | 0.989 | 0.959 | -1.000 | 0.898 | 0.912 | 0.995 | 0.970 | -1.000 | 0.912 |
+2026-11-06 07:04:25,025 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:04:28,020 Epoch: [51][0/32]	Accuracy_d 0.5 (0.9219261456628478)	Loss_d_2 0.7263249158859253	Time 1.467s (1.467s)	Data 1.166s (1.166s)	Loss_p -0.00020 (-0.00012)	Loss_d 0.73769 (0.55801)	Accuracy_p 0.965 (0.943)
+2026-11-06 07:04:33,862 Epoch: [51][20/32]	Accuracy_d 0.546875 (0.9115243660855784)	Loss_d_2 0.6464154124259949	Time 0.297s (0.348s)	Data 0.000s (0.056s)	Loss_p -0.00018 (-0.00012)	Loss_d 0.65246 (0.55900)	Accuracy_p 0.972 (0.943)
+2026-11-06 07:04:37,527 Test: [0/25]	Time 0.508 (0.508)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 07:04:39,426 Test: [20/25]	Time 0.091 (0.116)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.887)
+2026-11-06 07:04:39,853 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:04:40,126 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:04:40,126 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:04:40,126 | adaptive... | 0.901 | 0.989 | 0.959 | -1.000 | 0.901 | 0.914 | 0.995 | 0.970 | -1.000 | 0.914 |
+2026-11-06 07:04:40,135 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:04:43,404 Epoch: [52][0/32]	Accuracy_d 0.609375 (0.922105155482815)	Loss_d_2 0.6345182657241821	Time 1.499s (1.499s)	Data 1.192s (1.192s)	Loss_p -0.00013 (-0.00012)	Loss_d 0.64100 (0.55947)	Accuracy_p 0.942 (0.943)
+2026-11-06 07:04:49,337 Epoch: [52][20/32]	Accuracy_d 0.6875 (0.9137282091917591)	Loss_d_2 0.5461685657501221	Time 0.295s (0.354s)	Data 0.000s (0.057s)	Loss_p -0.00013 (-0.00012)	Loss_d 0.55054 (0.56008)	Accuracy_p 0.968 (0.943)
+2026-11-06 07:04:52,996 Test: [0/25]	Time 0.501 (0.501)	Loss 0.0004 (0.0004)	Accuracy 0.893 (0.893)
+2026-11-06 07:04:54,910 Test: [20/25]	Time 0.091 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.906 (0.887)
+2026-11-06 07:04:55,345 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:04:55,615 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:04:55,616 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:04:55,616 | adaptive... | 0.899 | 0.989 | 0.959 | -1.000 | 0.899 | 0.913 | 0.995 | 0.970 | -1.000 | 0.913 |
+2026-11-06 07:04:55,622 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:04:58,812 Epoch: [53][0/32]	Accuracy_d 0.546875 (0.9220028641571195)	Loss_d_2 0.7083345651626587	Time 1.466s (1.466s)	Data 1.155s (1.155s)	Loss_p -0.00018 (-0.00012)	Loss_d 0.71888 (0.56038)	Accuracy_p 0.965 (0.943)
+2026-11-06 07:05:04,637 Epoch: [53][20/32]	Accuracy_d 0.59375 (0.9093452852614897)	Loss_d_2 0.6593043208122253	Time 0.296s (0.347s)	Data 0.000s (0.055s)	Loss_p -0.00018 (-0.00012)	Loss_d 0.66953 (0.56182)	Accuracy_p 0.970 (0.944)
+2026-11-06 07:05:08,595 Test: [0/25]	Time 0.543 (0.543)	Loss 0.0004 (0.0004)	Accuracy 0.893 (0.893)
+2026-11-06 07:05:10,501 Test: [20/25]	Time 0.091 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.899 (0.887)
+2026-11-06 07:05:10,927 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:05:11,197 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:05:11,197 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:05:11,197 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.911 | 0.992 | 0.967 | -1.000 | 0.911 |
+2026-11-06 07:05:11,201 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:05:14,266 Epoch: [54][0/32]	Accuracy_d 0.625 (0.9221307283142389)	Loss_d_2 0.6376476287841797	Time 1.322s (1.322s)	Data 1.020s (1.020s)	Loss_p -0.00015 (-0.00012)	Loss_d 0.64362 (0.56225)	Accuracy_p 0.963 (0.944)
+2026-11-06 07:05:20,211 Epoch: [54][20/32]	Accuracy_d 0.765625 (0.9138767828843106)	Loss_d_2 0.5758636593818665	Time 0.295s (0.346s)	Data 0.000s (0.049s)	Loss_p -0.00016 (-0.00012)	Loss_d 0.58289 (0.56290)	Accuracy_p 0.982 (0.944)
+2026-11-06 07:05:23,895 Test: [0/25]	Time 0.510 (0.510)	Loss 0.0004 (0.0004)	Accuracy 0.893 (0.893)
+2026-11-06 07:05:25,795 Test: [20/25]	Time 0.091 (0.116)	Loss 0.0004 (0.0004)	Accuracy 0.895 (0.887)
+2026-11-06 07:05:26,226 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:05:26,498 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:05:26,498 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:05:26,498 | adaptive... | 0.899 | 0.989 | 0.959 | -1.000 | 0.899 | 0.912 | 0.995 | 0.970 | -1.000 | 0.912 |
+2026-11-06 07:05:26,506 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:05:29,578 Epoch: [55][0/32]	Accuracy_d 0.6875 (0.9222330196399345)	Loss_d_2 0.6076868176460266	Time 1.410s (1.410s)	Data 1.108s (1.108s)	Loss_p -0.00011 (-0.00013)	Loss_d 0.61285 (0.56317)	Accuracy_p 0.964 (0.944)
+2026-11-06 07:05:35,423 Epoch: [55][20/32]	Accuracy_d 0.703125 (0.9137282091917591)	Loss_d_2 0.5207017660140991	Time 0.296s (0.345s)	Data 0.000s (0.053s)	Loss_p -0.00012 (-0.00013)	Loss_d 0.52841 (0.56360)	Accuracy_p 0.979 (0.944)
+2026-11-06 07:05:39,235 Test: [0/25]	Time 0.659 (0.659)	Loss 0.0004 (0.0004)	Accuracy 0.893 (0.893)
+2026-11-06 07:05:41,147 Test: [20/25]	Time 0.094 (0.123)	Loss 0.0004 (0.0004)	Accuracy 0.899 (0.885)
+2026-11-06 07:05:41,588 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:05:41,862 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:05:41,862 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:05:41,862 | adaptive... | 0.897 | 0.989 | 0.958 | -1.000 | 0.897 | 0.911 | 0.995 | 0.970 | -1.000 | 0.911 |
+2026-11-06 07:05:41,868 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:05:44,862 Epoch: [56][0/32]	Accuracy_d 0.609375 (0.922105155482815)	Loss_d_2 0.5903562307357788	Time 1.370s (1.370s)	Data 1.067s (1.067s)	Loss_p -0.00010 (-0.00013)	Loss_d 0.59398 (0.56380)	Accuracy_p 0.943 (0.944)
+2026-11-06 07:05:50,768 Epoch: [56][20/32]	Accuracy_d 0.5625 (0.9119700871632329)	Loss_d_2 0.6157568097114563	Time 0.295s (0.346s)	Data 0.000s (0.051s)	Loss_p -0.00016 (-0.00013)	Loss_d 0.62752 (0.56443)	Accuracy_p 0.973 (0.945)
+2026-11-06 07:05:54,416 Test: [0/25]	Time 0.489 (0.489)	Loss 0.0004 (0.0004)	Accuracy 0.890 (0.890)
+2026-11-06 07:05:56,355 Test: [20/25]	Time 0.091 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.906 (0.887)
+2026-11-06 07:05:56,785 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:05:57,053 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:05:57,054 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:05:57,054 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.913 | 0.995 | 0.970 | -1.000 | 0.913 |
+2026-11-06 07:05:57,059 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:06:00,116 Epoch: [57][0/32]	Accuracy_d 0.609375 (0.922105155482815)	Loss_d_2 0.6055665016174316	Time 1.465s (1.465s)	Data 1.162s (1.162s)	Loss_p -0.00013 (-0.00013)	Loss_d 0.61316 (0.56461)	Accuracy_p 0.959 (0.945)
+2026-11-06 07:06:05,978 Epoch: [57][20/32]	Accuracy_d 0.65625 (0.9130596275752774)	Loss_d_2 0.5656132698059082	Time 0.295s (0.349s)	Data 0.000s (0.056s)	Loss_p -0.00014 (-0.00013)	Loss_d 0.57536 (0.56501)	Accuracy_p 0.965 (0.945)
+2026-11-06 07:06:09,659 Test: [0/25]	Time 0.533 (0.533)	Loss 0.0004 (0.0004)	Accuracy 0.890 (0.890)
+2026-11-06 07:06:11,623 Test: [20/25]	Time 0.091 (0.120)	Loss 0.0004 (0.0004)	Accuracy 0.906 (0.887)
+2026-11-06 07:06:12,062 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:06:12,360 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:06:12,360 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:06:12,360 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.912 | 0.995 | 0.965 | -1.000 | 0.912 |
+2026-11-06 07:06:12,366 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:06:15,597 Epoch: [58][0/32]	Accuracy_d 0.578125 (0.9220540098199672)	Loss_d_2 0.6289830207824707	Time 1.555s (1.555s)	Data 1.256s (1.256s)	Loss_p -0.00015 (-0.00013)	Loss_d 0.63655 (0.56515)	Accuracy_p 0.961 (0.945)
+2026-11-06 07:06:21,521 Epoch: [58][20/32]	Accuracy_d 0.609375 (0.9121929477020603)	Loss_d_2 0.6404242515563965	Time 0.295s (0.356s)	Data 0.000s (0.060s)	Loss_p -0.00018 (-0.00013)	Loss_d 0.65644 (0.56578)	Accuracy_p 0.969 (0.946)
+2026-11-06 07:06:25,223 Test: [0/25]	Time 0.543 (0.543)	Loss 0.0004 (0.0004)	Accuracy 0.893 (0.893)
+2026-11-06 07:06:27,111 Test: [20/25]	Time 0.091 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.906 (0.888)
+2026-11-06 07:06:27,553 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:06:27,833 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:06:27,833 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:06:27,833 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.911 | 0.995 | 0.965 | -1.000 | 0.911 |
+2026-11-06 07:06:27,846 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:06:30,730 Epoch: [59][0/32]	Accuracy_d 0.71875 (0.9222841653027823)	Loss_d_2 0.5668579339981079	Time 1.347s (1.347s)	Data 1.047s (1.047s)	Loss_p -0.00010 (-0.00013)	Loss_d 0.57590 (0.56594)	Accuracy_p 0.964 (0.946)
+2026-11-06 07:06:36,579 Epoch: [59][20/32]	Accuracy_d 0.765625 (0.9145453645007924)	Loss_d_2 0.5109677910804749	Time 0.295s (0.343s)	Data 0.000s (0.050s)	Loss_p -0.00012 (-0.00013)	Loss_d 0.52257 (0.56609)	Accuracy_p 0.977 (0.946)
+2026-11-06 07:06:40,198 Test: [0/25]	Time 0.474 (0.474)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 07:06:42,111 Test: [20/25]	Time 0.092 (0.115)	Loss 0.0004 (0.0004)	Accuracy 0.903 (0.888)
+2026-11-06 07:06:42,542 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:06:42,814 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:06:42,814 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:06:42,814 | adaptive... | 0.899 | 0.989 | 0.959 | -1.000 | 0.899 | 0.913 | 0.992 | 0.967 | -1.000 | 0.913 |
+2026-11-06 07:06:42,817 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:06:45,620 Epoch: [60][0/32]	Accuracy_d 0.703125 (0.9222585924713584)	Loss_d_2 0.5267894864082336	Time 1.235s (1.235s)	Data 0.934s (0.934s)	Loss_p -0.00009 (-0.00013)	Loss_d 0.54445 (0.56613)	Accuracy_p 0.962 (0.946)
+2026-11-06 07:06:51,495 Epoch: [60][20/32]	Accuracy_d 0.75 (0.9137282091917591)	Loss_d_2 0.5247681736946106	Time 0.295s (0.339s)	Data 0.000s (0.045s)	Loss_p -0.00010 (-0.00013)	Loss_d 0.54202 (0.56645)	Accuracy_p 0.961 (0.946)
+2026-11-06 07:06:55,181 Test: [0/25]	Time 0.495 (0.495)	Loss 0.0004 (0.0004)	Accuracy 0.890 (0.890)
+2026-11-06 07:06:57,064 Test: [20/25]	Time 0.092 (0.116)	Loss 0.0004 (0.0004)	Accuracy 0.899 (0.887)
+2026-11-06 07:06:57,499 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:06:57,812 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:06:57,812 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:06:57,812 | adaptive... | 0.898 | 0.989 | 0.959 | -1.000 | 0.898 | 0.913 | 0.992 | 0.970 | -1.000 | 0.913 |
+2026-11-06 07:06:57,817 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:07:00,936 Epoch: [61][0/32]	Accuracy_d 0.53125 (0.9219772913256956)	Loss_d_2 0.6536833643913269	Time 1.408s (1.408s)	Data 1.097s (1.097s)	Loss_p -0.00016 (-0.00013)	Loss_d 0.66831 (0.56649)	Accuracy_p 0.967 (0.946)
+2026-11-06 07:07:06,776 Epoch: [61][20/32]	Accuracy_d 0.71875 (0.912886291600634)	Loss_d_2 0.5235706567764282	Time 0.297s (0.345s)	Data 0.000s (0.053s)	Loss_p -0.00013 (-0.00013)	Loss_d 0.53372 (0.56689)	Accuracy_p 0.973 (0.946)
+2026-11-06 07:07:10,460 Test: [0/25]	Time 0.523 (0.523)	Loss 0.0004 (0.0004)	Accuracy 0.893 (0.893)
+2026-11-06 07:07:12,374 Test: [20/25]	Time 0.092 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.895 (0.885)
+2026-11-06 07:07:12,797 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:07:13,067 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:07:13,067 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:07:13,067 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.912 | 0.992 | 0.970 | -1.000 | 0.912 |
+2026-11-06 07:07:13,073 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:07:15,967 Epoch: [62][0/32]	Accuracy_d 0.625 (0.9221307283142389)	Loss_d_2 0.6090432405471802	Time 1.278s (1.278s)	Data 0.978s (0.978s)	Loss_p -0.00014 (-0.00013)	Loss_d 0.62418 (0.56687)	Accuracy_p 0.969 (0.947)
+2026-11-06 07:07:21,956 Epoch: [62][20/32]	Accuracy_d 0.71875 (0.9137034469096672)	Loss_d_2 0.5414071679115295	Time 0.295s (0.346s)	Data 0.000s (0.047s)	Loss_p -0.00012 (-0.00013)	Loss_d 0.55028 (0.56718)	Accuracy_p 0.966 (0.947)
+2026-11-06 07:07:25,642 Test: [0/25]	Time 0.518 (0.518)	Loss 0.0004 (0.0004)	Accuracy 0.890 (0.890)
+2026-11-06 07:07:27,545 Test: [20/25]	Time 0.091 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.895 (0.888)
+2026-11-06 07:07:27,979 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:07:28,256 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:07:28,256 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:07:28,256 | adaptive... | 0.899 | 0.989 | 0.958 | -1.000 | 0.899 | 0.912 | 0.992 | 0.970 | -1.000 | 0.912 |
+2026-11-06 07:07:28,263 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:07:31,049 Epoch: [63][0/32]	Accuracy_d 0.5625 (0.9220284369885434)	Loss_d_2 0.6366782188415527	Time 1.303s (1.303s)	Data 1.006s (1.006s)	Loss_p -0.00016 (-0.00013)	Loss_d 0.65296 (0.56720)	Accuracy_p 0.978 (0.947)
+2026-11-06 07:07:36,950 Epoch: [63][20/32]	Accuracy_d 0.75 (0.9130101030110935)	Loss_d_2 0.481131374835968	Time 0.297s (0.343s)	Data 0.000s (0.048s)	Loss_p -0.00010 (-0.00013)	Loss_d 0.49300 (0.56765)	Accuracy_p 0.967 (0.947)
+2026-11-06 07:07:40,639 Test: [0/25]	Time 0.481 (0.481)	Loss 0.0004 (0.0004)	Accuracy 0.897 (0.897)
+2026-11-06 07:07:42,522 Test: [20/25]	Time 0.091 (0.116)	Loss 0.0004 (0.0004)	Accuracy 0.899 (0.887)
+2026-11-06 07:07:42,947 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:07:43,215 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:07:43,215 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:07:43,215 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.913 | 0.992 | 0.970 | -1.000 | 0.913 |
+2026-11-06 07:07:43,219 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:07:46,108 Epoch: [64][0/32]	Accuracy_d 0.59375 (0.9220795826513911)	Loss_d_2 0.6332051157951355	Time 1.381s (1.381s)	Data 1.081s (1.081s)	Loss_p -0.00013 (-0.00013)	Loss_d 0.65186 (0.56757)	Accuracy_p 0.964 (0.947)
+2026-11-06 07:07:51,942 Epoch: [64][20/32]	Accuracy_d 0.703125 (0.9145206022187005)	Loss_d_2 0.539933443069458	Time 0.296s (0.344s)	Data 0.000s (0.052s)	Loss_p -0.00013 (-0.00013)	Loss_d 0.55390 (0.56767)	Accuracy_p 0.976 (0.947)
+2026-11-06 07:07:55,772 Test: [0/25]	Time 0.651 (0.651)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 07:07:57,749 Test: [20/25]	Time 0.093 (0.127)	Loss 0.0004 (0.0004)	Accuracy 0.906 (0.887)
+2026-11-06 07:07:58,183 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:07:58,574 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:07:58,574 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:07:58,574 | adaptive... | 0.897 | 0.989 | 0.958 | -1.000 | 0.897 | 0.912 | 0.995 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:07:58,579 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:08:01,925 Epoch: [65][0/32]	Accuracy_d 0.5625 (0.9220284369885434)	Loss_d_2 0.6777571439743042	Time 1.295s (1.295s)	Data 0.987s (0.987s)	Loss_p -0.00013 (-0.00013)	Loss_d 0.69707 (0.56815)	Accuracy_p 0.938 (0.947)
+2026-11-06 07:08:07,769 Epoch: [65][20/32]	Accuracy_d 0.828125 (0.9141244057052298)	Loss_d_2 0.4822618365287781	Time 0.295s (0.340s)	Data 0.000s (0.047s)	Loss_p -0.00010 (-0.00013)	Loss_d 0.49166 (0.56827)	Accuracy_p 0.978 (0.948)
+2026-11-06 07:08:11,406 Test: [0/25]	Time 0.479 (0.479)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+2026-11-06 07:08:13,357 Test: [20/25]	Time 0.091 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.906 (0.888)
+2026-11-06 07:08:13,795 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:08:14,063 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:08:14,063 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:08:14,063 | adaptive... | 0.897 | 0.989 | 0.958 | -1.000 | 0.897 | 0.910 | 0.992 | 0.967 | -1.000 | 0.910 |
+2026-11-06 07:08:14,068 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:08:17,219 Epoch: [66][0/32]	Accuracy_d 0.78125 (0.922386456628478)	Loss_d_2 0.46450063586235046	Time 1.441s (1.441s)	Data 1.141s (1.141s)	Loss_p -0.00004 (-0.00013)	Loss_d 0.47699 (0.56796)	Accuracy_p 0.952 (0.948)
+2026-11-06 07:08:23,105 Epoch: [66][20/32]	Accuracy_d 0.78125 (0.9170463549920761)	Loss_d_2 0.45764708518981934	Time 0.295s (0.349s)	Data 0.000s (0.055s)	Loss_p -0.00009 (-0.00013)	Loss_d 0.46790 (0.56750)	Accuracy_p 0.984 (0.948)
+2026-11-06 07:08:26,850 Test: [0/25]	Time 0.521 (0.521)	Loss 0.0004 (0.0004)	Accuracy 0.904 (0.904)
+2026-11-06 07:08:28,822 Test: [20/25]	Time 0.092 (0.120)	Loss 0.0004 (0.0004)	Accuracy 0.899 (0.888)
+2026-11-06 07:08:29,250 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:08:29,523 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:08:29,524 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:08:29,524 | adaptive... | 0.897 | 0.989 | 0.958 | -1.000 | 0.897 | 0.911 | 0.995 | 0.970 | -1.000 | 0.911 |
+2026-11-06 07:08:29,529 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:08:33,293 Epoch: [67][0/32]	Accuracy_d 0.640625 (0.9221563011456628)	Loss_d_2 0.6092092990875244	Time 1.634s (1.634s)	Data 1.328s (1.328s)	Loss_p -0.00013 (-0.00013)	Loss_d 0.63002 (0.56739)	Accuracy_p 0.952 (0.948)
+2026-11-06 07:08:39,137 Epoch: [67][20/32]	Accuracy_d 0.6875 (0.913455824088748)	Loss_d_2 0.5430759191513062	Time 0.297s (0.356s)	Data 0.000s (0.064s)	Loss_p -0.00012 (-0.00013)	Loss_d 0.56702 (0.56772)	Accuracy_p 0.977 (0.948)
+2026-11-06 07:08:42,812 Test: [0/25]	Time 0.481 (0.481)	Loss 0.0004 (0.0004)	Accuracy 0.897 (0.897)
+2026-11-06 07:08:44,704 Test: [20/25]	Time 0.091 (0.116)	Loss 0.0004 (0.0004)	Accuracy 0.895 (0.887)
+2026-11-06 07:08:45,130 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:08:45,411 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:08:45,412 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:08:45,412 | adaptive... | 0.897 | 0.989 | 0.959 | -1.000 | 0.897 | 0.912 | 0.992 | 0.970 | -1.000 | 0.912 |
+2026-11-06 07:08:45,415 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:08:48,427 Epoch: [68][0/32]	Accuracy_d 0.625 (0.9221307283142389)	Loss_d_2 0.5860329866409302	Time 1.384s (1.384s)	Data 1.086s (1.086s)	Loss_p -0.00010 (-0.00013)	Loss_d 0.60624 (0.56785)	Accuracy_p 0.949 (0.948)
+2026-11-06 07:08:54,254 Epoch: [68][20/32]	Accuracy_d 0.71875 (0.9150406101426307)	Loss_d_2 0.474994957447052	Time 0.296s (0.343s)	Data 0.000s (0.052s)	Loss_p -0.00009 (-0.00013)	Loss_d 0.48962 (0.56781)	Accuracy_p 0.970 (0.948)
+2026-11-06 07:08:58,131 Test: [0/25]	Time 0.646 (0.646)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 07:09:00,037 Test: [20/25]	Time 0.091 (0.123)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.887)
+2026-11-06 07:09:00,463 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:09:00,732 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:09:00,732 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:09:00,732 | adaptive... | 0.898 | 0.989 | 0.959 | -1.000 | 0.898 | 0.913 | 0.992 | 0.970 | -1.000 | 0.913 |
+2026-11-06 07:09:00,736 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:09:03,737 Epoch: [69][0/32]	Accuracy_d 0.734375 (0.9223097381342062)	Loss_d_2 0.49706652760505676	Time 1.459s (1.459s)	Data 1.159s (1.159s)	Loss_p -0.00007 (-0.00013)	Loss_d 0.51414 (0.56744)	Accuracy_p 0.959 (0.948)
+2026-11-06 07:09:09,562 Epoch: [69][20/32]	Accuracy_d 0.578125 (0.9138024960380349)	Loss_d_2 0.5859285593032837	Time 0.296s (0.347s)	Data 0.000s (0.055s)	Loss_p -0.00013 (-0.00013)	Loss_d 0.64177 (0.56798)	Accuracy_p 0.964 (0.949)
+2026-11-06 07:09:13,201 Test: [0/25]	Time 0.471 (0.471)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:09:15,127 Test: [20/25]	Time 0.091 (0.115)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.888)
+2026-11-06 07:09:15,562 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:09:15,835 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:09:15,835 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:09:15,835 | adaptive... | 0.898 | 0.979 | 0.958 | -1.000 | 0.898 | 0.911 | 0.990 | 0.967 | -1.000 | 0.911 |
+2026-11-06 07:09:15,869 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:09:18,954 Epoch: [70][0/32]	Accuracy_d 0.625 (0.9221307283142389)	Loss_d_2 0.6344819068908691	Time 1.500s (1.500s)	Data 1.195s (1.195s)	Loss_p -0.00014 (-0.00013)	Loss_d 0.65064 (0.56799)	Accuracy_p 0.962 (0.949)
+2026-11-06 07:09:24,788 Epoch: [70][20/32]	Accuracy_d 0.75 (0.9147682250396196)	Loss_d_2 0.4837118983268738	Time 0.294s (0.349s)	Data 0.000s (0.057s)	Loss_p -0.00008 (-0.00013)	Loss_d 0.49708 (0.56795)	Accuracy_p 0.966 (0.949)
+2026-11-06 07:09:28,448 Test: [0/25]	Time 0.513 (0.513)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+2026-11-06 07:09:30,403 Test: [20/25]	Time 0.092 (0.118)	Loss 0.0004 (0.0004)	Accuracy 0.895 (0.886)
+2026-11-06 07:09:30,834 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:09:31,219 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:09:31,219 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:09:31,219 | adaptive... | 0.898 | 0.979 | 0.958 | -1.000 | 0.898 | 0.911 | 0.990 | 0.965 | -1.000 | 0.911 |
+2026-11-06 07:09:31,224 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:09:35,075 Epoch: [71][0/32]	Accuracy_d 0.5 (0.9219261456628478)	Loss_d_2 0.7123854160308838	Time 1.648s (1.648s)	Data 1.346s (1.346s)	Loss_p -0.00018 (-0.00013)	Loss_d 0.73448 (0.56790)	Accuracy_p 0.967 (0.949)
+2026-11-06 07:09:40,832 Epoch: [71][20/32]	Accuracy_d 0.640625 (0.9150158478605388)	Loss_d_2 0.5552616715431213	Time 0.284s (0.353s)	Data 0.000s (0.064s)	Loss_p -0.00013 (-0.00013)	Loss_d 0.58038 (0.56776)	Accuracy_p 0.969 (0.949)
+2026-11-06 07:09:44,449 Test: [0/25]	Time 0.486 (0.486)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:09:46,340 Test: [20/25]	Time 0.091 (0.114)	Loss 0.0004 (0.0004)	Accuracy 0.895 (0.885)
+2026-11-06 07:09:46,769 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:09:47,039 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:09:47,039 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:09:47,039 | adaptive... | 0.896 | 0.989 | 0.959 | -1.000 | 0.896 | 0.910 | 0.992 | 0.967 | -1.000 | 0.910 |
+2026-11-06 07:09:47,043 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:09:49,915 Epoch: [72][0/32]	Accuracy_d 0.6875 (0.9222330196399345)	Loss_d_2 0.5954573154449463	Time 1.368s (1.368s)	Data 1.066s (1.066s)	Loss_p -0.00014 (-0.00013)	Loss_d 0.62298 (0.56767)	Accuracy_p 0.975 (0.949)
+2026-11-06 07:09:55,773 Epoch: [72][20/32]	Accuracy_d 0.640625 (0.9141986925515055)	Loss_d_2 0.5217832326889038	Time 0.295s (0.344s)	Data 0.000s (0.051s)	Loss_p -0.00011 (-0.00013)	Loss_d 0.54195 (0.56792)	Accuracy_p 0.971 (0.949)
+2026-11-06 07:09:59,436 Test: [0/25]	Time 0.511 (0.511)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 07:10:01,391 Test: [20/25]	Time 0.091 (0.118)	Loss 0.0004 (0.0004)	Accuracy 0.903 (0.885)
+2026-11-06 07:10:01,820 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:10:02,088 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:10:02,089 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:10:02,089 | adaptive... | 0.896 | 0.989 | 0.958 | -1.000 | 0.896 | 0.910 | 0.995 | 0.965 | -1.000 | 0.910 |
+2026-11-06 07:10:02,092 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:10:05,178 Epoch: [73][0/32]	Accuracy_d 0.53125 (0.9219772913256956)	Loss_d_2 0.6667582988739014	Time 1.418s (1.418s)	Data 1.111s (1.111s)	Loss_p -0.00015 (-0.00013)	Loss_d 0.68298 (0.56796)	Accuracy_p 0.952 (0.949)
+2026-11-06 07:10:11,009 Epoch: [73][20/32]	Accuracy_d 0.734375 (0.9142729793977813)	Loss_d_2 0.5371578335762024	Time 0.295s (0.345s)	Data 0.000s (0.053s)	Loss_p -0.00012 (-0.00013)	Loss_d 0.55450 (0.56802)	Accuracy_p 0.971 (0.950)
+2026-11-06 07:10:14,595 Test: [0/25]	Time 0.440 (0.440)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 07:10:16,505 Test: [20/25]	Time 0.091 (0.113)	Loss 0.0004 (0.0004)	Accuracy 0.899 (0.886)
+2026-11-06 07:10:16,929 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:10:17,198 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:10:17,199 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:10:17,199 | adaptive... | 0.897 | 0.989 | 0.958 | -1.000 | 0.897 | 0.910 | 0.995 | 0.965 | -1.000 | 0.910 |
+2026-11-06 07:10:17,202 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:10:20,238 Epoch: [74][0/32]	Accuracy_d 0.71875 (0.9222841653027823)	Loss_d_2 0.5596742630004883	Time 1.496s (1.496s)	Data 1.199s (1.199s)	Loss_p -0.00007 (-0.00013)	Loss_d 0.58632 (0.56802)	Accuracy_p 0.942 (0.950)
+2026-11-06 07:10:26,085 Epoch: [74][20/32]	Accuracy_d 0.84375 (0.9159815768621236)	Loss_d_2 0.3934415578842163	Time 0.296s (0.350s)	Data 0.000s (0.057s)	Loss_p -0.00007 (-0.00013)	Loss_d 0.40253 (0.56789)	Accuracy_p 0.976 (0.950)
+2026-11-06 07:10:29,827 Test: [0/25]	Time 0.554 (0.554)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:10:31,726 Test: [20/25]	Time 0.091 (0.119)	Loss 0.0004 (0.0004)	Accuracy 0.903 (0.886)
+2026-11-06 07:10:32,155 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:10:32,542 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:10:32,543 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:10:32,543 | adaptive... | 0.899 | 0.989 | 0.958 | -1.000 | 0.899 | 0.912 | 0.995 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:10:32,588 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:10:35,511 Epoch: [75][0/32]	Accuracy_d 0.65625 (0.9221818739770867)	Loss_d_2 0.6508310437202454	Time 1.348s (1.348s)	Data 1.048s (1.048s)	Loss_p -0.00017 (-0.00013)	Loss_d 0.67587 (0.56785)	Accuracy_p 0.967 (0.950)
+2026-11-06 07:10:41,386 Epoch: [75][20/32]	Accuracy_d 0.828125 (0.9137034469096672)	Loss_d_2 0.4126923680305481	Time 0.296s (0.344s)	Data 0.000s (0.050s)	Loss_p -0.00009 (-0.00013)	Loss_d 0.42014 (0.56812)	Accuracy_p 0.988 (0.950)
+2026-11-06 07:10:45,287 Test: [0/25]	Time 0.738 (0.738)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:10:47,245 Test: [20/25]	Time 0.092 (0.130)	Loss 0.0004 (0.0004)	Accuracy 0.895 (0.884)
+2026-11-06 07:10:47,679 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:10:47,956 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:10:47,957 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:10:47,957 | adaptive... | 0.896 | 0.989 | 0.959 | -1.000 | 0.896 | 0.910 | 0.995 | 0.967 | -1.000 | 0.910 |
+2026-11-06 07:10:47,961 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:10:50,854 Epoch: [76][0/32]	Accuracy_d 0.625 (0.9221307283142389)	Loss_d_2 0.5692821145057678	Time 1.363s (1.363s)	Data 1.052s (1.052s)	Loss_p -0.00013 (-0.00013)	Loss_d 0.58293 (0.56792)	Accuracy_p 0.974 (0.950)
+2026-11-06 07:10:56,718 Epoch: [76][20/32]	Accuracy_d 0.75 (0.9153625198098256)	Loss_d_2 0.4843651056289673	Time 0.295s (0.344s)	Data 0.000s (0.050s)	Loss_p -0.00010 (-0.00013)	Loss_d 0.49728 (0.56782)	Accuracy_p 0.968 (0.950)
+2026-11-06 07:11:00,342 Test: [0/25]	Time 0.477 (0.477)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:11:02,341 Test: [20/25]	Time 0.093 (0.118)	Loss 0.0004 (0.0004)	Accuracy 0.891 (0.885)
+2026-11-06 07:11:02,772 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:11:03,157 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:11:03,157 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:11:03,157 | adaptive... | 0.897 | 0.989 | 0.959 | -1.000 | 0.897 | 0.911 | 0.992 | 0.967 | -1.000 | 0.911 |
+2026-11-06 07:11:03,162 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:11:06,232 Epoch: [77][0/32]	Accuracy_d 0.609375 (0.922105155482815)	Loss_d_2 0.5905853509902954	Time 1.366s (1.366s)	Data 1.066s (1.066s)	Loss_p -0.00012 (-0.00012)	Loss_d 0.60618 (0.56756)	Accuracy_p 0.964 (0.950)
+2026-11-06 07:11:12,075 Epoch: [77][20/32]	Accuracy_d 0.84375 (0.9149167987321711)	Loss_d_2 0.37685269117355347	Time 0.297s (0.343s)	Data 0.000s (0.051s)	Loss_p -0.00006 (-0.00012)	Loss_d 0.38957 (0.56753)	Accuracy_p 0.980 (0.950)
+2026-11-06 07:11:15,754 Test: [0/25]	Time 0.524 (0.524)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:11:17,698 Test: [20/25]	Time 0.091 (0.118)	Loss 0.0004 (0.0004)	Accuracy 0.891 (0.885)
+2026-11-06 07:11:18,123 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:11:18,389 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:11:18,390 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:11:18,390 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.912 | 0.995 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:11:18,397 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:11:21,824 Epoch: [78][0/32]	Accuracy_d 0.59375 (0.9220795826513911)	Loss_d_2 0.6414325833320618	Time 1.886s (1.886s)	Data 1.589s (1.589s)	Loss_p -0.00013 (-0.00012)	Loss_d 0.67142 (0.56748)	Accuracy_p 0.950 (0.950)
+2026-11-06 07:11:27,696 Epoch: [78][20/32]	Accuracy_d 0.765625 (0.9154120443740095)	Loss_d_2 0.4726519286632538	Time 0.296s (0.369s)	Data 0.000s (0.076s)	Loss_p -0.00008 (-0.00012)	Loss_d 0.48665 (0.56738)	Accuracy_p 0.968 (0.951)
+2026-11-06 07:11:31,391 Test: [0/25]	Time 0.553 (0.553)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 07:11:33,328 Test: [20/25]	Time 0.092 (0.119)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.888)
+2026-11-06 07:11:33,759 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:11:34,145 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:11:34,145 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:11:34,145 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.912 | 0.992 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:11:34,154 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:11:36,926 Epoch: [79][0/32]	Accuracy_d 0.640625 (0.9221563011456628)	Loss_d_2 0.6187809109687805	Time 1.247s (1.247s)	Data 0.945s (0.945s)	Loss_p -0.00013 (-0.00012)	Loss_d 0.63835 (0.56717)	Accuracy_p 0.960 (0.951)
+2026-11-06 07:11:42,762 Epoch: [79][20/32]	Accuracy_d 0.71875 (0.914966323296355)	Loss_d_2 0.538596510887146	Time 0.295s (0.337s)	Data 0.000s (0.045s)	Loss_p -0.00009 (-0.00012)	Loss_d 0.56028 (0.56712)	Accuracy_p 0.958 (0.951)
+2026-11-06 07:11:46,409 Test: [0/25]	Time 0.486 (0.486)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+2026-11-06 07:11:48,310 Test: [20/25]	Time 0.091 (0.115)	Loss 0.0004 (0.0004)	Accuracy 0.891 (0.886)
+2026-11-06 07:11:48,741 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:11:49,013 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:11:49,013 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:11:49,013 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.912 | 0.992 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:11:49,021 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:11:52,046 Epoch: [80][0/32]	Accuracy_d 0.640625 (0.9221563011456628)	Loss_d_2 0.5900880098342896	Time 1.510s (1.510s)	Data 1.199s (1.199s)	Loss_p -0.00011 (-0.00012)	Loss_d 0.61126 (0.56696)	Accuracy_p 0.958 (0.951)
+2026-11-06 07:11:57,898 Epoch: [80][20/32]	Accuracy_d 0.703125 (0.9157339540412044)	Loss_d_2 0.5117469429969788	Time 0.297s (0.351s)	Data 0.000s (0.057s)	Loss_p -0.00011 (-0.00012)	Loss_d 0.53101 (0.56676)	Accuracy_p 0.962 (0.951)
+2026-11-06 07:12:01,547 Test: [0/25]	Time 0.500 (0.500)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:12:03,448 Test: [20/25]	Time 0.091 (0.115)	Loss 0.0004 (0.0004)	Accuracy 0.895 (0.887)
+2026-11-06 07:12:03,880 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:12:04,160 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:12:04,160 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:12:04,160 | adaptive... | 0.900 | 0.989 | 0.959 | -1.000 | 0.900 | 0.913 | 0.995 | 0.967 | -1.000 | 0.913 |
+2026-11-06 07:12:04,167 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:12:07,320 Epoch: [81][0/32]	Accuracy_d 0.734375 (0.9223097381342062)	Loss_d_2 0.5284780263900757	Time 1.474s (1.474s)	Data 1.174s (1.174s)	Loss_p -0.00006 (-0.00012)	Loss_d 0.54832 (0.56651)	Accuracy_p 0.942 (0.951)
+2026-11-06 07:12:13,158 Epoch: [81][20/32]	Accuracy_d 0.75 (0.9163530110935024)	Loss_d_2 0.43569254875183105	Time 0.296s (0.348s)	Data 0.000s (0.056s)	Loss_p -0.00008 (-0.00012)	Loss_d 0.44864 (0.56621)	Accuracy_p 0.968 (0.951)
+2026-11-06 07:12:16,816 Test: [0/25]	Time 0.507 (0.507)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+2026-11-06 07:12:18,699 Test: [20/25]	Time 0.091 (0.114)	Loss 0.0004 (0.0004)	Accuracy 0.899 (0.886)
+2026-11-06 07:12:19,120 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:12:19,392 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:12:19,392 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:12:19,392 | adaptive... | 0.900 | 0.989 | 0.958 | -1.000 | 0.900 | 0.913 | 0.995 | 0.967 | -1.000 | 0.913 |
+2026-11-06 07:12:19,398 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:12:22,448 Epoch: [82][0/32]	Accuracy_d 0.734375 (0.9223097381342062)	Loss_d_2 0.5188908576965332	Time 1.477s (1.477s)	Data 1.181s (1.181s)	Loss_p -0.00009 (-0.00012)	Loss_d 0.53975 (0.56599)	Accuracy_p 0.956 (0.951)
+2026-11-06 07:12:28,268 Epoch: [82][20/32]	Accuracy_d 0.78125 (0.9156844294770206)	Loss_d_2 0.4043983221054077	Time 0.296s (0.347s)	Data 0.000s (0.056s)	Loss_p -0.00006 (-0.00012)	Loss_d 0.41924 (0.56588)	Accuracy_p 0.968 (0.951)
+2026-11-06 07:12:31,951 Test: [0/25]	Time 0.530 (0.530)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:12:33,861 Test: [20/25]	Time 0.092 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.887)
+2026-11-06 07:12:34,307 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:12:34,627 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:12:34,628 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:12:34,628 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.912 | 0.995 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:12:34,665 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:12:37,809 Epoch: [83][0/32]	Accuracy_d 0.65625 (0.9221818739770867)	Loss_d_2 0.5044872164726257	Time 1.430s (1.430s)	Data 1.129s (1.129s)	Loss_p -0.00008 (-0.00012)	Loss_d 0.53053 (0.56569)	Accuracy_p 0.975 (0.951)
+2026-11-06 07:12:43,629 Epoch: [83][20/32]	Accuracy_d 0.65625 (0.9150158478605388)	Loss_d_2 0.527856707572937	Time 0.297s (0.345s)	Data 0.000s (0.054s)	Loss_p -0.00012 (-0.00012)	Loss_d 0.55375 (0.56563)	Accuracy_p 0.970 (0.951)
+2026-11-06 07:12:47,273 Test: [0/25]	Time 0.492 (0.492)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+2026-11-06 07:12:49,192 Test: [20/25]	Time 0.091 (0.115)	Loss 0.0004 (0.0004)	Accuracy 0.895 (0.888)
+2026-11-06 07:12:49,619 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:12:49,887 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:12:49,887 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:12:49,887 | adaptive... | 0.899 | 0.989 | 0.958 | -1.000 | 0.899 | 0.912 | 0.995 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:12:49,891 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:12:52,906 Epoch: [84][0/32]	Accuracy_d 0.6875 (0.9222330196399345)	Loss_d_2 0.5621959567070007	Time 1.450s (1.450s)	Data 1.149s (1.149s)	Loss_p -0.00013 (-0.00012)	Loss_d 0.58327 (0.56529)	Accuracy_p 0.973 (0.952)
+2026-11-06 07:12:58,738 Epoch: [84][20/32]	Accuracy_d 0.703125 (0.9151891838351822)	Loss_d_2 0.538385808467865	Time 0.295s (0.347s)	Data 0.000s (0.055s)	Loss_p -0.00011 (-0.00012)	Loss_d 0.55860 (0.56523)	Accuracy_p 0.955 (0.952)
+2026-11-06 07:13:02,356 Test: [0/25]	Time 0.465 (0.465)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:13:04,222 Test: [20/25]	Time 0.091 (0.112)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.886)
+2026-11-06 07:13:04,645 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:13:04,920 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:13:04,920 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:13:04,920 | adaptive... | 0.899 | 0.989 | 0.958 | -1.000 | 0.899 | 0.913 | 0.995 | 0.967 | -1.000 | 0.913 |
+2026-11-06 07:13:04,925 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:13:08,201 Epoch: [85][0/32]	Accuracy_d 0.65625 (0.9221818739770867)	Loss_d_2 0.5514628887176514	Time 1.579s (1.579s)	Data 1.272s (1.272s)	Loss_p -0.00009 (-0.00012)	Loss_d 0.57624 (0.56496)	Accuracy_p 0.956 (0.952)
+2026-11-06 07:13:14,035 Epoch: [85][20/32]	Accuracy_d 0.734375 (0.9160063391442155)	Loss_d_2 0.49358803033828735	Time 0.296s (0.353s)	Data 0.000s (0.061s)	Loss_p -0.00011 (-0.00012)	Loss_d 0.51428 (0.56470)	Accuracy_p 0.973 (0.952)
+2026-11-06 07:13:17,623 Test: [0/25]	Time 0.449 (0.449)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+2026-11-06 07:13:19,497 Test: [20/25]	Time 0.091 (0.111)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.889)
+2026-11-06 07:13:19,920 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:13:20,231 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:13:20,231 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:13:20,231 | adaptive... | 0.900 | 0.989 | 0.958 | -1.000 | 0.900 | 0.914 | 0.992 | 0.967 | -1.000 | 0.914 |
+2026-11-06 07:13:20,237 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:13:23,217 Epoch: [86][0/32]	Accuracy_d 0.625 (0.9221307283142389)	Loss_d_2 0.5527881979942322	Time 1.458s (1.458s)	Data 1.158s (1.158s)	Loss_p -0.00010 (-0.00012)	Loss_d 0.57533 (0.56448)	Accuracy_p 0.963 (0.952)
+2026-11-06 07:13:29,036 Epoch: [86][20/32]	Accuracy_d 0.828125 (0.9157339540412044)	Loss_d_2 0.38210439682006836	Time 0.296s (0.347s)	Data 0.000s (0.055s)	Loss_p -0.00006 (-0.00012)	Loss_d 0.39392 (0.56436)	Accuracy_p 0.976 (0.952)
+2026-11-06 07:13:32,746 Test: [0/25]	Time 0.530 (0.530)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+2026-11-06 07:13:34,619 Test: [20/25]	Time 0.092 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.889)
+2026-11-06 07:13:35,048 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:13:35,314 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:13:35,315 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:13:35,315 | adaptive... | 0.900 | 0.989 | 0.958 | -1.000 | 0.900 | 0.913 | 0.995 | 0.967 | -1.000 | 0.913 |
+2026-11-06 07:13:35,320 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:13:38,869 Epoch: [87][0/32]	Accuracy_d 0.734375 (0.9223097381342062)	Loss_d_2 0.5084314346313477	Time 1.446s (1.446s)	Data 1.143s (1.143s)	Loss_p -0.00011 (-0.00012)	Loss_d 0.52684 (0.56407)	Accuracy_p 0.976 (0.952)
+2026-11-06 07:13:44,727 Epoch: [87][20/32]	Accuracy_d 0.78125 (0.9162539619651348)	Loss_d_2 0.4099768400192261	Time 0.295s (0.348s)	Data 0.000s (0.055s)	Loss_p -0.00007 (-0.00012)	Loss_d 0.42622 (0.56384)	Accuracy_p 0.974 (0.952)
+2026-11-06 07:13:48,617 Test: [0/25]	Time 0.719 (0.719)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+2026-11-06 07:13:50,511 Test: [20/25]	Time 0.091 (0.126)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.889)
+2026-11-06 07:13:50,934 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:13:51,204 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:13:51,204 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:13:51,204 | adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.913 | 0.992 | 0.967 | -1.000 | 0.913 |
+2026-11-06 07:13:51,209 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:13:54,132 Epoch: [88][0/32]	Accuracy_d 0.703125 (0.9222585924713584)	Loss_d_2 0.5271453857421875	Time 1.346s (1.346s)	Data 1.047s (1.047s)	Loss_p -0.00009 (-0.00012)	Loss_d 0.55088 (0.56359)	Accuracy_p 0.962 (0.952)
+2026-11-06 07:13:59,966 Epoch: [88][20/32]	Accuracy_d 0.765625 (0.9165758716323297)	Loss_d_2 0.41104310750961304	Time 0.295s (0.342s)	Data 0.000s (0.050s)	Loss_p -0.00008 (-0.00012)	Loss_d 0.42991 (0.56333)	Accuracy_p 0.987 (0.952)
+2026-11-06 07:14:03,598 Test: [0/25]	Time 0.479 (0.479)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:14:05,533 Test: [20/25]	Time 0.091 (0.116)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.888)
+2026-11-06 07:14:05,961 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:14:06,229 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:14:06,229 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:14:06,229 | adaptive... | 0.897 | 0.989 | 0.959 | -1.000 | 0.897 | 0.912 | 0.995 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:14:06,234 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:14:09,340 Epoch: [89][0/32]	Accuracy_d 0.71875 (0.9222841653027823)	Loss_d_2 0.5348341464996338	Time 1.418s (1.418s)	Data 1.118s (1.118s)	Loss_p -0.00010 (-0.00012)	Loss_d 0.56540 (0.56300)	Accuracy_p 0.963 (0.952)
+2026-11-06 07:14:15,187 Epoch: [89][20/32]	Accuracy_d 0.734375 (0.9155110935023771)	Loss_d_2 0.44589510560035706	Time 0.296s (0.346s)	Data 0.000s (0.054s)	Loss_p -0.00007 (-0.00012)	Loss_d 0.47209 (0.56294)	Accuracy_p 0.956 (0.953)
+2026-11-06 07:14:18,867 Test: [0/25]	Time 0.513 (0.513)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:14:20,761 Test: [20/25]	Time 0.091 (0.116)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.888)
+2026-11-06 07:14:21,194 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:14:21,468 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:14:21,469 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:14:21,469 | adaptive... | 0.897 | 0.989 | 0.959 | -1.000 | 0.897 | 0.912 | 0.995 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:14:21,473 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:14:24,957 Epoch: [90][0/32]	Accuracy_d 0.671875 (0.9222074468085106)	Loss_d_2 0.5235151052474976	Time 1.883s (1.883s)	Data 1.581s (1.581s)	Loss_p -0.00009 (-0.00012)	Loss_d 0.55367 (0.56260)	Accuracy_p 0.974 (0.953)
+2026-11-06 07:14:31,932 Epoch: [90][20/32]	Accuracy_d 0.8125 (0.9163034865293186)	Loss_d_2 0.38813433051109314	Time 0.295s (0.422s)	Data 0.000s (0.076s)	Loss_p -0.00006 (-0.00012)	Loss_d 0.40497 (0.56234)	Accuracy_p 0.976 (0.953)
+2026-11-06 07:14:35,588 Test: [0/25]	Time 0.510 (0.510)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:14:37,502 Test: [20/25]	Time 0.091 (0.116)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.887)
+2026-11-06 07:14:37,946 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:14:38,305 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:14:38,306 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:14:38,306 | adaptive... | 0.897 | 0.979 | 0.959 | -1.000 | 0.897 | 0.912 | 0.990 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:14:38,352 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:14:41,803 Epoch: [91][0/32]	Accuracy_d 0.78125 (0.922386456628478)	Loss_d_2 0.480224609375	Time 1.499s (1.499s)	Data 1.193s (1.193s)	Loss_p -0.00006 (-0.00012)	Loss_d 0.50831 (0.56205)	Accuracy_p 0.965 (0.953)
+2026-11-06 07:14:47,621 Epoch: [91][20/32]	Accuracy_d 0.796875 (0.9166749207606973)	Loss_d_2 0.40290528535842896	Time 0.295s (0.348s)	Data 0.000s (0.057s)	Loss_p -0.00004 (-0.00012)	Loss_d 0.42726 (0.56177)	Accuracy_p 0.961 (0.953)
+2026-11-06 07:14:51,297 Test: [0/25]	Time 0.526 (0.526)	Loss 0.0004 (0.0004)	Accuracy 0.919 (0.919)
+2026-11-06 07:14:53,159 Test: [20/25]	Time 0.091 (0.114)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.885)
+2026-11-06 07:14:53,585 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:14:53,853 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:14:53,854 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:14:53,854 | adaptive... | 0.897 | 0.989 | 0.958 | -1.000 | 0.897 | 0.911 | 0.992 | 0.967 | -1.000 | 0.911 |
+2026-11-06 07:14:53,860 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:14:56,832 Epoch: [92][0/32]	Accuracy_d 0.734375 (0.9223097381342062)	Loss_d_2 0.4472474157810211	Time 1.426s (1.426s)	Data 1.128s (1.128s)	Loss_p -0.00004 (-0.00012)	Loss_d 0.46955 (0.56136)	Accuracy_p 0.947 (0.953)
+2026-11-06 07:15:02,685 Epoch: [92][20/32]	Accuracy_d 0.671875 (0.9164272979397782)	Loss_d_2 0.5180813074111938	Time 0.295s (0.347s)	Data 0.000s (0.054s)	Loss_p -0.00014 (-0.00012)	Loss_d 0.55011 (0.56114)	Accuracy_p 0.979 (0.953)
+2026-11-06 07:15:06,374 Test: [0/25]	Time 0.532 (0.532)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+2026-11-06 07:15:08,289 Test: [20/25]	Time 0.091 (0.118)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.886)
+2026-11-06 07:15:08,741 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:15:09,010 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:15:09,010 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:15:09,010 | adaptive... | 0.897 | 0.988 | 0.958 | -1.000 | 0.897 | 0.911 | 0.992 | 0.967 | -1.000 | 0.911 |
+2026-11-06 07:15:09,015 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:15:11,961 Epoch: [93][0/32]	Accuracy_d 0.78125 (0.922386456628478)	Loss_d_2 0.4603882133960724	Time 1.352s (1.352s)	Data 1.051s (1.051s)	Loss_p -0.00004 (-0.00012)	Loss_d 0.48708 (0.56083)	Accuracy_p 0.960 (0.953)
+2026-11-06 07:15:17,794 Epoch: [93][20/32]	Accuracy_d 0.796875 (0.9162787242472267)	Loss_d_2 0.4251210689544678	Time 0.296s (0.342s)	Data 0.000s (0.050s)	Loss_p -0.00008 (-0.00012)	Loss_d 0.45225 (0.56054)	Accuracy_p 0.979 (0.953)
+2026-11-06 07:15:21,450 Test: [0/25]	Time 0.488 (0.488)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+2026-11-06 07:15:23,353 Test: [20/25]	Time 0.091 (0.115)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.887)
+2026-11-06 07:15:23,893 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:15:24,169 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:15:24,169 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:15:24,169 | adaptive... | 0.897 | 0.989 | 0.958 | -1.000 | 0.897 | 0.911 | 0.992 | 0.967 | -1.000 | 0.911 |
+2026-11-06 07:15:24,173 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:15:27,756 Epoch: [94][0/32]	Accuracy_d 0.765625 (0.922360883797054)	Loss_d_2 0.5191226601600647	Time 1.956s (1.956s)	Data 1.660s (1.660s)	Loss_p -0.00011 (-0.00012)	Loss_d 0.54778 (0.56022)	Accuracy_p 0.978 (0.953)
+2026-11-06 07:15:33,584 Epoch: [94][20/32]	Accuracy_d 0.8125 (0.9166501584786054)	Loss_d_2 0.4337657690048218	Time 0.295s (0.371s)	Data 0.000s (0.079s)	Loss_p -0.00007 (-0.00012)	Loss_d 0.45938 (0.55984)	Accuracy_p 0.979 (0.953)
+2026-11-06 07:15:37,334 Test: [0/25]	Time 0.572 (0.572)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:15:39,278 Test: [20/25]	Time 0.091 (0.121)	Loss 0.0004 (0.0004)	Accuracy 0.895 (0.886)
+2026-11-06 07:15:39,700 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:15:39,968 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:15:39,968 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:15:39,968 | adaptive... | 0.896 | 0.988 | 0.958 | -1.000 | 0.896 | 0.910 | 0.992 | 0.967 | -1.000 | 0.910 |
+2026-11-06 07:15:39,973 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:15:42,948 Epoch: [95][0/32]	Accuracy_d 0.78125 (0.922386456628478)	Loss_d_2 0.4581976532936096	Time 1.411s (1.411s)	Data 1.112s (1.112s)	Loss_p -0.00006 (-0.00012)	Loss_d 0.48250 (0.55951)	Accuracy_p 0.963 (0.953)
+2026-11-06 07:15:48,783 Epoch: [95][20/32]	Accuracy_d 0.796875 (0.9166749207606973)	Loss_d_2 0.3989456295967102	Time 0.295s (0.345s)	Data 0.000s (0.053s)	Loss_p -0.00007 (-0.00012)	Loss_d 0.42068 (0.55926)	Accuracy_p 0.977 (0.954)
+2026-11-06 07:15:52,462 Test: [0/25]	Time 0.456 (0.456)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 07:15:54,388 Test: [20/25]	Time 0.091 (0.114)	Loss 0.0004 (0.0004)	Accuracy 0.891 (0.884)
+2026-11-06 07:15:54,812 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:15:55,079 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:15:55,080 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:15:55,080 | adaptive... | 0.898 | 0.988 | 0.958 | -1.000 | 0.898 | 0.911 | 0.992 | 0.967 | -1.000 | 0.911 |
+2026-11-06 07:15:55,084 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:15:58,012 Epoch: [96][0/32]	Accuracy_d 0.6875 (0.9222330196399345)	Loss_d_2 0.5372570753097534	Time 1.432s (1.432s)	Data 1.130s (1.130s)	Loss_p -0.00010 (-0.00012)	Loss_d 0.57611 (0.55890)	Accuracy_p 0.962 (0.954)
+2026-11-06 07:16:03,829 Epoch: [96][20/32]	Accuracy_d 0.796875 (0.9160311014263075)	Loss_d_2 0.42054909467697144	Time 0.295s (0.345s)	Data 0.000s (0.054s)	Loss_p -0.00009 (-0.00012)	Loss_d 0.44825 (0.55862)	Accuracy_p 0.985 (0.954)
+2026-11-06 07:16:07,498 Test: [0/25]	Time 0.510 (0.510)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:16:09,410 Test: [20/25]	Time 0.090 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.891 (0.886)
+2026-11-06 07:16:09,838 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:16:10,111 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:16:10,111 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:16:10,111 | adaptive... | 0.898 | 0.988 | 0.958 | -1.000 | 0.898 | 0.911 | 0.992 | 0.967 | -1.000 | 0.911 |
+2026-11-06 07:16:10,119 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:16:13,197 Epoch: [97][0/32]	Accuracy_d 0.65625 (0.9221818739770867)	Loss_d_2 0.5386776924133301	Time 1.491s (1.491s)	Data 1.192s (1.192s)	Loss_p -0.00011 (-0.00012)	Loss_d 0.57355 (0.55824)	Accuracy_p 0.968 (0.954)
+2026-11-06 07:16:19,024 Epoch: [97][20/32]	Accuracy_d 0.796875 (0.916773969889065)	Loss_d_2 0.36483439803123474	Time 0.295s (0.348s)	Data 0.000s (0.057s)	Loss_p -0.00004 (-0.00012)	Loss_d 0.38099 (0.55794)	Accuracy_p 0.973 (0.954)
+2026-11-06 07:16:22,674 Test: [0/25]	Time 0.508 (0.508)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:16:24,626 Test: [20/25]	Time 0.091 (0.118)	Loss 0.0004 (0.0004)	Accuracy 0.891 (0.886)
+2026-11-06 07:16:25,050 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:16:25,438 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:16:25,438 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:16:25,438 | adaptive... | 0.897 | 0.988 | 0.958 | -1.000 | 0.897 | 0.911 | 0.992 | 0.967 | -1.000 | 0.911 |
+2026-11-06 07:16:25,442 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:16:28,479 Epoch: [98][0/32]	Accuracy_d 0.84375 (0.9224887479541735)	Loss_d_2 0.40165019035339355	Time 1.514s (1.514s)	Data 1.212s (1.212s)	Loss_p -0.00006 (-0.00012)	Loss_d 0.42309 (0.55762)	Accuracy_p 0.985 (0.954)
+2026-11-06 07:16:34,307 Epoch: [98][20/32]	Accuracy_d 0.78125 (0.9168482567353408)	Loss_d_2 0.4539346694946289	Time 0.295s (0.350s)	Data 0.000s (0.058s)	Loss_p -0.00007 (-0.00012)	Loss_d 0.48087 (0.55732)	Accuracy_p 0.966 (0.954)
+2026-11-06 07:16:38,026 Test: [0/25]	Time 0.572 (0.572)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+2026-11-06 07:16:39,892 Test: [20/25]	Time 0.091 (0.117)	Loss 0.0004 (0.0004)	Accuracy 0.887 (0.886)
+2026-11-06 07:16:40,424 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:16:40,766 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:16:40,766 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:16:40,767 | adaptive... | 0.898 | 0.979 | 0.958 | -1.000 | 0.898 | 0.913 | 0.990 | 0.967 | -1.000 | 0.913 |
+2026-11-06 07:16:40,803 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:16:44,054 Epoch: [99][0/32]	Accuracy_d 0.796875 (0.9224120294599017)	Loss_d_2 0.4250805974006653	Time 1.559s (1.559s)	Data 1.255s (1.255s)	Loss_p -0.00006 (-0.00012)	Loss_d 0.44784 (0.55696)	Accuracy_p 0.981 (0.954)
+2026-11-06 07:16:49,870 Epoch: [99][20/32]	Accuracy_d 0.75 (0.9161053882725833)	Loss_d_2 0.44290056824684143	Time 0.296s (0.351s)	Data 0.000s (0.060s)	Loss_p -0.00009 (-0.00012)	Loss_d 0.47936 (0.55677)	Accuracy_p 0.983 (0.954)
+2026-11-06 07:16:53,507 Test: [0/25]	Time 0.486 (0.486)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+2026-11-06 07:16:55,414 Test: [20/25]	Time 0.091 (0.115)	Loss 0.0004 (0.0004)	Accuracy 0.891 (0.885)
+2026-11-06 07:16:55,838 => writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+2026-11-06 07:16:56,114 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:16:56,114 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:16:56,114 | adaptive... | 0.898 | 0.988 | 0.958 | -1.000 | 0.898 | 0.912 | 0.992 | 0.967 | -1.000 | 0.912 |
+2026-11-06 07:16:56,119 => saving checkpoint to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+2026-11-06 07:16:58,414 saving final model state to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth

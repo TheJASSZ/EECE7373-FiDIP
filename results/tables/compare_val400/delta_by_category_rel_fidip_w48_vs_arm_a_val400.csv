@@ -1,0 +1,13 @@
+a,b,factor,category,n,mean_delta_oks,ci_lo,ci_hi,share_of_total_gain
+rel_fidip_w48,arm_a,inplane,upright,198,0.00614448,0.00171135,0.0104892,0.509402
+rel_fidip_w48,arm_a,inplane,sideways,190,0.00652713,0.00222898,0.0110353,0.519262
+rel_fidip_w48,arm_a,inplane,inverted,9,-0.00760658,-0.0324811,0.0122997,-0.0286644
+rel_fidip_w48,arm_a,view,front,246,0.00477608,0.0012743,0.0088034,0.491945
+rel_fidip_w48,arm_a,view,back,116,0.00847596,0.00208123,0.0153479,0.411678
+rel_fidip_w48,arm_a,view,profile,35,0.00657649,-0.00122275,0.0150294,0.0963769
+rel_fidip_w48,arm_a,occ_bin,0,281,0.0040146,0.00137451,0.00673692,0.472345
+rel_fidip_w48,arm_a,occ_bin,1,31,0.00821967,0.000194909,0.0175245,0.106691
+rel_fidip_w48,arm_a,occ_bin,≥2,85,0.0118281,0.00178051,0.0222815,0.420964
+rel_fidip_w48,arm_a,scale_bin,small,133,0.00696584,0.000610628,0.0132984,0.387914
+rel_fidip_w48,arm_a,scale_bin,medium,132,0.00512793,0.0006095,0.00970117,0.283418
+rel_fidip_w48,arm_a,scale_bin,large,132,0.00594666,0.00156172,0.01091,0.328668

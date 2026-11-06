@@ -1,0 +1,2 @@
+R108_mmp-vitpose-l256_lr2e-4_s1,11665220,improve,mmp-vitpose-l256,lr2e-4,1,mmpose_exps/configs/syrip_vitpose-l_udp-256x192.py,942e20d30a4e/tree:e5270eb3e0ce,gpu,"NVIDIA A100-SXM4-40GB
+NVIDIA A100-SXM4-40GB",done,92.58,,/scratch/purohitham.v/fidip/runs/R108_mmp-vitpose-l256_lr2e-4_s1/best_coco_AP_epoch_5.pth,ff77762d16bd4c728027fdfac923de9b1dfbb62481dffe86c777fd27e02015b8,

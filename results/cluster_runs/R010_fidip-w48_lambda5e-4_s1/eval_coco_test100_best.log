@@ -1,0 +1,10 @@
+[eval_coco] run=R010_fidip-w48_lambda5e-4_s1 split=test100 n_img=100 n_det=100 scoring=rescored
+  paper : AP= 93.9 AP50= 98.5 AP75= 98.5 AR= 94.9 AR50= 99.0 AR75= 99.0
+  fixed : AP= 95.3 AP50=100.0 AP75=100.0 AR= 95.9 AR50=100.0 AR75=100.0
+  metrics_original_scores: AP= 93.9 AP50= 98.5 AP75= 98.5 AR= 94.9 AR50= 99.0 AR75= 99.0
+  metrics_original_scores_fixed: AP= 95.3 AP50=100.0 AP75=100.0 AR= 95.9 AR50=100.0 AR75=100.0
+  AP@OKS 0.50:98.5 0.55:98.5 0.60:98.5 0.65:98.5 0.70:98.5 0.75:98.5 0.80:96.2 0.85:96.2 0.90:88.9 0.95:66.1  | AP_80_95=86.9
+  id-0 image test0.jpg: score rank 50/100 (percentile 50), OKS 0.960; paper-fixed AP -1.48
+  mean OKS=0.9550  kpt err/sqrt(bbox)=0.0299  PCK@0.05=0.849 @0.1=0.952 @0.2=0.989
+  WARNING: GT contains annotation id 0 (image_id 0): under pycocotools it can never be matched ('paper' protocol, comparable with published numbers); see metrics_fixed for the corrected protocol
+  -> /scratch/purohitham.v/fidip/runs/R010_fidip-w48_lambda5e-4_s1/metrics_test100_best.json

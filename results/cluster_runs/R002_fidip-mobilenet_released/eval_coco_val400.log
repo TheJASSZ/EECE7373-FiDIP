@@ -1,0 +1,8 @@
+[eval_coco] run=R002_fidip-mobilenet_released split=val400 n_img=397 n_det=397 scoring=rescored
+  paper : AP= 68.2 AP50= 95.3 AP75= 77.4 AR= 76.9 AR50= 97.0 AR75= 84.4
+  fixed : AP= 68.2 AP50= 95.3 AP75= 77.4 AR= 76.9 AR50= 97.0 AR75= 84.4
+  metrics_original_scores: AP= 68.2 AP50= 95.3 AP75= 77.4 AR= 76.9 AR50= 97.0 AR75= 84.4
+  metrics_original_scores_fixed: AP= 68.2 AP50= 95.3 AP75= 77.4 AR= 76.9 AR50= 97.0 AR75= 84.4
+  AP@OKS 0.50:95.3 0.55:93.7 0.60:90.8 0.65:88.9 0.70:84.0 0.75:77.4 0.80:62.2 0.85:49.9 0.90:30.7 0.95:8.9  | AP_80_95=38.0
+  mean OKS=0.8564  kpt err/sqrt(bbox)=0.0684  PCK@0.05=0.679 @0.1=0.837 @0.2=0.917
+  -> /scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/metrics_val400.json

@@ -2,28 +2,42 @@ model,key,factor,category,n_images,mean_1_minus_oks,ci_lo,ci_hi,frac_oks_lt_0.85
 FiDIP HRNet-W48 (released),rel_fidip_w48,inplane,upright,198,0.0548998,0.0451555,0.0659765,0.0757576,0.418586
 FiDIP HRNet-W48 (released),rel_fidip_w48,inplane,sideways,190,0.0761352,0.0641604,0.0898558,0.121053,0.557041
 FiDIP HRNet-W48 (released),rel_fidip_w48,inplane,inverted,9,0.0703277,0.0378669,0.108703,0.222222,0.0243735
+HRNet-W48 DARK 384 (arm A),arm_a,inplane,upright,198,0.0487553,0.0395318,0.059679,0.0656566,0.409387
+HRNet-W48 DARK 384 (arm A),arm_a,inplane,sideways,190,0.069608,0.0583869,0.0827939,0.1,0.560867
+HRNet-W48 DARK 384 (arm A),arm_a,inplane,inverted,9,0.0779342,0.0323119,0.135223,0.222222,0.0297453
 ViTPose-L 256 (MMPose),mmp_vitl256_base,inplane,upright,198,0.0401983,0.0312989,0.0519307,0.0505051,0.377558
 ViTPose-L 256 (MMPose),mmp_vitl256_base,inplane,sideways,190,0.065885,0.0539448,0.0793743,0.0842105,0.593816
 ViTPose-L 256 (MMPose),mmp_vitl256_base,inplane,inverted,9,0.0670507,0.0286804,0.121217,0.111111,0.0286258
 FiDIP HRNet-W48 (released),rel_fidip_w48,view,front,246,0.0487434,0.040999,0.0577425,0.0528455,0.461742
 FiDIP HRNet-W48 (released),rel_fidip_w48,view,back,116,0.0971897,0.0827522,0.113259,0.215517,0.434137
 FiDIP HRNet-W48 (released),rel_fidip_w48,view,profile,35,0.0772543,0.0434943,0.132622,0.0571429,0.104121
+HRNet-W48 DARK 384 (arm A),arm_a,view,front,246,0.0439674,0.0365589,0.0526405,0.0528455,0.458683
+HRNet-W48 DARK 384 (arm A),arm_a,view,back,116,0.0887137,0.0755601,0.103352,0.172414,0.436411
+HRNet-W48 DARK 384 (arm A),arm_a,view,profile,35,0.0706778,0.0379973,0.126024,0.0285714,0.104906
 ViTPose-L 256 (MMPose),mmp_vitl256_base,view,front,246,0.0363438,0.0293168,0.0453492,0.0365854,0.424109
 ViTPose-L 256 (MMPose),mmp_vitl256_base,view,back,116,0.0845698,0.0702063,0.0999614,0.146552,0.465356
 ViTPose-L 256 (MMPose),mmp_vitl256_base,view,profile,35,0.0665768,0.0352011,0.122381,0.0285714,0.110536
 FiDIP HRNet-W48 (released),rel_fidip_w48,occ_bin,0,281,0.0419601,0.0353075,0.0508964,0.0355872,0.454037
 FiDIP HRNet-W48 (released),rel_fidip_w48,occ_bin,1,31,0.0710369,0.0571944,0.085244,0.0322581,0.0847996
 FiDIP HRNet-W48 (released),rel_fidip_w48,occ_bin,≥2,85,0.140893,0.119667,0.163509,0.341176,0.461164
+HRNet-W48 DARK 384 (arm A),arm_a,occ_bin,0,281,0.0379455,0.0312108,0.0472057,0.0284698,0.452182
+HRNet-W48 DARK 384 (arm A),arm_a,occ_bin,1,31,0.0628172,0.0509184,0.0755104,0,0.0825824
+HRNet-W48 DARK 384 (arm A),arm_a,occ_bin,≥2,85,0.129064,0.108911,0.151481,0.305882,0.465235
 ViTPose-L 256 (MMPose),mmp_vitl256_base,occ_bin,0,281,0.0322503,0.0263456,0.0411188,0.0177936,0.429884
 ViTPose-L 256 (MMPose),mmp_vitl256_base,occ_bin,1,31,0.0582552,0.0461911,0.0719173,0.0322581,0.0856659
 ViTPose-L 256 (MMPose),mmp_vitl256_base,occ_bin,≥2,85,0.120148,0.0974183,0.147083,0.247059,0.48445
 FiDIP HRNet-W48 (released),rel_fidip_w48,scale_bin,small,133,0.0860235,0.0679596,0.107223,0.150376,0.440572
 FiDIP HRNet-W48 (released),rel_fidip_w48,scale_bin,medium,132,0.0603416,0.0497129,0.071307,0.0909091,0.306718
 FiDIP HRNet-W48 (released),rel_fidip_w48,scale_bin,large,132,0.0497165,0.0404375,0.0606849,0.0606061,0.25271
+HRNet-W48 DARK 384 (arm A),arm_a,scale_bin,small,133,0.0790576,0.0626042,0.099453,0.120301,0.445905
+HRNet-W48 DARK 384 (arm A),arm_a,scale_bin,medium,132,0.0552137,0.0451677,0.0660588,0.0833333,0.309078
+HRNet-W48 DARK 384 (arm A),arm_a,scale_bin,large,132,0.0437698,0.0350843,0.0544969,0.0530303,0.245017
 ViTPose-L 256 (MMPose),mmp_vitl256_base,scale_bin,small,133,0.0740176,0.0560595,0.095669,0.112782,0.46698
 ViTPose-L 256 (MMPose),mmp_vitl256_base,scale_bin,medium,132,0.0454185,0.0373488,0.0546007,0.0454545,0.284392
 ViTPose-L 256 (MMPose),mmp_vitl256_base,scale_bin,large,132,0.0397068,0.0311185,0.0503199,0.0454545,0.248628
 FiDIP HRNet-W48 (released),rel_fidip_w48,lr_swap,no,393,0.0637944,0.0559886,0.0725785,,
 FiDIP HRNet-W48 (released),rel_fidip_w48,lr_swap,yes,4,0.224396,0.117838,0.379373,,
+HRNet-W48 DARK 384 (arm A),arm_a,lr_swap,no,391,0.055517,0.0486781,0.0631149,,
+HRNet-W48 DARK 384 (arm A),arm_a,lr_swap,yes,6,0.312223,0.180414,0.465586,,
 ViTPose-L 256 (MMPose),mmp_vitl256_base,lr_swap,no,391,0.048362,0.0421429,0.056043,,
 ViTPose-L 256 (MMPose),mmp_vitl256_base,lr_swap,yes,6,0.361886,0.194461,0.559959,,

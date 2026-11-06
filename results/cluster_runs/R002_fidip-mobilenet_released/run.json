@@ -1,0 +1,47 @@
+{
+ "checkpoints": {
+  "eval": {
+   "path": "/scratch/purohitham.v/fidip/models/mobile_fidip.pth",
+   "sha256": "bd0b7548b1f1158f0a8a97d022305547343c835e7d4027727a978d2d7a4cbca1"
+  }
+ },
+ "commands": [
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/mobilenet/mobile_224x224_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/models/mobile_fidip.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET test100 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/upstream_eval/test100/output LOG_DIR /scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/upstream_eval/test100/log",
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/mobilenet/mobile_224x224_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/models/mobile_fidip.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET validate_infant OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/upstream_eval/validate_infant/output LOG_DIR /scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/upstream_eval/validate_infant/log",
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/mobilenet/mobile_224x224_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/models/mobile_fidip.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/upstream_eval/val400/output LOG_DIR /scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/upstream_eval/val400/log"
+ ],
+ "eval_seconds_test100": 8,
+ "eval_seconds_val400": 11,
+ "eval_seconds_validate_infant": 9,
+ "git_pushed": {
+  "dirty_any": true,
+  "dirty_repro_paths": [
+   " M scripts/analysis/build_manifests.py",
+   " M scripts/analysis/run_released.sh",
+   " M scripts/analysis_pipeline.py",
+   " M scripts/collect_results.py",
+   " M scripts/slurm/analysis.sbatch",
+   " M scripts/slurm/build_env_analysis.sbatch",
+   " M scripts/slurm/crosscheck_impls.sbatch",
+   " M scripts/slurm/eval_tests.sbatch"
+  ],
+  "head": "947c6a13221b1ba2939bd6c527bc56904bf82a3f",
+  "pushed_at": "2026-11-05T21:07:26-0500",
+  "tree": "491c25b1aaadc0962e7cfee2a64cc1d313a0c64c"
+ },
+ "gpu": [
+  "n/a ([Errno 2] No such file or directory: 'nvidia-smi')"
+ ],
+ "note": "time_end backfilled from the slurm log",
+ "run_id": "R002_fidip-mobilenet_released",
+ "slurm": {
+  "gpus": null,
+  "job_id": null,
+  "job_name": null,
+  "node": null,
+  "partition": null
+ },
+ "time_end": "2026-11-05T21:09:27-0500",
+ "time_start": "2026-11-05T21:08:59-0500",
+ "upstream_code_sha256": "7561f21d1f45839fe7fe9588f0fd41edffcaebcce1d9e0580c668b86c1e3ed12"
+}

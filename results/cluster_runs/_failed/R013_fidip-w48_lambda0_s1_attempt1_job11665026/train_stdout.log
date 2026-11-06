@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation/tools/train_adaptive_model_hrnet.py", line 403, in <module>
+    main()
+  File "/scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation/tools/train_adaptive_model_hrnet.py", line 85, in main
+    update_config(cfg, args)
+  File "/scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation/tools/../lib/config/default.py", line 136, in update_config
+    cfg.merge_from_list(args.opts)
+  File "/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/yacs/config.py", line 245, in merge_from_list
+    value = _check_and_coerce_cfg_value_type(value, d[subkey], subkey, full_key)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/yacs/config.py", line 534, in _check_and_coerce_cfg_value_type
+    raise ValueError(
+ValueError: Type mismatch (<class 'float'> vs. <class 'int'>) with values (0.0 vs. 0) for config key: TRAIN.LAMBDA

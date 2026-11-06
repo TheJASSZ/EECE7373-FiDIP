@@ -1,0 +1,61 @@
+[train_fidip 2026-11-06 06:45:25] R019_fidip-w48_paperrecipe_s1: /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/train_adaptive_model_hrnet.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TRAIN.CHECKPOINT /scratch/purohitham.v/fidip/models/coco/w48_384x288.pth TRAIN.PRE_EPOCH 10 TRAIN.LAMBDA 0.0005 DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TRAIN_SET train_infant DATASET.TRAIN_PRE_SET train_pre_infant DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output LOG_DIR /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/log WORKERS 8 DEBUG.DEBUG False SEED 1 TRAIN.LR 0.001 TRAIN.END_EPOCH 100 TRAIN.BATCH_SIZE_PER_GPU 64
+[train_fidip] best Val400 epoch/AP: 10 0.9074420747138967
+[eval_upstream 2026-11-06 07:17:02] R019_fidip-w48_paperrecipe_s1 val400_best: /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/model_best.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/upstream_eval/val400_best/output LOG_DIR /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/upstream_eval/val400_best/log
+=> writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/upstream_eval/val400_best/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/json_tricks/encoders.py:419: UserWarning: json-tricks: numpy scalar serialization is experimental and may work differently in future versions
+  warnings.warn('json-tricks: numpy scalar serialization is experimental and may work differently in future versions')
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.907 | 0.989 | 0.968 | -1.000 | 0.907 | 0.920 | 0.997 | 0.972 | -1.000 | 0.920 |
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.907
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.968
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.907
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.920
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.997
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.972
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.920
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.920
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+| adaptive... | 0.907 | 0.989 | 0.968 | -1.000 | 0.907 | 0.920 | 0.997 | 0.972 | -1.000 | 0.920 |
+[eval_upstream 2026-11-06 07:17:14] R019_fidip-w48_paperrecipe_s1 val400_final: /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/upstream_eval/val400_final/output LOG_DIR /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/upstream_eval/val400_final/log
+=> writing results json to /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/upstream_eval/val400_final/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/json_tricks/encoders.py:419: UserWarning: json-tricks: numpy scalar serialization is experimental and may work differently in future versions
+  warnings.warn('json-tricks: numpy scalar serialization is experimental and may work differently in future versions')
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.898 | 0.988 | 0.958 | -1.000 | 0.898 | 0.912 | 0.992 | 0.967 | -1.000 | 0.912 |
+Loading and preparing results...
+DONE (t=0.02s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.898
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.988
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.898
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.912
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.992
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.967
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.912
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.912
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+| adaptive... | 0.898 | 0.988 | 0.958 | -1.000 | 0.898 | 0.912 | 0.992 | 0.967 | -1.000 | 0.912 |
+[train_fidip 2026-11-06 07:17:27] R019_fidip-w48_paperrecipe_s1 done

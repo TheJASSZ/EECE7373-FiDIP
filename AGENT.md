@@ -527,3 +527,22 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - `scratchpad/finalize.sh`.
 - **Report worker:** tables, captions, appendix command, README and AI-use wording, by 09:05.
 - **Timing:** R133/R134 and R138 are slower than estimated (they share node d4047). R136/R137 should finish around 09:10, the final pipeline around 09:30, then review, push and zip.
+
+### 2026-11-06 09:38 EST — FINAL: pre-registered H1 supported; submission packaged
+- **Infra:** at about 09:35 the Explorer login node began refusing key auth ("Permission denied (publickey)"), an RC-side problem. The final pulls went through the transfer node `xfer.discovery.neu.edu` (same home and /scratch, same key), without changing any keys or config.
+- **Final Test100 results** (eval_coco, `paper` protocol, pre-registered imp-1…4):
+
+| Run(s) | Test100 AP |
+|---|---|
+| **Arm B, ViTPose-H 256** (R136–R140, fresh seeds) | **95.2 ± 0.1** |
+| Arm A, HRNet-W48 (R131–R135) | 93.6 ± 0.2 |
+
+| Contrast | ΔAP | 95% CI |
+|---|---|---|
+| **C1: B vs released FiDIP** | **+1.6** | [+0.4, +2.8] |
+| C2: B vs A | +1.6 | [+0.6, +2.8] |
+| C3: B vs FiDIP retrain | +1.6 | [+0.6, +2.7] |
+
+  - **H1 is supported:** mean > 93.6, and C1's CI excludes 0 under both protocols after Holm correction. The verdict is computed by `scripts/fill_final_keys.py`.
+  - The ensemble R141 and the supplementary R101/R105 are in the generated tables.
+- **Closing steps:** registry backfilled (16 rows from run.json); MANIFEST §8 generated from the provenance files (89 rows); report rebuilt (0 undefined refs, 0 overfull boxes); pushed to the private GitHub repo; zip rebuilt.

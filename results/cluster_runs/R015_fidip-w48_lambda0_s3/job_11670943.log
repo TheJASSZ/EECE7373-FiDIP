@@ -1,0 +1,119 @@
+[train_fidip 2026-11-06 07:01:43] R015_fidip-w48_lambda0_s3: /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/train_adaptive_model_hrnet.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TRAIN.CHECKPOINT /scratch/purohitham.v/fidip/models/coco/w48_384x288.pth TRAIN.PRE_EPOCH 10 TRAIN.LAMBDA 0.0 DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TRAIN_SET train_infant DATASET.TRAIN_PRE_SET train_pre_infant DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output LOG_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/log WORKERS 8 DEBUG.DEBUG False SEED 3 
+[train_fidip] best Val400 epoch/AP: 20 0.9077099946058422
+[eval_upstream 2026-11-06 07:18:10] R015_fidip-w48_lambda0_s3 test100_best: /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/model_best.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET test100 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_best/output LOG_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_best/log
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_best/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_test100_results_0.json
+/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/json_tricks/encoders.py:419: UserWarning: json-tricks: numpy scalar serialization is experimental and may work differently in future versions
+  warnings.warn('json-tricks: numpy scalar serialization is experimental and may work differently in future versions')
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.936 | 0.985 | 0.985 | -1.000 | 0.936 | 0.945 | 0.990 | 0.990 | -1.000 | 0.945 |
+Loading and preparing results...
+DONE (t=0.00s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.01s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.936
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.985
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.985
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.936
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.945
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.990
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.990
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.945
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.945
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+| adaptive... | 0.936 | 0.985 | 0.985 | -1.000 | 0.936 | 0.945 | 0.990 | 0.990 | -1.000 | 0.945 |
+[eval_upstream 2026-11-06 07:18:18] R015_fidip-w48_lambda0_s3 val400_best: /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/model_best.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_best/output LOG_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_best/log
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_best/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/json_tricks/encoders.py:419: UserWarning: json-tricks: numpy scalar serialization is experimental and may work differently in future versions
+  warnings.warn('json-tricks: numpy scalar serialization is experimental and may work differently in future versions')
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.908 | 0.989 | 0.958 | -1.000 | 0.908 | 0.920 | 0.995 | 0.970 | -1.000 | 0.920 |
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.908
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.908
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.920
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.920
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.920
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+| adaptive... | 0.908 | 0.989 | 0.958 | -1.000 | 0.908 | 0.920 | 0.995 | 0.970 | -1.000 | 0.920 |
+[eval_upstream 2026-11-06 07:18:31] R015_fidip-w48_lambda0_s3 test100_final: /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET test100 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_final/output LOG_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_final/log
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_final/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_test100_results_0.json
+/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/json_tricks/encoders.py:419: UserWarning: json-tricks: numpy scalar serialization is experimental and may work differently in future versions
+  warnings.warn('json-tricks: numpy scalar serialization is experimental and may work differently in future versions')
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.936 | 0.985 | 0.985 | -1.000 | 0.936 | 0.945 | 0.990 | 0.990 | -1.000 | 0.945 |
+Loading and preparing results...
+DONE (t=0.00s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.01s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.936
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.985
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.985
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.936
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.945
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.990
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.990
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.945
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.945
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+| adaptive... | 0.936 | 0.985 | 0.985 | -1.000 | 0.936 | 0.945 | 0.990 | 0.990 | -1.000 | 0.945 |
+[eval_upstream 2026-11-06 07:18:39] R015_fidip-w48_lambda0_s3 val400_final: /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/output LOG_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/log
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/json_tricks/encoders.py:419: UserWarning: json-tricks: numpy scalar serialization is experimental and may work differently in future versions
+  warnings.warn('json-tricks: numpy scalar serialization is experimental and may work differently in future versions')
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.908 | 0.989 | 0.958 | -1.000 | 0.908 | 0.920 | 0.995 | 0.970 | -1.000 | 0.920 |
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.908
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.908
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.920
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.920
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.920
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+| adaptive... | 0.908 | 0.989 | 0.958 | -1.000 | 0.908 | 0.920 | 0.995 | 0.970 | -1.000 | 0.920 |
+[train_fidip 2026-11-06 07:18:51] R015_fidip-w48_lambda0_s3 done

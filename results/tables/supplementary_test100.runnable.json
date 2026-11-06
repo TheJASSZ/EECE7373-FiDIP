@@ -1,0 +1,48 @@
+{
+ "_doc": "Reported outside the bonus claim (PREREGISTRATION): arm A vs released; screening seeds R101/R105 vs released. Separate Holm family.",
+ "B": 10000,
+ "seed": 0,
+ "protocol": "paper",
+ "metric": "AP",
+ "alpha": 0.05,
+ "contrasts": [
+  {
+   "name": "S1: arm A vs released FiDIP",
+   "label_a": "HRNet-W48 (arm A)",
+   "label_b": "FiDIP released",
+   "a": [
+    "/scratch/purohitham.v/fidip/runs/R131_mmp-hrnetw48_conf_s2/preds_test100.json",
+    "/scratch/purohitham.v/fidip/runs/R132_mmp-hrnetw48_conf_s3/preds_test100.json",
+    "/scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/preds_test100.json",
+    "/scratch/purohitham.v/fidip/runs/R134_mmp-hrnetw48_conf_s5/preds_test100.json",
+    "/scratch/purohitham.v/fidip/runs/R135_mmp-hrnetw48_conf_s6/preds_test100.json"
+   ],
+   "b": [
+    "/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_test100.json"
+   ]
+  },
+  {
+   "name": "S2: R105 (arm B s1) vs released FiDIP",
+   "label_a": "ViTPose-H 256 s1",
+   "label_b": "FiDIP released",
+   "a": [
+    "/scratch/purohitham.v/fidip/runs/R105_mmp-vitpose-h256_base_s1/preds_test100.json"
+   ],
+   "b": [
+    "/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_test100.json"
+   ]
+  },
+  {
+   "name": "S3: R101 (arm A s1) vs released FiDIP",
+   "label_a": "HRNet-W48 s1",
+   "label_b": "FiDIP released",
+   "a": [
+    "/scratch/purohitham.v/fidip/runs/R101_mmp-hrnetw48_base_s1/preds_test100.json"
+   ],
+   "b": [
+    "/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_test100.json"
+   ]
+  }
+ ],
+ "skipped_missing_inputs": []
+}

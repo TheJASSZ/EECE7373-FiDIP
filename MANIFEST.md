@@ -99,9 +99,90 @@ See `results/registry.csv` (one row per run: run ID, Slurm job ID, config, seed,
 - Every number in the report enters through `report/generated/numbers.tex` (`\setres{key}{value}`) and `report/generated/tab_*.tex`. Both are written by `scripts/collect_results.py` from `eval/eval_coco.py` and `eval/bootstrap_ci.py` outputs. Published baselines (cited) are typed directly. A few values without a generated key are transcribed into `report/generated/manual_numbers.tex`, each with its source file or log entry noted (mirrored in `results/tables/provenance_manual.csv`). The final computed keys and the H1 verdict come from `scripts/fill_final_keys.py` (`results/tables/provenance_final_keys.csv`).
 - `results/tables/provenance.csv` maps each report key to its value, RUN_ID(s), metrics file, protocol (`paper`/`fixed`) and split. The table below is generated from it once results are final.
 
-| Report key | Value | RUN_ID(s) | Metrics file | Protocol / split |
+| Report key | Value | RUN_ID(s) | Source | Protocol / split |
 |---|---|---|---|---|
-| _generated at finalization_ | | | | |
+| `rel.fidip.test.ap` | 93.6 | R001_fidip-w48_released | `results/analysis_eval/R001_fidip-w48_released/metrics_test100.json` | paper test100 |
+| `rel.fidip.test.ap50` | 98.5 | R001_fidip-w48_released | `results/analysis_eval/R001_fidip-w48_released/metrics_test100.json` | paper test100 |
+| `rel.fidip.test.ap75` | 98.5 | R001_fidip-w48_released | `results/analysis_eval/R001_fidip-w48_released/metrics_test100.json` | paper test100 |
+| `rel.fidip.test.ar` | 94.6 | R001_fidip-w48_released | `results/analysis_eval/R001_fidip-w48_released/metrics_test100.json` | paper test100 |
+| `rel.fidip.test.apstrict` | 86.2 | R001_fidip-w48_released | `results/analysis_eval/R001_fidip-w48_released/metrics_test100.json` | paper test100 |
+| `rel.fidip.test.ap.fixed` | 95.0 | R001_fidip-w48_released | `results/analysis_eval/R001_fidip-w48_released/metrics_test100.json` | fixed test100 |
+| `rel.fidip.test.ar.fixed` | 95.6 | R001_fidip-w48_released | `results/analysis_eval/R001_fidip-w48_released/metrics_test100.json` | fixed test100 |
+| `rel.fidip.test.diffpub` | $+0.0$ | R001_fidip-w48_released | `results/analysis_eval/R001_fidip-w48_released/metrics_test100.json` | paper test100 |
+| `rel.fidip.test0rank` | 51 | R001_fidip-w48_released | `results/analysis_eval/R001_fidip-w48_released/metrics_test100.json` | paper test100 |
+| `rel.fidip.test.clean.ap` | 92.8 | R001_fidip-w48_released | `results/analysis_eval/R001_fidip-w48_released/metrics_test100_clean.json` | paper test100_clean |
+| `rel.fidip.test.ap.upstream` | 93.6 | R001_fidip-w48_released | `runs/R001_fidip-w48_released/metrics_upstream_test100.txt` | paper (upstream code) test100 |
+| `rel.fidip.val.ap` | 90.4 | R001_fidip-w48_released | `results/analysis_eval/R001_fidip-w48_released/metrics_val400.json` | paper val400 |
+| `rel.mobile.test.ap` | 79.1 | R002_fidip-mobilenet_released | `results/analysis_eval/R002_fidip-mobilenet_released/metrics_test100.json` | paper test100 |
+| `rel.mobile.val.ap` | 68.2 | R002_fidip-mobilenet_released | `results/analysis_eval/R002_fidip-mobilenet_released/metrics_val400.json` | paper val400 |
+| `zs.darkpose.test.ap` | 88.5 | R003_darkpose-w48-coco_released | `results/analysis_eval/R003_darkpose-w48-coco_released/metrics_test100.json` | paper test100 |
+| `zs.darkpose.val.ap` | 86.5 | R003_darkpose-w48-coco_released | `results/analysis_eval/R003_darkpose-w48-coco_released/metrics_val400.json` | paper val400 |
+| `rt.fidip.test.ap.mean` | 93.6 | R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R0 | `` | paper test100 |
+| `rt.fidip.test.ap.sd` | 0.4 | R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R0 | `` | paper test100 |
+| `rt.fidip.val.ap.mean` | 90.5 | R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R0 | `` | paper val400 |
+| `rt.fidip.val.ap.sd` | 0.1 | R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R0 | `` | paper val400 |
+| `rt.fidip.test.ap.final.mean` | 93.4 | R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R0 | `metrics_test100_final.json` | paper test100 |
+| `rt.fidip.test.ap.final.sd` | 0.5 | R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R0 | `metrics_test100_final.json` | paper test100 |
+| `rt.seeds` | 3 | R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R0 | `results/analysis_eval` |   |
+| `rt.ft.test.ap.mean` | 93.6 | R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fid | `` | paper test100 |
+| `rt.ft.test.ap.sd` | 0.1 | R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fid | `` | paper test100 |
+| `rt.ft.val.ap.mean` | 90.8 | R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fid | `` | paper val400 |
+| `rt.ft.val.ap.sd` | 0.2 | R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fid | `` | paper val400 |
+| `rt.ft.test.ap.final.mean` | 93.7 | R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fid | `metrics_test100_final.json` | paper test100 |
+| `rt.ft.test.ap.final.sd` | 0.1 | R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fid | `metrics_test100_final.json` | paper test100 |
+| `rt.delta.test.ap` | $-0.0$ | R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R0 | `results/tables/bootstrap_retrain_fidip_vs_ft_test100.json` | paper test100 |
+| `rt.delta.test.ci.lo` | $-0.3$ | R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R0 | `results/tables/bootstrap_retrain_fidip_vs_ft_test100.json` | paper test100 |
+| `rt.delta.test.ci.hi` | $+0.2$ | R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R0 | `results/tables/bootstrap_retrain_fidip_vs_ft_test100.json` | paper test100 |
+| `rt.delta.test.p` | 1.000 | R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R0 | `results/tables/bootstrap_retrain_fidip_vs_ft_test100.json` | paper test100 |
+| `best.name` | ViTPose-H 256 (arm B) | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `results/configs.json` |   |
+| `best.input` | 256$\times$192 | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `results/configs.json` |   |
+| `best.flip` | yes | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `results/configs.json` |   |
+| `best.ckptrule` | best Val400 coco/AP epoch per seed | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `results/configs.json` |   |
+| `best.prereg.commit` | \texttt{72f9449} | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `results/PREREGISTRATION.md` |   |
+| `best.val.ap.mean` | 92.9 | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `` | paper val400 |
+| `best.val.ap.sd` | 0.1 | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `` | paper val400 |
+| `best.seeds` | 5 | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `` | paper test100 |
+| `best.test.ap.mean` | 95.2 | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `` | paper test100 |
+| `best.test.ap50` | 98.2 | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `` | paper test100 |
+| `best.test.ap75` | 98.2 | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `` | paper test100 |
+| `best.test.ar` | 96.4 | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `` | paper test100 |
+| `best.test.apstrict` | 90.6 | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `` | paper test100 |
+| `best.test.ap.sd` | 0.1 | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `` | paper test100 |
+| `best.test.ap.fixed` | 97.0 | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `` | fixed test100 |
+| `best.vs.published` | $+1.6$ | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `` | paper test100 |
+| `best.test.clean.ap` | 94.4 | R136_mmp-vitpose-h256_conf_s2;R137_mmp-vitpose-h256_conf_s3; | `` | paper test100_clean |
+| `best.test0rank` | 15 | R136_mmp-vitpose-h256_conf_s2 | `results/analysis_eval/R136_mmp-vitpose-h256_conf_s2/metrics_test100.json` | paper test100 |
+| `best.delta.ap` | $+1.6$ | R001_fidip-w48_released;R136_mmp-vitpose-h256_conf_s2;R137_m | `results/tables/bootstrap_final_C1_C4_test100.json` | paper test100 |
+| `best.delta.ci.lo` | $+0.4$ | R001_fidip-w48_released;R136_mmp-vitpose-h256_conf_s2;R137_m | `results/tables/bootstrap_final_C1_C4_test100.json` | paper test100 |
+| `best.delta.ci.hi` | $+2.8$ | R001_fidip-w48_released;R136_mmp-vitpose-h256_conf_s2;R137_m | `results/tables/bootstrap_final_C1_C4_test100.json` | paper test100 |
+| `best.delta.p` | 0.007 | R001_fidip-w48_released;R136_mmp-vitpose-h256_conf_s2;R137_m | `results/tables/bootstrap_final_C1_C4_test100.json` | paper test100 |
+| `best.delta.fixed` | $+2.0$ | R001_fidip-w48_released;R136_mmp-vitpose-h256_conf_s2;R137_m | `results/tables/bootstrap_final_C1_C4_test100.json` | fixed test100 |
+| `best.delta.fixed.ci.lo` | $+1.0$ | R001_fidip-w48_released;R136_mmp-vitpose-h256_conf_s2;R137_m | `results/tables/bootstrap_final_C1_C4_test100.json` | fixed test100 |
+| `best.delta.fixed.ci.hi` | $+2.9$ | R001_fidip-w48_released;R136_mmp-vitpose-h256_conf_s2;R137_m | `results/tables/bootstrap_final_C1_C4_test100.json` | fixed test100 |
+| `best.robust` | yes | R001_fidip-w48_released;R136_mmp-vitpose-h256_conf_s2;R137_m | `results/tables/bootstrap_final_C1_C4_test100.json` | both test100 |
+| `ens.name` | ViTPose-H 256, 5-seed ensemble | R141_mmp-vitpose-h256_ens5 | `results/configs.json` |   |
+| `ens.test.ap` | 95.7 | R141_mmp-vitpose-h256_ens5 | `` | paper test100 |
+| `ens.delta.ci.lo` | $+0.9$ | R001_fidip-w48_released;R141_mmp-vitpose-h256_ens5 | `results/tables/bootstrap_final_C1_C4_test100.json` | paper test100 |
+| `ens.delta.ci.hi` | $+3.3$ | R001_fidip-w48_released;R141_mmp-vitpose-h256_ens5 | `results/tables/bootstrap_final_C1_C4_test100.json` | paper test100 |
+| `rt.ftnp.test.ap.mean` | 93.7 | R021 R022 R023 | `results/analysis_eval/R021_fidip-w48_ft-noprestage_s1/metrics_test100_best.json;results/an` | paper test100_best |
+| `rt.ftnp.test.ap.sd` | 0.2 | R021 R022 R023 | `results/analysis_eval/R021_fidip-w48_ft-noprestage_s1/metrics_test100_best.json;results/an` | paper test100_best |
+| `rt.ftnp.val.ap.mean` | 90.9 | R021 R022 R023 | `results/analysis_eval/R021_fidip-w48_ft-noprestage_s1/metrics_val400_best.json;results/ana` | paper val400_best |
+| `rt.ftnp.val.ap.sd` | 0.2 | R021 R022 R023 | `results/analysis_eval/R021_fidip-w48_ft-noprestage_s1/metrics_val400_best.json;results/ana` | paper val400_best |
+| `armA.test.ap.mean` | 93.6 | R131 R132 R133 R134 R135 | `results/analysis_eval/R131_mmp-hrnetw48_conf_s2/metrics_test100.json;results/analysis_eval` | paper test100 |
+| `armA.test.ap.sd` | 0.2 | R131 R132 R133 R134 R135 | `results/analysis_eval/R131_mmp-hrnetw48_conf_s2/metrics_test100.json;results/analysis_eval` | paper test100 |
+| `c2.delta` | $+1.6$ | C2 | `results/tables/bootstrap_final_C1_C4_test100.json` | paper test100 |
+| `c2.ci.lo` | $+0.6$ | C2 | `results/tables/bootstrap_final_C1_C4_test100.json` | paper test100 |
+| `c2.ci.hi` | $+2.8$ | C2 | `results/tables/bootstrap_final_C1_C4_test100.json` | paper test100 |
+| `c3.delta` | $+1.6$ | C3 | `results/tables/bootstrap_final_C1_C4_test100.json` | paper test100 |
+| `c3.ci.lo` | $+0.6$ | C3 | `results/tables/bootstrap_final_C1_C4_test100.json` | paper test100 |
+| `c3.ci.hi` | $+2.7$ | C3 | `results/tables/bootstrap_final_C1_C4_test100.json` | paper test100 |
+| `finaloutcome` | supported | R136 R137 R138 R139 R140 R001 | `results/tables/bootstrap_final_C1_C4_test100.json` | paper+fixed test100 |
+| `rt.epochs` | 20 |  | `` |   |
+| `rt.fidip.bestepoch` | 18--20 |  | `` |   |
+| `rt.ft.bestepoch` | 16--20 |  | `` |   |
+| `rt.ft.test.ap.final.mean` | 93.7 |  | `` |   |
+
+Full lists: `results/tables/provenance.csv`, `provenance_final_keys.csv`, `provenance_manual.csv`.
 
 ## 9. Report build
 | What | Command |

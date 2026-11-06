@@ -59,6 +59,13 @@
 | `\RelMobileTestCleanAR` | 83.6 | test100_clean paper: R002_fidip-mobilenet_released |
 | `\RelMobileTestCleanAPFixed` | 78.7 | test100_clean fixed: R002_fidip-mobilenet_released |
 | `\RelMobileTestCleanAPStrictFixed` | 53.5 | test100_clean fixed: R002_fidip-mobilenet_released |
+| `\MmpHRNetTestAP` | 93.9 | test100 paper: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestAPStrict` | 87.4 | test100 paper: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestAPFifty` | 98.5 | test100 paper: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestAPSeventyfive` | 97.1 | test100 paper: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestAR` | 95.0 | test100 paper: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestAPFixed` | 95.3 | test100 fixed: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestAPStrictFixed` | 88.7 | test100 fixed: R101_mmp-hrnetw48_base_s1 |
 | `\MmpHRNetValAP` | 91.5 | val400 paper: R101_mmp-hrnetw48_base_s1 |
 | `\MmpHRNetValAPStrict` | 81.6 | val400 paper: R101_mmp-hrnetw48_base_s1 |
 | `\MmpHRNetValAPFifty` | 98.9 | val400 paper: R101_mmp-hrnetw48_base_s1 |
@@ -66,6 +73,13 @@
 | `\MmpHRNetValAR` | 92.7 | val400 paper: R101_mmp-hrnetw48_base_s1 |
 | `\MmpHRNetValAPFixed` | 91.5 | val400 fixed: R101_mmp-hrnetw48_base_s1 |
 | `\MmpHRNetValAPStrictFixed` | 81.6 | val400 fixed: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestCleanAP` | 93.0 | test100_clean paper: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestCleanAPStrict` | 86.7 | test100_clean paper: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestCleanAPFifty` | 97.5 | test100_clean paper: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestCleanAPSeventyfive` | 96.1 | test100_clean paper: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestCleanAR` | 94.9 | test100_clean paper: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestCleanAPFixed` | 95.1 | test100_clean fixed: R101_mmp-hrnetw48_base_s1 |
+| `\MmpHRNetTestCleanAPStrictFixed` | 88.3 | test100_clean fixed: R101_mmp-hrnetw48_base_s1 |
 | `\MmpVitLTwoValAP` | 92.8 | val400 paper: R102_mmp-vitpose-l256_base_s1 |
 | `\MmpVitLTwoValAPStrict` | 84.8 | val400 paper: R102_mmp-vitpose-l256_base_s1 |
 | `\MmpVitLTwoValAPFifty` | 98.8 | val400 paper: R102_mmp-vitpose-l256_base_s1 |
@@ -192,6 +206,13 @@
 | `\MmpVitLLrFiveValAR` | 94.0 | val400 paper: R109_mmp-vitpose-l256_lr5e-5_s1 |
 | `\MmpVitLLrFiveValAPFixed` | 92.6 | val400 fixed: R109_mmp-vitpose-l256_lr5e-5_s1 |
 | `\MmpVitLLrFiveValAPStrictFixed` | 84.3 | val400 fixed: R109_mmp-vitpose-l256_lr5e-5_s1 |
+| `\MmpVitHTwoTestAP` | 94.7 | test100 paper: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestAPStrict` | 89.6 | test100 paper: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestAPFifty` | 98.1 | test100 paper: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestAPSeventyfive` | 98.1 | test100 paper: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestAR` | 96.1 | test100 paper: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestAPFixed` | 96.7 | test100 fixed: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestAPStrictFixed` | 91.9 | test100 fixed: R105_mmp-vitpose-h256_base_s1 |
 | `\MmpVitHTwoValAP` | 93.2 | val400 paper: R105_mmp-vitpose-h256_base_s1 |
 | `\MmpVitHTwoValAPStrict` | 85.3 | val400 paper: R105_mmp-vitpose-h256_base_s1 |
 | `\MmpVitHTwoValAPFifty` | 98.8 | val400 paper: R105_mmp-vitpose-h256_base_s1 |
@@ -199,6 +220,13 @@
 | `\MmpVitHTwoValAR` | 94.5 | val400 paper: R105_mmp-vitpose-h256_base_s1 |
 | `\MmpVitHTwoValAPFixed` | 93.2 | val400 fixed: R105_mmp-vitpose-h256_base_s1 |
 | `\MmpVitHTwoValAPStrictFixed` | 85.3 | val400 fixed: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestCleanAP` | 93.9 | test100_clean paper: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestCleanAPStrict` | 89.3 | test100_clean paper: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestCleanAPFifty` | 97.1 | test100_clean paper: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestCleanAPSeventyfive` | 97.1 | test100_clean paper: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestCleanAR` | 96.1 | test100_clean paper: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestCleanAPFixed` | 96.6 | test100_clean fixed: R105_mmp-vitpose-h256_base_s1 |
+| `\MmpVitHTwoTestCleanAPStrictFixed` | 91.6 | test100_clean fixed: R105_mmp-vitpose-h256_base_s1 |
 | `\MmpVitHThreeValAP` | 93.3 | val400 paper: R104_mmp-vitpose-h384_base_s1 |
 | `\MmpVitHThreeValAPStrict` | 85.8 | val400 paper: R104_mmp-vitpose-h384_base_s1 |
 | `\MmpVitHThreeValAPFifty` | 98.9 | val400 paper: R104_mmp-vitpose-h384_base_s1 |
@@ -262,13 +290,102 @@
 | `\MmpVitLRotValAR` | 94.0 | val400 paper: R121_mmp-vitpose-l256_rot180_s1 |
 | `\MmpVitLRotValAPFixed` | 92.6 | val400 fixed: R121_mmp-vitpose-l256_rot180_s1 |
 | `\MmpVitLRotValAPStrictFixed` | 84.3 | val400 fixed: R121_mmp-vitpose-l256_rot180_s1 |
-| `\ArmBValAP` | 92.9 | val400 paper: R140_mmp-vitpose-h256_conf_s6 |
-| `\ArmBValAPStrict` | 84.7 | val400 paper: R140_mmp-vitpose-h256_conf_s6 |
-| `\ArmBValAPFifty` | 98.9 | val400 paper: R140_mmp-vitpose-h256_conf_s6 |
-| `\ArmBValAPSeventyfive` | 96.7 | val400 paper: R140_mmp-vitpose-h256_conf_s6 |
-| `\ArmBValAR` | 94.4 | val400 paper: R140_mmp-vitpose-h256_conf_s6 |
-| `\ArmBValAPFixed` | 92.9 | val400 fixed: R140_mmp-vitpose-h256_conf_s6 |
-| `\ArmBValAPStrictFixed` | 84.7 | val400 fixed: R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmATestAP` | 93.6 | test100 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestAPStrict` | 86.3 | test100 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestAPFifty` | 98.5 | test100 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestAPSeventyfive` | 98.2 | test100 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestAR` | 94.6 | test100 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestAPStd` | 0.22 | test100 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestNRuns` | 5 | test100 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestAPFixed` | 95.0 | test100 fixed: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestAPStrictFixed` | 87.6 | test100 fixed: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmAValAP` | 91.6 | val400 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmAValAPStrict` | 81.6 | val400 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmAValAPFifty` | 98.9 | val400 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmAValAPSeventyfive` | 96.2 | val400 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmAValAR` | 92.8 | val400 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmAValAPStd` | 0.11 | val400 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmAValNRuns` | 5 | val400 paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmAValAPFixed` | 91.6 | val400 fixed: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmAValAPStrictFixed` | 81.6 | val400 fixed: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestCleanAP` | 92.7 | test100_clean paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestCleanAPStrict` | 85.6 | test100_clean paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestCleanAPFifty` | 97.5 | test100_clean paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestCleanAPSeventyfive` | 97.2 | test100_clean paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestCleanAR` | 94.5 | test100_clean paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestCleanAPStd` | 0.22 | test100_clean paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestCleanNRuns` | 5 | test100_clean paper: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestCleanAPFixed` | 94.8 | test100_clean fixed: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmATestCleanAPStrictFixed` | 87.1 | test100_clean fixed: R131_mmp-hrnetw48_conf_s2,R132_mmp-hrnetw48_conf_s3,R133_mmp-hrnetw48_conf_s4,R134_mmp-hrnetw48_conf_s5,R135_mmp-hrnetw48_conf_s6 |
+| `\ArmBTestAP` | 95.2 | test100 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestAPStrict` | 90.6 | test100 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestAPFifty` | 98.2 | test100 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestAPSeventyfive` | 98.2 | test100 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestAR` | 96.4 | test100 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestAPStd` | 0.12 | test100 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestNRuns` | 5 | test100 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestAPFixed` | 97.0 | test100 fixed: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestAPStrictFixed` | 92.4 | test100 fixed: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAP` | 92.9 | val400 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAPStrict` | 84.8 | val400 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAPFifty` | 98.9 | val400 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAPSeventyfive` | 96.9 | val400 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAR` | 94.3 | val400 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAPStd` | 0.08 | val400 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValNRuns` | 5 | val400 paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAPFixed` | 92.9 | val400 fixed: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAPStrictFixed` | 84.8 | val400 fixed: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestCleanAP` | 94.4 | test100_clean paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestCleanAPStrict` | 90.2 | test100_clean paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestCleanAPFifty` | 97.2 | test100_clean paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestCleanAPSeventyfive` | 97.2 | test100_clean paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestCleanAR` | 96.4 | test100_clean paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestCleanAPStd` | 0.10 | test100_clean paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestCleanNRuns` | 5 | test100_clean paper: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestCleanAPFixed` | 96.9 | test100_clean fixed: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBTestCleanAPStrictFixed` | 92.2 | test100_clean fixed: R136_mmp-vitpose-h256_conf_s2,R137_mmp-vitpose-h256_conf_s3,R138_mmp-vitpose-h256_conf_s4,R139_mmp-vitpose-h256_conf_s5,R140_mmp-vitpose-h256_conf_s6 |
+| `\EnsBTestAP` | 95.7 | test100 paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestAPStrict` | 91.9 | test100 paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestAPFifty` | 98.2 | test100 paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestAPSeventyfive` | 98.2 | test100 paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestAR` | 96.8 | test100 paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestAPFixed` | 97.4 | test100 fixed: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestAPStrictFixed` | 93.5 | test100 fixed: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBValAP` | 92.9 | val400 paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBValAPStrict` | 84.7 | val400 paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBValAPFifty` | 98.9 | val400 paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBValAPSeventyfive` | 96.7 | val400 paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBValAR` | 94.4 | val400 paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBValAPFixed` | 92.9 | val400 fixed: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBValAPStrictFixed` | 84.7 | val400 fixed: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestCleanAP` | 95.0 | test100_clean paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestCleanAPStrict` | 91.6 | test100_clean paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestCleanAPFifty` | 97.2 | test100_clean paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestCleanAPSeventyfive` | 97.2 | test100_clean paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestCleanAR` | 96.8 | test100_clean paper: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestCleanAPFixed` | 97.5 | test100_clean fixed: R141_mmp-vitpose-h256_ens5 |
+| `\EnsBTestCleanAPStrictFixed` | 93.7 | test100_clean fixed: R141_mmp-vitpose-h256_ens5 |
+| `\ZsDarkPoseTestAP` | 88.5 | test100 paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestAPStrict` | 73.4 | test100 paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestAPFifty` | 98.5 | test100 paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestAPSeventyfive` | 98.5 | test100 paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestAR` | 90.0 | test100 paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestAPFixed` | 89.9 | test100 fixed: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestAPStrictFixed` | 74.8 | test100 fixed: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseValAP` | 86.5 | val400 paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseValAPStrict` | 71.2 | val400 paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseValAPFifty` | 98.9 | val400 paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseValAPSeventyfive` | 93.8 | val400 paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseValAR` | 88.4 | val400 paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseValAPFixed` | 86.5 | val400 fixed: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseValAPStrictFixed` | 71.2 | val400 fixed: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestCleanAP` | 88.1 | test100_clean paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestCleanAPStrict` | 74.1 | test100_clean paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestCleanAPFifty` | 97.5 | test100_clean paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestCleanAPSeventyfive` | 97.5 | test100_clean paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestCleanAR` | 90.3 | test100_clean paper: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestCleanAPFixed` | 90.3 | test100_clean fixed: R003_darkpose-w48-coco_released |
+| `\ZsDarkPoseTestCleanAPStrictFixed` | 75.7 | test100_clean fixed: R003_darkpose-w48-coco_released |
 | `\RtFTnpTestAP` | 93.7 | test100 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
 | `\RtFTnpTestAPStrict` | 86.5 | test100 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
 | `\RtFTnpTestAPFifty` | 98.5 | test100 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
@@ -296,27 +413,27 @@
 | `\RtFTnpTestCleanNRuns` | 3 | test100_clean paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
 | `\RtFTnpTestCleanAPFixed` | 95.0 | test100_clean fixed: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
 | `\RtFTnpTestCleanAPStrictFixed` | 87.4 | test100_clean fixed: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAP` | 90.7 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAPStrict` | 80.1 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAPFifty` | 98.9 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAPSeventyfive` | 96.8 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAR` | 92.0 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAPFixed` | 90.7 | val400 fixed: R019_fidip-w48_paperrecipe_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAPStrictFixed` | 80.1 | val400 fixed: R019_fidip-w48_paperrecipe_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAP` | 89.3 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAPStrict` | 76.6 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAPFifty` | 98.8 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAPSeventyfive` | 95.8 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAR` | 91.1 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAPFixed` | 89.3 | val400 fixed: R020_fidip-w48_readme-literal-labels_s1 |
-| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAPStrictFixed` | 76.6 | val400 fixed: R020_fidip-w48_readme-literal-labels_s1 |
-| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAP` | 92.8 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
-| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAPStrict` | 84.7 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
-| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAPFifty` | 98.9 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
-| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAPSeventyfive` | 96.7 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
-| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAR` | 94.2 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
-| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAPFixed` | 92.8 | val400 fixed: R122_mmp-vitpose-h256_realonly_s1 |
-| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAPStrictFixed` | 84.7 | val400 fixed: R122_mmp-vitpose-h256_realonly_s1 |
+| `\RtPaperRecipeValAP` | 90.7 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
+| `\RtPaperRecipeValAPStrict` | 80.1 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
+| `\RtPaperRecipeValAPFifty` | 98.9 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
+| `\RtPaperRecipeValAPSeventyfive` | 96.8 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
+| `\RtPaperRecipeValAR` | 92.0 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
+| `\RtPaperRecipeValAPFixed` | 90.7 | val400 fixed: R019_fidip-w48_paperrecipe_s1 |
+| `\RtPaperRecipeValAPStrictFixed` | 80.1 | val400 fixed: R019_fidip-w48_paperrecipe_s1 |
+| `\RtReadmeLabelsValAP` | 89.3 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
+| `\RtReadmeLabelsValAPStrict` | 76.6 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
+| `\RtReadmeLabelsValAPFifty` | 98.8 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
+| `\RtReadmeLabelsValAPSeventyfive` | 95.8 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
+| `\RtReadmeLabelsValAR` | 91.1 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
+| `\RtReadmeLabelsValAPFixed` | 89.3 | val400 fixed: R020_fidip-w48_readme-literal-labels_s1 |
+| `\RtReadmeLabelsValAPStrictFixed` | 76.6 | val400 fixed: R020_fidip-w48_readme-literal-labels_s1 |
+| `\MmpVitHRealValAP` | 92.8 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
+| `\MmpVitHRealValAPStrict` | 84.7 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
+| `\MmpVitHRealValAPFifty` | 98.9 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
+| `\MmpVitHRealValAPSeventyfive` | 96.7 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
+| `\MmpVitHRealValAR` | 94.2 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
+| `\MmpVitHRealValAPFixed` | 92.8 | val400 fixed: R122_mmp-vitpose-h256_realonly_s1 |
+| `\MmpVitHRealValAPStrictFixed` | 84.7 | val400 fixed: R122_mmp-vitpose-h256_realonly_s1 |
 | `\RelFiDIPTestAPCiLo` | 89.8 | test100 bootstrap: R001_fidip-w48_released |
 | `\RelFiDIPTestAPCiHi` | 96.3 | test100 bootstrap: R001_fidip-w48_released |
 | `\RelFiDIPValAPCiLo` | 88.7 | val400 bootstrap: R001_fidip-w48_released |
@@ -325,6 +442,42 @@
 | `\RelMobileTestAPCiHi` | 83.8 | test100 bootstrap: R002_fidip-mobilenet_released |
 | `\RelMobileValAPCiLo` | 65.1 | val400 bootstrap: R002_fidip-mobilenet_released |
 | `\RelMobileValAPCiHi` | 71.6 | val400 bootstrap: R002_fidip-mobilenet_released |
+| `\BootCOneArmBVsReleasedFiDIPDelta` | 1.57 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCOneArmBVsReleasedFiDIPCiLo` | 0.43 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCOneArmBVsReleasedFiDIPCiHi` | 2.79 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCOneArmBVsReleasedFiDIPP` | 0.0045 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCOneArmBVsReleasedFiDIPPHolm` | 0.0069 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCOneArmBVsReleasedFiDIPFixedDelta` | 1.96 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCOneArmBVsReleasedFiDIPFixedCiLo` | 1.00 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCOneArmBVsReleasedFiDIPFixedCiHi` | 2.90 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCOneArmBVsReleasedFiDIPRobust` | yes | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCTwoArmBVsArmADelta` | 1.61 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCTwoArmBVsArmACiLo` | 0.56 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCTwoArmBVsArmACiHi` | 2.82 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCTwoArmBVsArmAP` | 0.0027 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCTwoArmBVsArmAPHolm` | 0.0069 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCTwoArmBVsArmAFixedDelta` | 1.93 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCTwoArmBVsArmAFixedCiLo` | 1.01 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCTwoArmBVsArmAFixedCiHi` | 2.91 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCTwoArmBVsArmARobust` | yes | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCThreeArmBVsFiDIPRetrainDelta` | 1.62 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCThreeArmBVsFiDIPRetrainCiLo` | 0.61 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCThreeArmBVsFiDIPRetrainCiHi` | 2.72 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCThreeArmBVsFiDIPRetrainP` | 0.0023 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCThreeArmBVsFiDIPRetrainPHolm` | 0.0069 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCThreeArmBVsFiDIPRetrainFixedDelta` | 1.84 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCThreeArmBVsFiDIPRetrainFixedCiLo` | 1.05 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCThreeArmBVsFiDIPRetrainFixedCiHi` | 2.80 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCThreeArmBVsFiDIPRetrainRobust` | yes | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCFourArmBEnsembleVsReleasedFiDIPDelta` | 2.09 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCFourArmBEnsembleVsReleasedFiDIPCiLo` | 0.91 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCFourArmBEnsembleVsReleasedFiDIPCiHi` | 3.26 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCFourArmBEnsembleVsReleasedFiDIPP` | 0.0010 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCFourArmBEnsembleVsReleasedFiDIPPHolm` | 0.0040 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCFourArmBEnsembleVsReleasedFiDIPFixedDelta` | 2.40 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCFourArmBEnsembleVsReleasedFiDIPFixedCiLo` | 1.53 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCFourArmBEnsembleVsReleasedFiDIPFixedCiHi` | 3.40 | results/tables/bootstrap_final_C1_C4_test100.json |
+| `\BootCFourArmBEnsembleVsReleasedFiDIPRobust` | yes | results/tables/bootstrap_final_C1_C4_test100.json |
 | `\BootFiDIPRetrainVsFineTuneDelta` | -0.04 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
 | `\BootFiDIPRetrainVsFineTuneCiLo` | -0.34 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
 | `\BootFiDIPRetrainVsFineTuneCiHi` | 0.20 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
@@ -379,3 +532,57 @@
 | `\BootFiDIPRetrainVsPlainFineTuneNoPreStageTestOneZeroZeroCleanFixedCiLo` | -0.30 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
 | `\BootFiDIPRetrainVsPlainFineTuneNoPreStageTestOneZeroZeroCleanFixedCiHi` | 0.36 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
 | `\BootFiDIPRetrainVsPlainFineTuneNoPreStageTestOneZeroZeroCleanRobust` | no | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootSOneArmAVsReleasedFiDIPDelta` | -0.04 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSOneArmAVsReleasedFiDIPCiLo` | -0.78 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSOneArmAVsReleasedFiDIPCiHi` | 0.69 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSOneArmAVsReleasedFiDIPP` | 0.5656 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSOneArmAVsReleasedFiDIPPHolm` | 0.5656 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSOneArmAVsReleasedFiDIPFixedDelta` | 0.03 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSOneArmAVsReleasedFiDIPFixedCiLo` | -0.72 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSOneArmAVsReleasedFiDIPFixedCiHi` | 0.75 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSOneArmAVsReleasedFiDIPRobust` | no | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPDelta` | 1.08 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPCiLo` | -0.29 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPCiHi` | 2.54 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPP` | 0.0524 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPPHolm` | 0.1572 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPFixedDelta` | 1.76 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPFixedCiLo` | 0.73 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPFixedCiHi` | 2.75 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPRobust` | no | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPDelta` | 0.29 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPCiLo` | -0.63 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPCiHi` | 1.20 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPP` | 0.2686 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPPHolm` | 0.5371 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPFixedDelta` | 0.35 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPFixedCiLo` | -0.55 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPFixedCiHi` | 1.24 | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPRobust` | no | results/tables/bootstrap_supplementary_test100_test100.json |
+| `\BootSOneArmAVsReleasedFiDIPTestOneZeroZeroCleanDelta` | -0.13 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSOneArmAVsReleasedFiDIPTestOneZeroZeroCleanCiLo` | -0.87 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSOneArmAVsReleasedFiDIPTestOneZeroZeroCleanCiHi` | 0.61 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSOneArmAVsReleasedFiDIPTestOneZeroZeroCleanP` | 0.6427 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSOneArmAVsReleasedFiDIPTestOneZeroZeroCleanPHolm` | 0.6631 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSOneArmAVsReleasedFiDIPTestOneZeroZeroCleanFixedDelta` | -0.08 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSOneArmAVsReleasedFiDIPTestOneZeroZeroCleanFixedCiLo` | -0.82 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSOneArmAVsReleasedFiDIPTestOneZeroZeroCleanFixedCiHi` | 0.64 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSOneArmAVsReleasedFiDIPTestOneZeroZeroCleanRobust` | no | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPTestOneZeroZeroCleanDelta` | 1.14 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPTestOneZeroZeroCleanCiLo` | -0.34 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPTestOneZeroZeroCleanCiHi` | 2.61 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPTestOneZeroZeroCleanP` | 0.0559 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPTestOneZeroZeroCleanPHolm` | 0.1677 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPTestOneZeroZeroCleanFixedDelta` | 1.75 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPTestOneZeroZeroCleanFixedCiLo` | 0.75 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPTestOneZeroZeroCleanFixedCiHi` | 2.84 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSTwoROneZeroFiveArmBSOneVsReleasedFiDIPTestOneZeroZeroCleanRobust` | no | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPTestOneZeroZeroCleanDelta` | 0.20 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPTestOneZeroZeroCleanCiLo` | -0.72 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPTestOneZeroZeroCleanCiHi` | 1.07 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPTestOneZeroZeroCleanP` | 0.3316 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPTestOneZeroZeroCleanPHolm` | 0.6631 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPTestOneZeroZeroCleanFixedDelta` | 0.19 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPTestOneZeroZeroCleanFixedCiLo` | -0.70 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPTestOneZeroZeroCleanFixedCiHi` | 1.10 | results/tables/bootstrap_supplementary_test100_test100_clean.json |
+| `\BootSThreeROneZeroOneArmASOneVsReleasedFiDIPTestOneZeroZeroCleanRobust` | no | results/tables/bootstrap_supplementary_test100_test100_clean.json |

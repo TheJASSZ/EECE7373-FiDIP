@@ -1,0 +1,84 @@
+{
+ "run_id": "R141_mmp-vitpose-h256_ens5",
+ "stream": "improve",
+ "kind": "ensemble (pre-registered imp-3)",
+ "method": "eval/ensemble_preds.py --weighting mean: per-instance mean of flip-tested keypoint coordinates over the members; scores re-derived by eval_coco rescoring",
+ "members": [
+  {
+   "run_id": "R136_mmp-vitpose-h256_conf_s2",
+   "checkpoint": "/scratch/purohitham.v/fidip/runs/R136_mmp-vitpose-h256_conf_s2/best_coco_AP_epoch_21.pth",
+   "checkpoint_sha256": "bf89da7fb854b2894fe8dc87b719ced3436f21b11e5fba54d688be5bf07271b5",
+   "preds": {
+    "val400": "0030f9004d79dbd0150f315204fe652b4a3160e4d64495b4394ae6b7ee3a3066",
+    "test100": "77bfbfd6d5fac8cf7207712a6b1add68b6989cd9a8f6235eb5cc78d0aceaf2d8"
+   }
+  },
+  {
+   "run_id": "R137_mmp-vitpose-h256_conf_s3",
+   "checkpoint": "/scratch/purohitham.v/fidip/runs/R137_mmp-vitpose-h256_conf_s3/best_coco_AP_epoch_5.pth",
+   "checkpoint_sha256": "a831a735c64fdfaec1f166bef59e44bc9862671b773d48a0417f3b0ffa5336f7",
+   "preds": {
+    "val400": "4231f7f5cbdcd609767bf4b2aa0e2149bae449b8cd10b183a61618e26a431de6",
+    "test100": "4a2c54b9eaa5a77673abdf9fd3b4341898c3cccfcb1ee896622ef82b2a2027fe"
+   }
+  },
+  {
+   "run_id": "R138_mmp-vitpose-h256_conf_s4",
+   "checkpoint": "/scratch/purohitham.v/fidip/runs/R138_mmp-vitpose-h256_conf_s4/best_coco_AP_epoch_10.pth",
+   "checkpoint_sha256": "e5c3a98abe6da2e750d5383c228076d22e2424613cf294d5b9980379e6acb672",
+   "preds": {
+    "val400": "d3a060489faf3b2bc6fc457a054d9a542c380c16424e861bdd9a7b7a99a071a1",
+    "test100": "66c1b97bde35ffba2a3d1595cbab59f59a46b9417e4f2535fd2478dd58b257a6"
+   }
+  },
+  {
+   "run_id": "R139_mmp-vitpose-h256_conf_s5",
+   "checkpoint": "/scratch/purohitham.v/fidip/runs/R139_mmp-vitpose-h256_conf_s5/best_coco_AP_epoch_11.pth",
+   "checkpoint_sha256": "2f6cb8ef78c6a1a3ead2473b45edad6a60e9d0d5213b6b7a8f9d285465866b57",
+   "preds": {
+    "val400": "fe61506cf23537c34c261c6e60cc1c5cac0968c82d221ff9ee2e6f514d296ffb",
+    "test100": "b3abc2b5037bf104508dd5f20ce785207cd132172482a4fbfc15a42e2d5c9cc3"
+   }
+  },
+  {
+   "run_id": "R140_mmp-vitpose-h256_conf_s6",
+   "checkpoint": "/scratch/purohitham.v/fidip/runs/R140_mmp-vitpose-h256_conf_s6/best_coco_AP_epoch_11.pth",
+   "checkpoint_sha256": "78eeb1cca5d6b65fe0da350f7f7de36d7144b557b364f5593c452d89d25779f2",
+   "preds": {
+    "val400": "042eddf9dc1bf80b7d3103d70658418714088751df2a0bde3bf1d81a44446908",
+    "test100": "f4a9bf98dc3d71591c2ee5a7c5559a931c6e4ee6cfff36b316780d498756a885"
+   }
+  }
+ ],
+ "slurm_job_id": "11674559",
+ "code_snapshot": "/scratch/purohitham.v/fidip/snapshots/11674559",
+ "metrics": {
+  "val400": {
+   "AP": 0.9286552821112237,
+   "AP50": 0.9885776990797317,
+   "AP75": 0.9672823208999332,
+   "APm": null,
+   "APl": 0.9286552821112237,
+   "AR": 0.9438287153652393,
+   "AR50": 0.9974811083123426,
+   "AR75": 0.9798488664987406,
+   "ARm": null,
+   "ARl": 0.9438287153652393,
+   "AP_80_95": 0.847074105338009
+  },
+  "test100": {
+   "AP": 0.9569891740539347,
+   "AP50": 0.9824752475247523,
+   "AP75": 0.9824752475247523,
+   "APm": null,
+   "APl": 0.9569891740539347,
+   "AR": 0.9680000000000002,
+   "AR50": 0.99,
+   "AR75": 0.99,
+   "ARm": null,
+   "ARl": 0.9680000000000002,
+   "AP_80_95": 0.9187600638477077
+  }
+ },
+ "finished": "2026-11-06T09:31:27-0500"
+}

@@ -1,0 +1,147 @@
+Namespace(cfg='experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml', opts=['TEST.MODEL_FILE', '/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth', 'TEST.USE_GT_BBOX', 'True', 'WORKERS', '8', 'DEBUG.DEBUG', 'False', 'DATASET.ROOT', '/scratch/purohitham.v/fidip/data/syrip/', 'DATASET.TEST_SET', 'val400', 'OUTPUT_DIR', '/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/output', 'LOG_DIR', '/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/log'], modelDir='', logDir='', dataDir='', prevModelDir='')
+AUTO_RESUME: True
+CUDNN:
+  BENCHMARK: True
+  DETERMINISTIC: False
+  ENABLED: True
+DATASET:
+  COLOR_RGB: True
+  DATASET: syrip
+  DATA_FORMAT: jpg
+  FLIP: True
+  HYBRID_JOINTS_TYPE: 
+  NUM_JOINTS_HALF_BODY: 8
+  PROB_HALF_BODY: 0.3
+  ROOT: /scratch/purohitham.v/fidip/data/syrip/
+  ROT_FACTOR: 45
+  SCALE_FACTOR: 0.35
+  SELECT_DATA: False
+  TEST_SET: val400
+  TRAIN_PRE_SET: train_pre_infant
+  TRAIN_SET: train_infant
+DATA_DIR: 
+DEBUG:
+  DEBUG: False
+  SAVE_BATCH_IMAGES_GT: True
+  SAVE_BATCH_IMAGES_PRED: True
+  SAVE_HEATMAPS_GT: True
+  SAVE_HEATMAPS_PRED: True
+GPUS: (0,)
+LOG_DIR: /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/log
+LOSS:
+  TOPK: 8
+  USE_DIFFERENT_JOINTS_WEIGHT: False
+  USE_OHKM: False
+  USE_TARGET_WEIGHT: True
+MODEL:
+  EXTRA:
+    FINAL_CONV_KERNEL: 1
+    PRETRAINED_LAYERS: ['conv1', 'bn1', 'conv2', 'bn2', 'layer1', 'transition1', 'stage2', 'transition2', 'stage3', 'transition3', 'stage4']
+    STAGE2:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4]
+      NUM_BRANCHES: 2
+      NUM_CHANNELS: [48, 96]
+      NUM_MODULES: 1
+    STAGE3:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4]
+      NUM_BRANCHES: 3
+      NUM_CHANNELS: [48, 96, 192]
+      NUM_MODULES: 4
+    STAGE4:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4, 4]
+      NUM_BRANCHES: 4
+      NUM_CHANNELS: [48, 96, 192, 384]
+      NUM_MODULES: 3
+  HEATMAP_SIZE: [72, 96]
+  IMAGE_SIZE: [288, 384]
+  INIT_WEIGHTS: True
+  NAME: adaptive_pose_hrnet
+  NUM_JOINTS: 17
+  PRETRAINED: 
+  SIGMA: 3
+  TAG_PER_JOINT: True
+  TARGET_TYPE: gaussian
+OUTPUT_DIR: /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/output
+PIN_MEMORY: True
+PRINT_FREQ: 20
+RANK: 0
+SEED: -1
+TEST:
+  BATCH_SIZE_PER_GPU: 16
+  BBOX_THRE: 1.0
+  BLUR_KERNEL: 11
+  COCO_BBOX_FILE: data/coco/person_detection_results/COCO_val2017_detections_AP_H_56_person.json
+  FLIP_TEST: True
+  IMAGE_THRE: 0.0
+  IN_VIS_THRE: 0.2
+  MODEL_FILE: /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth
+  NMS_THRE: 1.0
+  OKS_THRE: 0.9
+  POST_PROCESS: True
+  SOFT_NMS: False
+  USE_GT_BBOX: True
+TRAIN:
+  BATCH_SIZE_PER_GPU: 20
+  BEGIN_EPOCH: 0
+  CHECKPOINT: 
+  END_EPOCH: 20
+  GAMMA1: 0.99
+  GAMMA2: 0.0
+  LAMBDA: 0.0
+  LR: 0.0001
+  LR_FACTOR: 0.1
+  LR_STEP: [40, 200]
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPTIMIZER: adam
+  PRE_BATCH_SIZE_PER_GPU: 16
+  PRE_EPOCH: 0
+  RESUME: False
+  SHUFFLE: True
+  WD: 0.0001
+WORKERS: 8
+=> loading model from /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth
+=> loaded 1754 tensors strictly
+=> classes: ['__background__', 'person']
+=> num_images: 397
+=> load 397 samples
+=> creating /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/output
+=> creating /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+=> creating /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/log/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant_2026-11-06-07-18
+loading annotations into memory...
+Done (t=0.01s)
+creating index...
+index created!
+Test: [0/25]	Time 1.139 (1.139)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+Test: [20/25]	Time 0.187 (0.195)	Loss 0.0004 (0.0004)	Accuracy 0.894 (0.890)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/json_tricks/encoders.py:419: UserWarning: json-tricks: numpy scalar serialization is experimental and may work differently in future versions
+  warnings.warn('json-tricks: numpy scalar serialization is experimental and may work differently in future versions')
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.908 | 0.989 | 0.958 | -1.000 | 0.908 | 0.920 | 0.995 | 0.970 | -1.000 | 0.920 |
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.908
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.908
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.920
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.920

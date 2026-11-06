@@ -1,0 +1,1971 @@
+# ==== 20261106_085437/20261106_085437.log ====
+2026/11/06 08:54:46 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.10.22 | packaged by conda-forge | (main, Oct  6 2026, 23:02:24) [GCC 14.4.0]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 3
+    GPU 0: NVIDIA L40S
+    CUDA_HOME: /shared/EL9/explorer/cuda/12.1.1
+    NVCC: Cuda compilation tools, release 12.1, V12.1.105
+    GCC: gcc (GCC) 11.4.1 20230605 (Red Hat 11.4.1-2)
+    PyTorch: 2.1.2+cu121
+    PyTorch compiling details: PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2022.2-Product Build 20220804 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX512
+  - CUDA Runtime 12.1
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 8.9.2
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.1, CUDNN_VERSION=8.9.2, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-invalid-partial-specialization -Wno-unused-private-field -Wno-aligned-allocation-unavailable -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Werror=cast-function-type -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=ON, TORCH_VERSION=2.1.2, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=1, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.2+cu121
+    OpenCV: 4.11.0
+    MMEngine: 0.10.7
+
+Runtime environment:
+    cudnn_benchmark: False
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    dist_cfg: {'backend': 'nccl'}
+    seed: 3
+    deterministic: False
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2026/11/06 08:54:47 - mmengine - INFO - Config:
+ann_real200 = '/scratch/purohitham.v/fidip/mmpose_data/splits/train_real200.json'
+ann_syn1000 = '/scratch/purohitham.v/fidip/mmpose_data/splits/train_syn1000.json'
+ann_test100 = 'splits/test100.json'
+ann_val400 = 'splits/val400.json'
+backend_args = dict(backend='local')
+coco_metainfo = dict(
+    from_file=
+    '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py')
+codec = dict(
+    heatmap_size=(
+        48,
+        64,
+    ),
+    input_size=(
+        192,
+        256,
+    ),
+    sigma=2,
+    type='UDPHeatmap')
+custom_hooks = [
+    dict(type='SyncBuffersHook'),
+]
+custom_imports = dict(
+    allow_failed_imports=False,
+    imports=[
+        'mmpose.engine.optim_wrappers.layer_decay_optim_wrapper',
+    ])
+data_mode = 'topdown'
+data_root = '/scratch/purohitham.v/fidip/data/'
+dataset_type = 'CocoDataset'
+default_hooks = dict(
+    badcase=dict(
+        badcase_thr=5,
+        enable=False,
+        metric_type='loss',
+        out_dir='badcase',
+        type='BadCaseAnalysisHook'),
+    checkpoint=dict(
+        interval=5,
+        max_keep_ckpts=1,
+        rule='greater',
+        save_best='coco/AP',
+        type='CheckpointHook'),
+    logger=dict(interval=10, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(enable=False, type='PoseVisualizationHook'))
+default_scope = 'mmpose'
+derived_root = '/scratch/purohitham.v/fidip/mmpose_data/'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+img_test100 = 'syrip/images/test100/'
+img_train = 'syrip/images/train_infant/'
+img_val400 = 'syrip/images/val400/'
+launcher = 'none'
+load_from = '/scratch/purohitham.v/fidip/models/mmpose/td-hm_ViTPose-huge_8xb64-210e_coco-256x192-e32adcd4_20230314.pth'
+log_level = 'INFO'
+log_processor = dict(
+    by_epoch=True, num_digits=6, type='LogProcessor', window_size=50)
+model = dict(
+    backbone=dict(
+        arch='huge',
+        drop_path_rate=0.55,
+        img_size=(
+            256,
+            192,
+        ),
+        out_type='featmap',
+        patch_cfg=dict(padding=2),
+        patch_size=16,
+        qkv_bias=True,
+        type='mmpretrain.VisionTransformer',
+        with_cls_token=False),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        std=[
+            58.395,
+            57.12,
+            57.375,
+        ],
+        type='PoseDataPreprocessor'),
+    head=dict(
+        decoder=dict(
+            heatmap_size=(
+                48,
+                64,
+            ),
+            input_size=(
+                192,
+                256,
+            ),
+            sigma=2,
+            type='UDPHeatmap'),
+        deconv_kernel_sizes=(
+            4,
+            4,
+        ),
+        deconv_out_channels=(
+            256,
+            256,
+        ),
+        in_channels=1280,
+        loss=dict(type='KeypointMSELoss', use_target_weight=True),
+        out_channels=17,
+        type='HeatmapHead'),
+    test_cfg=dict(flip_mode='heatmap', flip_test=True, shift_heatmap=False),
+    type='TopdownPoseEstimator')
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=1.0, norm_type=2),
+    constructor='LayerDecayOptimWrapperConstructor',
+    optimizer=dict(
+        betas=(
+            0.9,
+            0.999,
+        ), lr=0.0001, type='AdamW', weight_decay=0.1),
+    paramwise_cfg=dict(
+        custom_keys=dict(
+            bias=dict(decay_multi=0.0),
+            norm=dict(decay_mult=0.0),
+            pos_embed=dict(decay_mult=0.0),
+            relative_position_bias_table=dict(decay_mult=0.0)),
+        layer_decay_rate=0.85,
+        num_layers=32))
+param_scheduler = [
+    dict(
+        begin=0,
+        by_epoch=True,
+        convert_to_iter_based=True,
+        end=1,
+        start_factor=0.001,
+        type='LinearLR'),
+    dict(
+        begin=0,
+        by_epoch=True,
+        end=30,
+        gamma=0.1,
+        milestones=[
+            24,
+            29,
+        ],
+        type='MultiStepLR'),
+]
+randomness = dict(deterministic=False, seed=3)
+resume = False
+test_cfg = dict()
+test_dataloader = dict(
+    batch_size=32,
+    dataset=dict(
+        ann_file='splits/test100.json',
+        data_mode='topdown',
+        data_prefix=dict(img='syrip/images/test100/'),
+        data_root='/scratch/purohitham.v/fidip/data/',
+        metainfo=dict(
+            from_file=
+            '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+        ),
+        pipeline=[
+            dict(type='LoadImage'),
+            dict(type='GetBBoxCenterScale'),
+            dict(input_size=(
+                192,
+                256,
+            ), type='TopdownAffine', use_udp=True),
+            dict(type='PackPoseInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(round_up=False, shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file='/scratch/purohitham.v/fidip/data/splits/test100.json',
+    type='CocoMetric')
+train_cfg = dict(by_epoch=True, max_epochs=30, val_interval=1)
+train_dataloader = dict(
+    batch_size=32,
+    dataset=dict(
+        datasets=[
+            dict(
+                ann_file=
+                '/scratch/purohitham.v/fidip/mmpose_data/splits/train_real200.json',
+                data_mode='topdown',
+                data_prefix=dict(img='syrip/images/train_infant/'),
+                data_root='/scratch/purohitham.v/fidip/data/',
+                metainfo=dict(
+                    from_file=
+                    '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+                ),
+                pipeline=[],
+                type='CocoDataset'),
+            dict(
+                ann_file=
+                '/scratch/purohitham.v/fidip/mmpose_data/splits/train_syn1000.json',
+                data_mode='topdown',
+                data_prefix=dict(img='syrip/images/train_infant/'),
+                data_root='/scratch/purohitham.v/fidip/data/',
+                metainfo=dict(
+                    from_file=
+                    '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+                ),
+                pipeline=[],
+                type='CocoDataset'),
+        ],
+        metainfo=dict(
+            from_file=
+            '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+        ),
+        pipeline=[
+            dict(type='LoadImage'),
+            dict(type='GetBBoxCenterScale'),
+            dict(direction='horizontal', type='RandomFlip'),
+            dict(type='RandomHalfBody'),
+            dict(type='RandomBBoxTransform'),
+            dict(input_size=(
+                192,
+                256,
+            ), type='TopdownAffine', use_udp=True),
+            dict(
+                encoder=dict(
+                    heatmap_size=(
+                        48,
+                        64,
+                    ),
+                    input_size=(
+                        192,
+                        256,
+                    ),
+                    sigma=2,
+                    type='UDPHeatmap'),
+                type='GenerateTarget'),
+            dict(type='PackPoseInputs'),
+        ],
+        sample_ratio_factor=[
+            5.0,
+            1.0,
+        ],
+        type='CombinedDataset'),
+    num_workers=6,
+    persistent_workers=True,
+    pin_memory=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline = [
+    dict(type='LoadImage'),
+    dict(type='GetBBoxCenterScale'),
+    dict(direction='horizontal', type='RandomFlip'),
+    dict(type='RandomHalfBody'),
+    dict(type='RandomBBoxTransform'),
+    dict(input_size=(
+        192,
+        256,
+    ), type='TopdownAffine', use_udp=True),
+    dict(
+        encoder=dict(
+            heatmap_size=(
+                48,
+                64,
+            ),
+            input_size=(
+                192,
+                256,
+            ),
+            sigma=2,
+            type='UDPHeatmap'),
+        type='GenerateTarget'),
+    dict(type='PackPoseInputs'),
+]
+val_cfg = dict()
+val_dataloader = dict(
+    batch_size=32,
+    dataset=dict(
+        ann_file='splits/val400.json',
+        data_mode='topdown',
+        data_prefix=dict(img='syrip/images/val400/'),
+        data_root='/scratch/purohitham.v/fidip/data/',
+        metainfo=dict(
+            from_file=
+            '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+        ),
+        pipeline=[
+            dict(type='LoadImage'),
+            dict(type='GetBBoxCenterScale'),
+            dict(input_size=(
+                192,
+                256,
+            ), type='TopdownAffine', use_udp=True),
+            dict(type='PackPoseInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(round_up=False, shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file='/scratch/purohitham.v/fidip/data/splits/val400.json',
+    type='CocoMetric')
+val_pipeline = [
+    dict(type='LoadImage'),
+    dict(type='GetBBoxCenterScale'),
+    dict(input_size=(
+        192,
+        256,
+    ), type='TopdownAffine', use_udp=True),
+    dict(type='PackPoseInputs'),
+]
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='PoseLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = '/scratch/purohitham.v/fidip/runs/R137_mmp-vitpose-h256_conf_s3'
+
+2026/11/06 08:54:54 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2026/11/06 08:54:54 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SyncBuffersHook                    
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SyncBuffersHook                    
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) PoseVisualizationHook              
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) PoseVisualizationHook              
+(NORMAL      ) BadCaseAnalysisHook                
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) BadCaseAnalysisHook                
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+Name of parameter - Initialization information
+
+backbone.pos_embed - torch.Size([1, 192, 1280]): 
+Initialized by user-defined `init_weights` in VisionTransformer  
+
+backbone.patch_embed.projection.weight - torch.Size([1280, 3, 16, 16]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.patch_embed.projection.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.0.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.0.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.0.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.0.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.0.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.0.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.0.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.0.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.0.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.0.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.0.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.0.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.1.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.1.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.1.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.1.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.1.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.1.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.1.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.1.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.1.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.1.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.1.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.1.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.2.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.2.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.2.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.2.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.2.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.2.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.2.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.2.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.2.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.2.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.2.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.2.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.3.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.3.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.3.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.3.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.3.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.3.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.3.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.3.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.3.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.3.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.3.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.3.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.4.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.4.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.4.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.4.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.4.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.4.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.4.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.4.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.4.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.4.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.4.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.4.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.5.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.5.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.5.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.5.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.5.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.5.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.5.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.5.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.5.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.5.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.5.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.5.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.6.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.6.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.6.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.6.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.6.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.6.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.6.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.6.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.6.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.6.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.6.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.6.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.7.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.7.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.7.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.7.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.7.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.7.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.7.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.7.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.7.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.7.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.7.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.7.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.8.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.8.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.8.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.8.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.8.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.8.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.8.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.8.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.8.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.8.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.8.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.8.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.9.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.9.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.9.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.9.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.9.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.9.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.9.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.9.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.9.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.9.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.9.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.9.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.10.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.10.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.10.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.10.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.10.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.10.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.10.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.10.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.10.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.10.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.10.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.10.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.11.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.11.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.11.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.11.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.11.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.11.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.11.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.11.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.11.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.11.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.11.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.11.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.12.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.12.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.12.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.12.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.12.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.12.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.12.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.12.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.12.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.12.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.12.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.12.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.13.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.13.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.13.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.13.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.13.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.13.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.13.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.13.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.13.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.13.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.13.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.13.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.14.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.14.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.14.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.14.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.14.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.14.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.14.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.14.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.14.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.14.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.14.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.14.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.15.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.15.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.15.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.15.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.15.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.15.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.15.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.15.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.15.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.15.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.15.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.15.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.16.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.16.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.16.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.16.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.16.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.16.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.16.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.16.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.16.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.16.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.16.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.16.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.17.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.17.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.17.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.17.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.17.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.17.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.17.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.17.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.17.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.17.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.17.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.17.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.18.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.18.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.18.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.18.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.18.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.18.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.18.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.18.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.18.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.18.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.18.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.18.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.19.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.19.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.19.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.19.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.19.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.19.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.19.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.19.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.19.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.19.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.19.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.19.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.20.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.20.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.20.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.20.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.20.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.20.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.20.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.20.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.20.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.20.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.20.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.20.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.21.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.21.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.21.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.21.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.21.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.21.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.21.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.21.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.21.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.21.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.21.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.21.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.22.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.22.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.22.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.22.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.22.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.22.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.22.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.22.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.22.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.22.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.22.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.22.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.23.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.23.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.23.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.23.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.23.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.23.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.23.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.23.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.23.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.23.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.23.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.23.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.24.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.24.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.24.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.24.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.24.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.24.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.24.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.24.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.24.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.24.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.24.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.24.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.25.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.25.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.25.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.25.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.25.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.25.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.25.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.25.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.25.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.25.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.25.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.25.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.26.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.26.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.26.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.26.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.26.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.26.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.26.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.26.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.26.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.26.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.26.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.26.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.27.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.27.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.27.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.27.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.27.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.27.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.27.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.27.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.27.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.27.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.27.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.27.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.28.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.28.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.28.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.28.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.28.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.28.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.28.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.28.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.28.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.28.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.28.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.28.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.29.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.29.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.29.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.29.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.29.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.29.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.29.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.29.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.29.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.29.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.29.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.29.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.30.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.30.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.30.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.30.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.30.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.30.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.30.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.30.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.30.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.30.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.30.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.30.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.31.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.31.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.31.attn.qkv.weight - torch.Size([3840, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.31.attn.qkv.bias - torch.Size([3840]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.31.attn.proj.weight - torch.Size([1280, 1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.31.attn.proj.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.31.ln2.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.31.ln2.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.layers.31.ffn.layers.0.0.weight - torch.Size([5120, 1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.31.ffn.layers.0.0.bias - torch.Size([5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.31.ffn.layers.1.weight - torch.Size([1280, 5120]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.layers.31.ffn.layers.1.bias - torch.Size([1280]): 
+Initialized by user-defined `init_weights` in TransformerEncoderLayer  
+
+backbone.ln1.weight - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+backbone.ln1.bias - torch.Size([1280]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+head.deconv_layers.0.weight - torch.Size([1280, 256, 4, 4]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+head.deconv_layers.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+head.deconv_layers.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+head.deconv_layers.3.weight - torch.Size([256, 256, 4, 4]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+head.deconv_layers.4.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+head.deconv_layers.4.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of TopdownPoseEstimator  
+
+head.final_layer.weight - torch.Size([17, 256, 1, 1]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+head.final_layer.bias - torch.Size([17]): 
+NormalInit: mean=0, std=0.001, bias=0 
+2026/11/06 08:54:58 - mmengine - INFO - Load checkpoint from /scratch/purohitham.v/fidip/models/mmpose/td-hm_ViTPose-huge_8xb64-210e_coco-256x192-e32adcd4_20230314.pth
+2026/11/06 08:54:58 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2026/11/06 08:54:58 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+2026/11/06 08:54:58 - mmengine - INFO - Checkpoints will be saved to /scratch/purohitham.v/fidip/runs/R137_mmp-vitpose-h256_conf_s3.
+2026/11/06 08:55:05 - mmengine - INFO - Epoch(train)  [1][10/63]  base_lr: 1.460161e-05 lr: 6.842667e-08  eta: 0:20:37  time: 0.658251  data_time: 0.108050  memory: 23270  grad_norm: 0.006295  loss: 0.000863  loss_kpt: 0.000863  acc_pose: 0.814283
+2026/11/06 08:55:10 - mmengine - INFO - Epoch(train)  [1][20/63]  base_lr: 3.071452e-05 lr: 1.439356e-07  eta: 0:18:49  time: 0.604000  data_time: 0.078287  memory: 23270  grad_norm: 0.006255  loss: 0.000838  loss_kpt: 0.000838  acc_pose: 0.809264
+2026/11/06 08:55:16 - mmengine - INFO - Epoch(train)  [1][30/63]  base_lr: 4.682742e-05 lr: 2.194445e-07  eta: 0:18:16  time: 0.589358  data_time: 0.071795  memory: 23270  grad_norm: 0.006371  loss: 0.000848  loss_kpt: 0.000848  acc_pose: 0.821556
+2026/11/06 08:55:21 - mmengine - INFO - Epoch(train)  [1][40/63]  base_lr: 6.294032e-05 lr: 2.949535e-07  eta: 0:18:02  time: 0.585101  data_time: 0.068534  memory: 23270  grad_norm: 0.006329  loss: 0.000847  loss_kpt: 0.000847  acc_pose: 0.884861
+2026/11/06 08:55:27 - mmengine - INFO - Epoch(train)  [1][50/63]  base_lr: 7.905323e-05 lr: 3.704624e-07  eta: 0:17:37  time: 0.574715  data_time: 0.061138  memory: 23270  grad_norm: 0.005916  loss: 0.000838  loss_kpt: 0.000838  acc_pose: 0.831928
+2026/11/06 08:55:32 - mmengine - INFO - Epoch(train)  [1][60/63]  base_lr: 9.516613e-05 lr: 4.459713e-07  eta: 0:17:26  time: 0.554253  data_time: 0.050598  memory: 23270  grad_norm: 0.005547  loss: 0.000816  loss_kpt: 0.000816  acc_pose: 0.873993
+2026/11/06 08:55:34 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 08:55:37 - mmengine - INFO - Epoch(val)  [1][10/13]    eta: 0:00:00  time: 0.320801  data_time: 0.043629  memory: 23270  
+2026/11/06 08:55:38 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 08:55:38 - mmengine - INFO - Epoch(val) [1][13/13]    coco/AP: 0.911886  coco/AP .5: 0.988871  coco/AP .75: 0.957641  coco/AP (M): -1.000000  coco/AP (L): 0.911886  coco/AR: 0.927708  coco/AR .5: 0.994962  coco/AR .75: 0.967254  coco/AR (M): -1.000000  coco/AR (L): 0.927708  data_time: 0.034473  time: 0.299257
+2026/11/06 08:55:54 - mmengine - INFO - The best checkpoint with 0.9119 coco/AP at 1 epoch is saved to best_coco_AP_epoch_1.pth.
+2026/11/06 08:56:00 - mmengine - INFO - Epoch(train)  [2][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:17:18  time: 0.551164  data_time: 0.050703  memory: 23270  grad_norm: 0.005029  loss: 0.000799  loss_kpt: 0.000799  acc_pose: 0.908488
+2026/11/06 08:56:05 - mmengine - INFO - Epoch(train)  [2][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:17:07  time: 0.548895  data_time: 0.046327  memory: 23270  grad_norm: 0.004730  loss: 0.000784  loss_kpt: 0.000784  acc_pose: 0.764032
+2026/11/06 08:56:11 - mmengine - INFO - Epoch(train)  [2][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:17:02  time: 0.553968  data_time: 0.053090  memory: 23270  grad_norm: 0.004650  loss: 0.000767  loss_kpt: 0.000767  acc_pose: 0.860716
+2026/11/06 08:56:16 - mmengine - INFO - Epoch(train)  [2][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:16:54  time: 0.553687  data_time: 0.051725  memory: 23270  grad_norm: 0.004858  loss: 0.000754  loss_kpt: 0.000754  acc_pose: 0.892334
+2026/11/06 08:56:22 - mmengine - INFO - Epoch(train)  [2][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:16:48  time: 0.560532  data_time: 0.052549  memory: 23270  grad_norm: 0.004726  loss: 0.000738  loss_kpt: 0.000738  acc_pose: 0.911809
+2026/11/06 08:56:28 - mmengine - INFO - Epoch(train)  [2][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:16:41  time: 0.559396  data_time: 0.051824  memory: 23270  grad_norm: 0.004798  loss: 0.000737  loss_kpt: 0.000737  acc_pose: 0.889437
+2026/11/06 08:56:29 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 08:56:32 - mmengine - INFO - Epoch(val)  [2][10/13]    eta: 0:00:00  time: 0.301444  data_time: 0.030102  memory: 23270  
+2026/11/06 08:56:33 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 08:56:33 - mmengine - INFO - Epoch(val) [2][13/13]    coco/AP: 0.920662  coco/AP .5: 0.988677  coco/AP .75: 0.967070  coco/AP (M): -1.000000  coco/AP (L): 0.920662  coco/AR: 0.936272  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.936272  data_time: 0.018973  time: 0.275676
+2026/11/06 08:56:34 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R137_mmp-vitpose-h256_conf_s3/best_coco_AP_epoch_1.pth is removed
+2026/11/06 08:56:45 - mmengine - INFO - The best checkpoint with 0.9207 coco/AP at 2 epoch is saved to best_coco_AP_epoch_2.pth.
+2026/11/06 08:56:51 - mmengine - INFO - Epoch(train)  [3][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:16:31  time: 0.551293  data_time: 0.046606  memory: 23270  grad_norm: 0.005058  loss: 0.000712  loss_kpt: 0.000712  acc_pose: 0.858464
+2026/11/06 08:56:57 - mmengine - INFO - Epoch(train)  [3][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:16:26  time: 0.553970  data_time: 0.049335  memory: 23270  grad_norm: 0.005016  loss: 0.000702  loss_kpt: 0.000702  acc_pose: 0.868865
+2026/11/06 08:57:02 - mmengine - INFO - Epoch(train)  [3][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:16:18  time: 0.550244  data_time: 0.045122  memory: 23270  grad_norm: 0.004822  loss: 0.000700  loss_kpt: 0.000700  acc_pose: 0.888142
+2026/11/06 08:57:08 - mmengine - INFO - Epoch(train)  [3][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:16:11  time: 0.547311  data_time: 0.042029  memory: 23270  grad_norm: 0.004671  loss: 0.000685  loss_kpt: 0.000685  acc_pose: 0.896917
+2026/11/06 08:57:13 - mmengine - INFO - Epoch(train)  [3][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:16:03  time: 0.551728  data_time: 0.040975  memory: 23270  grad_norm: 0.004852  loss: 0.000688  loss_kpt: 0.000688  acc_pose: 0.857270
+2026/11/06 08:57:19 - mmengine - INFO - Epoch(train)  [3][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:15:58  time: 0.553562  data_time: 0.045409  memory: 23270  grad_norm: 0.004726  loss: 0.000695  loss_kpt: 0.000695  acc_pose: 0.897983
+2026/11/06 08:57:20 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 08:57:24 - mmengine - INFO - Epoch(val)  [3][10/13]    eta: 0:00:00  time: 0.301450  data_time: 0.028947  memory: 23270  
+2026/11/06 08:57:24 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 08:57:24 - mmengine - INFO - Epoch(val) [3][13/13]    coco/AP: 0.923531  coco/AP .5: 0.988528  coco/AP .75: 0.967129  coco/AP (M): -1.000000  coco/AP (L): 0.923531  coco/AR: 0.940050  coco/AR .5: 0.997481  coco/AR .75: 0.979849  coco/AR (M): -1.000000  coco/AR (L): 0.940050  data_time: 0.024425  time: 0.288126
+2026/11/06 08:57:25 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R137_mmp-vitpose-h256_conf_s3/best_coco_AP_epoch_2.pth is removed
+2026/11/06 08:57:38 - mmengine - INFO - The best checkpoint with 0.9235 coco/AP at 3 epoch is saved to best_coco_AP_epoch_3.pth.
+2026/11/06 08:57:44 - mmengine - INFO - Epoch(train)  [4][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:15:50  time: 0.548350  data_time: 0.044554  memory: 23270  grad_norm: 0.004567  loss: 0.000700  loss_kpt: 0.000700  acc_pose: 0.834956
+2026/11/06 08:57:49 - mmengine - INFO - Epoch(train)  [4][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:15:44  time: 0.550567  data_time: 0.046532  memory: 23270  grad_norm: 0.004548  loss: 0.000691  loss_kpt: 0.000691  acc_pose: 0.900492
+2026/11/06 08:57:55 - mmengine - INFO - Epoch(train)  [4][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:15:39  time: 0.555833  data_time: 0.051924  memory: 23270  grad_norm: 0.004588  loss: 0.000689  loss_kpt: 0.000689  acc_pose: 0.906259
+2026/11/06 08:58:01 - mmengine - INFO - Epoch(train)  [4][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:15:33  time: 0.552452  data_time: 0.048390  memory: 23270  grad_norm: 0.004475  loss: 0.000676  loss_kpt: 0.000676  acc_pose: 0.887548
+2026/11/06 08:58:06 - mmengine - INFO - Epoch(train)  [4][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:15:26  time: 0.556229  data_time: 0.046194  memory: 23270  grad_norm: 0.004356  loss: 0.000669  loss_kpt: 0.000669  acc_pose: 0.903219
+2026/11/06 08:58:12 - mmengine - INFO - Epoch(train)  [4][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:15:22  time: 0.562265  data_time: 0.050075  memory: 23270  grad_norm: 0.004024  loss: 0.000646  loss_kpt: 0.000646  acc_pose: 0.925200
+2026/11/06 08:58:14 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 08:58:20 - mmengine - INFO - Epoch(val)  [4][10/13]    eta: 0:00:01  time: 0.366851  data_time: 0.096155  memory: 23270  
+2026/11/06 08:58:21 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 08:58:21 - mmengine - INFO - Epoch(val) [4][13/13]    coco/AP: 0.924230  coco/AP .5: 0.988603  coco/AP .75: 0.967054  coco/AP (M): -1.000000  coco/AP (L): 0.924230  coco/AR: 0.940554  coco/AR .5: 0.997481  coco/AR .75: 0.979849  coco/AR (M): -1.000000  coco/AR (L): 0.940554  data_time: 0.262828  time: 0.517983
+2026/11/06 08:58:22 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R137_mmp-vitpose-h256_conf_s3/best_coco_AP_epoch_3.pth is removed
+2026/11/06 08:58:39 - mmengine - INFO - The best checkpoint with 0.9242 coco/AP at 4 epoch is saved to best_coco_AP_epoch_4.pth.
+2026/11/06 08:58:45 - mmengine - INFO - Epoch(train)  [5][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:15:17  time: 0.561998  data_time: 0.054643  memory: 23270  grad_norm: 0.004332  loss: 0.000641  loss_kpt: 0.000641  acc_pose: 0.889382
+2026/11/06 08:58:50 - mmengine - INFO - Epoch(train)  [5][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:15:10  time: 0.560081  data_time: 0.052831  memory: 23270  grad_norm: 0.004338  loss: 0.000642  loss_kpt: 0.000642  acc_pose: 0.868772
+2026/11/06 08:58:56 - mmengine - INFO - Epoch(train)  [5][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:15:06  time: 0.568393  data_time: 0.061566  memory: 23270  grad_norm: 0.004140  loss: 0.000639  loss_kpt: 0.000639  acc_pose: 0.905586
+2026/11/06 08:59:02 - mmengine - INFO - Epoch(train)  [5][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:14:59  time: 0.559727  data_time: 0.055819  memory: 23270  grad_norm: 0.004295  loss: 0.000634  loss_kpt: 0.000634  acc_pose: 0.919389
+2026/11/06 08:59:07 - mmengine - INFO - Epoch(train)  [5][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:14:53  time: 0.561575  data_time: 0.052434  memory: 23270  grad_norm: 0.004030  loss: 0.000638  loss_kpt: 0.000638  acc_pose: 0.906827
+2026/11/06 08:59:13 - mmengine - INFO - Epoch(train)  [5][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:14:47  time: 0.556736  data_time: 0.047725  memory: 23270  grad_norm: 0.004363  loss: 0.000642  loss_kpt: 0.000642  acc_pose: 0.903367
+2026/11/06 08:59:15 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 08:59:15 - mmengine - INFO - Saving checkpoint at 5 epochs
+2026/11/06 09:00:15 - mmengine - INFO - Epoch(val)  [5][10/13]    eta: 0:00:00  time: 0.359510  data_time: 0.092110  memory: 23270  
+2026/11/06 09:00:16 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:00:16 - mmengine - INFO - Epoch(val) [5][13/13]    coco/AP: 0.929362  coco/AP .5: 0.988727  coco/AP .75: 0.967507  coco/AP (M): -1.000000  coco/AP (L): 0.929362  coco/AR: 0.943325  coco/AR .5: 0.997481  coco/AR .75: 0.979849  coco/AR (M): -1.000000  coco/AR (L): 0.943325  data_time: 0.024443  time: 0.276994
+2026/11/06 09:00:17 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R137_mmp-vitpose-h256_conf_s3/best_coco_AP_epoch_4.pth is removed
+2026/11/06 09:00:34 - mmengine - INFO - The best checkpoint with 0.9294 coco/AP at 5 epoch is saved to best_coco_AP_epoch_5.pth.
+2026/11/06 09:01:44 - mmengine - INFO - Epoch(train)  [6][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:14:39  time: 0.547288  data_time: 0.044059  memory: 23270  grad_norm: 0.004233  loss: 0.000633  loss_kpt: 0.000633  acc_pose: 0.908731
+2026/11/06 09:01:49 - mmengine - INFO - Epoch(train)  [6][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:14:34  time: 0.551515  data_time: 0.049311  memory: 23270  grad_norm: 0.004513  loss: 0.000620  loss_kpt: 0.000620  acc_pose: 0.906330
+2026/11/06 09:01:55 - mmengine - INFO - Epoch(train)  [6][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:14:29  time: 0.556573  data_time: 0.055511  memory: 23270  grad_norm: 0.004398  loss: 0.000623  loss_kpt: 0.000623  acc_pose: 0.860026
+2026/11/06 09:02:01 - mmengine - INFO - Epoch(train)  [6][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:14:23  time: 0.555706  data_time: 0.055174  memory: 23270  grad_norm: 0.004625  loss: 0.000626  loss_kpt: 0.000626  acc_pose: 0.865257
+2026/11/06 09:02:06 - mmengine - INFO - Epoch(train)  [6][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:14:17  time: 0.558018  data_time: 0.052043  memory: 23270  grad_norm: 0.004446  loss: 0.000624  loss_kpt: 0.000624  acc_pose: 0.905590
+2026/11/06 09:02:12 - mmengine - INFO - Epoch(train)  [6][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:14:12  time: 0.564668  data_time: 0.058889  memory: 23270  grad_norm: 0.004359  loss: 0.000617  loss_kpt: 0.000617  acc_pose: 0.940230
+2026/11/06 09:02:14 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:02:17 - mmengine - INFO - Epoch(val)  [6][10/13]    eta: 0:00:00  time: 0.359704  data_time: 0.092820  memory: 23270  
+2026/11/06 09:02:18 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:02:18 - mmengine - INFO - Epoch(val) [6][13/13]    coco/AP: 0.926249  coco/AP .5: 0.988378  coco/AP .75: 0.966703  coco/AP (M): -1.000000  coco/AP (L): 0.926249  coco/AR: 0.941310  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.941310  data_time: 0.021492  time: 0.276721
+2026/11/06 09:02:24 - mmengine - INFO - Epoch(train)  [7][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:14:05  time: 0.555420  data_time: 0.051820  memory: 23270  grad_norm: 0.004372  loss: 0.000612  loss_kpt: 0.000612  acc_pose: 0.924023
+2026/11/06 09:02:29 - mmengine - INFO - Epoch(train)  [7][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:59  time: 0.558672  data_time: 0.054325  memory: 23270  grad_norm: 0.004139  loss: 0.000603  loss_kpt: 0.000603  acc_pose: 0.917977
+2026/11/06 09:02:35 - mmengine - INFO - Epoch(train)  [7][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:55  time: 0.567689  data_time: 0.063145  memory: 23270  grad_norm: 0.003968  loss: 0.000607  loss_kpt: 0.000607  acc_pose: 0.836103
+2026/11/06 09:02:41 - mmengine - INFO - Epoch(train)  [7][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:49  time: 0.564476  data_time: 0.060475  memory: 23270  grad_norm: 0.004064  loss: 0.000610  loss_kpt: 0.000610  acc_pose: 0.920448
+2026/11/06 09:02:47 - mmengine - INFO - Epoch(train)  [7][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:45  time: 0.577474  data_time: 0.067366  memory: 23270  grad_norm: 0.004057  loss: 0.000609  loss_kpt: 0.000609  acc_pose: 0.924325
+2026/11/06 09:02:53 - mmengine - INFO - Epoch(train)  [7][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:41  time: 0.588131  data_time: 0.076870  memory: 23270  grad_norm: 0.003754  loss: 0.000615  loss_kpt: 0.000615  acc_pose: 0.890490
+2026/11/06 09:02:55 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:03:03 - mmengine - INFO - Epoch(val)  [7][10/13]    eta: 0:00:02  time: 0.443397  data_time: 0.178544  memory: 23270  
+2026/11/06 09:03:03 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:03:03 - mmengine - INFO - Epoch(val) [7][13/13]    coco/AP: 0.926050  coco/AP .5: 0.988378  coco/AP .75: 0.966699  coco/AP (M): -1.000000  coco/AP (L): 0.926050  coco/AR: 0.941310  coco/AR .5: 0.997481  coco/AR .75: 0.974811  coco/AR (M): -1.000000  coco/AR (L): 0.941310  data_time: 0.330672  time: 0.587240
+2026/11/06 09:03:11 - mmengine - INFO - Epoch(train)  [8][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:39  time: 0.609014  data_time: 0.101708  memory: 23270  grad_norm: 0.003997  loss: 0.000612  loss_kpt: 0.000612  acc_pose: 0.915806
+2026/11/06 09:03:17 - mmengine - INFO - Epoch(train)  [8][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:34  time: 0.611147  data_time: 0.102925  memory: 23270  grad_norm: 0.004020  loss: 0.000605  loss_kpt: 0.000605  acc_pose: 0.870924
+2026/11/06 09:03:23 - mmengine - INFO - Epoch(train)  [8][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:28  time: 0.603249  data_time: 0.095202  memory: 23270  grad_norm: 0.004109  loss: 0.000596  loss_kpt: 0.000596  acc_pose: 0.895258
+2026/11/06 09:03:29 - mmengine - INFO - Epoch(train)  [8][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:23  time: 0.604587  data_time: 0.096195  memory: 23270  grad_norm: 0.004197  loss: 0.000593  loss_kpt: 0.000593  acc_pose: 0.901629
+2026/11/06 09:03:35 - mmengine - INFO - Epoch(train)  [8][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:18  time: 0.606106  data_time: 0.095026  memory: 23270  grad_norm: 0.004365  loss: 0.000598  loss_kpt: 0.000598  acc_pose: 0.911756
+2026/11/06 09:03:40 - mmengine - INFO - Epoch(train)  [8][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:12  time: 0.579103  data_time: 0.068711  memory: 23270  grad_norm: 0.004296  loss: 0.000606  loss_kpt: 0.000606  acc_pose: 0.902560
+2026/11/06 09:03:42 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:03:45 - mmengine - INFO - Epoch(val)  [8][10/13]    eta: 0:00:00  time: 0.377626  data_time: 0.111678  memory: 23270  
+2026/11/06 09:03:46 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:03:46 - mmengine - INFO - Epoch(val) [8][13/13]    coco/AP: 0.926466  coco/AP .5: 0.988353  coco/AP .75: 0.966950  coco/AP (M): -1.000000  coco/AP (L): 0.926466  coco/AR: 0.942317  coco/AR .5: 0.997481  coco/AR .75: 0.974811  coco/AR (M): -1.000000  coco/AR (L): 0.942317  data_time: 0.023938  time: 0.283263
+2026/11/06 09:03:52 - mmengine - INFO - Epoch(train)  [9][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:04  time: 0.568641  data_time: 0.061938  memory: 23270  grad_norm: 0.003981  loss: 0.000600  loss_kpt: 0.000600  acc_pose: 0.922241
+2026/11/06 09:03:58 - mmengine - INFO - Epoch(train)  [9][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:13:00  time: 0.570751  data_time: 0.063747  memory: 23270  grad_norm: 0.003889  loss: 0.000599  loss_kpt: 0.000599  acc_pose: 0.928319
+2026/11/06 09:04:05 - mmengine - INFO - Epoch(train)  [9][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:12:55  time: 0.577628  data_time: 0.070932  memory: 23270  grad_norm: 0.003755  loss: 0.000588  loss_kpt: 0.000588  acc_pose: 0.924037
+2026/11/06 09:04:11 - mmengine - INFO - Epoch(train)  [9][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:12:50  time: 0.588783  data_time: 0.078313  memory: 23270  grad_norm: 0.003454  loss: 0.000576  loss_kpt: 0.000576  acc_pose: 0.923301
+2026/11/06 09:04:16 - mmengine - INFO - Epoch(train)  [9][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:12:44  time: 0.594858  data_time: 0.077394  memory: 23270  grad_norm: 0.003573  loss: 0.000575  loss_kpt: 0.000575  acc_pose: 0.914306
+2026/11/06 09:04:22 - mmengine - INFO - Epoch(train)  [9][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:12:38  time: 0.592194  data_time: 0.075975  memory: 23270  grad_norm: 0.003647  loss: 0.000572  loss_kpt: 0.000572  acc_pose: 0.937203
+2026/11/06 09:04:24 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:04:31 - mmengine - INFO - Epoch(val)  [9][10/13]    eta: 0:00:02  time: 0.464658  data_time: 0.196894  memory: 23270  
+2026/11/06 09:04:32 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:04:32 - mmengine - INFO - Epoch(val) [9][13/13]    coco/AP: 0.928005  coco/AP .5: 0.988303  coco/AP .75: 0.966922  coco/AP (M): -1.000000  coco/AP (L): 0.928005  coco/AR: 0.942821  coco/AR .5: 0.997481  coco/AR .75: 0.974811  coco/AR (M): -1.000000  coco/AR (L): 0.942821  data_time: 0.328341  time: 0.587335
+2026/11/06 09:04:39 - mmengine - INFO - Epoch(train) [10][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:12:33  time: 0.587523  data_time: 0.075970  memory: 23270  grad_norm: 0.003525  loss: 0.000572  loss_kpt: 0.000572  acc_pose: 0.898647
+2026/11/06 09:04:45 - mmengine - INFO - Epoch(train) [10][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:12:28  time: 0.583856  data_time: 0.075133  memory: 23270  grad_norm: 0.003419  loss: 0.000573  loss_kpt: 0.000573  acc_pose: 0.939624
+2026/11/06 09:04:51 - mmengine - INFO - Epoch(train) [10][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:12:22  time: 0.590718  data_time: 0.082186  memory: 23270  grad_norm: 0.003339  loss: 0.000566  loss_kpt: 0.000566  acc_pose: 0.929073
+2026/11/06 09:04:56 - mmengine - INFO - Epoch(train) [10][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:12:16  time: 0.585999  data_time: 0.078589  memory: 23270  grad_norm: 0.003265  loss: 0.000563  loss_kpt: 0.000563  acc_pose: 0.922718
+2026/11/06 09:05:02 - mmengine - INFO - Epoch(train) [10][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:12:10  time: 0.591237  data_time: 0.078619  memory: 23270  grad_norm: 0.003488  loss: 0.000560  loss_kpt: 0.000560  acc_pose: 0.852287
+2026/11/06 09:05:08 - mmengine - INFO - Epoch(train) [10][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:12:04  time: 0.571231  data_time: 0.059714  memory: 23270  grad_norm: 0.003676  loss: 0.000561  loss_kpt: 0.000561  acc_pose: 0.889597
+2026/11/06 09:05:10 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:05:10 - mmengine - INFO - Saving checkpoint at 10 epochs
+2026/11/06 09:06:05 - mmengine - INFO - Epoch(val) [10][10/13]    eta: 0:00:00  time: 0.467685  data_time: 0.199724  memory: 23270  
+2026/11/06 09:06:06 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:06:06 - mmengine - INFO - Epoch(val) [10][13/13]    coco/AP: 0.926998  coco/AP .5: 0.988278  coco/AP .75: 0.966691  coco/AP (M): -1.000000  coco/AP (L): 0.926998  coco/AR: 0.942317  coco/AR .5: 0.997481  coco/AR .75: 0.974811  coco/AR (M): -1.000000  coco/AR (L): 0.942317  data_time: 0.031997  time: 0.287195
+2026/11/06 09:06:12 - mmengine - INFO - Epoch(train) [11][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:11:57  time: 0.557204  data_time: 0.050643  memory: 23270  grad_norm: 0.003795  loss: 0.000564  loss_kpt: 0.000564  acc_pose: 0.871579
+2026/11/06 09:06:17 - mmengine - INFO - Epoch(train) [11][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:11:51  time: 0.564139  data_time: 0.058716  memory: 23270  grad_norm: 0.003848  loss: 0.000564  loss_kpt: 0.000564  acc_pose: 0.922895
+2026/11/06 09:06:23 - mmengine - INFO - Epoch(train) [11][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:11:46  time: 0.565779  data_time: 0.061855  memory: 23270  grad_norm: 0.003799  loss: 0.000570  loss_kpt: 0.000570  acc_pose: 0.884562
+2026/11/06 09:06:29 - mmengine - INFO - Epoch(train) [11][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:11:40  time: 0.566278  data_time: 0.062393  memory: 23270  grad_norm: 0.003599  loss: 0.000576  loss_kpt: 0.000576  acc_pose: 0.881984
+2026/11/06 09:06:34 - mmengine - INFO - Epoch(train) [11][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:11:33  time: 0.565887  data_time: 0.056874  memory: 23270  grad_norm: 0.003326  loss: 0.000560  loss_kpt: 0.000560  acc_pose: 0.910440
+2026/11/06 09:06:40 - mmengine - INFO - Epoch(train) [11][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:11:27  time: 0.564329  data_time: 0.056131  memory: 23270  grad_norm: 0.003348  loss: 0.000555  loss_kpt: 0.000555  acc_pose: 0.931279
+2026/11/06 09:06:42 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:06:45 - mmengine - INFO - Epoch(val) [11][10/13]    eta: 0:00:00  time: 0.382053  data_time: 0.113930  memory: 23270  
+2026/11/06 09:06:46 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:06:46 - mmengine - INFO - Epoch(val) [11][13/13]    coco/AP: 0.927361  coco/AP .5: 0.988303  coco/AP .75: 0.966500  coco/AP (M): -1.000000  coco/AP (L): 0.927361  coco/AR: 0.941562  coco/AR .5: 0.997481  coco/AR .75: 0.974811  coco/AR (M): -1.000000  coco/AR (L): 0.941562  data_time: 0.023859  time: 0.281678
+2026/11/06 09:06:52 - mmengine - INFO - Epoch(train) [12][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:11:20  time: 0.554750  data_time: 0.049710  memory: 23270  grad_norm: 0.004286  loss: 0.000572  loss_kpt: 0.000572  acc_pose: 0.878002
+2026/11/06 09:06:57 - mmengine - INFO - Epoch(train) [12][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:11:14  time: 0.556842  data_time: 0.050974  memory: 23270  grad_norm: 0.004621  loss: 0.000563  loss_kpt: 0.000563  acc_pose: 0.920929
+2026/11/06 09:07:03 - mmengine - INFO - Epoch(train) [12][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:11:09  time: 0.565812  data_time: 0.059741  memory: 23270  grad_norm: 0.004757  loss: 0.000557  loss_kpt: 0.000557  acc_pose: 0.933791
+2026/11/06 09:07:09 - mmengine - INFO - Epoch(train) [12][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:11:04  time: 0.574151  data_time: 0.067483  memory: 23270  grad_norm: 0.004749  loss: 0.000557  loss_kpt: 0.000557  acc_pose: 0.939697
+2026/11/06 09:07:15 - mmengine - INFO - Epoch(train) [12][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:10:58  time: 0.582300  data_time: 0.069736  memory: 23270  grad_norm: 0.004048  loss: 0.000547  loss_kpt: 0.000547  acc_pose: 0.916815
+2026/11/06 09:07:21 - mmengine - INFO - Epoch(train) [12][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:10:52  time: 0.585707  data_time: 0.074043  memory: 23270  grad_norm: 0.004085  loss: 0.000537  loss_kpt: 0.000537  acc_pose: 0.901995
+2026/11/06 09:07:23 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:07:26 - mmengine - INFO - Epoch(val) [12][10/13]    eta: 0:00:00  time: 0.384188  data_time: 0.114488  memory: 23270  
+2026/11/06 09:07:27 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:07:27 - mmengine - INFO - Epoch(val) [12][13/13]    coco/AP: 0.926965  coco/AP .5: 0.988328  coco/AP .75: 0.967380  coco/AP (M): -1.000000  coco/AP (L): 0.926965  coco/AR: 0.943073  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.943073  data_time: 0.038792  time: 0.303226
+2026/11/06 09:07:34 - mmengine - INFO - Epoch(train) [13][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:10:45  time: 0.579127  data_time: 0.071517  memory: 23270  grad_norm: 0.003570  loss: 0.000540  loss_kpt: 0.000540  acc_pose: 0.915288
+2026/11/06 09:07:39 - mmengine - INFO - Epoch(train) [13][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:10:39  time: 0.573120  data_time: 0.065363  memory: 23270  grad_norm: 0.003479  loss: 0.000542  loss_kpt: 0.000542  acc_pose: 0.933034
+2026/11/06 09:07:46 - mmengine - INFO - Epoch(train) [13][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:10:34  time: 0.583869  data_time: 0.076084  memory: 23270  grad_norm: 0.003494  loss: 0.000543  loss_kpt: 0.000543  acc_pose: 0.883741
+2026/11/06 09:07:52 - mmengine - INFO - Epoch(train) [13][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:10:29  time: 0.590653  data_time: 0.082211  memory: 23270  grad_norm: 0.003335  loss: 0.000546  loss_kpt: 0.000546  acc_pose: 0.916438
+2026/11/06 09:07:58 - mmengine - INFO - Epoch(train) [13][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:10:24  time: 0.604741  data_time: 0.091178  memory: 23270  grad_norm: 0.003034  loss: 0.000555  loss_kpt: 0.000555  acc_pose: 0.869988
+2026/11/06 09:08:05 - mmengine - INFO - Epoch(train) [13][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:10:20  time: 0.625267  data_time: 0.112646  memory: 23270  grad_norm: 0.003008  loss: 0.000557  loss_kpt: 0.000557  acc_pose: 0.929105
+2026/11/06 09:08:07 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:08:13 - mmengine - INFO - Epoch(val) [13][10/13]    eta: 0:00:01  time: 0.369558  data_time: 0.100273  memory: 23270  
+2026/11/06 09:08:14 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:08:14 - mmengine - INFO - Epoch(val) [13][13/13]    coco/AP: 0.926230  coco/AP .5: 0.988278  coco/AP .75: 0.966966  coco/AP (M): -1.000000  coco/AP (L): 0.926230  coco/AR: 0.942569  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.942569  data_time: 0.265018  time: 0.523126
+2026/11/06 09:08:23 - mmengine - INFO - Epoch(train) [14][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:10:15  time: 0.649303  data_time: 0.135580  memory: 23270  grad_norm: 0.003022  loss: 0.000549  loss_kpt: 0.000549  acc_pose: 0.859692
+2026/11/06 09:08:29 - mmengine - INFO - Epoch(train) [14][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:10:09  time: 0.640176  data_time: 0.126555  memory: 23270  grad_norm: 0.003141  loss: 0.000549  loss_kpt: 0.000549  acc_pose: 0.896674
+2026/11/06 09:08:35 - mmengine - INFO - Epoch(train) [14][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:10:04  time: 0.634903  data_time: 0.122381  memory: 23270  grad_norm: 0.003129  loss: 0.000543  loss_kpt: 0.000543  acc_pose: 0.914248
+2026/11/06 09:08:42 - mmengine - INFO - Epoch(train) [14][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:09:58  time: 0.625165  data_time: 0.111597  memory: 23270  grad_norm: 0.003149  loss: 0.000540  loss_kpt: 0.000540  acc_pose: 0.927745
+2026/11/06 09:08:47 - mmengine - INFO - Epoch(train) [14][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:09:53  time: 0.630900  data_time: 0.111716  memory: 23270  grad_norm: 0.003088  loss: 0.000540  loss_kpt: 0.000540  acc_pose: 0.876202
+2026/11/06 09:08:53 - mmengine - INFO - Epoch(train) [14][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:09:47  time: 0.593426  data_time: 0.080322  memory: 23270  grad_norm: 0.003155  loss: 0.000543  loss_kpt: 0.000543  acc_pose: 0.932463
+2026/11/06 09:08:55 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:08:58 - mmengine - INFO - Epoch(val) [14][10/13]    eta: 0:00:00  time: 0.368127  data_time: 0.097086  memory: 23270  
+2026/11/06 09:08:59 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:08:59 - mmengine - INFO - Epoch(val) [14][13/13]    coco/AP: 0.926071  coco/AP .5: 0.988303  coco/AP .75: 0.966422  coco/AP (M): -1.000000  coco/AP (L): 0.926071  coco/AR: 0.943325  coco/AR .5: 0.997481  coco/AR .75: 0.979849  coco/AR (M): -1.000000  coco/AR (L): 0.943325  data_time: 0.021108  time: 0.282928
+2026/11/06 09:09:05 - mmengine - INFO - Epoch(train) [15][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:09:39  time: 0.583221  data_time: 0.073553  memory: 23270  grad_norm: 0.002954  loss: 0.000530  loss_kpt: 0.000530  acc_pose: 0.923069
+2026/11/06 09:09:11 - mmengine - INFO - Epoch(train) [15][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:09:34  time: 0.580494  data_time: 0.070471  memory: 23270  grad_norm: 0.003082  loss: 0.000524  loss_kpt: 0.000524  acc_pose: 0.947950
+2026/11/06 09:09:17 - mmengine - INFO - Epoch(train) [15][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:09:28  time: 0.575839  data_time: 0.066437  memory: 23270  grad_norm: 0.003178  loss: 0.000523  loss_kpt: 0.000523  acc_pose: 0.936588
+2026/11/06 09:09:23 - mmengine - INFO - Epoch(train) [15][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:09:22  time: 0.573903  data_time: 0.064964  memory: 23270  grad_norm: 0.003235  loss: 0.000516  loss_kpt: 0.000516  acc_pose: 0.925573
+2026/11/06 09:09:28 - mmengine - INFO - Epoch(train) [15][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:09:16  time: 0.568845  data_time: 0.054450  memory: 23270  grad_norm: 0.003171  loss: 0.000520  loss_kpt: 0.000520  acc_pose: 0.938618
+2026/11/06 09:09:34 - mmengine - INFO - Epoch(train) [15][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:09:10  time: 0.568131  data_time: 0.055478  memory: 23270  grad_norm: 0.003353  loss: 0.000530  loss_kpt: 0.000530  acc_pose: 0.932173
+2026/11/06 09:09:36 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:09:36 - mmengine - INFO - Saving checkpoint at 15 epochs
+2026/11/06 09:10:13 - mmengine - INFO - Epoch(val) [15][10/13]    eta: 0:00:00  time: 0.366879  data_time: 0.096354  memory: 23270  
+2026/11/06 09:10:14 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:10:14 - mmengine - INFO - Epoch(val) [15][13/13]    coco/AP: 0.925243  coco/AP .5: 0.988528  coco/AP .75: 0.966494  coco/AP (M): -1.000000  coco/AP (L): 0.925243  coco/AR: 0.941814  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.941814  data_time: 0.021050  time: 0.276669
+2026/11/06 09:10:19 - mmengine - INFO - Epoch(train) [16][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:09:02  time: 0.555822  data_time: 0.048130  memory: 23270  grad_norm: 0.003198  loss: 0.000522  loss_kpt: 0.000522  acc_pose: 0.936238
+2026/11/06 09:10:25 - mmengine - INFO - Epoch(train) [16][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:08:56  time: 0.557926  data_time: 0.050356  memory: 23270  grad_norm: 0.003209  loss: 0.000529  loss_kpt: 0.000529  acc_pose: 0.925793
+2026/11/06 09:10:31 - mmengine - INFO - Epoch(train) [16][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:08:50  time: 0.560357  data_time: 0.052699  memory: 23270  grad_norm: 0.003304  loss: 0.000523  loss_kpt: 0.000523  acc_pose: 0.907424
+2026/11/06 09:10:36 - mmengine - INFO - Epoch(train) [16][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:08:44  time: 0.557582  data_time: 0.050465  memory: 23270  grad_norm: 0.003281  loss: 0.000514  loss_kpt: 0.000514  acc_pose: 0.913789
+2026/11/06 09:10:42 - mmengine - INFO - Epoch(train) [16][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:08:38  time: 0.558039  data_time: 0.046132  memory: 23270  grad_norm: 0.003038  loss: 0.000508  loss_kpt: 0.000508  acc_pose: 0.917655
+2026/11/06 09:10:45 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:10:47 - mmengine - INFO - Epoch(train) [16][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:08:32  time: 0.556955  data_time: 0.046286  memory: 23270  grad_norm: 0.003080  loss: 0.000516  loss_kpt: 0.000516  acc_pose: 0.909672
+2026/11/06 09:10:49 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:10:53 - mmengine - INFO - Epoch(val) [16][10/13]    eta: 0:00:01  time: 0.364951  data_time: 0.092338  memory: 23270  
+2026/11/06 09:10:53 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:10:54 - mmengine - INFO - Epoch(val) [16][13/13]    coco/AP: 0.928283  coco/AP .5: 0.988677  coco/AP .75: 0.967667  coco/AP (M): -1.000000  coco/AP (L): 0.928283  coco/AR: 0.943577  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.943577  data_time: 0.024915  time: 0.300657
+2026/11/06 09:11:00 - mmengine - INFO - Epoch(train) [17][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:08:25  time: 0.553479  data_time: 0.047424  memory: 23270  grad_norm: 0.003052  loss: 0.000511  loss_kpt: 0.000511  acc_pose: 0.891227
+2026/11/06 09:11:05 - mmengine - INFO - Epoch(train) [17][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:08:19  time: 0.558499  data_time: 0.051700  memory: 23270  grad_norm: 0.003130  loss: 0.000522  loss_kpt: 0.000522  acc_pose: 0.935429
+2026/11/06 09:11:12 - mmengine - INFO - Epoch(train) [17][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:08:13  time: 0.573050  data_time: 0.063365  memory: 23270  grad_norm: 0.003083  loss: 0.000521  loss_kpt: 0.000521  acc_pose: 0.930797
+2026/11/06 09:11:17 - mmengine - INFO - Epoch(train) [17][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:08:07  time: 0.572778  data_time: 0.062083  memory: 23270  grad_norm: 0.003135  loss: 0.000518  loss_kpt: 0.000518  acc_pose: 0.909001
+2026/11/06 09:11:23 - mmengine - INFO - Epoch(train) [17][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:08:01  time: 0.574888  data_time: 0.058459  memory: 23270  grad_norm: 0.003018  loss: 0.000507  loss_kpt: 0.000507  acc_pose: 0.921935
+2026/11/06 09:11:29 - mmengine - INFO - Epoch(train) [17][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:07:56  time: 0.578510  data_time: 0.063080  memory: 23270  grad_norm: 0.003136  loss: 0.000515  loss_kpt: 0.000515  acc_pose: 0.918592
+2026/11/06 09:11:31 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:11:34 - mmengine - INFO - Epoch(val) [17][10/13]    eta: 0:00:00  time: 0.297966  data_time: 0.023744  memory: 23270  
+2026/11/06 09:11:35 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:11:35 - mmengine - INFO - Epoch(val) [17][13/13]    coco/AP: 0.928007  coco/AP .5: 0.988528  coco/AP .75: 0.967107  coco/AP (M): -1.000000  coco/AP (L): 0.928007  coco/AR: 0.942821  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.942821  data_time: 0.020015  time: 0.281623
+2026/11/06 09:11:41 - mmengine - INFO - Epoch(train) [18][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:07:48  time: 0.570187  data_time: 0.061864  memory: 23270  grad_norm: 0.003128  loss: 0.000509  loss_kpt: 0.000509  acc_pose: 0.920056
+2026/11/06 09:11:47 - mmengine - INFO - Epoch(train) [18][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:07:42  time: 0.572891  data_time: 0.064324  memory: 23270  grad_norm: 0.003322  loss: 0.000507  loss_kpt: 0.000507  acc_pose: 0.936861
+2026/11/06 09:11:53 - mmengine - INFO - Epoch(train) [18][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:07:37  time: 0.575156  data_time: 0.065762  memory: 23270  grad_norm: 0.003268  loss: 0.000502  loss_kpt: 0.000502  acc_pose: 0.941376
+2026/11/06 09:11:58 - mmengine - INFO - Epoch(train) [18][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:07:31  time: 0.571696  data_time: 0.062473  memory: 23270  grad_norm: 0.003424  loss: 0.000495  loss_kpt: 0.000495  acc_pose: 0.915018
+2026/11/06 09:12:04 - mmengine - INFO - Epoch(train) [18][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:07:25  time: 0.575991  data_time: 0.061728  memory: 23270  grad_norm: 0.003276  loss: 0.000488  loss_kpt: 0.000488  acc_pose: 0.919406
+2026/11/06 09:12:10 - mmengine - INFO - Epoch(train) [18][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:07:19  time: 0.578630  data_time: 0.064875  memory: 23270  grad_norm: 0.003495  loss: 0.000494  loss_kpt: 0.000494  acc_pose: 0.939904
+2026/11/06 09:12:12 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:12:15 - mmengine - INFO - Epoch(val) [18][10/13]    eta: 0:00:00  time: 0.298038  data_time: 0.024903  memory: 23270  
+2026/11/06 09:12:16 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:12:16 - mmengine - INFO - Epoch(val) [18][13/13]    coco/AP: 0.924494  coco/AP .5: 0.988353  coco/AP .75: 0.967167  coco/AP (M): -1.000000  coco/AP (L): 0.924494  coco/AR: 0.941058  coco/AR .5: 0.997481  coco/AR .75: 0.974811  coco/AR (M): -1.000000  coco/AR (L): 0.941058  data_time: 0.024645  time: 0.282156
+2026/11/06 09:12:25 - mmengine - INFO - Epoch(train) [19][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:07:13  time: 0.616641  data_time: 0.103294  memory: 23270  grad_norm: 0.003267  loss: 0.000491  loss_kpt: 0.000491  acc_pose: 0.942113
+2026/11/06 09:12:31 - mmengine - INFO - Epoch(train) [19][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:07:07  time: 0.621171  data_time: 0.109240  memory: 23270  grad_norm: 0.003299  loss: 0.000501  loss_kpt: 0.000501  acc_pose: 0.916199
+2026/11/06 09:12:37 - mmengine - INFO - Epoch(train) [19][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:07:02  time: 0.632561  data_time: 0.118573  memory: 23270  grad_norm: 0.003311  loss: 0.000507  loss_kpt: 0.000507  acc_pose: 0.934162
+2026/11/06 09:12:43 - mmengine - INFO - Epoch(train) [19][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:06:56  time: 0.632561  data_time: 0.119434  memory: 23270  grad_norm: 0.003248  loss: 0.000508  loss_kpt: 0.000508  acc_pose: 0.901206
+2026/11/06 09:12:50 - mmengine - INFO - Epoch(train) [19][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:06:51  time: 0.662081  data_time: 0.141294  memory: 23270  grad_norm: 0.003006  loss: 0.000500  loss_kpt: 0.000500  acc_pose: 0.971901
+2026/11/06 09:12:56 - mmengine - INFO - Epoch(train) [19][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:06:45  time: 0.625921  data_time: 0.110726  memory: 23270  grad_norm: 0.003275  loss: 0.000506  loss_kpt: 0.000506  acc_pose: 0.904140
+2026/11/06 09:12:58 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:13:14 - mmengine - INFO - Epoch(val) [19][10/13]    eta: 0:00:04  time: 0.548237  data_time: 0.274862  memory: 23270  
+2026/11/06 09:13:15 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:13:15 - mmengine - INFO - Epoch(val) [19][13/13]    coco/AP: 0.926966  coco/AP .5: 0.988428  coco/AP .75: 0.967307  coco/AP (M): -1.000000  coco/AP (L): 0.926966  coco/AR: 0.943073  coco/AR .5: 0.997481  coco/AR .75: 0.979849  coco/AR (M): -1.000000  coco/AR (L): 0.943073  data_time: 0.965696  time: 1.221679
+2026/11/06 09:13:22 - mmengine - INFO - Epoch(train) [20][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:06:38  time: 0.607656  data_time: 0.095531  memory: 23270  grad_norm: 0.003263  loss: 0.000502  loss_kpt: 0.000502  acc_pose: 0.932834
+2026/11/06 09:13:28 - mmengine - INFO - Epoch(train) [20][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:06:32  time: 0.604197  data_time: 0.094645  memory: 23270  grad_norm: 0.003079  loss: 0.000502  loss_kpt: 0.000502  acc_pose: 0.942192
+2026/11/06 09:13:33 - mmengine - INFO - Epoch(train) [20][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:06:26  time: 0.585155  data_time: 0.076056  memory: 23270  grad_norm: 0.003198  loss: 0.000495  loss_kpt: 0.000495  acc_pose: 0.948045
+2026/11/06 09:13:40 - mmengine - INFO - Epoch(train) [20][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:06:21  time: 0.586136  data_time: 0.077073  memory: 23270  grad_norm: 0.003200  loss: 0.000501  loss_kpt: 0.000501  acc_pose: 0.934249
+2026/11/06 09:13:45 - mmengine - INFO - Epoch(train) [20][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:06:15  time: 0.582237  data_time: 0.068739  memory: 23270  grad_norm: 0.003046  loss: 0.000497  loss_kpt: 0.000497  acc_pose: 0.915627
+2026/11/06 09:13:51 - mmengine - INFO - Epoch(train) [20][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:06:09  time: 0.584708  data_time: 0.071690  memory: 23270  grad_norm: 0.002972  loss: 0.000498  loss_kpt: 0.000498  acc_pose: 0.959094
+2026/11/06 09:13:54 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:13:54 - mmengine - INFO - Saving checkpoint at 20 epochs
+2026/11/06 09:14:44 - mmengine - INFO - Epoch(val) [20][10/13]    eta: 0:00:00  time: 0.556456  data_time: 0.289040  memory: 23270  
+2026/11/06 09:14:45 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:14:45 - mmengine - INFO - Epoch(val) [20][13/13]    coco/AP: 0.925874  coco/AP .5: 0.988278  coco/AP .75: 0.966872  coco/AP (M): -1.000000  coco/AP (L): 0.925874  coco/AR: 0.942065  coco/AR .5: 0.997481  coco/AR .75: 0.979849  coco/AR (M): -1.000000  coco/AR (L): 0.942065  data_time: 0.075821  time: 0.328919
+2026/11/06 09:14:51 - mmengine - INFO - Epoch(train) [21][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:06:02  time: 0.593104  data_time: 0.083201  memory: 23270  grad_norm: 0.003603  loss: 0.000505  loss_kpt: 0.000505  acc_pose: 0.904212
+2026/11/06 09:14:57 - mmengine - INFO - Epoch(train) [21][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:05:56  time: 0.588165  data_time: 0.078943  memory: 23270  grad_norm: 0.003549  loss: 0.000506  loss_kpt: 0.000506  acc_pose: 0.909093
+2026/11/06 09:15:03 - mmengine - INFO - Epoch(train) [21][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:05:50  time: 0.588482  data_time: 0.080005  memory: 23270  grad_norm: 0.003545  loss: 0.000504  loss_kpt: 0.000504  acc_pose: 0.929447
+2026/11/06 09:15:09 - mmengine - INFO - Epoch(train) [21][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:05:44  time: 0.585665  data_time: 0.077586  memory: 23270  grad_norm: 0.003590  loss: 0.000505  loss_kpt: 0.000505  acc_pose: 0.902883
+2026/11/06 09:15:15 - mmengine - INFO - Epoch(train) [21][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:05:38  time: 0.581973  data_time: 0.069565  memory: 23270  grad_norm: 0.003116  loss: 0.000507  loss_kpt: 0.000507  acc_pose: 0.936142
+2026/11/06 09:15:20 - mmengine - INFO - Epoch(train) [21][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:05:32  time: 0.576258  data_time: 0.067630  memory: 23270  grad_norm: 0.003014  loss: 0.000495  loss_kpt: 0.000495  acc_pose: 0.899019
+2026/11/06 09:15:22 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:15:25 - mmengine - INFO - Epoch(val) [21][10/13]    eta: 0:00:00  time: 0.555811  data_time: 0.289486  memory: 23270  
+2026/11/06 09:15:26 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:15:26 - mmengine - INFO - Epoch(val) [21][13/13]    coco/AP: 0.922976  coco/AP .5: 0.988129  coco/AP .75: 0.966557  coco/AP (M): -1.000000  coco/AP (L): 0.922976  coco/AR: 0.940554  coco/AR .5: 0.997481  coco/AR .75: 0.979849  coco/AR (M): -1.000000  coco/AR (L): 0.940554  data_time: 0.021607  time: 0.279694
+2026/11/06 09:15:32 - mmengine - INFO - Epoch(train) [22][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:05:25  time: 0.568025  data_time: 0.060484  memory: 23270  grad_norm: 0.002841  loss: 0.000489  loss_kpt: 0.000489  acc_pose: 0.938362
+2026/11/06 09:15:38 - mmengine - INFO - Epoch(train) [22][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:05:19  time: 0.570415  data_time: 0.062686  memory: 23270  grad_norm: 0.002835  loss: 0.000490  loss_kpt: 0.000490  acc_pose: 0.900148
+2026/11/06 09:15:44 - mmengine - INFO - Epoch(train) [22][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:05:13  time: 0.564890  data_time: 0.056682  memory: 23270  grad_norm: 0.002842  loss: 0.000491  loss_kpt: 0.000491  acc_pose: 0.883577
+2026/11/06 09:15:50 - mmengine - INFO - Epoch(train) [22][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:05:07  time: 0.578780  data_time: 0.069584  memory: 23270  grad_norm: 0.002842  loss: 0.000488  loss_kpt: 0.000488  acc_pose: 0.926470
+2026/11/06 09:15:56 - mmengine - INFO - Epoch(train) [22][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:05:01  time: 0.588211  data_time: 0.073626  memory: 23270  grad_norm: 0.002855  loss: 0.000486  loss_kpt: 0.000486  acc_pose: 0.920301
+2026/11/06 09:16:02 - mmengine - INFO - Epoch(train) [22][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:04:56  time: 0.591084  data_time: 0.080030  memory: 23270  grad_norm: 0.003090  loss: 0.000490  loss_kpt: 0.000490  acc_pose: 0.942383
+2026/11/06 09:16:04 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:16:07 - mmengine - INFO - Epoch(val) [22][10/13]    eta: 0:00:00  time: 0.556839  data_time: 0.289109  memory: 23270  
+2026/11/06 09:16:08 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:16:08 - mmengine - INFO - Epoch(val) [22][13/13]    coco/AP: 0.924827  coco/AP .5: 0.988278  coco/AP .75: 0.967199  coco/AP (M): -1.000000  coco/AP (L): 0.924827  coco/AR: 0.941058  coco/AR .5: 0.997481  coco/AR .75: 0.979849  coco/AR (M): -1.000000  coco/AR (L): 0.941058  data_time: 0.022851  time: 0.285577
+2026/11/06 09:16:14 - mmengine - INFO - Epoch(train) [23][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:04:48  time: 0.584669  data_time: 0.077472  memory: 23270  grad_norm: 0.003013  loss: 0.000479  loss_kpt: 0.000479  acc_pose: 0.915403
+2026/11/06 09:16:20 - mmengine - INFO - Epoch(train) [23][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:04:42  time: 0.574240  data_time: 0.066497  memory: 23270  grad_norm: 0.003015  loss: 0.000479  loss_kpt: 0.000479  acc_pose: 0.922646
+2026/11/06 09:16:26 - mmengine - INFO - Epoch(train) [23][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:04:36  time: 0.576326  data_time: 0.068771  memory: 23270  grad_norm: 0.002957  loss: 0.000477  loss_kpt: 0.000477  acc_pose: 0.931861
+2026/11/06 09:16:32 - mmengine - INFO - Epoch(train) [23][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:04:31  time: 0.573383  data_time: 0.064911  memory: 23270  grad_norm: 0.003196  loss: 0.000487  loss_kpt: 0.000487  acc_pose: 0.942919
+2026/11/06 09:16:37 - mmengine - INFO - Epoch(train) [23][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:04:25  time: 0.575573  data_time: 0.061358  memory: 23270  grad_norm: 0.003067  loss: 0.000482  loss_kpt: 0.000482  acc_pose: 0.947947
+2026/11/06 09:16:43 - mmengine - INFO - Epoch(train) [23][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:04:19  time: 0.574887  data_time: 0.062452  memory: 23270  grad_norm: 0.002977  loss: 0.000485  loss_kpt: 0.000485  acc_pose: 0.954080
+2026/11/06 09:16:45 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:16:48 - mmengine - INFO - Epoch(val) [23][10/13]    eta: 0:00:00  time: 0.308786  data_time: 0.039782  memory: 23270  
+2026/11/06 09:16:48 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:16:49 - mmengine - INFO - Epoch(val) [23][13/13]    coco/AP: 0.923003  coco/AP .5: 0.988528  coco/AP .75: 0.966935  coco/AP (M): -1.000000  coco/AP (L): 0.923003  coco/AR: 0.939798  coco/AR .5: 0.997481  coco/AR .75: 0.979849  coco/AR (M): -1.000000  coco/AR (L): 0.939798  data_time: 0.023692  time: 0.284603
+2026/11/06 09:16:55 - mmengine - INFO - Epoch(train) [24][10/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:04:11  time: 0.559835  data_time: 0.052053  memory: 23270  grad_norm: 0.003008  loss: 0.000481  loss_kpt: 0.000481  acc_pose: 0.933320
+2026/11/06 09:17:01 - mmengine - INFO - Epoch(train) [24][20/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:04:05  time: 0.562011  data_time: 0.054599  memory: 23270  grad_norm: 0.003030  loss: 0.000479  loss_kpt: 0.000479  acc_pose: 0.946754
+2026/11/06 09:17:07 - mmengine - INFO - Epoch(train) [24][30/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:03:59  time: 0.567128  data_time: 0.060259  memory: 23270  grad_norm: 0.002885  loss: 0.000477  loss_kpt: 0.000477  acc_pose: 0.946216
+2026/11/06 09:17:13 - mmengine - INFO - Epoch(train) [24][40/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:03:54  time: 0.569630  data_time: 0.062451  memory: 23270  grad_norm: 0.002716  loss: 0.000473  loss_kpt: 0.000473  acc_pose: 0.939533
+2026/11/06 09:17:19 - mmengine - INFO - Epoch(train) [24][50/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:03:48  time: 0.579683  data_time: 0.066933  memory: 23270  grad_norm: 0.002670  loss: 0.000466  loss_kpt: 0.000466  acc_pose: 0.928450
+2026/11/06 09:17:24 - mmengine - INFO - Epoch(train) [24][60/63]  base_lr: 1.000000e-04 lr: 4.686240e-07  eta: 0:03:42  time: 0.584142  data_time: 0.072967  memory: 23270  grad_norm: 0.002753  loss: 0.000471  loss_kpt: 0.000471  acc_pose: 0.936516
+2026/11/06 09:17:26 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:17:29 - mmengine - INFO - Epoch(val) [24][10/13]    eta: 0:00:00  time: 0.296859  data_time: 0.026231  memory: 23270  
+2026/11/06 09:17:30 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:17:30 - mmengine - INFO - Epoch(val) [24][13/13]    coco/AP: 0.923657  coco/AP .5: 0.988528  coco/AP .75: 0.967026  coco/AP (M): -1.000000  coco/AP (L): 0.923657  coco/AR: 0.940050  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.940050  data_time: 0.026748  time: 0.285658
+2026/11/06 09:17:37 - mmengine - INFO - Epoch(train) [25][10/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:03:34  time: 0.573872  data_time: 0.065832  memory: 23270  grad_norm: 0.002741  loss: 0.000462  loss_kpt: 0.000462  acc_pose: 0.973778
+2026/11/06 09:17:43 - mmengine - INFO - Epoch(train) [25][20/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:03:29  time: 0.579895  data_time: 0.071618  memory: 23270  grad_norm: 0.002691  loss: 0.000462  loss_kpt: 0.000462  acc_pose: 0.931309
+2026/11/06 09:17:49 - mmengine - INFO - Epoch(train) [25][30/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:03:23  time: 0.580525  data_time: 0.072590  memory: 23270  grad_norm: 0.002872  loss: 0.000469  loss_kpt: 0.000469  acc_pose: 0.944724
+2026/11/06 09:17:55 - mmengine - INFO - Epoch(train) [25][40/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:03:17  time: 0.577637  data_time: 0.069894  memory: 23270  grad_norm: 0.002907  loss: 0.000466  loss_kpt: 0.000466  acc_pose: 0.952740
+2026/11/06 09:18:00 - mmengine - INFO - Epoch(train) [25][50/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:03:11  time: 0.581978  data_time: 0.068073  memory: 23270  grad_norm: 0.002765  loss: 0.000468  loss_kpt: 0.000468  acc_pose: 0.905486
+2026/11/06 09:18:06 - mmengine - INFO - Epoch(train) [25][60/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:03:05  time: 0.576740  data_time: 0.065420  memory: 23270  grad_norm: 0.002821  loss: 0.000474  loss_kpt: 0.000474  acc_pose: 0.946685
+2026/11/06 09:18:08 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:18:08 - mmengine - INFO - Saving checkpoint at 25 epochs
+2026/11/06 09:19:03 - mmengine - INFO - Epoch(val) [25][10/13]    eta: 0:00:00  time: 0.296890  data_time: 0.027543  memory: 23270  
+2026/11/06 09:19:03 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:19:03 - mmengine - INFO - Epoch(val) [25][13/13]    coco/AP: 0.923991  coco/AP .5: 0.988503  coco/AP .75: 0.967093  coco/AP (M): -1.000000  coco/AP (L): 0.923991  coco/AR: 0.940806  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.940806  data_time: 0.026927  time: 0.279427
+2026/11/06 09:19:10 - mmengine - INFO - Epoch(train) [26][10/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:02:57  time: 0.559686  data_time: 0.053754  memory: 23270  grad_norm: 0.002982  loss: 0.000467  loss_kpt: 0.000467  acc_pose: 0.930148
+2026/11/06 09:19:16 - mmengine - INFO - Epoch(train) [26][20/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:02:52  time: 0.569770  data_time: 0.064588  memory: 23270  grad_norm: 0.002793  loss: 0.000462  loss_kpt: 0.000462  acc_pose: 0.929329
+2026/11/06 09:19:22 - mmengine - INFO - Epoch(train) [26][30/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:02:46  time: 0.575147  data_time: 0.070855  memory: 23270  grad_norm: 0.002836  loss: 0.000461  loss_kpt: 0.000461  acc_pose: 0.960862
+2026/11/06 09:19:28 - mmengine - INFO - Epoch(train) [26][40/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:02:40  time: 0.580169  data_time: 0.077527  memory: 23270  grad_norm: 0.002740  loss: 0.000458  loss_kpt: 0.000458  acc_pose: 0.933399
+2026/11/06 09:19:34 - mmengine - INFO - Epoch(train) [26][50/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:02:34  time: 0.585545  data_time: 0.078069  memory: 23270  grad_norm: 0.002946  loss: 0.000462  loss_kpt: 0.000462  acc_pose: 0.950572
+2026/11/06 09:19:39 - mmengine - INFO - Epoch(train) [26][60/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:02:28  time: 0.585008  data_time: 0.078357  memory: 23270  grad_norm: 0.002794  loss: 0.000461  loss_kpt: 0.000461  acc_pose: 0.929752
+2026/11/06 09:19:41 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:19:45 - mmengine - INFO - Epoch(val) [26][10/13]    eta: 0:00:00  time: 0.294841  data_time: 0.027294  memory: 23270  
+2026/11/06 09:19:45 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:19:45 - mmengine - INFO - Epoch(val) [26][13/13]    coco/AP: 0.923846  coco/AP .5: 0.988553  coco/AP .75: 0.967146  coco/AP (M): -1.000000  coco/AP (L): 0.923846  coco/AR: 0.940806  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.940806  data_time: 0.021569  time: 0.278175
+2026/11/06 09:19:52 - mmengine - INFO - Epoch(train) [27][10/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:02:21  time: 0.565210  data_time: 0.062019  memory: 23270  grad_norm: 0.002725  loss: 0.000459  loss_kpt: 0.000459  acc_pose: 0.912651
+2026/11/06 09:19:57 - mmengine - INFO - Epoch(train) [27][20/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:02:15  time: 0.562679  data_time: 0.059059  memory: 23270  grad_norm: 0.002732  loss: 0.000462  loss_kpt: 0.000462  acc_pose: 0.942143
+2026/11/06 09:20:03 - mmengine - INFO - Epoch(train) [27][30/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:02:09  time: 0.564028  data_time: 0.059606  memory: 23270  grad_norm: 0.002630  loss: 0.000453  loss_kpt: 0.000453  acc_pose: 0.946414
+2026/11/06 09:20:09 - mmengine - INFO - Epoch(train) [27][40/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:02:03  time: 0.570601  data_time: 0.065968  memory: 23270  grad_norm: 0.002616  loss: 0.000448  loss_kpt: 0.000448  acc_pose: 0.952513
+2026/11/06 09:20:15 - mmengine - INFO - Epoch(train) [27][50/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:01:57  time: 0.572779  data_time: 0.062266  memory: 23270  grad_norm: 0.002592  loss: 0.000453  loss_kpt: 0.000453  acc_pose: 0.950125
+2026/11/06 09:20:21 - mmengine - INFO - Epoch(train) [27][60/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:01:52  time: 0.579750  data_time: 0.070611  memory: 23270  grad_norm: 0.002743  loss: 0.000462  loss_kpt: 0.000462  acc_pose: 0.952218
+2026/11/06 09:20:23 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:20:26 - mmengine - INFO - Epoch(val) [27][10/13]    eta: 0:00:00  time: 0.293583  data_time: 0.027255  memory: 23270  
+2026/11/06 09:20:27 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:20:27 - mmengine - INFO - Epoch(val) [27][13/13]    coco/AP: 0.925114  coco/AP .5: 0.988528  coco/AP .75: 0.967079  coco/AP (M): -1.000000  coco/AP (L): 0.925114  coco/AR: 0.941310  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.941310  data_time: 0.023755  time: 0.280814
+2026/11/06 09:20:33 - mmengine - INFO - Epoch(train) [28][10/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:01:44  time: 0.577146  data_time: 0.071648  memory: 23270  grad_norm: 0.002808  loss: 0.000457  loss_kpt: 0.000457  acc_pose: 0.945775
+2026/11/06 09:20:39 - mmengine - INFO - Epoch(train) [28][20/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:01:38  time: 0.569703  data_time: 0.063738  memory: 23270  grad_norm: 0.002803  loss: 0.000458  loss_kpt: 0.000458  acc_pose: 0.947962
+2026/11/06 09:20:44 - mmengine - INFO - Epoch(train) [28][30/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:01:32  time: 0.563675  data_time: 0.057600  memory: 23270  grad_norm: 0.003170  loss: 0.000461  loss_kpt: 0.000461  acc_pose: 0.897323
+2026/11/06 09:20:50 - mmengine - INFO - Epoch(train) [28][40/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:01:26  time: 0.559209  data_time: 0.052729  memory: 23270  grad_norm: 0.003131  loss: 0.000458  loss_kpt: 0.000458  acc_pose: 0.926647
+2026/11/06 09:20:55 - mmengine - INFO - Epoch(train) [28][50/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:01:21  time: 0.559610  data_time: 0.047433  memory: 23270  grad_norm: 0.003115  loss: 0.000457  loss_kpt: 0.000457  acc_pose: 0.928746
+2026/11/06 09:21:01 - mmengine - INFO - Epoch(train) [28][60/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:01:15  time: 0.557081  data_time: 0.043882  memory: 23270  grad_norm: 0.003169  loss: 0.000461  loss_kpt: 0.000461  acc_pose: 0.925045
+2026/11/06 09:21:03 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:21:06 - mmengine - INFO - Epoch(val) [28][10/13]    eta: 0:00:01  time: 0.296816  data_time: 0.027137  memory: 23270  
+2026/11/06 09:21:07 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:21:07 - mmengine - INFO - Epoch(val) [28][13/13]    coco/AP: 0.925079  coco/AP .5: 0.988553  coco/AP .75: 0.967091  coco/AP (M): -1.000000  coco/AP (L): 0.925079  coco/AR: 0.941310  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.941310  data_time: 0.026218  time: 0.297088
+2026/11/06 09:21:13 - mmengine - INFO - Epoch(train) [29][10/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:01:07  time: 0.561127  data_time: 0.051597  memory: 23270  grad_norm: 0.003098  loss: 0.000464  loss_kpt: 0.000464  acc_pose: 0.920471
+2026/11/06 09:21:19 - mmengine - INFO - Epoch(train) [29][20/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:01:01  time: 0.566461  data_time: 0.056883  memory: 23270  grad_norm: 0.002846  loss: 0.000469  loss_kpt: 0.000469  acc_pose: 0.892890
+2026/11/06 09:21:25 - mmengine - INFO - Epoch(train) [29][30/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:00:55  time: 0.571881  data_time: 0.062205  memory: 23270  grad_norm: 0.003031  loss: 0.000474  loss_kpt: 0.000474  acc_pose: 0.931789
+2026/11/06 09:21:31 - mmengine - INFO - Epoch(train) [29][40/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:00:50  time: 0.578289  data_time: 0.070835  memory: 23270  grad_norm: 0.002812  loss: 0.000467  loss_kpt: 0.000467  acc_pose: 0.953886
+2026/11/06 09:21:37 - mmengine - INFO - Epoch(train) [29][50/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:00:44  time: 0.586104  data_time: 0.073690  memory: 23270  grad_norm: 0.002973  loss: 0.000466  loss_kpt: 0.000466  acc_pose: 0.948056
+2026/11/06 09:21:43 - mmengine - INFO - Epoch(train) [29][60/63]  base_lr: 1.000000e-05 lr: 4.686240e-08  eta: 0:00:38  time: 0.602493  data_time: 0.089493  memory: 23270  grad_norm: 0.003081  loss: 0.000462  loss_kpt: 0.000462  acc_pose: 0.924302
+2026/11/06 09:21:46 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:21:49 - mmengine - INFO - Epoch(val) [29][10/13]    eta: 0:00:00  time: 0.297966  data_time: 0.026688  memory: 23270  
+2026/11/06 09:21:50 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:21:50 - mmengine - INFO - Epoch(val) [29][13/13]    coco/AP: 0.923317  coco/AP .5: 0.988528  coco/AP .75: 0.967108  coco/AP (M): -1.000000  coco/AP (L): 0.923317  coco/AR: 0.940554  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.940554  data_time: 0.024926  time: 0.282820
+2026/11/06 09:21:56 - mmengine - INFO - Epoch(train) [30][10/63]  base_lr: 1.000000e-06 lr: 4.686240e-09  eta: 0:00:30  time: 0.596101  data_time: 0.087532  memory: 23270  grad_norm: 0.003054  loss: 0.000459  loss_kpt: 0.000459  acc_pose: 0.963495
+2026/11/06 09:22:02 - mmengine - INFO - Epoch(train) [30][20/63]  base_lr: 1.000000e-06 lr: 4.686240e-09  eta: 0:00:25  time: 0.589631  data_time: 0.081544  memory: 23270  grad_norm: 0.003057  loss: 0.000463  loss_kpt: 0.000463  acc_pose: 0.917324
+2026/11/06 09:22:07 - mmengine - INFO - Epoch(train) [30][30/63]  base_lr: 1.000000e-06 lr: 4.686240e-09  eta: 0:00:19  time: 0.582980  data_time: 0.074010  memory: 23270  grad_norm: 0.003199  loss: 0.000458  loss_kpt: 0.000458  acc_pose: 0.950722
+2026/11/06 09:22:13 - mmengine - INFO - Epoch(train) [30][40/63]  base_lr: 1.000000e-06 lr: 4.686240e-09  eta: 0:00:13  time: 0.568855  data_time: 0.061956  memory: 23270  grad_norm: 0.003043  loss: 0.000459  loss_kpt: 0.000459  acc_pose: 0.907590
+2026/11/06 09:22:19 - mmengine - INFO - Epoch(train) [30][50/63]  base_lr: 1.000000e-06 lr: 4.686240e-09  eta: 0:00:07  time: 0.564716  data_time: 0.052386  memory: 23270  grad_norm: 0.003014  loss: 0.000460  loss_kpt: 0.000460  acc_pose: 0.954504
+2026/11/06 09:22:24 - mmengine - INFO - Epoch(train) [30][60/63]  base_lr: 1.000000e-06 lr: 4.686240e-09  eta: 0:00:01  time: 0.564410  data_time: 0.053375  memory: 23270  grad_norm: 0.003035  loss: 0.000457  loss_kpt: 0.000457  acc_pose: 0.945856
+2026/11/06 09:22:27 - mmengine - INFO - Exp name: syrip_vitpose-h_udp-256x192_20261106_085437
+2026/11/06 09:22:27 - mmengine - INFO - Saving checkpoint at 30 epochs
+2026/11/06 09:23:46 - mmengine - INFO - Epoch(val) [30][10/13]    eta: 0:00:00  time: 0.298195  data_time: 0.028093  memory: 23270  
+2026/11/06 09:23:46 - mmengine - INFO - Evaluating CocoMetric...
+2026/11/06 09:23:46 - mmengine - INFO - Epoch(val) [30][13/13]    coco/AP: 0.923331  coco/AP .5: 0.988503  coco/AP .75: 0.967068  coco/AP (M): -1.000000  coco/AP (L): 0.923331  coco/AR: 0.940554  coco/AR .5: 0.997481  coco/AR .75: 0.977330  coco/AR (M): -1.000000  coco/AR (L): 0.940554  data_time: 0.027162  time: 0.279113

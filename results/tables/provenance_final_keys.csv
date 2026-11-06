@@ -3,3 +3,12 @@ rt.ftnp.test.ap.mean,93.7,R021 R022 R023,results/analysis_eval/R021_fidip-w48_ft
 rt.ftnp.test.ap.sd,0.2,R021 R022 R023,results/analysis_eval/R021_fidip-w48_ft-noprestage_s1/metrics_test100_best.json;results/analysis_eval/R022_fidip-w48_ft-noprestage_s2/metrics_test100_best.json;results/analysis_eval/R023_fidip-w48_ft-noprestage_s3/metrics_test100_best.json,paper,test100_best
 rt.ftnp.val.ap.mean,90.9,R021 R022 R023,results/analysis_eval/R021_fidip-w48_ft-noprestage_s1/metrics_val400_best.json;results/analysis_eval/R022_fidip-w48_ft-noprestage_s2/metrics_val400_best.json;results/analysis_eval/R023_fidip-w48_ft-noprestage_s3/metrics_val400_best.json,paper,val400_best
 rt.ftnp.val.ap.sd,0.2,R021 R022 R023,results/analysis_eval/R021_fidip-w48_ft-noprestage_s1/metrics_val400_best.json;results/analysis_eval/R022_fidip-w48_ft-noprestage_s2/metrics_val400_best.json;results/analysis_eval/R023_fidip-w48_ft-noprestage_s3/metrics_val400_best.json,paper,val400_best
+armA.test.ap.mean,93.6,R131 R132 R133 R134 R135,results/analysis_eval/R131_mmp-hrnetw48_conf_s2/metrics_test100.json;results/analysis_eval/R132_mmp-hrnetw48_conf_s3/metrics_test100.json;results/analysis_eval/R133_mmp-hrnetw48_conf_s4/metrics_test100.json;results/analysis_eval/R134_mmp-hrnetw48_conf_s5/metrics_test100.json;results/analysis_eval/R135_mmp-hrnetw48_conf_s6/metrics_test100.json,paper,test100
+armA.test.ap.sd,0.2,R131 R132 R133 R134 R135,results/analysis_eval/R131_mmp-hrnetw48_conf_s2/metrics_test100.json;results/analysis_eval/R132_mmp-hrnetw48_conf_s3/metrics_test100.json;results/analysis_eval/R133_mmp-hrnetw48_conf_s4/metrics_test100.json;results/analysis_eval/R134_mmp-hrnetw48_conf_s5/metrics_test100.json;results/analysis_eval/R135_mmp-hrnetw48_conf_s6/metrics_test100.json,paper,test100
+c2.delta,$+1.6$,C2,results/tables/bootstrap_final_C1_C4_test100.json,paper,test100
+c2.ci.lo,$+0.6$,C2,results/tables/bootstrap_final_C1_C4_test100.json,paper,test100
+c2.ci.hi,$+2.8$,C2,results/tables/bootstrap_final_C1_C4_test100.json,paper,test100
+c3.delta,$+1.6$,C3,results/tables/bootstrap_final_C1_C4_test100.json,paper,test100
+c3.ci.lo,$+0.6$,C3,results/tables/bootstrap_final_C1_C4_test100.json,paper,test100
+c3.ci.hi,$+2.7$,C3,results/tables/bootstrap_final_C1_C4_test100.json,paper,test100
+finaloutcome,supported,R136 R137 R138 R139 R140 R001,results/tables/bootstrap_final_C1_C4_test100.json,paper+fixed,test100

@@ -1,0 +1,1107 @@
+{
+  "mode": "contrasts",
+  "protocol": "paper",
+  "metric": "AP",
+  "B": 10000,
+  "seed": 0,
+  "alpha": 0.05,
+  "n_contrasts": 3,
+  "correction": "Holm step-down over the declared contrasts",
+  "contrasts": [
+    {
+      "mode": "multiseed",
+      "protocol": "paper",
+      "gt": "/scratch/purohitham.v/fidip/data/splits/test100.json",
+      "n_images": 100,
+      "B": 10000,
+      "seed": 0,
+      "metric": "AP",
+      "a": {
+        "label": "HRNet-W48 (arm A)",
+        "n_runs": 5,
+        "files": [
+          "/scratch/purohitham.v/fidip/runs/R131_mmp-hrnetw48_conf_s2/preds_test100.json",
+          "/scratch/purohitham.v/fidip/runs/R132_mmp-hrnetw48_conf_s3/preds_test100.json",
+          "/scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/preds_test100.json",
+          "/scratch/purohitham.v/fidip/runs/R134_mmp-hrnetw48_conf_s5/preds_test100.json",
+          "/scratch/purohitham.v/fidip/runs/R135_mmp-hrnetw48_conf_s6/preds_test100.json"
+        ],
+        "run_ids": [
+          "R131_mmp-hrnetw48_conf_s2",
+          "R132_mmp-hrnetw48_conf_s3",
+          "R133_mmp-hrnetw48_conf_s4",
+          "R134_mmp-hrnetw48_conf_s5",
+          "R135_mmp-hrnetw48_conf_s6"
+        ],
+        "mean": {
+          "AP": 0.9356103389021093,
+          "AP50": 0.9847722772277226,
+          "AP75": 0.9822173140390962,
+          "AP_80_95": 0.8625061722108456,
+          "AR": 0.9461999999999999,
+          "AR50": 0.99,
+          "AR75": 0.9879999999999999
+        },
+        "std_across_runs": {
+          "AP": 0.002185534643456235,
+          "AP50": 0.00019044934714519752,
+          "AP75": 0.005727297683565912,
+          "AP_80_95": 0.005148593458841341,
+          "AR": 0.002280350850198254,
+          "AR50": 0.0,
+          "AR75": 0.004472135954999584
+        },
+        "per_run_AP": [
+          0.9359805046202206,
+          0.9385996215205316,
+          0.9361453352998457,
+          0.9326229621138448,
+          0.9347032709561038
+        ],
+        "boot_ci95": {
+          "AP": [
+            0.8962300400413359,
+            0.9625909673038969
+          ],
+          "AP50": [
+            0.952831683168317,
+            1.0
+          ],
+          "AP75": [
+            0.9464473944762898,
+            1.0
+          ],
+          "AP_80_95": [
+            0.8064462350339392,
+            0.9084406247400229
+          ],
+          "AR": [
+            0.9192,
+            0.967
+          ],
+          "AR50": [
+            0.97,
+            1.0
+          ],
+          "AR75": [
+            0.966,
+            1.0
+          ]
+        },
+        "self_check": [
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          }
+        ]
+      },
+      "b": {
+        "label": "FiDIP released",
+        "n_runs": 1,
+        "files": [
+          "/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_test100.json"
+        ],
+        "run_ids": [
+          "R001_fidip-w48_released"
+        ],
+        "mean": {
+          "AP": 0.9360499387537228,
+          "AP50": 0.9852475247524751,
+          "AP75": 0.9852475247524751,
+          "AP_80_95": 0.8622535597555939,
+          "AR": 0.946,
+          "AR50": 0.99,
+          "AR75": 0.99
+        },
+        "std_across_runs": {
+          "AP": null,
+          "AP50": null,
+          "AP75": null,
+          "AP_80_95": null,
+          "AR": null,
+          "AR50": null,
+          "AR75": null
+        },
+        "per_run_AP": [
+          0.9360499387537228
+        ],
+        "boot_ci95": {
+          "AP": [
+            0.8976715175218407,
+            0.9626934481654199
+          ],
+          "AP50": [
+            0.9542574257425743,
+            1.0
+          ],
+          "AP75": [
+            0.9542574257425743,
+            1.0
+          ],
+          "AP_80_95": [
+            0.8068619269175933,
+            0.908305919974468
+          ],
+          "AR": [
+            0.9189999999999999,
+            0.967
+          ],
+          "AR50": [
+            0.97,
+            1.0
+          ],
+          "AR75": [
+            0.97,
+            1.0
+          ]
+        },
+        "self_check": [
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          }
+        ]
+      },
+      "delta": {
+        "AP": {
+          "observed": -0.00043959985161345916,
+          "boot_mean": -0.0005488181129972012,
+          "boot_se": 0.0037689183082854167,
+          "ci95": [
+            -0.007771510225628644,
+            0.006912130577579213
+          ],
+          "frac_boot_a_gt_b": 0.4344
+        },
+        "AP50": {
+          "observed": -0.00047524752475247567,
+          "boot_mean": -0.00044322772277226774,
+          "boot_se": 0.000583219469075883,
+          "ci95": [
+            -0.0020198019801980216,
+            3.960396039615066e-05
+          ],
+          "frac_boot_a_gt_b": 0.0328
+        },
+        "AP75": {
+          "observed": -0.0030302107133789447,
+          "boot_mean": -0.0030155380385116794,
+          "boot_se": 0.0027058461373417335,
+          "ci95": [
+            -0.00990099009900991,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0133
+        },
+        "AP_80_95": {
+          "observed": 0.0002526124552516551,
+          "boot_mean": -6.412611939974056e-05,
+          "boot_se": 0.009150061700024291,
+          "ci95": [
+            -0.017583944271301402,
+            0.018185802164675382
+          ],
+          "frac_boot_a_gt_b": 0.4886
+        },
+        "AR": {
+          "observed": 0.00019999999999997797,
+          "boot_mean": 0.00019595999999999617,
+          "boot_se": 0.003499841220292244,
+          "ci95": [
+            -0.00660000000000005,
+            0.007200000000000095
+          ],
+          "frac_boot_a_gt_b": 0.5077
+        },
+        "AR50": {
+          "observed": 0.0,
+          "boot_mean": 1.9895196601282805e-17,
+          "boot_se": 4.2754714656404465e-17,
+          "ci95": [
+            0.0,
+            1.1102230246251565e-16
+          ],
+          "frac_boot_a_gt_b": 0.1798
+        },
+        "AR75": {
+          "observed": -0.002000000000000113,
+          "boot_mean": -0.002006200000000002,
+          "boot_se": 0.0020035875314793807,
+          "ci95": [
+            -0.006000000000000005,
+            1.1102230246251565e-16
+          ],
+          "frac_boot_a_gt_b": 0.0689
+        }
+      },
+      "p_one_sided_a_gt_b": 0.5656434356564344,
+      "p_one_sided_b_gt_a": 0.43445655434456554,
+      "p_two_sided": 0.8689131086891311,
+      "seed_pairs_a_gt_b": 0.4,
+      "all_a_runs_gt_all_b_runs": false,
+      "per_image_consistency": {
+        "n_images": 100,
+        "wins": 66,
+        "ties": 0,
+        "losses": 34,
+        "mean_delta_oks": 0.005207177021469257,
+        "median_delta_oks": 0.0035763311761418115,
+        "sign_test_p_two_sided": 0.0017899303914868526,
+        "wilcoxon_p_two_sided": 0.000716173136332072
+      },
+      "sensitivity": {
+        "protocol": "fixed",
+        "delta": {
+          "AP": {
+            "observed": 0.0003166001972041421,
+            "boot_mean": 1.4647071714132564e-05,
+            "boot_se": 0.003720582602876771,
+            "ci95": [
+              -0.007181201183612543,
+              0.007485279655499614
+            ],
+            "frac_boot_a_gt_b": 0.4962
+          },
+          "AP50": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AP75": {
+            "observed": -0.002396039603960398,
+            "boot_mean": -0.0024098673267326765,
+            "boot_se": 0.002433178138502296,
+            "ci95": [
+              -0.007485148514851381,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AP_80_95": {
+            "observed": 0.0013905103940009544,
+            "boot_mean": 0.0006390845109684975,
+            "boot_se": 0.009190013318686383,
+            "ci95": [
+              -0.017000429324962124,
+              0.019116727525509174
+            ],
+            "frac_boot_a_gt_b": 0.5192
+          },
+          "AR": {
+            "observed": 0.00020000000000031104,
+            "boot_mean": 0.00019595999999999717,
+            "boot_se": 0.003499841220292247,
+            "ci95": [
+              -0.006599999999999939,
+              0.007200000000000095
+            ],
+            "frac_boot_a_gt_b": 0.5079
+          },
+          "AR50": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AR75": {
+            "observed": -0.0020000000000000018,
+            "boot_mean": -0.0020061999999999814,
+            "boot_se": 0.0020035875314793603,
+            "ci95": [
+              -0.006000000000000005,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          }
+        },
+        "p_one_sided_a_gt_b": 0.5038496150384961,
+        "p_one_sided_b_gt_a": 0.49625037496250374,
+        "p_two_sided": 0.9925007499250075,
+        "a_mean": {
+          "AP": 0.9502080176375323,
+          "AP50": 1.0,
+          "AP75": 0.9976039603960396,
+          "AP_80_95": 0.8761190539948209,
+          "AR": 0.9562000000000002,
+          "AR50": 1.0,
+          "AR75": 0.998
+        },
+        "b_mean": {
+          "AP": 0.9498914174403281,
+          "AP50": 1.0,
+          "AP75": 1.0,
+          "AP_80_95": 0.87472854360082,
+          "AR": 0.9559999999999998,
+          "AR50": 1.0,
+          "AR75": 1.0
+        },
+        "self_check": [
+          [
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            }
+          ],
+          [
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            }
+          ]
+        ],
+        "p_holm": 0.5038496150384961,
+        "reject_h0_holm": false
+      },
+      "a_gt_b_robust_both_protocols": false,
+      "ci_excludes_zero_both_protocols": false,
+      "name": "S1: arm A vs released FiDIP",
+      "hypothesis": null,
+      "p_holm": 0.5656434356564344,
+      "reject_h0_holm": false,
+      "robust_claim": false
+    },
+    {
+      "mode": "paired",
+      "protocol": "paper",
+      "gt": "/scratch/purohitham.v/fidip/data/splits/test100.json",
+      "n_images": 100,
+      "B": 10000,
+      "seed": 0,
+      "metric": "AP",
+      "a": {
+        "label": "ViTPose-H 256 s1",
+        "n_runs": 1,
+        "files": [
+          "/scratch/purohitham.v/fidip/runs/R105_mmp-vitpose-h256_base_s1/preds_test100.json"
+        ],
+        "run_ids": [
+          "R105_mmp-vitpose-h256_base_s1"
+        ],
+        "mean": {
+          "AP": 0.9468984937012421,
+          "AP50": 0.981089108910891,
+          "AP75": 0.981089108910891,
+          "AP_80_95": 0.8956125708867685,
+          "AR": 0.961,
+          "AR50": 0.99,
+          "AR75": 0.99
+        },
+        "std_across_runs": {
+          "AP": null,
+          "AP50": null,
+          "AP75": null,
+          "AP_80_95": null,
+          "AR": null,
+          "AR50": null,
+          "AR75": null
+        },
+        "per_run_AP": [
+          0.9468984937012421
+        ],
+        "boot_ci95": {
+          "AP": [
+            0.902520362207551,
+            0.9758953903601656
+          ],
+          "AP50": [
+            0.9426732673267327,
+            1.0
+          ],
+          "AP75": [
+            0.9426732673267327,
+            1.0
+          ],
+          "AP_80_95": [
+            0.8442094251278204,
+            0.9399587535193143
+          ],
+          "AR": [
+            0.9359999999999999,
+            0.9790000000000001
+          ],
+          "AR50": [
+            0.97,
+            1.0
+          ],
+          "AR75": [
+            0.97,
+            1.0
+          ]
+        },
+        "self_check": [
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          }
+        ]
+      },
+      "b": {
+        "label": "FiDIP released",
+        "n_runs": 1,
+        "files": [
+          "/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_test100.json"
+        ],
+        "run_ids": [
+          "R001_fidip-w48_released"
+        ],
+        "mean": {
+          "AP": 0.9360499387537228,
+          "AP50": 0.9852475247524751,
+          "AP75": 0.9852475247524751,
+          "AP_80_95": 0.8622535597555939,
+          "AR": 0.946,
+          "AR50": 0.99,
+          "AR75": 0.99
+        },
+        "std_across_runs": {
+          "AP": null,
+          "AP50": null,
+          "AP75": null,
+          "AP_80_95": null,
+          "AR": null,
+          "AR50": null,
+          "AR75": null
+        },
+        "per_run_AP": [
+          0.9360499387537228
+        ],
+        "boot_ci95": {
+          "AP": [
+            0.8976715175218407,
+            0.9626934481654199
+          ],
+          "AP50": [
+            0.9542574257425743,
+            1.0
+          ],
+          "AP75": [
+            0.9542574257425743,
+            1.0
+          ],
+          "AP_80_95": [
+            0.8068619269175933,
+            0.908305919974468
+          ],
+          "AR": [
+            0.9189999999999999,
+            0.967
+          ],
+          "AR50": [
+            0.97,
+            1.0
+          ],
+          "AR75": [
+            0.97,
+            1.0
+          ]
+        },
+        "self_check": [
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          }
+        ]
+      },
+      "delta": {
+        "AP": {
+          "observed": 0.010848554947519351,
+          "boot_mean": 0.012115503079396921,
+          "boot_se": 0.007182139571028212,
+          "ci95": [
+            -0.0029056412312264755,
+            0.025382196993583992
+          ],
+          "frac_boot_a_gt_b": 0.9477
+        },
+        "AP50": {
+          "observed": -0.004158415841584162,
+          "boot_mean": -0.0040867029702970166,
+          "boot_se": 0.004113211724134228,
+          "ci95": [
+            -0.013861386138613763,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0
+        },
+        "AP75": {
+          "observed": -0.004158415841584162,
+          "boot_mean": -0.0040867029702970166,
+          "boot_se": 0.004113211724134228,
+          "ci95": [
+            -0.013861386138613763,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0
+        },
+        "AP_80_95": {
+          "observed": 0.033359011131174565,
+          "boot_mean": 0.0364188121539378,
+          "boot_se": 0.014420876109757492,
+          "ci95": [
+            0.008695559206765959,
+            0.0652079024504229
+          ],
+          "frac_boot_a_gt_b": 0.9944
+        },
+        "AR": {
+          "observed": 0.015000000000000013,
+          "boot_mean": 0.0150197,
+          "boot_se": 0.0047342109358707845,
+          "ci95": [
+            0.006000000000000116,
+            0.02499999999999991
+          ],
+          "frac_boot_a_gt_b": 0.9992
+        },
+        "AR50": {
+          "observed": 0.0,
+          "boot_mean": 0.0,
+          "boot_se": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0
+        },
+        "AR75": {
+          "observed": 0.0,
+          "boot_mean": 0.0,
+          "boot_se": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0
+        }
+      },
+      "p_one_sided_a_gt_b": 0.052394760523947606,
+      "p_one_sided_b_gt_a": 0.9477052294770523,
+      "p_two_sided": 0.10478952104789521,
+      "per_image_consistency": {
+        "n_images": 100,
+        "wins": 74,
+        "ties": 0,
+        "losses": 26,
+        "mean_delta_oks": 0.011167467970650736,
+        "median_delta_oks": 0.005777976705877097,
+        "sign_test_p_two_sided": 1.667362649450101e-06,
+        "wilcoxon_p_two_sided": 9.30910218972074e-08
+      },
+      "sensitivity": {
+        "protocol": "fixed",
+        "delta": {
+          "AP": {
+            "observed": 0.01756559684095582,
+            "boot_mean": 0.016852101566121522,
+            "boot_se": 0.00516674091718857,
+            "ci95": [
+              0.007303815266017764,
+              0.02751215128612973
+            ],
+            "frac_boot_a_gt_b": 0.9995
+          },
+          "AP50": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AP75": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AP_80_95": {
+            "observed": 0.04391399210238989,
+            "boot_mean": 0.04213025391530381,
+            "boot_se": 0.012916852292971424,
+            "ci95": [
+              0.01825953816504484,
+              0.0687803782153242
+            ],
+            "frac_boot_a_gt_b": 0.9995
+          },
+          "AR": {
+            "observed": 0.015000000000000013,
+            "boot_mean": 0.015019700000000018,
+            "boot_se": 0.004734210935870782,
+            "ci95": [
+              0.006000000000000116,
+              0.02499999999999991
+            ],
+            "frac_boot_a_gt_b": 0.9993
+          },
+          "AR50": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AR75": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          }
+        },
+        "p_one_sided_a_gt_b": 0.0005999400059994001,
+        "p_one_sided_b_gt_a": 0.9995000499950005,
+        "p_two_sided": 0.0011998800119988001,
+        "a_mean": {
+          "AP": 0.967457014281284,
+          "AP50": 1.0,
+          "AP75": 1.0,
+          "AP_80_95": 0.9186425357032099,
+          "AR": 0.9709999999999999,
+          "AR50": 1.0,
+          "AR75": 1.0
+        },
+        "b_mean": {
+          "AP": 0.9498914174403281,
+          "AP50": 1.0,
+          "AP75": 1.0,
+          "AP_80_95": 0.87472854360082,
+          "AR": 0.9559999999999998,
+          "AR50": 1.0,
+          "AR75": 1.0
+        },
+        "self_check": [
+          [
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            }
+          ],
+          [
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            }
+          ]
+        ],
+        "p_holm": 0.0017998200179982003,
+        "reject_h0_holm": true
+      },
+      "a_gt_b_robust_both_protocols": false,
+      "ci_excludes_zero_both_protocols": false,
+      "name": "S2: R105 (arm B s1) vs released FiDIP",
+      "hypothesis": null,
+      "p_holm": 0.15718428157184283,
+      "reject_h0_holm": false,
+      "robust_claim": false
+    },
+    {
+      "mode": "paired",
+      "protocol": "paper",
+      "gt": "/scratch/purohitham.v/fidip/data/splits/test100.json",
+      "n_images": 100,
+      "B": 10000,
+      "seed": 0,
+      "metric": "AP",
+      "a": {
+        "label": "HRNet-W48 s1",
+        "n_runs": 1,
+        "files": [
+          "/scratch/purohitham.v/fidip/runs/R101_mmp-hrnetw48_base_s1/preds_test100.json"
+        ],
+        "run_ids": [
+          "R101_mmp-hrnetw48_base_s1"
+        ],
+        "mean": {
+          "AP": 0.9389896204367647,
+          "AP50": 0.9848514851485148,
+          "AP75": 0.9710017472335473,
+          "AP_80_95": 0.8736592578478815,
+          "AR": 0.95,
+          "AR50": 0.99,
+          "AR75": 0.98
+        },
+        "std_across_runs": {
+          "AP": null,
+          "AP50": null,
+          "AP75": null,
+          "AP_80_95": null,
+          "AR": null,
+          "AR50": null,
+          "AR75": null
+        },
+        "per_run_AP": [
+          0.9389896204367647
+        ],
+        "boot_ci95": {
+          "AP": [
+            0.8983426682913876,
+            0.967740786468663
+          ],
+          "AP50": [
+            0.9530693069306931,
+            1.0
+          ],
+          "AP75": [
+            0.9168316831683168,
+            1.0
+          ],
+          "AP_80_95": [
+            0.8169965888505831,
+            0.921853221763167
+          ],
+          "AR": [
+            0.922,
+            0.9719999999999999
+          ],
+          "AR50": [
+            0.97,
+            1.0
+          ],
+          "AR75": [
+            0.95,
+            1.0
+          ]
+        },
+        "self_check": [
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          }
+        ]
+      },
+      "b": {
+        "label": "FiDIP released",
+        "n_runs": 1,
+        "files": [
+          "/scratch/purohitham.v/fidip/runs/R001_fidip-w48_released/preds_test100.json"
+        ],
+        "run_ids": [
+          "R001_fidip-w48_released"
+        ],
+        "mean": {
+          "AP": 0.9360499387537228,
+          "AP50": 0.9852475247524751,
+          "AP75": 0.9852475247524751,
+          "AP_80_95": 0.8622535597555939,
+          "AR": 0.946,
+          "AR50": 0.99,
+          "AR75": 0.99
+        },
+        "std_across_runs": {
+          "AP": null,
+          "AP50": null,
+          "AP75": null,
+          "AP_80_95": null,
+          "AR": null,
+          "AR50": null,
+          "AR75": null
+        },
+        "per_run_AP": [
+          0.9360499387537228
+        ],
+        "boot_ci95": {
+          "AP": [
+            0.8976715175218407,
+            0.9626934481654199
+          ],
+          "AP50": [
+            0.9542574257425743,
+            1.0
+          ],
+          "AP75": [
+            0.9542574257425743,
+            1.0
+          ],
+          "AP_80_95": [
+            0.8068619269175933,
+            0.908305919974468
+          ],
+          "AR": [
+            0.9189999999999999,
+            0.967
+          ],
+          "AR50": [
+            0.97,
+            1.0
+          ],
+          "AR75": [
+            0.97,
+            1.0
+          ]
+        },
+        "self_check": [
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          }
+        ]
+      },
+      "delta": {
+        "AP": {
+          "observed": 0.002939681683041928,
+          "boot_mean": 0.00278484210131843,
+          "boot_se": 0.004598276088456405,
+          "ci95": [
+            -0.006291336338154224,
+            0.011958620837553393
+          ],
+          "frac_boot_a_gt_b": 0.7315
+        },
+        "AP50": {
+          "observed": -0.00039603960396028537,
+          "boot_mean": -0.0003830495049504848,
+          "boot_se": 0.0005750315679563027,
+          "ci95": [
+            -0.001980198019801871,
+            0.0001980198019801982
+          ],
+          "frac_boot_a_gt_b": 0.0452
+        },
+        "AP75": {
+          "observed": -0.01424577751892786,
+          "boot_mean": -0.0142507038536528,
+          "boot_se": 0.014120103180472776,
+          "ci95": [
+            -0.050299504950495184,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0181
+        },
+        "AP_80_95": {
+          "observed": 0.01140569809228753,
+          "boot_mean": 0.0110035930978974,
+          "boot_se": 0.009992690167837149,
+          "ci95": [
+            -0.00779179683292575,
+            0.03138680168321381
+          ],
+          "frac_boot_a_gt_b": 0.8649
+        },
+        "AR": {
+          "observed": 0.0040000000000000036,
+          "boot_mean": 0.004014999999999988,
+          "boot_se": 0.003739087198409219,
+          "ci95": [
+            -0.0030000000000001137,
+            0.01100000000000012
+          ],
+          "frac_boot_a_gt_b": 0.8362
+        },
+        "AR50": {
+          "observed": 0.0,
+          "boot_mean": 0.0,
+          "boot_se": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0
+        },
+        "AR75": {
+          "observed": -0.010000000000000009,
+          "boot_mean": -0.010031000000000009,
+          "boot_se": 0.0100179376573969,
+          "ci95": [
+            -0.030000000000000027,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0
+        }
+      },
+      "p_one_sided_a_gt_b": 0.2685731426857314,
+      "p_one_sided_b_gt_a": 0.7315268473152685,
+      "p_two_sided": 0.5371462853714628,
+      "per_image_consistency": {
+        "n_images": 100,
+        "wins": 68,
+        "ties": 0,
+        "losses": 32,
+        "mean_delta_oks": 0.006212571628457317,
+        "median_delta_oks": 0.003928385427883152,
+        "sign_test_p_two_sided": 0.00040877716742681523,
+        "wilcoxon_p_two_sided": 5.834610829586528e-05
+      },
+      "sensitivity": {
+        "protocol": "fixed",
+        "delta": {
+          "AP": {
+            "observed": 0.003547723235734157,
+            "boot_mean": 0.003473458919507889,
+            "boot_se": 0.004544642341759153,
+            "ci95": [
+              -0.005508178254221001,
+              0.012429256599113979
+            ],
+            "frac_boot_a_gt_b": 0.7792
+          },
+          "AP50": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AP75": {
+            "observed": -0.012970297029703093,
+            "boot_mean": -0.013041900990099008,
+            "boot_se": 0.013156245505688127,
+            "ci95": [
+              -0.04039603960396021,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AP_80_95": {
+            "observed": 0.012111882346761305,
+            "boot_mean": 0.011944122546294466,
+            "boot_se": 0.010087563261003055,
+            "ci95": [
+              -0.007113681107600394,
+              0.032283947776202304
+            ],
+            "frac_boot_a_gt_b": 0.8843
+          },
+          "AR": {
+            "observed": 0.004000000000000115,
+            "boot_mean": 0.004014999999999987,
+            "boot_se": 0.003739087198409222,
+            "ci95": [
+              -0.0030000000000001137,
+              0.01100000000000012
+            ],
+            "frac_boot_a_gt_b": 0.8352
+          },
+          "AR50": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AR75": {
+            "observed": -0.010000000000000009,
+            "boot_mean": -0.010031000000000009,
+            "boot_se": 0.010017937657396902,
+            "ci95": [
+              -0.030000000000000027,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          }
+        },
+        "p_one_sided_a_gt_b": 0.22087791220877911,
+        "p_one_sided_b_gt_a": 0.7792220777922207,
+        "p_two_sided": 0.44175582441755823,
+        "a_mean": {
+          "AP": 0.9534391406760623,
+          "AP50": 1.0,
+          "AP75": 0.9870297029702969,
+          "AP_80_95": 0.8868404259475813,
+          "AR": 0.96,
+          "AR50": 1.0,
+          "AR75": 0.99
+        },
+        "b_mean": {
+          "AP": 0.9498914174403281,
+          "AP50": 1.0,
+          "AP75": 1.0,
+          "AP_80_95": 0.87472854360082,
+          "AR": 0.9559999999999998,
+          "AR50": 1.0,
+          "AR75": 1.0
+        },
+        "self_check": [
+          [
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            }
+          ],
+          [
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            }
+          ]
+        ],
+        "p_holm": 0.44175582441755823,
+        "reject_h0_holm": false
+      },
+      "a_gt_b_robust_both_protocols": false,
+      "ci_excludes_zero_both_protocols": false,
+      "name": "S3: R101 (arm A s1) vs released FiDIP",
+      "hypothesis": null,
+      "p_holm": 0.5371462853714628,
+      "reject_h0_holm": false,
+      "robust_claim": false
+    }
+  ],
+  "settings": {
+    "evaluator": "eval/eval_coco.py v1.0",
+    "area_rule": "gt",
+    "ci": "percentile",
+    "pycocotools": "2.0.8",
+    "numpy": "1.26.4",
+    "python": "3.12.16"
+  }
+}

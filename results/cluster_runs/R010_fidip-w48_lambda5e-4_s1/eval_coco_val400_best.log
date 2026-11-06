@@ -1,0 +1,8 @@
+[eval_coco] run=R010_fidip-w48_lambda5e-4_s1 split=val400 n_img=397 n_det=397 scoring=rescored
+  paper : AP= 90.6 AP50= 98.9 AP75= 95.8 AR= 92.1 AR50= 99.5 AR75= 97.0
+  fixed : AP= 90.6 AP50= 98.9 AP75= 95.8 AR= 92.1 AR50= 99.5 AR75= 97.0
+  metrics_original_scores: AP= 90.6 AP50= 98.9 AP75= 95.8 AR= 92.1 AR50= 99.5 AR75= 97.0
+  metrics_original_scores_fixed: AP= 90.6 AP50= 98.9 AP75= 95.8 AR= 92.1 AR50= 99.5 AR75= 97.0
+  AP@OKS 0.50:98.9 0.55:98.9 0.60:97.9 0.65:97.8 0.70:97.8 0.75:95.8 0.80:93.7 0.85:89.4 0.90:77.9 0.95:58.3  | AP_80_95=79.8
+  mean OKS=0.9373  kpt err/sqrt(bbox)=0.0346  PCK@0.05=0.835 @0.1=0.937 @0.2=0.977
+  -> /scratch/purohitham.v/fidip/runs/R010_fidip-w48_lambda5e-4_s1/metrics_val400_best.json

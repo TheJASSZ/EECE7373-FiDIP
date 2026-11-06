@@ -1,0 +1,118 @@
+2026-11-06 07:18:34,632 Namespace(cfg='experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml', opts=['TEST.MODEL_FILE', '/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth', 'TEST.USE_GT_BBOX', 'True', 'WORKERS', '8', 'DEBUG.DEBUG', 'False', 'DATASET.ROOT', '/scratch/purohitham.v/fidip/data/syrip/', 'DATASET.TEST_SET', 'test100', 'OUTPUT_DIR', '/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_final/output', 'LOG_DIR', '/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_final/log'], modelDir='', logDir='', dataDir='', prevModelDir='')
+2026-11-06 07:18:34,632 AUTO_RESUME: True
+CUDNN:
+  BENCHMARK: True
+  DETERMINISTIC: False
+  ENABLED: True
+DATASET:
+  COLOR_RGB: True
+  DATASET: syrip
+  DATA_FORMAT: jpg
+  FLIP: True
+  HYBRID_JOINTS_TYPE: 
+  NUM_JOINTS_HALF_BODY: 8
+  PROB_HALF_BODY: 0.3
+  ROOT: /scratch/purohitham.v/fidip/data/syrip/
+  ROT_FACTOR: 45
+  SCALE_FACTOR: 0.35
+  SELECT_DATA: False
+  TEST_SET: test100
+  TRAIN_PRE_SET: train_pre_infant
+  TRAIN_SET: train_infant
+DATA_DIR: 
+DEBUG:
+  DEBUG: False
+  SAVE_BATCH_IMAGES_GT: True
+  SAVE_BATCH_IMAGES_PRED: True
+  SAVE_HEATMAPS_GT: True
+  SAVE_HEATMAPS_PRED: True
+GPUS: (0,)
+LOG_DIR: /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_final/log
+LOSS:
+  TOPK: 8
+  USE_DIFFERENT_JOINTS_WEIGHT: False
+  USE_OHKM: False
+  USE_TARGET_WEIGHT: True
+MODEL:
+  EXTRA:
+    FINAL_CONV_KERNEL: 1
+    PRETRAINED_LAYERS: ['conv1', 'bn1', 'conv2', 'bn2', 'layer1', 'transition1', 'stage2', 'transition2', 'stage3', 'transition3', 'stage4']
+    STAGE2:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4]
+      NUM_BRANCHES: 2
+      NUM_CHANNELS: [48, 96]
+      NUM_MODULES: 1
+    STAGE3:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4]
+      NUM_BRANCHES: 3
+      NUM_CHANNELS: [48, 96, 192]
+      NUM_MODULES: 4
+    STAGE4:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4, 4]
+      NUM_BRANCHES: 4
+      NUM_CHANNELS: [48, 96, 192, 384]
+      NUM_MODULES: 3
+  HEATMAP_SIZE: [72, 96]
+  IMAGE_SIZE: [288, 384]
+  INIT_WEIGHTS: True
+  NAME: adaptive_pose_hrnet
+  NUM_JOINTS: 17
+  PRETRAINED: 
+  SIGMA: 3
+  TAG_PER_JOINT: True
+  TARGET_TYPE: gaussian
+OUTPUT_DIR: /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_final/output
+PIN_MEMORY: True
+PRINT_FREQ: 20
+RANK: 0
+SEED: -1
+TEST:
+  BATCH_SIZE_PER_GPU: 16
+  BBOX_THRE: 1.0
+  BLUR_KERNEL: 11
+  COCO_BBOX_FILE: data/coco/person_detection_results/COCO_val2017_detections_AP_H_56_person.json
+  FLIP_TEST: True
+  IMAGE_THRE: 0.0
+  IN_VIS_THRE: 0.2
+  MODEL_FILE: /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth
+  NMS_THRE: 1.0
+  OKS_THRE: 0.9
+  POST_PROCESS: True
+  SOFT_NMS: False
+  USE_GT_BBOX: True
+TRAIN:
+  BATCH_SIZE_PER_GPU: 20
+  BEGIN_EPOCH: 0
+  CHECKPOINT: 
+  END_EPOCH: 20
+  GAMMA1: 0.99
+  GAMMA2: 0.0
+  LAMBDA: 0.0
+  LR: 0.0001
+  LR_FACTOR: 0.1
+  LR_STEP: [40, 200]
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPTIMIZER: adam
+  PRE_BATCH_SIZE_PER_GPU: 16
+  PRE_EPOCH: 0
+  RESUME: False
+  SHUFFLE: True
+  WD: 0.0001
+WORKERS: 8
+2026-11-06 07:18:34,961 => loading model from /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth
+2026-11-06 07:18:35,167 => loaded 1754 tensors strictly
+2026-11-06 07:18:36,150 => classes: ['__background__', 'person']
+2026-11-06 07:18:36,150 => num_images: 100
+2026-11-06 07:18:36,154 => load 100 samples
+2026-11-06 07:18:37,214 Test: [0/7]	Time 1.021 (1.021)	Loss 0.0003 (0.0003)	Accuracy 0.949 (0.949)
+2026-11-06 07:18:38,076 => writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_final/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_test100_results_0.json
+2026-11-06 07:18:38,149 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-06 07:18:38,149 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-06 07:18:38,150 | adaptive... | 0.936 | 0.985 | 0.985 | -1.000 | 0.936 | 0.945 | 0.990 | 0.990 | -1.000 | 0.945 |

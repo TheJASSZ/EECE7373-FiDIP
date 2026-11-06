@@ -1,0 +1,1 @@
+R101_mmp-hrnetw48_base_s1,11659888,improve,mmp-hrnetw48,base,1,mmpose_exps/configs/syrip_hrnet-w48_dark-384x288.py,942e20d30a4e/tree:e5270eb3e0ce,sharing,NVIDIA L40S,done,91.52,,/scratch/purohitham.v/fidip/runs/R101_mmp-hrnetw48_base_s1/best_coco_AP_epoch_29.pth,1f33ae420dd74909d9e5e0f324dbfb609d36a20039f8ac82bee7bc1e87de01b9,

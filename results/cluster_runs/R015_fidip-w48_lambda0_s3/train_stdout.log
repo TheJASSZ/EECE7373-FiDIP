@@ -1,0 +1,1420 @@
+Namespace(cfg='experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml', opts=['TRAIN.CHECKPOINT', '/scratch/purohitham.v/fidip/models/coco/w48_384x288.pth', 'TRAIN.PRE_EPOCH', '10', 'TRAIN.LAMBDA', '0.0', 'DATASET.ROOT', '/scratch/purohitham.v/fidip/data/syrip/', 'DATASET.TRAIN_SET', 'train_infant', 'DATASET.TRAIN_PRE_SET', 'train_pre_infant', 'DATASET.TEST_SET', 'val400', 'OUTPUT_DIR', '/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output', 'LOG_DIR', '/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/log', 'WORKERS', '8', 'DEBUG.DEBUG', 'False', 'SEED', '3'], modelDir='', logDir='', dataDir='', prevModelDir='')
+AUTO_RESUME: True
+CUDNN:
+  BENCHMARK: True
+  DETERMINISTIC: False
+  ENABLED: True
+DATASET:
+  COLOR_RGB: True
+  DATASET: syrip
+  DATA_FORMAT: jpg
+  FLIP: True
+  HYBRID_JOINTS_TYPE: 
+  NUM_JOINTS_HALF_BODY: 8
+  PROB_HALF_BODY: 0.3
+  ROOT: /scratch/purohitham.v/fidip/data/syrip/
+  ROT_FACTOR: 45
+  SCALE_FACTOR: 0.35
+  SELECT_DATA: False
+  TEST_SET: val400
+  TRAIN_PRE_SET: train_pre_infant
+  TRAIN_SET: train_infant
+DATA_DIR: 
+DEBUG:
+  DEBUG: False
+  SAVE_BATCH_IMAGES_GT: True
+  SAVE_BATCH_IMAGES_PRED: True
+  SAVE_HEATMAPS_GT: True
+  SAVE_HEATMAPS_PRED: True
+GPUS: (0,)
+LOG_DIR: /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/log
+LOSS:
+  TOPK: 8
+  USE_DIFFERENT_JOINTS_WEIGHT: False
+  USE_OHKM: False
+  USE_TARGET_WEIGHT: True
+MODEL:
+  EXTRA:
+    FINAL_CONV_KERNEL: 1
+    PRETRAINED_LAYERS: ['conv1', 'bn1', 'conv2', 'bn2', 'layer1', 'transition1', 'stage2', 'transition2', 'stage3', 'transition3', 'stage4']
+    STAGE2:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4]
+      NUM_BRANCHES: 2
+      NUM_CHANNELS: [48, 96]
+      NUM_MODULES: 1
+    STAGE3:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4]
+      NUM_BRANCHES: 3
+      NUM_CHANNELS: [48, 96, 192]
+      NUM_MODULES: 4
+    STAGE4:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4, 4]
+      NUM_BRANCHES: 4
+      NUM_CHANNELS: [48, 96, 192, 384]
+      NUM_MODULES: 3
+  HEATMAP_SIZE: [72, 96]
+  IMAGE_SIZE: [288, 384]
+  INIT_WEIGHTS: True
+  NAME: adaptive_pose_hrnet
+  NUM_JOINTS: 17
+  PRETRAINED: 
+  SIGMA: 3
+  TAG_PER_JOINT: True
+  TARGET_TYPE: gaussian
+OUTPUT_DIR: /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output
+PIN_MEMORY: True
+PRINT_FREQ: 20
+RANK: 0
+SEED: 3
+TEST:
+  BATCH_SIZE_PER_GPU: 16
+  BBOX_THRE: 1.0
+  BLUR_KERNEL: 11
+  COCO_BBOX_FILE: data/coco/person_detection_results/COCO_val2017_detections_AP_H_56_person.json
+  FLIP_TEST: True
+  IMAGE_THRE: 0.0
+  IN_VIS_THRE: 0.2
+  MODEL_FILE: models/coco/w48_384×288.pth
+  NMS_THRE: 1.0
+  OKS_THRE: 0.9
+  POST_PROCESS: True
+  SOFT_NMS: False
+  USE_GT_BBOX: True
+TRAIN:
+  BATCH_SIZE_PER_GPU: 20
+  BEGIN_EPOCH: 0
+  CHECKPOINT: /scratch/purohitham.v/fidip/models/coco/w48_384x288.pth
+  END_EPOCH: 20
+  GAMMA1: 0.99
+  GAMMA2: 0.0
+  LAMBDA: 0.0
+  LR: 0.0001
+  LR_FACTOR: 0.1
+  LR_STEP: [40, 200]
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPTIMIZER: adam
+  PRE_BATCH_SIZE_PER_GPU: 16
+  PRE_EPOCH: 10
+  RESUME: False
+  SHUFFLE: True
+  WD: 0.0001
+WORKERS: 8
+=> seeded python/numpy/torch/cuda RNGs with SEED=3
+=> init weights from normal distribution
+=> loading model from /scratch/purohitham.v/fidip/models/coco/w48_384x288.pth
+
+Total Parameters: 63,595,745
+----------------------------------------------------------------------------------------------------------------------------------
+Total Multiply Adds (For Convolution and Linear Layers only): 32.881839752197266 GFLOPs
+----------------------------------------------------------------------------------------------------------------------------------
+Number of Layers
+Conv2d : 293 layers   BatchNorm2d : 292 layers   ReLU : 261 layers   Bottleneck : 4 layers   BasicBlock : 104 layers   Upsample : 28 layers   HighResolutionModule : 8 layers   
+=> classes: ['__background__', 'person']
+=> num_images: 4057
+=> load 3904 samples
+=> classes: ['__background__', 'person']
+=> num_images: 1200
+=> load 1200 samples
+=> classes: ['__background__', 'person']
+=> num_images: 397
+=> load 397 samples
+=> creating /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output
+=> creating /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+=> creating /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/log/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant_2026-11-06-07-01
+loading annotations into memory...
+Done (t=0.04s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=0.02s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=0.01s)
+creating index...
+index created!
+Pretrained Stage:
+Start to train Domain Classifier-------
+Epoch: [0][0/244]	Accuracy_d: 0.625 (0.625)	Loss_d: 0.65898 (0.65898)
+Epoch: [0][20/244]	Accuracy_d: 1.0 (0.8244047619047619)	Loss_d: 0.32040 (0.46513)
+Epoch: [0][40/244]	Accuracy_d: 1.0 (0.8628048780487805)	Loss_d: 0.21829 (0.39056)
+Epoch: [0][60/244]	Accuracy_d: 0.8125 (0.8627049180327869)	Loss_d: 0.34011 (0.37154)
+Epoch: [0][80/244]	Accuracy_d: 0.9375 (0.8657407407407407)	Loss_d: 0.27483 (0.36236)
+Epoch: [0][100/244]	Accuracy_d: 0.875 (0.8675742574257426)	Loss_d: 0.27957 (0.35169)
+Epoch: [0][120/244]	Accuracy_d: 0.875 (0.868801652892562)	Loss_d: 0.31600 (0.34649)
+Epoch: [0][140/244]	Accuracy_d: 0.8125 (0.8723404255319149)	Loss_d: 0.40276 (0.34202)
+Epoch: [0][160/244]	Accuracy_d: 0.9375 (0.8792701863354038)	Loss_d: 0.27825 (0.32868)
+Epoch: [0][180/244]	Accuracy_d: 0.9375 (0.8839779005524862)	Loss_d: 0.19693 (0.32173)
+Epoch: [0][200/244]	Accuracy_d: 0.9375 (0.8893034825870647)	Loss_d: 0.22349 (0.31330)
+Epoch: [0][220/244]	Accuracy_d: 0.9375 (0.8914027149321267)	Loss_d: 0.18347 (0.30808)
+Epoch: [0][240/244]	Accuracy_d: 0.75 (0.891338174273859)	Loss_d: 0.39470 (0.30337)
+Epoch: [1][0/244]	Accuracy_d: 0.875 (0.8908163265306123)	Loss_d: 0.22693 (0.30309)
+Epoch: [1][20/244]	Accuracy_d: 0.9375 (0.8931603773584905)	Loss_d: 0.22874 (0.29753)
+Epoch: [1][40/244]	Accuracy_d: 0.9375 (0.8940789473684211)	Loss_d: 0.19055 (0.29473)
+Epoch: [1][60/244]	Accuracy_d: 0.875 (0.8926229508196721)	Loss_d: 0.26334 (0.29420)
+Epoch: [1][80/244]	Accuracy_d: 1.0 (0.8932692307692308)	Loss_d: 0.15659 (0.29176)
+Epoch: [1][100/244]	Accuracy_d: 0.8125 (0.8942028985507247)	Loss_d: 0.20857 (0.28941)
+Epoch: [1][120/244]	Accuracy_d: 1.0 (0.8950342465753425)	Loss_d: 0.13374 (0.28591)
+Epoch: [1][140/244]	Accuracy_d: 0.9375 (0.8956168831168831)	Loss_d: 0.20390 (0.28448)
+Epoch: [1][160/244]	Accuracy_d: 0.9375 (0.8955246913580247)	Loss_d: 0.22770 (0.28395)
+Epoch: [1][180/244]	Accuracy_d: 0.875 (0.8964705882352941)	Loss_d: 0.35607 (0.28259)
+Epoch: [1][200/244]	Accuracy_d: 0.875 (0.8964887640449438)	Loss_d: 0.23748 (0.28179)
+Epoch: [1][220/244]	Accuracy_d: 0.875 (0.8973118279569893)	Loss_d: 0.53820 (0.28132)
+Epoch: [1][240/244]	Accuracy_d: 0.9375 (0.8983247422680413)	Loss_d: 0.23787 (0.27939)
+Epoch: [2][0/244]	Accuracy_d: 0.9375 (0.8983895705521472)	Loss_d: 0.22922 (0.27901)
+Epoch: [2][20/244]	Accuracy_d: 1.0 (0.899680746561886)	Loss_d: 0.16971 (0.27656)
+Epoch: [2][40/244]	Accuracy_d: 0.9375 (0.900992438563327)	Loss_d: 0.15892 (0.27471)
+Epoch: [2][60/244]	Accuracy_d: 1.0 (0.9020947176684881)	Loss_d: 0.12881 (0.27244)
+Epoch: [2][80/244]	Accuracy_d: 0.8125 (0.9018014059753954)	Loss_d: 0.40592 (0.27189)
+Epoch: [2][100/244]	Accuracy_d: 0.8125 (0.9024830220713073)	Loss_d: 0.45294 (0.27052)
+Epoch: [2][120/244]	Accuracy_d: 0.875 (0.90311986863711)	Loss_d: 0.17309 (0.26850)
+Epoch: [2][140/244]	Accuracy_d: 0.9375 (0.9043124006359301)	Loss_d: 0.11032 (0.26589)
+Epoch: [2][160/244]	Accuracy_d: 0.75 (0.9043721109399075)	Loss_d: 0.50436 (0.26568)
+Epoch: [2][180/244]	Accuracy_d: 0.9375 (0.9049887892376681)	Loss_d: 0.19687 (0.26413)
+Epoch: [2][200/244]	Accuracy_d: 1.0 (0.9062046444121916)	Loss_d: 0.11816 (0.26209)
+Epoch: [2][220/244]	Accuracy_d: 0.875 (0.9069992947813822)	Loss_d: 0.20079 (0.26026)
+Epoch: [2][240/244]	Accuracy_d: 0.9375 (0.9071502057613169)	Loss_d: 0.15515 (0.25989)
+Epoch: [3][0/244]	Accuracy_d: 0.9375 (0.9073158253751705)	Loss_d: 0.17166 (0.25931)
+Epoch: [3][20/244]	Accuracy_d: 0.9375 (0.9083665338645418)	Loss_d: 0.16584 (0.25693)
+Epoch: [3][40/244]	Accuracy_d: 0.75 (0.9086351875808538)	Loss_d: 0.46349 (0.25573)
+Epoch: [3][60/244]	Accuracy_d: 0.875 (0.9088902900378311)	Loss_d: 0.19689 (0.25461)
+Epoch: [3][80/244]	Accuracy_d: 1.0 (0.9093634686346863)	Loss_d: 0.09641 (0.25372)
+Epoch: [3][100/244]	Accuracy_d: 0.9375 (0.9092136854741897)	Loss_d: 0.25384 (0.25377)
+Epoch: [3][120/244]	Accuracy_d: 0.9375 (0.9100967174677609)	Loss_d: 0.13676 (0.25205)
+Epoch: [3][140/244]	Accuracy_d: 1.0 (0.9105097365406644)	Loss_d: 0.10069 (0.25049)
+Epoch: [3][160/244]	Accuracy_d: 0.9375 (0.911114221724524)	Loss_d: 0.20853 (0.24938)
+Epoch: [3][180/244]	Accuracy_d: 0.6875 (0.9109392113910186)	Loss_d: 0.74059 (0.24934)
+Epoch: [3][200/244]	Accuracy_d: 1.0 (0.9117095391211146)	Loss_d: 0.11878 (0.24750)
+Epoch: [3][220/244]	Accuracy_d: 0.875 (0.9118572927597062)	Loss_d: 0.24195 (0.24643)
+Epoch: [3][240/244]	Accuracy_d: 1.0 (0.9123843782117164)	Loss_d: 0.11543 (0.24539)
+Epoch: [4][0/244]	Accuracy_d: 0.875 (0.9121673490276356)	Loss_d: 0.27203 (0.24547)
+Epoch: [4][20/244]	Accuracy_d: 0.75 (0.9128635907723169)	Loss_d: 0.54440 (0.24380)
+Epoch: [4][40/244]	Accuracy_d: 1.0 (0.9134709931170109)	Loss_d: 0.07282 (0.24212)
+Epoch: [4][60/244]	Accuracy_d: 1.0 (0.9138138862102217)	Loss_d: 0.10287 (0.24098)
+Epoch: [4][80/244]	Accuracy_d: 0.9375 (0.9140846736045412)	Loss_d: 0.21536 (0.24068)
+Epoch: [4][100/244]	Accuracy_d: 0.9375 (0.9146935933147632)	Loss_d: 0.18531 (0.23913)
+Epoch: [4][120/244]	Accuracy_d: 0.9375 (0.9147105742935278)	Loss_d: 0.10633 (0.23904)
+Epoch: [4][140/244]	Accuracy_d: 1.0 (0.9151186213070726)	Loss_d: 0.04520 (0.23805)
+Epoch: [4][160/244]	Accuracy_d: 0.875 (0.9154573438874231)	Loss_d: 0.28961 (0.23728)
+Epoch: [4][180/244]	Accuracy_d: 1.0 (0.9161084701815039)	Loss_d: 0.09565 (0.23616)
+Epoch: [4][200/244]	Accuracy_d: 0.875 (0.9161002548853017)	Loss_d: 0.19722 (0.23557)
+Epoch: [4][220/244]	Accuracy_d: 0.9375 (0.9160401002506265)	Loss_d: 0.14801 (0.23490)
+Epoch: [4][240/244]	Accuracy_d: 0.75 (0.9155710764174199)	Loss_d: 0.65742 (0.23530)
+Epoch: [5][0/244]	Accuracy_d: 1.0 (0.9156941031941032)	Loss_d: 0.09883 (0.23499)
+Epoch: [5][20/244]	Accuracy_d: 0.9375 (0.915894439967768)	Loss_d: 0.20861 (0.23460)
+Epoch: [5][40/244]	Accuracy_d: 0.8125 (0.9158901665344964)	Loss_d: 0.48874 (0.23411)
+Epoch: [5][60/244]	Accuracy_d: 1.0 (0.9165202966432474)	Loss_d: 0.10865 (0.23298)
+Epoch: [5][80/244]	Accuracy_d: 0.6875 (0.9160261337432744)	Loss_d: 0.84179 (0.23360)
+Epoch: [5][100/244]	Accuracy_d: 1.0 (0.9161146858440575)	Loss_d: 0.17105 (0.23305)
+Epoch: [5][120/244]	Accuracy_d: 0.9375 (0.9162472035794184)	Loss_d: 0.17687 (0.23224)
+Epoch: [5][140/244]	Accuracy_d: 1.0 (0.9166972814107274)	Loss_d: 0.05977 (0.23118)
+Epoch: [5][160/244]	Accuracy_d: 1.0 (0.9170438088341781)	Loss_d: 0.16032 (0.23070)
+Epoch: [5][180/244]	Accuracy_d: 1.0 (0.916978943611706)	Loss_d: 0.11235 (0.23029)
+Epoch: [5][200/244]	Accuracy_d: 0.9375 (0.9170478536242083)	Loss_d: 0.16427 (0.22963)
+Epoch: [5][220/244]	Accuracy_d: 0.9375 (0.916941360166551)	Loss_d: 0.13002 (0.22944)
+Epoch: [5][240/244]	Accuracy_d: 0.9375 (0.917137234770705)	Loss_d: 0.22768 (0.22878)
+Epoch: [6][0/244]	Accuracy_d: 0.875 (0.9170648464163823)	Loss_d: 0.27610 (0.22877)
+Epoch: [6][20/244]	Accuracy_d: 0.9375 (0.9172558922558922)	Loss_d: 0.14636 (0.22821)
+Epoch: [6][40/244]	Accuracy_d: 0.875 (0.9173172757475083)	Loss_d: 0.28584 (0.22768)
+Epoch: [6][60/244]	Accuracy_d: 0.9375 (0.9174180327868853)	Loss_d: 0.32261 (0.22729)
+Epoch: [6][80/244]	Accuracy_d: 1.0 (0.9174352750809062)	Loss_d: 0.05795 (0.22694)
+Epoch: [6][100/244]	Accuracy_d: 1.0 (0.9176916932907349)	Loss_d: 0.08126 (0.22638)
+Epoch: [6][120/244]	Accuracy_d: 0.9375 (0.917705047318612)	Loss_d: 0.25965 (0.22595)
+Epoch: [6][140/244]	Accuracy_d: 0.9375 (0.9179127725856698)	Loss_d: 0.26224 (0.22533)
+Epoch: [6][160/244]	Accuracy_d: 0.875 (0.9180769230769231)	Loss_d: 0.19407 (0.22470)
+Epoch: [6][180/244]	Accuracy_d: 1.0 (0.9184270516717326)	Loss_d: 0.06652 (0.22416)
+Epoch: [6][200/244]	Accuracy_d: 0.875 (0.9183933933933934)	Loss_d: 0.33899 (0.22405)
+Epoch: [6][220/244]	Accuracy_d: 0.875 (0.9185830860534124)	Loss_d: 0.18365 (0.22354)
+Epoch: [6][240/244]	Accuracy_d: 1.0 (0.9188049853372434)	Loss_d: 0.06021 (0.22299)
+Epoch: [7][0/244]	Accuracy_d: 0.875 (0.9188487419543593)	Loss_d: 0.17245 (0.22279)
+Epoch: [7][20/244]	Accuracy_d: 0.9375 (0.9190283400809717)	Loss_d: 0.12418 (0.22221)
+Epoch: [7][40/244]	Accuracy_d: 1.0 (0.9191680960548885)	Loss_d: 0.03266 (0.22136)
+Epoch: [7][60/244]	Accuracy_d: 0.8125 (0.9190573770491803)	Loss_d: 0.39022 (0.22141)
+Epoch: [7][80/244]	Accuracy_d: 1.0 (0.919543040804919)	Loss_d: 0.05932 (0.22062)
+Epoch: [7][100/244]	Accuracy_d: 0.9375 (0.9197070204532891)	Loss_d: 0.12808 (0.22031)
+Epoch: [7][120/244]	Accuracy_d: 0.875 (0.9201407873154729)	Loss_d: 0.21375 (0.21945)
+Epoch: [7][140/244]	Accuracy_d: 0.9375 (0.9203285559762033)	Loss_d: 0.15025 (0.21884)
+Epoch: [7][160/244]	Accuracy_d: 0.875 (0.9204454253611557)	Loss_d: 0.42224 (0.21848)
+Epoch: [7][180/244]	Accuracy_d: 1.0 (0.9207252514557968)	Loss_d: 0.06661 (0.21835)
+Epoch: [7][200/244]	Accuracy_d: 1.0 (0.9212611314824516)	Loss_d: 0.06206 (0.21713)
+Epoch: [7][220/244]	Accuracy_d: 1.0 (0.9213970969414205)	Loss_d: 0.11077 (0.21673)
+Epoch: [7][240/244]	Accuracy_d: 0.9375 (0.9214661364802463)	Loss_d: 0.21789 (0.21664)
+Epoch: [8][0/244]	Accuracy_d: 0.8125 (0.9213709677419355)	Loss_d: 0.58355 (0.21677)
+Epoch: [8][20/244]	Accuracy_d: 1.0 (0.9217245311708059)	Loss_d: 0.08347 (0.21594)
+Epoch: [8][40/244]	Accuracy_d: 0.8125 (0.9216633216256899)	Loss_d: 0.26291 (0.21588)
+Epoch: [8][60/244]	Accuracy_d: 1.0 (0.921727521112767)	Loss_d: 0.13034 (0.21536)
+Epoch: [8][80/244]	Accuracy_d: 0.9375 (0.9217289719626168)	Loss_d: 0.13244 (0.21558)
+Epoch: [8][100/244]	Accuracy_d: 0.875 (0.9218826108134437)	Loss_d: 0.21054 (0.21517)
+Epoch: [8][120/244]	Accuracy_d: 0.9375 (0.9222141823444283)	Loss_d: 0.09253 (0.21445)
+Epoch: [8][140/244]	Accuracy_d: 0.9375 (0.9224796942188247)	Loss_d: 0.11786 (0.21387)
+Epoch: [8][160/244]	Accuracy_d: 1.0 (0.9227106010411736)	Loss_d: 0.09921 (0.21324)
+Epoch: [8][180/244]	Accuracy_d: 1.0 (0.9227320675105485)	Loss_d: 0.10804 (0.21305)
+Epoch: [8][200/244]	Accuracy_d: 0.875 (0.922724105898746)	Loss_d: 0.14971 (0.21275)
+Epoch: [8][220/244]	Accuracy_d: 1.0 (0.92300391164289)	Loss_d: 0.11916 (0.21208)
+Epoch: [8][240/244]	Accuracy_d: 0.9375 (0.9229366165070679)	Loss_d: 0.12199 (0.21217)
+Epoch: [9][0/244]	Accuracy_d: 0.9375 (0.9230484751934456)	Loss_d: 0.11463 (0.21194)
+Epoch: [9][20/244]	Accuracy_d: 1.0 (0.9231788452864231)	Loss_d: 0.05975 (0.21139)
+Epoch: [9][40/244]	Accuracy_d: 1.0 (0.9234186410371032)	Loss_d: 0.03524 (0.21088)
+Epoch: [9][60/244]	Accuracy_d: 1.0 (0.9234603455914931)	Loss_d: 0.03831 (0.21070)
+Epoch: [9][80/244]	Accuracy_d: 0.9375 (0.9237483530961792)	Loss_d: 0.12034 (0.21020)
+Epoch: [9][100/244]	Accuracy_d: 0.9375 (0.9238136700043535)	Loss_d: 0.25505 (0.20994)
+Epoch: [9][120/244]	Accuracy_d: 0.9375 (0.923850884764782)	Loss_d: 0.15449 (0.20957)
+Epoch: [9][140/244]	Accuracy_d: 0.875 (0.9239944373127942)	Loss_d: 0.19911 (0.20925)
+Epoch: [9][160/244]	Accuracy_d: 1.0 (0.9242416207042851)	Loss_d: 0.06949 (0.20882)
+Epoch: [9][180/244]	Accuracy_d: 1.0 (0.9242480016827934)	Loss_d: 0.05471 (0.20865)
+Epoch: [9][200/244]	Accuracy_d: 0.9375 (0.9244889445139758)	Loss_d: 0.10647 (0.20794)
+Epoch: [9][220/244]	Accuracy_d: 0.9375 (0.9245707488622259)	Loss_d: 0.16185 (0.20786)
+Epoch: [9][240/244]	Accuracy_d: 1.0 (0.9247537956503898)	Loss_d: 0.08542 (0.20733)
+/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/torch/optim/lr_scheduler.py:143: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn("Detected call of `lr_scheduler.step()` before `optimizer.step()`. "
+Training Stage (Step I and II):
+100
+Epoch: [0][0/100]	Accuracy_d 0.7 (0.924705581157194)	Loss_d_2 0.38330432772636414	Time 5.102s (5.102s)	Data 0.601s (0.601s)	Loss_p 0.00056 (0.00056)	Loss_d 0.51034 (0.20735)	Accuracy_p 0.782 (0.782)
+Epoch: [0][20/100]	Accuracy_d 0.4 (0.9205271160669032)	Loss_d_2 0.8060514330863953	Time 0.222s (0.502s)	Data 0.000s (0.029s)	Loss_p 0.00037 (0.00046)	Loss_d 0.99221 (0.21771)	Accuracy_p 0.870 (0.837)
+Epoch: [0][40/100]	Accuracy_d 0.7 (0.9169844455594581)	Loss_d_2 0.520551860332489	Time 0.207s (0.394s)	Data 0.000s (0.015s)	Loss_p 0.00052 (0.00045)	Loss_d 0.55955 (0.22397)	Accuracy_p 0.756 (0.838)
+Epoch: [0][60/100]	Accuracy_d 0.65 (0.9138102334823647)	Loss_d_2 0.6958966255187988	Time 0.322s (0.372s)	Data 0.000s (0.010s)	Loss_p 0.00051 (0.00043)	Loss_d 0.73360 (0.22891)	Accuracy_p 0.814 (0.846)
+Epoch: [0][80/100]	Accuracy_d 0.55 (0.9108706345302509)	Loss_d_2 0.7479544281959534	Time 0.322s (0.357s)	Data 0.000s (0.008s)	Loss_p 0.00042 (0.00042)	Loss_d 0.79423 (0.23305)	Accuracy_p 0.841 (0.854)
+Test: [0/25]	Time 0.564 (0.564)	Loss 0.0004 (0.0004)	Accuracy 0.890 (0.890)
+Test: [20/25]	Time 0.152 (0.156)	Loss 0.0004 (0.0004)	Accuracy 0.887 (0.875)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/json_tricks/encoders.py:419: UserWarning: json-tricks: numpy scalar serialization is experimental and may work differently in future versions
+  warnings.warn('json-tricks: numpy scalar serialization is experimental and may work differently in future versions')
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.881 | 0.989 | 0.948 | -1.000 | 0.881 | 0.898 | 0.997 | 0.955 | -1.000 | 0.898 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.881
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.948
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.881
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.898
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.997
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.955
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.898
+100
+Epoch: [1][0/100]	Accuracy_d 0.55 (0.9246287762416795)	Loss_d_2 0.6297327280044556	Time 0.945s (0.945s)	Data 0.603s (0.603s)	Loss_p 0.00039 (0.00042)	Loss_d 0.65998 (0.23735)	Accuracy_p 0.888 (0.851)
+Epoch: [1][20/100]	Accuracy_d 0.6 (0.9211860111505322)	Loss_d_2 0.6790450215339661	Time 0.383s (0.283s)	Data 0.000s (0.029s)	Loss_p 0.00032 (0.00042)	Loss_d 0.70911 (0.24163)	Accuracy_p 0.896 (0.854)
+Epoch: [1][40/100]	Accuracy_d 0.55 (0.9183391871550427)	Loss_d_2 0.6741873025894165	Time 0.337s (0.309s)	Data 0.000s (0.015s)	Loss_p 0.00044 (0.00041)	Loss_d 0.70076 (0.24564)	Accuracy_p 0.820 (0.856)
+Epoch: [1][60/100]	Accuracy_d 0.55 (0.9156979632389468)	Loss_d_2 0.6858322024345398	Time 0.325s (0.314s)	Data 0.000s (0.010s)	Loss_p 0.00047 (0.00040)	Loss_d 0.70840 (0.24919)	Accuracy_p 0.837 (0.858)
+Epoch: [1][80/100]	Accuracy_d 0.55 (0.9132808657156911)	Loss_d_2 0.6729684472084045	Time 0.289s (0.312s)	Data 0.000s (0.008s)	Loss_p 0.00033 (0.00040)	Loss_d 0.70474 (0.25235)	Accuracy_p 0.901 (0.862)
+Test: [0/25]	Time 0.572 (0.572)	Loss 0.0004 (0.0004)	Accuracy 0.897 (0.897)
+Test: [20/25]	Time 0.195 (0.180)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.880)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.886 | 0.989 | 0.948 | -1.000 | 0.886 | 0.904 | 0.995 | 0.957 | -1.000 | 0.904 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.886
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.948
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.886
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.904
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.957
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.904
+100
+Epoch: [2][0/100]	Accuracy_d 0.45 (0.9245775729646697)	Loss_d_2 0.7258973121643066	Time 0.954s (0.954s)	Data 0.551s (0.551s)	Loss_p 0.00035 (0.00040)	Loss_d 0.76581 (0.25590)	Accuracy_p 0.883 (0.862)
+Epoch: [2][20/100]	Accuracy_d 0.8 (0.9217688798783579)	Loss_d_2 0.5425532460212708	Time 0.227s (0.272s)	Data 0.000s (0.026s)	Loss_p 0.00035 (0.00040)	Loss_d 0.56278 (0.25923)	Accuracy_p 0.900 (0.863)
+Epoch: [2][40/100]	Accuracy_d 0.6 (0.9188911189162067)	Loss_d_2 0.6756749749183655	Time 0.322s (0.301s)	Data 0.000s (0.014s)	Loss_p 0.00033 (0.00039)	Loss_d 0.70211 (0.26256)	Accuracy_p 0.875 (0.865)
+Epoch: [2][60/100]	Accuracy_d 0.8 (0.9168156979632389)	Loss_d_2 0.48379889130592346	Time 0.455s (0.305s)	Data 0.000s (0.009s)	Loss_p 0.00033 (0.00039)	Loss_d 0.49885 (0.26564)	Accuracy_p 0.912 (0.866)
+Epoch: [2][80/100]	Accuracy_d 0.7 (0.914756517461879)	Loss_d_2 0.5500497817993164	Time 0.291s (0.303s)	Data 0.000s (0.007s)	Loss_p 0.00030 (0.00038)	Loss_d 0.58399 (0.26838)	Accuracy_p 0.929 (0.869)
+Test: [0/25]	Time 0.545 (0.545)	Loss 0.0004 (0.0004)	Accuracy 0.901 (0.901)
+Test: [20/25]	Time 0.130 (0.181)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.882)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.892 | 0.989 | 0.948 | -1.000 | 0.892 | 0.907 | 0.995 | 0.952 | -1.000 | 0.907 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.892
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.948
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.892
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.907
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.952
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.907
+100
+Epoch: [3][0/100]	Accuracy_d 0.65 (0.9246799795186892)	Loss_d_2 0.5601634383201599	Time 0.867s (0.867s)	Data 0.543s (0.543s)	Loss_p 0.00037 (0.00038)	Loss_d 0.59000 (0.27128)	Accuracy_p 0.869 (0.869)
+Epoch: [3][20/100]	Accuracy_d 0.55 (0.9216675114039534)	Loss_d_2 0.7260090708732605	Time 0.221s (0.291s)	Data 0.000s (0.026s)	Loss_p 0.00030 (0.00038)	Loss_d 0.75670 (0.27451)	Accuracy_p 0.917 (0.870)
+Epoch: [3][40/100]	Accuracy_d 0.65 (0.9191169091821375)	Loss_d_2 0.5852296948432922	Time 0.188s (0.303s)	Data 0.000s (0.014s)	Loss_p 0.00036 (0.00038)	Loss_d 0.60776 (0.27751)	Accuracy_p 0.862 (0.871)
+Epoch: [3][60/100]	Accuracy_d 0.75 (0.9171137605563835)	Loss_d_2 0.4988956153392792	Time 0.270s (0.309s)	Data 0.000s (0.009s)	Loss_p 0.00034 (0.00038)	Loss_d 0.51618 (0.27994)	Accuracy_p 0.920 (0.873)
+Epoch: [3][80/100]	Accuracy_d 0.85 (0.9157648794884408)	Loss_d_2 0.42617136240005493	Time 0.222s (0.301s)	Data 0.000s (0.007s)	Loss_p 0.00032 (0.00037)	Loss_d 0.45156 (0.28188)	Accuracy_p 0.914 (0.874)
+Test: [0/25]	Time 0.656 (0.656)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+Test: [20/25]	Time 0.122 (0.195)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.883)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.894 | 0.989 | 0.948 | -1.000 | 0.894 | 0.910 | 0.997 | 0.957 | -1.000 | 0.910 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.894
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.948
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.894
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.910
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.997
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.957
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.910
+100
+Epoch: [4][0/100]	Accuracy_d 0.65 (0.9246799795186892)	Loss_d_2 0.5942838788032532	Time 0.781s (0.781s)	Data 0.567s (0.567s)	Loss_p 0.00030 (0.00037)	Loss_d 0.62223 (0.28430)	Accuracy_p 0.931 (0.874)
+Epoch: [4][20/100]	Accuracy_d 0.7 (0.9224277749619868)	Loss_d_2 0.5529008507728577	Time 0.222s (0.287s)	Data 0.000s (0.027s)	Loss_p 0.00029 (0.00037)	Loss_d 0.58369 (0.28713)	Accuracy_p 0.907 (0.874)
+Epoch: [4][40/100]	Accuracy_d 0.45 (0.9200953336678375)	Loss_d_2 0.795322597026825	Time 0.232s (0.295s)	Data 0.000s (0.014s)	Loss_p 0.00038 (0.00037)	Loss_d 0.86000 (0.28953)	Accuracy_p 0.832 (0.875)
+Epoch: [4][60/100]	Accuracy_d 0.75 (0.9181321410829607)	Loss_d_2 0.4553704261779785	Time 0.323s (0.306s)	Data 0.000s (0.010s)	Loss_p 0.00037 (0.00037)	Loss_d 0.48361 (0.29178)	Accuracy_p 0.874 (0.876)
+Epoch: [4][80/100]	Accuracy_d 0.7 (0.9165272995573045)	Loss_d_2 0.5234079360961914	Time 0.221s (0.295s)	Data 0.000s (0.007s)	Loss_p 0.00038 (0.00036)	Loss_d 0.55478 (0.29359)	Accuracy_p 0.845 (0.878)
+Test: [0/25]	Time 0.573 (0.573)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+Test: [20/25]	Time 0.194 (0.190)	Loss 0.0004 (0.0004)	Accuracy 0.887 (0.883)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.895 | 0.989 | 0.948 | -1.000 | 0.895 | 0.911 | 0.995 | 0.960 | -1.000 | 0.911 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.895
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.948
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.895
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.911
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.960
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.911
+100
+Epoch: [5][0/100]	Accuracy_d 0.65 (0.9246799795186892)	Loss_d_2 0.5266647338867188	Time 0.927s (0.927s)	Data 0.669s (0.669s)	Loss_p 0.00031 (0.00036)	Loss_d 0.55582 (0.29548)	Accuracy_p 0.914 (0.878)
+Epoch: [5][20/100]	Accuracy_d 0.4 (0.9222250380131779)	Loss_d_2 0.6517993807792664	Time 0.235s (0.294s)	Data 0.000s (0.032s)	Loss_p 0.00029 (0.00036)	Loss_d 0.69452 (0.29774)	Accuracy_p 0.922 (0.878)
+Epoch: [5][40/100]	Accuracy_d 0.6 (0.92019568489714)	Loss_d_2 0.4970889091491699	Time 0.316s (0.301s)	Data 0.000s (0.017s)	Loss_p 0.00032 (0.00036)	Loss_d 0.53009 (0.29978)	Accuracy_p 0.904 (0.879)
+Epoch: [5][60/100]	Accuracy_d 0.6 (0.9186289120715351)	Loss_d_2 0.5498170256614685	Time 0.343s (0.300s)	Data 0.000s (0.011s)	Loss_p 0.00031 (0.00036)	Loss_d 0.58626 (0.30147)	Accuracy_p 0.910 (0.880)
+Epoch: [5][80/100]	Accuracy_d 0.75 (0.9173143138219381)	Loss_d_2 0.4502839744091034	Time 0.291s (0.291s)	Data 0.000s (0.009s)	Loss_p 0.00032 (0.00036)	Loss_d 0.48582 (0.30276)	Accuracy_p 0.905 (0.881)
+Test: [0/25]	Time 0.664 (0.664)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+Test: [20/25]	Time 0.194 (0.190)	Loss 0.0004 (0.0004)	Accuracy 0.879 (0.883)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.898 | 0.989 | 0.958 | -1.000 | 0.898 | 0.912 | 0.995 | 0.962 | -1.000 | 0.912 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.898
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.898
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.912
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.962
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.912
+100
+Epoch: [6][0/100]	Accuracy_d 0.6 (0.9246543778801843)	Loss_d_2 0.7523345351219177	Time 1.129s (1.129s)	Data 0.748s (0.748s)	Loss_p 0.00031 (0.00036)	Loss_d 0.79644 (0.30465)	Accuracy_p 0.913 (0.881)
+Epoch: [6][20/100]	Accuracy_d 0.6 (0.9222757222503801)	Loss_d_2 0.5325506925582886	Time 0.222s (0.317s)	Data 0.000s (0.036s)	Loss_p 0.00026 (0.00036)	Loss_d 0.56314 (0.30681)	Accuracy_p 0.925 (0.882)
+Epoch: [6][40/100]	Accuracy_d 0.85 (0.9202207727044657)	Loss_d_2 0.5229586362838745	Time 0.371s (0.324s)	Data 0.000s (0.019s)	Loss_p 0.00035 (0.00035)	Loss_d 0.54878 (0.30889)	Accuracy_p 0.867 (0.882)
+Epoch: [6][60/100]	Accuracy_d 0.7 (0.9189021361152508)	Loss_d_2 0.4957863986492157	Time 0.200s (0.317s)	Data 0.000s (0.013s)	Loss_p 0.00031 (0.00035)	Loss_d 0.52397 (0.31023)	Accuracy_p 0.907 (0.883)
+Epoch: [6][80/100]	Accuracy_d 0.6 (0.9175356615838662)	Loss_d_2 0.5644112229347229	Time 0.341s (0.301s)	Data 0.000s (0.009s)	Loss_p 0.00031 (0.00035)	Loss_d 0.61487 (0.31143)	Accuracy_p 0.899 (0.884)
+Test: [0/25]	Time 0.610 (0.610)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+Test: [20/25]	Time 0.215 (0.189)	Loss 0.0004 (0.0004)	Accuracy 0.894 (0.888)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.901 | 0.989 | 0.958 | -1.000 | 0.901 | 0.914 | 0.995 | 0.962 | -1.000 | 0.914 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.901
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.901
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.914
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.962
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.914
+100
+Epoch: [7][0/100]	Accuracy_d 0.65 (0.9246799795186892)	Loss_d_2 0.6676948666572571	Time 0.964s (0.964s)	Data 0.677s (0.677s)	Loss_p 0.00029 (0.00035)	Loss_d 0.72151 (0.31322)	Accuracy_p 0.921 (0.884)
+Epoch: [7][20/100]	Accuracy_d 0.8 (0.9226305119107957)	Loss_d_2 0.3918771743774414	Time 0.221s (0.293s)	Data 0.000s (0.033s)	Loss_p 0.00032 (0.00035)	Loss_d 0.40704 (0.31509)	Accuracy_p 0.892 (0.884)
+Epoch: [7][40/100]	Accuracy_d 0.7 (0.9202709483191169)	Loss_d_2 0.4835541844367981	Time 0.336s (0.301s)	Data 0.000s (0.017s)	Loss_p 0.00034 (0.00035)	Loss_d 0.51479 (0.31692)	Accuracy_p 0.879 (0.885)
+Epoch: [7][60/100]	Accuracy_d 1.0 (0.9190263288623944)	Loss_d_2 0.3085925281047821	Time 0.222s (0.294s)	Data 0.000s (0.011s)	Loss_p 0.00027 (0.00035)	Loss_d 0.32062 (0.31815)	Accuracy_p 0.941 (0.885)
+Epoch: [7][80/100]	Accuracy_d 0.85 (0.9175110673880964)	Loss_d_2 0.3730228543281555	Time 0.316s (0.291s)	Data 0.000s (0.009s)	Loss_p 0.00028 (0.00035)	Loss_d 0.39894 (0.31917)	Accuracy_p 0.915 (0.886)
+Test: [0/25]	Time 0.599 (0.599)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+Test: [20/25]	Time 0.147 (0.198)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.886)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.899 | 0.989 | 0.958 | -1.000 | 0.899 | 0.913 | 0.995 | 0.962 | -1.000 | 0.913 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.899
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.899
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.913
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.962
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.913
+100
+Epoch: [8][0/100]	Accuracy_d 0.75 (0.9247311827956989)	Loss_d_2 0.4109167754650116	Time 0.732s (0.732s)	Data 0.506s (0.506s)	Loss_p 0.00029 (0.00035)	Loss_d 0.43466 (0.32008)	Accuracy_p 0.915 (0.886)
+Epoch: [8][20/100]	Accuracy_d 0.75 (0.9223264064875824)	Loss_d_2 0.38285189867019653	Time 0.223s (0.296s)	Data 0.000s (0.024s)	Loss_p 0.00026 (0.00034)	Loss_d 0.39899 (0.32190)	Accuracy_p 0.922 (0.886)
+Epoch: [8][40/100]	Accuracy_d 0.65 (0.9205218263923733)	Loss_d_2 0.5654110908508301	Time 0.318s (0.283s)	Data 0.000s (0.013s)	Loss_p 0.00036 (0.00034)	Loss_d 0.59714 (0.32347)	Accuracy_p 0.857 (0.887)
+Epoch: [8][60/100]	Accuracy_d 0.8 (0.9193989071038251)	Loss_d_2 0.5420815348625183	Time 0.229s (0.292s)	Data 0.000s (0.009s)	Loss_p 0.00032 (0.00034)	Loss_d 0.57057 (0.32422)	Accuracy_p 0.900 (0.888)
+Epoch: [8][80/100]	Accuracy_d 0.8 (0.9183718642400394)	Loss_d_2 0.454334557056427	Time 0.343s (0.284s)	Data 0.000s (0.007s)	Loss_p 0.00032 (0.00034)	Loss_d 0.48256 (0.32488)	Accuracy_p 0.886 (0.888)
+Test: [0/25]	Time 0.608 (0.608)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+Test: [20/25]	Time 0.197 (0.185)	Loss 0.0004 (0.0004)	Accuracy 0.894 (0.887)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.899 | 0.989 | 0.948 | -1.000 | 0.899 | 0.914 | 0.995 | 0.960 | -1.000 | 0.914 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.899
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.948
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.899
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.914
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.960
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.914
+100
+Epoch: [9][0/100]	Accuracy_d 0.45 (0.9245775729646697)	Loss_d_2 0.8001568913459778	Time 0.871s (0.871s)	Data 0.514s (0.514s)	Loss_p 0.00035 (0.00034)	Loss_d 0.85610 (0.32592)	Accuracy_p 0.890 (0.889)
+Epoch: [9][20/100]	Accuracy_d 0.8 (0.9225291434363913)	Loss_d_2 0.4722963869571686	Time 0.276s (0.314s)	Data 0.000s (0.025s)	Loss_p 0.00028 (0.00034)	Loss_d 0.49723 (0.32748)	Accuracy_p 0.907 (0.889)
+Epoch: [9][40/100]	Accuracy_d 0.75 (0.9208479678876066)	Loss_d_2 0.4378736615180969	Time 0.337s (0.284s)	Data 0.000s (0.013s)	Loss_p 0.00036 (0.00034)	Loss_d 0.47251 (0.32871)	Accuracy_p 0.882 (0.890)
+Epoch: [9][60/100]	Accuracy_d 0.65 (0.9193492300049677)	Loss_d_2 0.5863192677497864	Time 0.290s (0.290s)	Data 0.000s (0.009s)	Loss_p 0.00027 (0.00034)	Loss_d 0.64165 (0.32959)	Accuracy_p 0.946 (0.890)
+Epoch: [9][80/100]	Accuracy_d 0.85 (0.9184210526315789)	Loss_d_2 0.31911349296569824	Time 0.380s (0.282s)	Data 0.000s (0.007s)	Loss_p 0.00028 (0.00033)	Loss_d 0.34347 (0.33018)	Accuracy_p 0.937 (0.891)
+Test: [0/25]	Time 0.578 (0.578)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+Test: [20/25]	Time 0.197 (0.180)	Loss 0.0004 (0.0004)	Accuracy 0.883 (0.889)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.903 | 0.989 | 0.958 | -1.000 | 0.903 | 0.915 | 0.995 | 0.962 | -1.000 | 0.915 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.903
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.903
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.915
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.962
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.915
+100
+Epoch: [10][0/100]	Accuracy_d 0.65 (0.9246799795186892)	Loss_d_2 0.7066299319267273	Time 1.021s (1.021s)	Data 0.560s (0.560s)	Loss_p 0.00028 (0.00033)	Loss_d 0.76668 (0.33107)	Accuracy_p 0.934 (0.891)
+Epoch: [10][20/100]	Accuracy_d 0.7 (0.9225544855549924)	Loss_d_2 0.4295028746128082	Time 0.269s (0.338s)	Data 0.000s (0.027s)	Loss_p 0.00027 (0.00033)	Loss_d 0.46444 (0.33235)	Accuracy_p 0.938 (0.892)
+Epoch: [10][40/100]	Accuracy_d 0.6 (0.9207977922729553)	Loss_d_2 0.5473763346672058	Time 0.435s (0.297s)	Data 0.000s (0.014s)	Loss_p 0.00033 (0.00033)	Loss_d 0.59894 (0.33350)	Accuracy_p 0.888 (0.892)
+Epoch: [10][60/100]	Accuracy_d 0.7 (0.9198211624441133)	Loss_d_2 0.5568235516548157	Time 0.288s (0.295s)	Data 0.000s (0.009s)	Loss_p 0.00036 (0.00033)	Loss_d 0.60160 (0.33407)	Accuracy_p 0.887 (0.893)
+Epoch: [10][80/100]	Accuracy_d 0.8 (0.9188145597638957)	Loss_d_2 0.30699023604393005	Time 0.286s (0.285s)	Data 0.000s (0.007s)	Loss_p 0.00029 (0.00033)	Loss_d 0.32420 (0.33455)	Accuracy_p 0.933 (0.894)
+Test: [0/25]	Time 0.540 (0.540)	Loss 0.0004 (0.0004)	Accuracy 0.919 (0.919)
+Test: [20/25]	Time 0.106 (0.183)	Loss 0.0004 (0.0004)	Accuracy 0.883 (0.888)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.903 | 0.989 | 0.958 | -1.000 | 0.903 | 0.916 | 0.995 | 0.965 | -1.000 | 0.916 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.02s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.16s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.903
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.903
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.916
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.965
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.916
+100
+Epoch: [11][0/100]	Accuracy_d 0.6 (0.9246543778801843)	Loss_d_2 0.621147096157074	Time 0.811s (0.811s)	Data 0.526s (0.526s)	Loss_p 0.00029 (0.00033)	Loss_d 0.66869 (0.33511)	Accuracy_p 0.920 (0.894)
+Epoch: [11][20/100]	Accuracy_d 0.7 (0.9223770907247846)	Loss_d_2 0.49652305245399475	Time 0.293s (0.323s)	Data 0.000s (0.025s)	Loss_p 0.00034 (0.00033)	Loss_d 0.52692 (0.33639)	Accuracy_p 0.894 (0.894)
+Epoch: [11][40/100]	Accuracy_d 0.65 (0.9205720020070246)	Loss_d_2 0.5713979601860046	Time 0.217s (0.289s)	Data 0.000s (0.013s)	Loss_p 0.00039 (0.00033)	Loss_d 0.60796 (0.33756)	Accuracy_p 0.825 (0.894)
+Epoch: [11][60/100]	Accuracy_d 0.65 (0.9192498758072528)	Loss_d_2 0.5992581248283386	Time 0.276s (0.292s)	Data 0.000s (0.009s)	Loss_p 0.00030 (0.00033)	Loss_d 0.64683 (0.33817)	Accuracy_p 0.895 (0.895)
+Epoch: [11][80/100]	Accuracy_d 0.9 (0.9182242990654206)	Loss_d_2 0.29656848311424255	Time 0.228s (0.285s)	Data 0.000s (0.007s)	Loss_p 0.00027 (0.00033)	Loss_d 0.30789 (0.33869)	Accuracy_p 0.925 (0.895)
+Test: [0/25]	Time 0.548 (0.548)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+Test: [20/25]	Time 0.210 (0.184)	Loss 0.0004 (0.0004)	Accuracy 0.887 (0.889)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.904 | 0.989 | 0.958 | -1.000 | 0.904 | 0.917 | 0.995 | 0.965 | -1.000 | 0.917 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.904
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.904
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.917
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.965
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.917
+100
+Epoch: [12][0/100]	Accuracy_d 0.7 (0.924705581157194)	Loss_d_2 0.5118705034255981	Time 0.781s (0.781s)	Data 0.494s (0.494s)	Loss_p 0.00032 (0.00033)	Loss_d 0.55007 (0.33937)	Accuracy_p 0.861 (0.895)
+Epoch: [12][20/100]	Accuracy_d 0.8 (0.9231373542828181)	Loss_d_2 0.3263108730316162	Time 0.316s (0.337s)	Data 0.000s (0.024s)	Loss_p 0.00029 (0.00033)	Loss_d 0.34304 (0.34031)	Accuracy_p 0.913 (0.895)
+Epoch: [12][40/100]	Accuracy_d 0.8 (0.9215755143000501)	Loss_d_2 0.3752545714378357	Time 0.222s (0.295s)	Data 0.000s (0.012s)	Loss_p 0.00025 (0.00032)	Loss_d 0.40625 (0.34116)	Accuracy_p 0.922 (0.896)
+Epoch: [12][60/100]	Accuracy_d 0.8 (0.9205166418281172)	Loss_d_2 0.4155424237251282	Time 0.298s (0.298s)	Data 0.000s (0.008s)	Loss_p 0.00026 (0.00032)	Loss_d 0.44218 (0.34157)	Accuracy_p 0.942 (0.896)
+Epoch: [12][80/100]	Accuracy_d 0.85 (0.9197737333989179)	Loss_d_2 0.36023661494255066	Time 0.347s (0.291s)	Data 0.000s (0.006s)	Loss_p 0.00030 (0.00032)	Loss_d 0.38557 (0.34179)	Accuracy_p 0.914 (0.897)
+Test: [0/25]	Time 0.630 (0.630)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+Test: [20/25]	Time 0.116 (0.184)	Loss 0.0004 (0.0004)	Accuracy 0.894 (0.890)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.905 | 0.989 | 0.958 | -1.000 | 0.905 | 0.918 | 0.995 | 0.965 | -1.000 | 0.918 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.905
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.905
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.918
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.965
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.918
+100
+Epoch: [13][0/100]	Accuracy_d 0.7 (0.924705581157194)	Loss_d_2 0.5009636282920837	Time 1.118s (1.118s)	Data 0.854s (0.854s)	Loss_p 0.00027 (0.00032)	Loss_d 0.55723 (0.34229)	Accuracy_p 0.927 (0.897)
+Epoch: [13][20/100]	Accuracy_d 0.85 (0.9228585909782058)	Loss_d_2 0.3233487606048584	Time 0.319s (0.338s)	Data 0.000s (0.041s)	Loss_p 0.00025 (0.00032)	Loss_d 0.33980 (0.34326)	Accuracy_p 0.938 (0.897)
+Epoch: [13][40/100]	Accuracy_d 0.6 (0.9211991971901656)	Loss_d_2 0.7090343832969666	Time 0.295s (0.301s)	Data 0.000s (0.021s)	Loss_p 0.00028 (0.00032)	Loss_d 0.78041 (0.34418)	Accuracy_p 0.912 (0.897)
+Epoch: [13][60/100]	Accuracy_d 0.8 (0.9202185792349726)	Loss_d_2 0.30882102251052856	Time 0.318s (0.302s)	Data 0.000s (0.014s)	Loss_p 0.00025 (0.00032)	Loss_d 0.33189 (0.34437)	Accuracy_p 0.950 (0.898)
+Epoch: [13][80/100]	Accuracy_d 0.85 (0.9194294146581407)	Loss_d_2 0.473346084356308	Time 0.356s (0.295s)	Data 0.000s (0.011s)	Loss_p 0.00027 (0.00032)	Loss_d 0.50987 (0.34457)	Accuracy_p 0.919 (0.898)
+Test: [0/25]	Time 0.817 (0.817)	Loss 0.0004 (0.0004)	Accuracy 0.915 (0.915)
+Test: [20/25]	Time 0.107 (0.193)	Loss 0.0004 (0.0004)	Accuracy 0.894 (0.890)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.906 | 0.989 | 0.958 | -1.000 | 0.906 | 0.918 | 0.995 | 0.967 | -1.000 | 0.918 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.906
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.906
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.918
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.967
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.918
+100
+Epoch: [14][0/100]	Accuracy_d 0.7 (0.924705581157194)	Loss_d_2 0.49659690260887146	Time 0.934s (0.934s)	Data 0.530s (0.530s)	Loss_p 0.00024 (0.00032)	Loss_d 0.54772 (0.34481)	Accuracy_p 0.932 (0.898)
+Epoch: [14][20/100]	Accuracy_d 0.8 (0.9230359858084136)	Loss_d_2 0.5508280396461487	Time 0.293s (0.321s)	Data 0.000s (0.026s)	Loss_p 0.00030 (0.00032)	Loss_d 0.59277 (0.34579)	Accuracy_p 0.889 (0.898)
+Epoch: [14][40/100]	Accuracy_d 0.65 (0.9216256899147015)	Loss_d_2 0.6069771647453308	Time 0.336s (0.286s)	Data 0.000s (0.013s)	Loss_p 0.00028 (0.00032)	Loss_d 0.67512 (0.34648)	Accuracy_p 0.898 (0.899)
+Epoch: [14][60/100]	Accuracy_d 0.75 (0.9206159960258321)	Loss_d_2 0.46191319823265076	Time 0.269s (0.288s)	Data 0.000s (0.009s)	Loss_p 0.00027 (0.00032)	Loss_d 0.49173 (0.34680)	Accuracy_p 0.920 (0.899)
+Epoch: [14][80/100]	Accuracy_d 0.85 (0.919749139203148)	Loss_d_2 0.2724120318889618	Time 0.296s (0.284s)	Data 0.000s (0.007s)	Loss_p 0.00026 (0.00032)	Loss_d 0.28804 (0.34698)	Accuracy_p 0.921 (0.900)
+Test: [0/25]	Time 0.648 (0.648)	Loss 0.0004 (0.0004)	Accuracy 0.919 (0.919)
+Test: [20/25]	Time 0.121 (0.183)	Loss 0.0004 (0.0004)	Accuracy 0.891 (0.887)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.904 | 0.989 | 0.958 | -1.000 | 0.904 | 0.916 | 0.995 | 0.967 | -1.000 | 0.916 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.904
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.904
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.916
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.967
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.916
+100
+Epoch: [15][0/100]	Accuracy_d 0.65 (0.9246799795186892)	Loss_d_2 0.37167805433273315	Time 0.958s (0.958s)	Data 0.599s (0.599s)	Loss_p 0.00028 (0.00032)	Loss_d 0.40840 (0.34723)	Accuracy_p 0.917 (0.900)
+Epoch: [15][20/100]	Accuracy_d 0.65 (0.9229346173340092)	Loss_d_2 0.514133870601654	Time 0.317s (0.345s)	Data 0.000s (0.029s)	Loss_p 0.00028 (0.00032)	Loss_d 0.56333 (0.34800)	Accuracy_p 0.885 (0.900)
+Epoch: [15][40/100]	Accuracy_d 0.65 (0.9216758655293528)	Loss_d_2 0.5332023501396179	Time 0.343s (0.306s)	Data 0.000s (0.015s)	Loss_p 0.00027 (0.00032)	Loss_d 0.57586 (0.34842)	Accuracy_p 0.914 (0.900)
+Epoch: [15][60/100]	Accuracy_d 0.9 (0.9206905116741182)	Loss_d_2 0.332283616065979	Time 0.220s (0.305s)	Data 0.000s (0.010s)	Loss_p 0.00039 (0.00031)	Loss_d 0.35270 (0.34865)	Accuracy_p 0.869 (0.901)
+Epoch: [15][80/100]	Accuracy_d 0.8 (0.9198475159862273)	Loss_d_2 0.32866737246513367	Time 0.331s (0.297s)	Data 0.000s (0.008s)	Loss_p 0.00028 (0.00031)	Loss_d 0.35885 (0.34863)	Accuracy_p 0.929 (0.901)
+Test: [0/25]	Time 0.605 (0.605)	Loss 0.0003 (0.0003)	Accuracy 0.915 (0.915)
+Test: [20/25]	Time 0.162 (0.187)	Loss 0.0004 (0.0004)	Accuracy 0.903 (0.889)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.906 | 0.989 | 0.958 | -1.000 | 0.906 | 0.918 | 0.995 | 0.965 | -1.000 | 0.918 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.02s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.07s).
+Accumulating evaluation results...
+DONE (t=0.01s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.906
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.906
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.918
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.965
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.918
+100
+Epoch: [16][0/100]	Accuracy_d 0.9 (0.9248079877112135)	Loss_d_2 0.4653426706790924	Time 0.906s (0.906s)	Data 0.519s (0.519s)	Loss_p 0.00026 (0.00031)	Loss_d 0.49737 (0.34896)	Accuracy_p 0.944 (0.901)
+Epoch: [16][20/100]	Accuracy_d 0.75 (0.9234921439432336)	Loss_d_2 0.39772677421569824	Time 0.293s (0.327s)	Data 0.000s (0.025s)	Loss_p 0.00021 (0.00031)	Loss_d 0.42881 (0.34956)	Accuracy_p 0.955 (0.901)
+Epoch: [16][40/100]	Accuracy_d 0.7 (0.9223783241344706)	Loss_d_2 0.4315171241760254	Time 0.284s (0.288s)	Data 0.000s (0.013s)	Loss_p 0.00027 (0.00031)	Loss_d 0.48206 (0.35003)	Accuracy_p 0.912 (0.902)
+Epoch: [16][60/100]	Accuracy_d 0.65 (0.9212121212121213)	Loss_d_2 0.5736861824989319	Time 0.156s (0.247s)	Data 0.000s (0.009s)	Loss_p 0.00026 (0.00031)	Loss_d 0.63527 (0.35031)	Accuracy_p 0.932 (0.902)
+Epoch: [16][80/100]	Accuracy_d 0.75 (0.9202164289227742)	Loss_d_2 0.5380784869194031	Time 0.110s (0.219s)	Data 0.000s (0.007s)	Loss_p 0.00027 (0.00031)	Loss_d 0.57217 (0.35069)	Accuracy_p 0.912 (0.902)
+Test: [0/25]	Time 0.545 (0.545)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+Test: [20/25]	Time 0.207 (0.175)	Loss 0.0004 (0.0004)	Accuracy 0.902 (0.888)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.904 | 0.989 | 0.958 | -1.000 | 0.904 | 0.918 | 0.995 | 0.967 | -1.000 | 0.918 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.02s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.05s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.904
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.904
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.918
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.967
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.918
+100
+Epoch: [17][0/100]	Accuracy_d 0.7 (0.924705581157194)	Loss_d_2 0.6939091682434082	Time 0.935s (0.935s)	Data 0.710s (0.710s)	Loss_p 0.00030 (0.00031)	Loss_d 0.74386 (0.35111)	Accuracy_p 0.927 (0.902)
+Epoch: [17][20/100]	Accuracy_d 0.9 (0.9232640648758236)	Loss_d_2 0.26604172587394714	Time 0.262s (0.258s)	Data 0.000s (0.034s)	Loss_p 0.00024 (0.00031)	Loss_d 0.27790 (0.35166)	Accuracy_p 0.939 (0.903)
+Epoch: [17][40/100]	Accuracy_d 0.75 (0.9216507777220271)	Loss_d_2 0.4325680732727051	Time 0.126s (0.240s)	Data 0.000s (0.018s)	Loss_p 0.00033 (0.00031)	Loss_d 0.47263 (0.35230)	Accuracy_p 0.871 (0.903)
+Epoch: [17][60/100]	Accuracy_d 0.7 (0.9205911574764034)	Loss_d_2 0.5196259021759033	Time 0.139s (0.228s)	Data 0.000s (0.012s)	Loss_p 0.00031 (0.00031)	Loss_d 0.55905 (0.35248)	Accuracy_p 0.885 (0.903)
+Epoch: [17][80/100]	Accuracy_d 0.85 (0.9200442695523856)	Loss_d_2 0.24537543952465057	Time 0.258s (0.208s)	Data 0.000s (0.009s)	Loss_p 0.00021 (0.00031)	Loss_d 0.27093 (0.35235)	Accuracy_p 0.950 (0.903)
+Test: [0/25]	Time 0.599 (0.599)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+Test: [20/25]	Time 0.148 (0.161)	Loss 0.0004 (0.0004)	Accuracy 0.891 (0.890)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.905 | 0.989 | 0.958 | -1.000 | 0.905 | 0.918 | 0.995 | 0.965 | -1.000 | 0.918 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.02s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.18s).
+Accumulating evaluation results...
+DONE (t=0.01s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.905
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.905
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.918
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.965
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.918
+100
+Epoch: [18][0/100]	Accuracy_d 0.85 (0.9247823860727087)	Loss_d_2 0.40353289246559143	Time 1.180s (1.180s)	Data 0.950s (0.950s)	Loss_p 0.00030 (0.00031)	Loss_d 0.43317 (0.35268)	Accuracy_p 0.916 (0.904)
+Epoch: [18][20/100]	Accuracy_d 0.85 (0.9231120121642169)	Loss_d_2 0.28052765130996704	Time 0.256s (0.292s)	Data 0.000s (0.045s)	Loss_p 0.00021 (0.00031)	Loss_d 0.29764 (0.35334)	Accuracy_p 0.962 (0.904)
+Epoch: [18][40/100]	Accuracy_d 0.75 (0.9218765679879578)	Loss_d_2 0.4540685713291168	Time 0.163s (0.238s)	Data 0.000s (0.024s)	Loss_p 0.00024 (0.00031)	Loss_d 0.49275 (0.35370)	Accuracy_p 0.954 (0.904)
+Epoch: [18][60/100]	Accuracy_d 0.6 (0.9208395429706905)	Loss_d_2 0.5740432739257812	Time 0.126s (0.210s)	Data 0.000s (0.017s)	Loss_p 0.00028 (0.00031)	Loss_d 0.61704 (0.35406)	Accuracy_p 0.907 (0.904)
+Epoch: [18][80/100]	Accuracy_d 0.9 (0.9201426463354648)	Loss_d_2 0.2958157956600189	Time 0.128s (0.190s)	Data 0.000s (0.013s)	Loss_p 0.00026 (0.00031)	Loss_d 0.31573 (0.35396)	Accuracy_p 0.956 (0.905)
+Test: [0/25]	Time 0.511 (0.511)	Loss 0.0004 (0.0004)	Accuracy 0.912 (0.912)
+Test: [20/25]	Time 0.088 (0.121)	Loss 0.0004 (0.0004)	Accuracy 0.887 (0.889)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.906 | 0.989 | 0.958 | -1.000 | 0.906 | 0.919 | 0.995 | 0.965 | -1.000 | 0.919 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.03s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.05s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.906
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.906
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.919
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.965
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.919
+100
+Epoch: [19][0/100]	Accuracy_d 0.65 (0.9246799795186892)	Loss_d_2 0.573765754699707	Time 0.621s (0.621s)	Data 0.482s (0.482s)	Loss_p 0.00023 (0.00031)	Loss_d 0.63917 (0.35409)	Accuracy_p 0.949 (0.905)
+Epoch: [19][20/100]	Accuracy_d 0.8 (0.9231373542828181)	Loss_d_2 0.32217517495155334	Time 0.111s (0.141s)	Data 0.000s (0.023s)	Loss_p 0.00022 (0.00031)	Loss_d 0.34096 (0.35483)	Accuracy_p 0.940 (0.905)
+Epoch: [19][40/100]	Accuracy_d 0.8 (0.922002007024586)	Loss_d_2 0.3926354944705963	Time 0.111s (0.127s)	Data 0.000s (0.012s)	Loss_p 0.00025 (0.00030)	Loss_d 0.43424 (0.35527)	Accuracy_p 0.916 (0.905)
+Epoch: [19][60/100]	Accuracy_d 0.7 (0.9211376055638351)	Loss_d_2 0.6450943350791931	Time 0.131s (0.123s)	Data 0.000s (0.008s)	Loss_p 0.00026 (0.00030)	Loss_d 0.71257 (0.35542)	Accuracy_p 0.948 (0.906)
+Epoch: [19][80/100]	Accuracy_d 0.85 (0.9207820954254796)	Loss_d_2 0.24690809845924377	Time 0.118s (0.123s)	Data 0.000s (0.006s)	Loss_p 0.00028 (0.00030)	Loss_d 0.26308 (0.35519)	Accuracy_p 0.921 (0.906)
+Test: [0/25]	Time 0.511 (0.511)	Loss 0.0004 (0.0004)	Accuracy 0.908 (0.908)
+Test: [20/25]	Time 0.107 (0.124)	Loss 0.0004 (0.0004)	Accuracy 0.894 (0.890)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.908 | 0.989 | 0.958 | -1.000 | 0.908 | 0.920 | 0.995 | 0.970 | -1.000 | 0.920 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+saving final model state to /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.04s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.908
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.908
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.920
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.920

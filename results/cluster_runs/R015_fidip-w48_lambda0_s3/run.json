@@ -1,0 +1,66 @@
+{
+ "best_val400_epoch_and_AP": "20 0.9077099946058422",
+ "cfg": "experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml",
+ "checkpoints": {
+  "best_val400": {
+   "path": "/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/model_best.pth",
+   "sha256": "b7b1e5c6cb499989c7ec4491e041a3dd397cbe8147f770f5b49394c3360ca8e4"
+  },
+  "eval_best": {
+   "path": "/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/model_best.pth",
+   "sha256": "b7b1e5c6cb499989c7ec4491e041a3dd397cbe8147f770f5b49394c3360ca8e4"
+  },
+  "eval_final": {
+   "path": "/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth",
+   "sha256": "45ecbe141cd9d612ee69293e7901f6e6955c0b2179f45f6bda71b1770b79605e"
+  },
+  "final": {
+   "path": "/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth",
+   "sha256": "45ecbe141cd9d612ee69293e7901f6e6955c0b2179f45f6bda71b1770b79605e"
+  },
+  "init_coco": {
+   "path": "/scratch/purohitham.v/fidip/models/coco/w48_384x288.pth",
+   "sha256": "c730334eef7c47f051f694949ad2f213526723e46a7781178deb0fc90a93635c"
+  }
+ },
+ "commands": [
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/train_adaptive_model_hrnet.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TRAIN.CHECKPOINT /scratch/purohitham.v/fidip/models/coco/w48_384x288.pth TRAIN.PRE_EPOCH 10 TRAIN.LAMBDA 0.0 DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TRAIN_SET train_infant DATASET.TRAIN_PRE_SET train_pre_infant DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output LOG_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/log WORKERS 8 DEBUG.DEBUG False SEED 3 ",
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/model_best.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET test100 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_best/output LOG_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_best/log",
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/model_best.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_best/output LOG_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_best/log",
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET test100 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_final/output LOG_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/test100_final/log",
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/output LOG_DIR /scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/upstream_eval/val400_final/log"
+ ],
+ "eval_seconds_test100_best": 7,
+ "eval_seconds_test100_final": 8,
+ "eval_seconds_val400_best": 13,
+ "eval_seconds_val400_final": 11,
+ "git_pushed": {
+  "dirty_any": true,
+  "dirty_repro_paths": [
+   " M scripts/collect_results.py",
+   " M scripts/report_interface.py"
+  ],
+  "head": "ea737e741ac38406f05a7a2962ee02a7cf83791c",
+  "pushed_at": "2026-11-06T06:55:51-0500",
+  "tree": "7ca74475bb4148478b21f2a68e14fa63e7cb79e1"
+ },
+ "gpu": [
+  "NVIDIA H200, 143771 MiB, 570.86.15"
+ ],
+ "lambda": 0.0,
+ "run_id": "R015_fidip-w48_lambda0_s3",
+ "seed": 3,
+ "selection": "model_best.pth = best Val400 AP (DATASET.TEST_SET val400); final_state.pth = last epoch",
+ "slurm": {
+  "gpus": "0",
+  "job_id": "11670943",
+  "job_name": "rp_R013-R015",
+  "node": "d4053",
+  "partition": "gpu"
+ },
+ "time_end": "2026-11-06T07:18:51-0500",
+ "time_start": "2026-11-06T07:18:31-0500",
+ "train_exit_code": 0,
+ "train_seconds": 986,
+ "upstream_code_sha256": "bba6ef0751f3dbc7a662f1f4840c25bf1b07f9bcb563d0671919156a2d802857"
+}

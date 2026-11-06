@@ -1,0 +1,101 @@
+2026-11-05 21:09:03,580 Namespace(cfg='experiments/coco/mobilenet/mobile_224x224_adam_lr1e-3_infant.yaml', opts=['TEST.MODEL_FILE', '/scratch/purohitham.v/fidip/models/mobile_fidip.pth', 'TEST.USE_GT_BBOX', 'True', 'WORKERS', '8', 'DEBUG.DEBUG', 'False', 'DATASET.ROOT', '/scratch/purohitham.v/fidip/data/syrip/', 'DATASET.TEST_SET', 'test100', 'OUTPUT_DIR', '/scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/upstream_eval/test100/output', 'LOG_DIR', '/scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/upstream_eval/test100/log'], modelDir='', logDir='', dataDir='', prevModelDir='')
+2026-11-05 21:09:03,580 AUTO_RESUME: True
+CUDNN:
+  BENCHMARK: True
+  DETERMINISTIC: False
+  ENABLED: True
+DATASET:
+  COLOR_RGB: True
+  DATASET: syrip
+  DATA_FORMAT: jpg
+  FLIP: True
+  HYBRID_JOINTS_TYPE: 
+  NUM_JOINTS_HALF_BODY: 8
+  PROB_HALF_BODY: 0.0
+  ROOT: /scratch/purohitham.v/fidip/data/syrip/
+  ROT_FACTOR: 40
+  SCALE_FACTOR: 0.3
+  SELECT_DATA: False
+  TEST_SET: test100
+  TRAIN_PRE_SET: train_pre_infant
+  TRAIN_SET: train_infant
+DATA_DIR: 
+DEBUG:
+  DEBUG: False
+  SAVE_BATCH_IMAGES_GT: True
+  SAVE_BATCH_IMAGES_PRED: True
+  SAVE_HEATMAPS_GT: True
+  SAVE_HEATMAPS_PRED: True
+GPUS: (0,)
+LOG_DIR: /scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/upstream_eval/test100/log
+LOSS:
+  TOPK: 8
+  USE_DIFFERENT_JOINTS_WEIGHT: False
+  USE_OHKM: False
+  USE_TARGET_WEIGHT: True
+MODEL:
+  EXTRA:
+    DECONV_WITH_BIAS: False
+    FINAL_CONV_KERNEL: 1
+    NUM_DECONV_FILTERS: [256, 256, 256]
+    NUM_DECONV_KERNELS: [4, 4, 4]
+    NUM_DECONV_LAYERS: 3
+    NUM_LAYERS: 50
+  HEATMAP_SIZE: [56, 56]
+  IMAGE_SIZE: [224, 224]
+  INIT_WEIGHTS: True
+  NAME: adaptive_pose_mobile
+  NUM_JOINTS: 17
+  PRETRAINED: 
+  SIGMA: 2
+  TAG_PER_JOINT: True
+  TARGET_TYPE: gaussian
+OUTPUT_DIR: /scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/upstream_eval/test100/output
+PIN_MEMORY: True
+PRINT_FREQ: 20
+RANK: 0
+SEED: -1
+TEST:
+  BATCH_SIZE_PER_GPU: 16
+  BBOX_THRE: 1.0
+  BLUR_KERNEL: 11
+  COCO_BBOX_FILE: 
+  FLIP_TEST: True
+  IMAGE_THRE: 0.0
+  IN_VIS_THRE: 0.2
+  MODEL_FILE: /scratch/purohitham.v/fidip/models/mobile_fidip.pth
+  NMS_THRE: 1.0
+  OKS_THRE: 0.9
+  POST_PROCESS: True
+  SOFT_NMS: False
+  USE_GT_BBOX: True
+TRAIN:
+  BATCH_SIZE_PER_GPU: 20
+  BEGIN_EPOCH: 0
+  CHECKPOINT: 
+  END_EPOCH: 20
+  GAMMA1: 0.99
+  GAMMA2: 0.0
+  LAMBDA: 0.0
+  LR: 0.001
+  LR_FACTOR: 0.1
+  LR_STEP: [90, 150]
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPTIMIZER: adam
+  PRE_BATCH_SIZE_PER_GPU: 16
+  PRE_EPOCH: 0
+  RESUME: False
+  SHUFFLE: True
+  WD: 0.0001
+WORKERS: 8
+2026-11-05 21:09:03,719 => loading model from /scratch/purohitham.v/fidip/models/mobile_fidip.pth
+2026-11-05 21:09:03,768 => loaded 332 tensors strictly
+2026-11-05 21:09:03,971 => classes: ['__background__', 'person']
+2026-11-05 21:09:03,971 => num_images: 100
+2026-11-05 21:09:03,978 => load 100 samples
+2026-11-05 21:09:05,903 Test: [0/7]	Time 1.878 (1.878)	Loss 0.0018 (0.0018)	Accuracy 0.779 (0.779)
+2026-11-05 21:09:06,556 => writing results json to /scratch/purohitham.v/fidip/runs/R002_fidip-mobilenet_released/upstream_eval/test100/output/syrip/adaptive_pose_mobile/mobile_224x224_adam_lr1e-3_infant/results/keypoints_test100_results_0.json
+2026-11-05 21:09:06,703 | Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+2026-11-05 21:09:06,703 |---|---|---|---|---|---|---|---|---|---|---|
+2026-11-05 21:09:06,703 | adaptive... | 0.791 | 0.990 | 0.893 | -1.000 | 0.791 | 0.841 | 0.990 | 0.920 | -1.000 | 0.841 |

@@ -1,0 +1,39 @@
+{
+  "tool": "eval/ensemble_preds.py",
+  "weighting": "mean",
+  "match": "single",
+  "inputs": [
+    {
+      "path": "/scratch/purohitham.v/fidip/runs/R136_mmp-vitpose-h256_conf_s2/preds_test100.json",
+      "sha256": "77bfbfd6d5fac8cf7207712a6b1add68b6989cd9a8f6235eb5cc78d0aceaf2d8",
+      "n": 100,
+      "run_id": "R136_mmp-vitpose-h256_conf_s2"
+    },
+    {
+      "path": "/scratch/purohitham.v/fidip/runs/R137_mmp-vitpose-h256_conf_s3/preds_test100.json",
+      "sha256": "4a2c54b9eaa5a77673abdf9fd3b4341898c3cccfcb1ee896622ef82b2a2027fe",
+      "n": 100,
+      "run_id": "R137_mmp-vitpose-h256_conf_s3"
+    },
+    {
+      "path": "/scratch/purohitham.v/fidip/runs/R138_mmp-vitpose-h256_conf_s4/preds_test100.json",
+      "sha256": "66c1b97bde35ffba2a3d1595cbab59f59a46b9417e4f2535fd2478dd58b257a6",
+      "n": 100,
+      "run_id": "R138_mmp-vitpose-h256_conf_s4"
+    },
+    {
+      "path": "/scratch/purohitham.v/fidip/runs/R139_mmp-vitpose-h256_conf_s5/preds_test100.json",
+      "sha256": "b3abc2b5037bf104508dd5f20ce785207cd132172482a4fbfc15a42e2d5c9cc3",
+      "n": 100,
+      "run_id": "R139_mmp-vitpose-h256_conf_s5"
+    },
+    {
+      "path": "/scratch/purohitham.v/fidip/runs/R140_mmp-vitpose-h256_conf_s6/preds_test100.json",
+      "sha256": "f4a9bf98dc3d71591c2ee5a7c5559a931c6e4ee6cfff36b316780d498756a885",
+      "n": 100,
+      "run_id": "R140_mmp-vitpose-h256_conf_s6"
+    }
+  ],
+  "n_out": 100,
+  "n_instances_missing_some_model": 0
+}

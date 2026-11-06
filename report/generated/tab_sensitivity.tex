@@ -4,13 +4,13 @@
 \toprule
 Condition & Variant & Split & Released FiDIP & Best config.\\
 \midrule
-Matching protocol (D10, D13) & \texttt{paper}: ids as shipped (headline) & Test100 & 93.6 & \tbd\\
- & \texttt{fixed}: ids shifted off 0 & Test100 & 95.0 & \tbd\\
+Matching protocol (D10, D13) & \texttt{paper}: ids as shipped (headline) & Test100 & 93.6 & 95.2\\
+ & \texttt{fixed}: ids shifted off 0 & Test100 & 95.0 & 97.0\\
 \midrule
-Train/test overlap (D16) & Test100 as shipped (100) & Test100 & 93.6 & \tbd\\
- & Test100-clean (95; copies of training images removed) & Test100-clean & 92.8 & \tbd\\
+Train/test overlap (D16) & Test100 as shipped (100) & Test100 & 93.6 & 95.2\\
+ & Test100-clean (95; copies of training images removed) & Test100-clean & 92.8 & 94.4\\
 \midrule
-Test images (D17) & \texttt{SyRIP.zip} (ours) & Test100 & 93.6 & \tbd\\
+Test images (D17) & \texttt{SyRIP.zip} (ours) & Test100 & 93.6 & 95.2\\
  & \texttt{syrip\_for\_train.zip} (test11 = copy of test24) & Test100 & 92.1 & ---\\
 \midrule
 GT boxes of the same 100 images & validate100 (as shipped) & Test100 & 93.6 & ---\\
@@ -19,7 +19,7 @@ GT boxes of the same 100 images & validate100 (as shipped) & Test100 & 93.6 & --
 OKS area on Val400 (D8) & shipped constant 2443298.48 & Val400 & 98.9 & ---\\
  & $\text{area} = w h$ (ours) & Val400 & 90.4 & 92.9\\
 \midrule
-Metric code & \texttt{eval\_coco.py} (pycocotools 2.0.8) & Test100 & 93.6 & \tbd\\
+Metric code & \texttt{eval\_coco.py} (pycocotools 2.0.8) & Test100 & 93.6 & 95.2\\
  & MMPose \texttt{CocoMetric} (xtcocotools) & Test100 & 95.0 & ---\\
 \bottomrule
 \end{tabular}

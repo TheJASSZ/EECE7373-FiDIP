@@ -1,0 +1,220 @@
+Namespace(cfg='experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml', opts=['TRAIN.CHECKPOINT', '/scratch/purohitham.v/fidip/models/coco/w48_384x288.pth', 'TRAIN.PRE_EPOCH', '10', 'TRAIN.LAMBDA', '0.0005', 'DATASET.ROOT', '/scratch/purohitham.v/fidip/data/syrip/', 'DATASET.TRAIN_SET', 'train_infant', 'DATASET.TRAIN_PRE_SET', 'train_pre_infant', 'DATASET.TEST_SET', 'val400', 'OUTPUT_DIR', '/scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output', 'LOG_DIR', '/scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/log', 'WORKERS', '8', 'DEBUG.DEBUG', 'False', 'SEED', '1', 'TRAIN.END_EPOCH', '1', 'TRAIN.PRE_EPOCH', '1'], modelDir='', logDir='', dataDir='', prevModelDir='')
+AUTO_RESUME: True
+CUDNN:
+  BENCHMARK: True
+  DETERMINISTIC: False
+  ENABLED: True
+DATASET:
+  COLOR_RGB: True
+  DATASET: syrip
+  DATA_FORMAT: jpg
+  FLIP: True
+  HYBRID_JOINTS_TYPE: 
+  NUM_JOINTS_HALF_BODY: 8
+  PROB_HALF_BODY: 0.3
+  ROOT: /scratch/purohitham.v/fidip/data/syrip/
+  ROT_FACTOR: 45
+  SCALE_FACTOR: 0.35
+  SELECT_DATA: False
+  TEST_SET: val400
+  TRAIN_PRE_SET: train_pre_infant
+  TRAIN_SET: train_infant
+DATA_DIR: 
+DEBUG:
+  DEBUG: False
+  SAVE_BATCH_IMAGES_GT: True
+  SAVE_BATCH_IMAGES_PRED: True
+  SAVE_HEATMAPS_GT: True
+  SAVE_HEATMAPS_PRED: True
+GPUS: (0,)
+LOG_DIR: /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/log
+LOSS:
+  TOPK: 8
+  USE_DIFFERENT_JOINTS_WEIGHT: False
+  USE_OHKM: False
+  USE_TARGET_WEIGHT: True
+MODEL:
+  EXTRA:
+    FINAL_CONV_KERNEL: 1
+    PRETRAINED_LAYERS: ['conv1', 'bn1', 'conv2', 'bn2', 'layer1', 'transition1', 'stage2', 'transition2', 'stage3', 'transition3', 'stage4']
+    STAGE2:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4]
+      NUM_BRANCHES: 2
+      NUM_CHANNELS: [48, 96]
+      NUM_MODULES: 1
+    STAGE3:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4]
+      NUM_BRANCHES: 3
+      NUM_CHANNELS: [48, 96, 192]
+      NUM_MODULES: 4
+    STAGE4:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4, 4]
+      NUM_BRANCHES: 4
+      NUM_CHANNELS: [48, 96, 192, 384]
+      NUM_MODULES: 3
+  HEATMAP_SIZE: [72, 96]
+  IMAGE_SIZE: [288, 384]
+  INIT_WEIGHTS: True
+  NAME: adaptive_pose_hrnet
+  NUM_JOINTS: 17
+  PRETRAINED: 
+  SIGMA: 3
+  TAG_PER_JOINT: True
+  TARGET_TYPE: gaussian
+OUTPUT_DIR: /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output
+PIN_MEMORY: True
+PRINT_FREQ: 20
+RANK: 0
+SEED: 1
+TEST:
+  BATCH_SIZE_PER_GPU: 16
+  BBOX_THRE: 1.0
+  BLUR_KERNEL: 11
+  COCO_BBOX_FILE: data/coco/person_detection_results/COCO_val2017_detections_AP_H_56_person.json
+  FLIP_TEST: True
+  IMAGE_THRE: 0.0
+  IN_VIS_THRE: 0.2
+  MODEL_FILE: models/coco/w48_384×288.pth
+  NMS_THRE: 1.0
+  OKS_THRE: 0.9
+  POST_PROCESS: True
+  SOFT_NMS: False
+  USE_GT_BBOX: True
+TRAIN:
+  BATCH_SIZE_PER_GPU: 20
+  BEGIN_EPOCH: 0
+  CHECKPOINT: /scratch/purohitham.v/fidip/models/coco/w48_384x288.pth
+  END_EPOCH: 1
+  GAMMA1: 0.99
+  GAMMA2: 0.0
+  LAMBDA: 0.0005
+  LR: 0.0001
+  LR_FACTOR: 0.1
+  LR_STEP: [40, 200]
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPTIMIZER: adam
+  PRE_BATCH_SIZE_PER_GPU: 16
+  PRE_EPOCH: 1
+  RESUME: False
+  SHUFFLE: True
+  WD: 0.0001
+WORKERS: 8
+=> seeded python/numpy/torch/cuda RNGs with SEED=1
+=> init weights from normal distribution
+=> loading model from /scratch/purohitham.v/fidip/models/coco/w48_384x288.pth
+
+Total Parameters: 63,595,745
+----------------------------------------------------------------------------------------------------------------------------------
+Total Multiply Adds (For Convolution and Linear Layers only): 32.881839752197266 GFLOPs
+----------------------------------------------------------------------------------------------------------------------------------
+Number of Layers
+Conv2d : 293 layers   BatchNorm2d : 292 layers   ReLU : 261 layers   Bottleneck : 4 layers   BasicBlock : 104 layers   Upsample : 28 layers   HighResolutionModule : 8 layers   
+=> classes: ['__background__', 'person']
+=> num_images: 4057
+=> load 3904 samples
+=> classes: ['__background__', 'person']
+=> num_images: 1200
+=> load 1200 samples
+=> classes: ['__background__', 'person']
+=> num_images: 397
+=> load 397 samples
+=> creating /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output
+=> creating /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+=> creating /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/log/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant_2026-11-06-01-13
+loading annotations into memory...
+Done (t=0.06s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=0.03s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=0.01s)
+creating index...
+index created!
+Pretrained Stage:
+Start to train Domain Classifier-------
+Epoch: [0][0/244]	Accuracy_d: 0.375 (0.375)	Loss_d: 0.68099 (0.68099)
+Epoch: [0][20/244]	Accuracy_d: 0.75 (0.8273809523809523)	Loss_d: 0.44245 (0.47240)
+Epoch: [0][40/244]	Accuracy_d: 0.8125 (0.8490853658536586)	Loss_d: 0.34165 (0.41769)
+Epoch: [0][60/244]	Accuracy_d: 0.9375 (0.8709016393442623)	Loss_d: 0.27383 (0.38292)
+Epoch: [0][80/244]	Accuracy_d: 0.9375 (0.8819444444444444)	Loss_d: 0.21910 (0.36393)
+Epoch: [0][100/244]	Accuracy_d: 0.875 (0.8879950495049505)	Loss_d: 0.45361 (0.34738)
+Epoch: [0][120/244]	Accuracy_d: 0.9375 (0.8941115702479339)	Loss_d: 0.19769 (0.33322)
+Epoch: [0][140/244]	Accuracy_d: 0.9375 (0.8927304964539007)	Loss_d: 0.30334 (0.33045)
+Epoch: [0][160/244]	Accuracy_d: 0.9375 (0.8971273291925466)	Loss_d: 0.19710 (0.31903)
+Epoch: [0][180/244]	Accuracy_d: 0.9375 (0.8974447513812155)	Loss_d: 0.19872 (0.31563)
+Epoch: [0][200/244]	Accuracy_d: 0.9375 (0.898320895522388)	Loss_d: 0.23559 (0.31035)
+Epoch: [0][220/244]	Accuracy_d: 0.8125 (0.9007352941176471)	Loss_d: 0.47165 (0.30667)
+Epoch: [0][240/244]	Accuracy_d: 1.0 (0.9006742738589212)	Loss_d: 0.11406 (0.30472)
+/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/torch/optim/lr_scheduler.py:143: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn("Detected call of `lr_scheduler.step()` before `optimizer.step()`. "
+Training Stage (Step I and II):
+100
+Epoch: [0][0/100]	Accuracy_d 0.6 (0.8990825688073395)	Loss_d_2 0.8583507537841797	Time 2.246s (2.246s)	Data 0.691s (0.691s)	Loss_p 0.00010 (0.00010)	Loss_d 0.93065 (0.30692)	Accuracy_p 0.803 (0.803)
+Epoch: [0][20/100]	Accuracy_d 0.45 (0.8633209990749307)	Loss_d_2 0.88686603307724	Time 0.114s (0.229s)	Data 0.000s (0.033s)	Loss_p 0.00005 (0.00002)	Loss_d 0.96060 (0.37046)	Accuracy_p 0.783 (0.827)
+Epoch: [0][40/100]	Accuracy_d 0.65 (0.8314987298899238)	Loss_d_2 0.6920366287231445	Time 0.115s (0.174s)	Data 0.000s (0.017s)	Loss_p 0.00011 (0.00004)	Loss_d 0.73459 (0.40764)	Accuracy_p 0.851 (0.841)
+Epoch: [0][60/100]	Accuracy_d 0.6 (0.804839968774395)	Loss_d_2 0.5928367376327515	Time 0.121s (0.155s)	Data 0.000s (0.012s)	Loss_p 0.00026 (0.00004)	Loss_d 0.61279 (0.43413)	Accuracy_p 0.779 (0.848)
+Epoch: [0][80/100]	Accuracy_d 0.7 (0.7901882693700217)	Loss_d_2 0.6439830660820007	Time 0.120s (0.145s)	Data 0.000s (0.009s)	Loss_p -0.00000 (0.00004)	Loss_d 0.66989 (0.45183)	Accuracy_p 0.897 (0.857)
+Test: [0/25]	Time 0.855 (0.855)	Loss 0.0004 (0.0004)	Accuracy 0.890 (0.890)
+Test: [20/25]	Time 0.108 (0.168)	Loss 0.0004 (0.0004)	Accuracy 0.898 (0.874)
+=> writing results json to /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/results/keypoints_val400_results_0.json
+/scratch/purohitham.v/fidip/envs/fidip/lib/python3.12/site-packages/json_tricks/encoders.py:419: UserWarning: json-tricks: numpy scalar serialization is experimental and may work differently in future versions
+  warnings.warn('json-tricks: numpy scalar serialization is experimental and may work differently in future versions')
+| Arch | AP | Ap .5 | AP .75 | AP (M) | AP (L) | AR | AR .5 | AR .75 | AR (M) | AR (L) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| adaptive... | 0.881 | 0.989 | 0.938 | -1.000 | 0.881 | 0.898 | 0.997 | 0.947 | -1.000 | 0.898 |
+=> saving checkpoint to /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant
+saving final model state to /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+batch
+Loading and preparing results...
+DONE (t=0.03s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.10s).
+Accumulating evaluation results...
+DONE (t=0.01s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.881
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.938
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.881
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] = 0.898
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] = 0.997
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] = 0.947
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] = 0.898

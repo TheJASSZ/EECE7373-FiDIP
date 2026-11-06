@@ -1,0 +1,1 @@
+R191_mmp-vitpose-l384_smoke_s1,11659558,improve,mmp-vitpose-l384,smoke,1,mmpose_exps/configs/syrip_vitpose-l_udp-384x288.py,220492ff0757/tree:bc76972919d9+dirty,sharing,NVIDIA L40S,done,91.19,,/scratch/purohitham.v/fidip/runs/R191_mmp-vitpose-l384_smoke_s1/best_coco_AP_epoch_2.pth,75297aac01e477b148e4f87d54c18073047b8a98b5ad99c975cb57a476e6d7be,

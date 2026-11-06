@@ -1,0 +1,2 @@
+R106_mmp-hrnetw48_lr2e-4_s1,11659885,improve,mmp-hrnetw48,lr2e-4,1,mmpose_exps/configs/syrip_hrnet-w48_dark-384x288.py,942e20d30a4e/tree:e5270eb3e0ce,gpu,"NVIDIA A100-SXM4-40GB
+NVIDIA A100-SXM4-40GB",done,91.43,,/scratch/purohitham.v/fidip/runs/R106_mmp-hrnetw48_lr2e-4_s1/best_coco_AP_epoch_28.pth,3c2cc69e550bf92b765f87fc44aa5c5064333e2154515384fbbec3f8fd6e3a74,

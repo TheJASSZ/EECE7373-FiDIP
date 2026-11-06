@@ -1,0 +1,23 @@
+{
+ "note": "MMPose CocoMetric (xtcocotools, no id-0 artifact). Bookkeeping only; reported numbers come from eval/eval_coco.py on preds_val400.json",
+ "run_id": "R190_mmp-hrnetw48_smoke_s1",
+ "split": "val400",
+ "ann_file": "/scratch/purohitham.v/fidip/data/splits/val400.json",
+ "checkpoint": "/scratch/purohitham.v/fidip/runs/R190_mmp-hrnetw48_smoke_s1/best_coco_AP_epoch_2.pth",
+ "config": "/scratch/purohitham.v/fidip/runs/R190_mmp-hrnetw48_smoke_s1/config.py",
+ "flip_test": true,
+ "cfg_options": null,
+ "seconds": 24.0,
+ "metrics": {
+  "coco/AP": 0.8984904949374577,
+  "coco/AP .5": 0.989106429439936,
+  "coco/AP .75": 0.9578360261355844,
+  "coco/AP (M)": -1.0,
+  "coco/AP (L)": 0.8984904949374577,
+  "coco/AR": 0.9117500000000002,
+  "coco/AR .5": 0.995,
+  "coco/AR .75": 0.9625,
+  "coco/AR (M)": -1.0,
+  "coco/AR (L)": 0.9117500000000002
+ }
+}

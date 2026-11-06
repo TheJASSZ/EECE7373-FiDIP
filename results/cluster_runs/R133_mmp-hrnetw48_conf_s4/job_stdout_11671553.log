@@ -1,0 +1,1998 @@
+run=R133_mmp-hrnetw48_conf_s4 config=mmpose_exps/configs/syrip_hrnet-w48_dark-384x288.py seed=4 cfg_opts='' job=11671553 node=d4047 start=2026-11-06T08:11:21-05:00
+11/06 08:11:48 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.10.22 | packaged by conda-forge | (main, Oct  6 2026, 23:02:24) [GCC 14.4.0]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 4
+    GPU 0: NVIDIA L40S
+    CUDA_HOME: /shared/EL9/explorer/cuda/12.1.1
+    NVCC: Cuda compilation tools, release 12.1, V12.1.105
+    GCC: gcc (GCC) 11.4.1 20230605 (Red Hat 11.4.1-2)
+    PyTorch: 2.1.2+cu121
+    PyTorch compiling details: PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2022.2-Product Build 20220804 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX512
+  - CUDA Runtime 12.1
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 8.9.2
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.1, CUDNN_VERSION=8.9.2, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-invalid-partial-specialization -Wno-unused-private-field -Wno-aligned-allocation-unavailable -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Werror=cast-function-type -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=ON, TORCH_VERSION=2.1.2, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=1, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.2+cu121
+    OpenCV: 4.11.0
+    MMEngine: 0.10.7
+
+Runtime environment:
+    cudnn_benchmark: False
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    dist_cfg: {'backend': 'nccl'}
+    seed: 4
+    deterministic: False
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+11/06 08:11:49 - mmengine - INFO - Config:
+ann_real200 = '/scratch/purohitham.v/fidip/mmpose_data/splits/train_real200.json'
+ann_syn1000 = '/scratch/purohitham.v/fidip/mmpose_data/splits/train_syn1000.json'
+ann_test100 = 'splits/test100.json'
+ann_val400 = 'splits/val400.json'
+backend_args = dict(backend='local')
+coco_metainfo = dict(
+    from_file=
+    '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py')
+codec = dict(
+    heatmap_size=(
+        72,
+        96,
+    ),
+    input_size=(
+        288,
+        384,
+    ),
+    sigma=3,
+    type='MSRAHeatmap',
+    unbiased=True)
+custom_hooks = [
+    dict(type='SyncBuffersHook'),
+]
+data_mode = 'topdown'
+data_root = '/scratch/purohitham.v/fidip/data/'
+dataset_type = 'CocoDataset'
+default_hooks = dict(
+    badcase=dict(
+        badcase_thr=5,
+        enable=False,
+        metric_type='loss',
+        out_dir='badcase',
+        type='BadCaseAnalysisHook'),
+    checkpoint=dict(
+        interval=5,
+        max_keep_ckpts=1,
+        rule='greater',
+        save_best='coco/AP',
+        type='CheckpointHook'),
+    logger=dict(interval=10, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(enable=False, type='PoseVisualizationHook'))
+default_scope = 'mmpose'
+derived_root = '/scratch/purohitham.v/fidip/mmpose_data/'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+img_test100 = 'syrip/images/test100/'
+img_train = 'syrip/images/train_infant/'
+img_val400 = 'syrip/images/val400/'
+launcher = 'none'
+load_from = '/scratch/purohitham.v/fidip/models/mmpose/td-hm_hrnet-w48_dark-8xb32-210e_coco-384x288-39c3c381_20220916.pth'
+log_level = 'INFO'
+log_processor = dict(
+    by_epoch=True, num_digits=6, type='LogProcessor', window_size=50)
+model = dict(
+    backbone=dict(
+        extra=dict(
+            stage1=dict(
+                block='BOTTLENECK',
+                num_blocks=(4, ),
+                num_branches=1,
+                num_channels=(64, ),
+                num_modules=1),
+            stage2=dict(
+                block='BASIC',
+                num_blocks=(
+                    4,
+                    4,
+                ),
+                num_branches=2,
+                num_channels=(
+                    48,
+                    96,
+                ),
+                num_modules=1),
+            stage3=dict(
+                block='BASIC',
+                num_blocks=(
+                    4,
+                    4,
+                    4,
+                ),
+                num_branches=3,
+                num_channels=(
+                    48,
+                    96,
+                    192,
+                ),
+                num_modules=4),
+            stage4=dict(
+                block='BASIC',
+                num_blocks=(
+                    4,
+                    4,
+                    4,
+                    4,
+                ),
+                num_branches=4,
+                num_channels=(
+                    48,
+                    96,
+                    192,
+                    384,
+                ),
+                num_modules=3)),
+        in_channels=3,
+        type='HRNet'),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        std=[
+            58.395,
+            57.12,
+            57.375,
+        ],
+        type='PoseDataPreprocessor'),
+    head=dict(
+        decoder=dict(
+            heatmap_size=(
+                72,
+                96,
+            ),
+            input_size=(
+                288,
+                384,
+            ),
+            sigma=3,
+            type='MSRAHeatmap',
+            unbiased=True),
+        deconv_out_channels=None,
+        in_channels=48,
+        loss=dict(type='KeypointMSELoss', use_target_weight=True),
+        out_channels=17,
+        type='HeatmapHead'),
+    test_cfg=dict(flip_mode='heatmap', flip_test=True, shift_heatmap=True),
+    type='TopdownPoseEstimator')
+optim_wrapper = dict(optimizer=dict(lr=0.0001, type='Adam'))
+param_scheduler = [
+    dict(
+        begin=0,
+        by_epoch=True,
+        convert_to_iter_based=True,
+        end=1,
+        start_factor=0.001,
+        type='LinearLR'),
+    dict(
+        begin=0,
+        by_epoch=True,
+        end=30,
+        gamma=0.1,
+        milestones=[
+            24,
+            29,
+        ],
+        type='MultiStepLR'),
+]
+randomness = dict(deterministic=False, seed=4)
+resume = False
+test_cfg = dict()
+test_dataloader = dict(
+    batch_size=32,
+    dataset=dict(
+        ann_file='splits/test100.json',
+        data_mode='topdown',
+        data_prefix=dict(img='syrip/images/test100/'),
+        data_root='/scratch/purohitham.v/fidip/data/',
+        metainfo=dict(
+            from_file=
+            '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+        ),
+        pipeline=[
+            dict(type='LoadImage'),
+            dict(type='GetBBoxCenterScale'),
+            dict(input_size=(
+                288,
+                384,
+            ), type='TopdownAffine'),
+            dict(type='PackPoseInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(round_up=False, shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file='/scratch/purohitham.v/fidip/data/splits/test100.json',
+    type='CocoMetric')
+train_cfg = dict(by_epoch=True, max_epochs=30, val_interval=1)
+train_dataloader = dict(
+    batch_size=32,
+    dataset=dict(
+        datasets=[
+            dict(
+                ann_file=
+                '/scratch/purohitham.v/fidip/mmpose_data/splits/train_real200.json',
+                data_mode='topdown',
+                data_prefix=dict(img='syrip/images/train_infant/'),
+                data_root='/scratch/purohitham.v/fidip/data/',
+                metainfo=dict(
+                    from_file=
+                    '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+                ),
+                pipeline=[],
+                type='CocoDataset'),
+            dict(
+                ann_file=
+                '/scratch/purohitham.v/fidip/mmpose_data/splits/train_syn1000.json',
+                data_mode='topdown',
+                data_prefix=dict(img='syrip/images/train_infant/'),
+                data_root='/scratch/purohitham.v/fidip/data/',
+                metainfo=dict(
+                    from_file=
+                    '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+                ),
+                pipeline=[],
+                type='CocoDataset'),
+        ],
+        metainfo=dict(
+            from_file=
+            '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+        ),
+        pipeline=[
+            dict(type='LoadImage'),
+            dict(type='GetBBoxCenterScale'),
+            dict(direction='horizontal', type='RandomFlip'),
+            dict(type='RandomHalfBody'),
+            dict(type='RandomBBoxTransform'),
+            dict(input_size=(
+                288,
+                384,
+            ), type='TopdownAffine'),
+            dict(
+                encoder=dict(
+                    heatmap_size=(
+                        72,
+                        96,
+                    ),
+                    input_size=(
+                        288,
+                        384,
+                    ),
+                    sigma=3,
+                    type='MSRAHeatmap',
+                    unbiased=True),
+                type='GenerateTarget'),
+            dict(type='PackPoseInputs'),
+        ],
+        sample_ratio_factor=[
+            5.0,
+            1.0,
+        ],
+        type='CombinedDataset'),
+    num_workers=6,
+    persistent_workers=True,
+    pin_memory=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline = [
+    dict(type='LoadImage'),
+    dict(type='GetBBoxCenterScale'),
+    dict(direction='horizontal', type='RandomFlip'),
+    dict(type='RandomHalfBody'),
+    dict(type='RandomBBoxTransform'),
+    dict(input_size=(
+        288,
+        384,
+    ), type='TopdownAffine'),
+    dict(
+        encoder=dict(
+            heatmap_size=(
+                72,
+                96,
+            ),
+            input_size=(
+                288,
+                384,
+            ),
+            sigma=3,
+            type='MSRAHeatmap',
+            unbiased=True),
+        type='GenerateTarget'),
+    dict(type='PackPoseInputs'),
+]
+val_cfg = dict()
+val_dataloader = dict(
+    batch_size=32,
+    dataset=dict(
+        ann_file='splits/val400.json',
+        data_mode='topdown',
+        data_prefix=dict(img='syrip/images/val400/'),
+        data_root='/scratch/purohitham.v/fidip/data/',
+        metainfo=dict(
+            from_file=
+            '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+        ),
+        pipeline=[
+            dict(type='LoadImage'),
+            dict(type='GetBBoxCenterScale'),
+            dict(input_size=(
+                288,
+                384,
+            ), type='TopdownAffine'),
+            dict(type='PackPoseInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(round_up=False, shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file='/scratch/purohitham.v/fidip/data/splits/val400.json',
+    type='CocoMetric')
+val_pipeline = [
+    dict(type='LoadImage'),
+    dict(type='GetBBoxCenterScale'),
+    dict(input_size=(
+        288,
+        384,
+    ), type='TopdownAffine'),
+    dict(type='PackPoseInputs'),
+]
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='PoseLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = '/scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4'
+
+11/06 08:11:50 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+11/06 08:11:51 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SyncBuffersHook                    
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SyncBuffersHook                    
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) PoseVisualizationHook              
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) PoseVisualizationHook              
+(NORMAL      ) BadCaseAnalysisHook                
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) BadCaseAnalysisHook                
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+loading annotations into memory...
+Done (t=0.01s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=0.02s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=0.01s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=0.01s)
+creating index...
+index created!
+Loads checkpoint by local backend from path: /scratch/purohitham.v/fidip/models/mmpose/td-hm_hrnet-w48_dark-8xb32-210e_coco-384x288-39c3c381_20220916.pth
+11/06 08:12:00 - mmengine - INFO - Load checkpoint from /scratch/purohitham.v/fidip/models/mmpose/td-hm_hrnet-w48_dark-8xb32-210e_coco-384x288-39c3c381_20220916.pth
+11/06 08:12:00 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+11/06 08:12:00 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+11/06 08:12:00 - mmengine - INFO - Checkpoints will be saved to /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4.
+11/06 08:12:16 - mmengine - INFO - Epoch(train)  [1][10/63]  lr: 1.460161e-05  eta: 0:51:30  time: 1.643690  data_time: 0.212717  memory: 14775  loss: 0.000939  loss_kpt: 0.000939  acc_pose: 0.812937
+11/06 08:12:24 - mmengine - INFO - Epoch(train)  [1][20/63]  lr: 3.071452e-05  eta: 0:37:19  time: 1.197486  data_time: 0.154647  memory: 14775  loss: 0.000944  loss_kpt: 0.000944  acc_pose: 0.752620
+11/06 08:12:31 - mmengine - INFO - Epoch(train)  [1][30/63]  lr: 4.682742e-05  eta: 0:32:04  time: 1.034901  data_time: 0.119525  memory: 14775  loss: 0.000943  loss_kpt: 0.000943  acc_pose: 0.798292
+11/06 08:12:38 - mmengine - INFO - Epoch(train)  [1][40/63]  lr: 6.294032e-05  eta: 0:29:16  time: 0.949538  data_time: 0.109323  memory: 14775  loss: 0.000925  loss_kpt: 0.000925  acc_pose: 0.804990
+11/06 08:12:45 - mmengine - INFO - Epoch(train)  [1][50/63]  lr: 7.905323e-05  eta: 0:27:28  time: 0.896080  data_time: 0.096729  memory: 14775  loss: 0.000912  loss_kpt: 0.000912  acc_pose: 0.860394
+11/06 08:12:52 - mmengine - INFO - Epoch(train)  [1][60/63]  lr: 9.516613e-05  eta: 0:26:13  time: 0.703388  data_time: 0.071639  memory: 14775  loss: 0.000886  loss_kpt: 0.000886  acc_pose: 0.878310
+11/06 08:12:53 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:12:57 - mmengine - INFO - Epoch(val)  [1][10/13]    eta: 0:00:01  time: 0.350200  data_time: 0.046638  memory: 14775  
+11/06 08:12:58 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.20s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.888
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.948
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.888
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.904
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.957
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.904
+11/06 08:12:58 - mmengine - INFO - Epoch(val) [1][13/13]    coco/AP: 0.888020  coco/AP .5: 0.989199  coco/AP .75: 0.948311  coco/AP (M): -1.000000  coco/AP (L): 0.888020  coco/AR: 0.903778  coco/AR .5: 0.994962  coco/AR .75: 0.957179  coco/AR (M): -1.000000  coco/AR (L): 0.903778  data_time: 0.037295  time: 0.312140
+11/06 08:13:02 - mmengine - INFO - The best checkpoint with 0.8880 coco/AP at 1 epoch is saved to best_coco_AP_epoch_1.pth.
+11/06 08:13:09 - mmengine - INFO - Epoch(train)  [2][10/63]  lr: 1.000000e-04  eta: 0:25:07  time: 0.680655  data_time: 0.063405  memory: 14775  loss: 0.000830  loss_kpt: 0.000830  acc_pose: 0.788345
+11/06 08:13:16 - mmengine - INFO - Epoch(train)  [2][20/63]  lr: 1.000000e-04  eta: 0:24:23  time: 0.668248  data_time: 0.057983  memory: 14775  loss: 0.000816  loss_kpt: 0.000816  acc_pose: 0.834261
+11/06 08:13:23 - mmengine - INFO - Epoch(train)  [2][30/63]  lr: 1.000000e-04  eta: 0:23:59  time: 0.680277  data_time: 0.063689  memory: 14775  loss: 0.000778  loss_kpt: 0.000778  acc_pose: 0.890029
+11/06 08:13:30 - mmengine - INFO - Epoch(train)  [2][40/63]  lr: 1.000000e-04  eta: 0:23:29  time: 0.669538  data_time: 0.054134  memory: 14775  loss: 0.000757  loss_kpt: 0.000757  acc_pose: 0.845980
+11/06 08:13:37 - mmengine - INFO - Epoch(train)  [2][50/63]  lr: 1.000000e-04  eta: 0:23:12  time: 0.700859  data_time: 0.060058  memory: 14775  loss: 0.000753  loss_kpt: 0.000753  acc_pose: 0.841988
+11/06 08:13:44 - mmengine - INFO - Epoch(train)  [2][60/63]  lr: 1.000000e-04  eta: 0:22:50  time: 0.697213  data_time: 0.063466  memory: 14775  loss: 0.000756  loss_kpt: 0.000756  acc_pose: 0.832922
+11/06 08:13:46 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:13:49 - mmengine - INFO - Epoch(val)  [2][10/13]    eta: 0:00:00  time: 0.307453  data_time: 0.034719  memory: 14775  
+11/06 08:13:49 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.896
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.896
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.912
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.965
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.912
+11/06 08:13:49 - mmengine - INFO - Epoch(val) [2][13/13]    coco/AP: 0.896138  coco/AP .5: 0.989174  coco/AP .75: 0.958210  coco/AP (M): -1.000000  coco/AP (L): 0.896138  coco/AR: 0.911839  coco/AR .5: 0.994962  coco/AR .75: 0.964736  coco/AR (M): -1.000000  coco/AR (L): 0.911839  data_time: 0.023249  time: 0.259907
+11/06 08:13:50 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_1.pth is removed
+11/06 08:13:54 - mmengine - INFO - The best checkpoint with 0.8961 coco/AP at 2 epoch is saved to best_coco_AP_epoch_2.pth.
+11/06 08:14:00 - mmengine - INFO - Epoch(train)  [3][10/63]  lr: 1.000000e-04  eta: 0:22:22  time: 0.682052  data_time: 0.061857  memory: 14775  loss: 0.000746  loss_kpt: 0.000746  acc_pose: 0.852015
+11/06 08:14:07 - mmengine - INFO - Epoch(train)  [3][20/63]  lr: 1.000000e-04  eta: 0:22:06  time: 0.683995  data_time: 0.063455  memory: 14775  loss: 0.000747  loss_kpt: 0.000747  acc_pose: 0.848866
+11/06 08:14:15 - mmengine - INFO - Epoch(train)  [3][30/63]  lr: 1.000000e-04  eta: 0:21:55  time: 0.685185  data_time: 0.059227  memory: 14775  loss: 0.000745  loss_kpt: 0.000745  acc_pose: 0.850954
+11/06 08:14:22 - mmengine - INFO - Epoch(train)  [3][40/63]  lr: 1.000000e-04  eta: 0:21:43  time: 0.686256  data_time: 0.055175  memory: 14775  loss: 0.000729  loss_kpt: 0.000729  acc_pose: 0.870206
+11/06 08:14:29 - mmengine - INFO - Epoch(train)  [3][50/63]  lr: 1.000000e-04  eta: 0:21:31  time: 0.701764  data_time: 0.055063  memory: 14775  loss: 0.000724  loss_kpt: 0.000724  acc_pose: 0.873892
+11/06 08:14:36 - mmengine - INFO - Epoch(train)  [3][60/63]  lr: 1.000000e-04  eta: 0:21:18  time: 0.709424  data_time: 0.051744  memory: 14775  loss: 0.000704  loss_kpt: 0.000704  acc_pose: 0.860923
+11/06 08:14:38 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:14:41 - mmengine - INFO - Epoch(val)  [3][10/13]    eta: 0:00:00  time: 0.302272  data_time: 0.030950  memory: 14775  
+11/06 08:14:42 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.902
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.902
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.915
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.962
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.915
+11/06 08:14:42 - mmengine - INFO - Epoch(val) [3][13/13]    coco/AP: 0.901812  coco/AP .5: 0.989099  coco/AP .75: 0.958459  coco/AP (M): -1.000000  coco/AP (L): 0.901812  coco/AR: 0.914861  coco/AR .5: 0.994962  coco/AR .75: 0.962217  coco/AR (M): -1.000000  coco/AR (L): 0.914861  data_time: 0.023730  time: 0.299253
+11/06 08:14:43 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_2.pth is removed
+11/06 08:14:48 - mmengine - INFO - The best checkpoint with 0.9018 coco/AP at 3 epoch is saved to best_coco_AP_epoch_3.pth.
+11/06 08:14:55 - mmengine - INFO - Epoch(train)  [4][10/63]  lr: 1.000000e-04  eta: 0:21:00  time: 0.689561  data_time: 0.049516  memory: 14775  loss: 0.000686  loss_kpt: 0.000686  acc_pose: 0.899554
+11/06 08:15:02 - mmengine - INFO - Epoch(train)  [4][20/63]  lr: 1.000000e-04  eta: 0:20:49  time: 0.689791  data_time: 0.057725  memory: 14775  loss: 0.000678  loss_kpt: 0.000678  acc_pose: 0.887740
+11/06 08:15:09 - mmengine - INFO - Epoch(train)  [4][30/63]  lr: 1.000000e-04  eta: 0:20:37  time: 0.679505  data_time: 0.057131  memory: 14775  loss: 0.000676  loss_kpt: 0.000676  acc_pose: 0.912993
+11/06 08:15:16 - mmengine - INFO - Epoch(train)  [4][40/63]  lr: 1.000000e-04  eta: 0:20:23  time: 0.674001  data_time: 0.063977  memory: 14775  loss: 0.000676  loss_kpt: 0.000676  acc_pose: 0.861318
+11/06 08:15:22 - mmengine - INFO - Epoch(train)  [4][50/63]  lr: 1.000000e-04  eta: 0:20:11  time: 0.678149  data_time: 0.064166  memory: 14775  loss: 0.000684  loss_kpt: 0.000684  acc_pose: 0.920116
+11/06 08:15:29 - mmengine - INFO - Epoch(train)  [4][60/63]  lr: 1.000000e-04  eta: 0:20:01  time: 0.681161  data_time: 0.064818  memory: 14775  loss: 0.000679  loss_kpt: 0.000679  acc_pose: 0.863908
+11/06 08:15:31 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:15:35 - mmengine - INFO - Epoch(val)  [4][10/13]    eta: 0:00:01  time: 0.306221  data_time: 0.029317  memory: 14775  
+11/06 08:15:35 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.903
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.959
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.903
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.919
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.967
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.919
+11/06 08:15:35 - mmengine - INFO - Epoch(val) [4][13/13]    coco/AP: 0.903445  coco/AP .5: 0.989149  coco/AP .75: 0.958653  coco/AP (M): -1.000000  coco/AP (L): 0.903445  coco/AR: 0.918640  coco/AR .5: 0.994962  coco/AR .75: 0.967254  coco/AR (M): -1.000000  coco/AR (L): 0.918640  data_time: 0.022527  time: 0.301652
+11/06 08:15:36 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_3.pth is removed
+11/06 08:15:39 - mmengine - INFO - The best checkpoint with 0.9034 coco/AP at 4 epoch is saved to best_coco_AP_epoch_4.pth.
+11/06 08:15:46 - mmengine - INFO - Epoch(train)  [5][10/63]  lr: 1.000000e-04  eta: 0:19:49  time: 0.681993  data_time: 0.065780  memory: 14775  loss: 0.000671  loss_kpt: 0.000671  acc_pose: 0.879620
+11/06 08:15:53 - mmengine - INFO - Epoch(train)  [5][20/63]  lr: 1.000000e-04  eta: 0:19:41  time: 0.693334  data_time: 0.062246  memory: 14775  loss: 0.000661  loss_kpt: 0.000661  acc_pose: 0.875853
+11/06 08:16:00 - mmengine - INFO - Epoch(train)  [5][30/63]  lr: 1.000000e-04  eta: 0:19:31  time: 0.694754  data_time: 0.060056  memory: 14775  loss: 0.000661  loss_kpt: 0.000661  acc_pose: 0.878468
+11/06 08:16:06 - mmengine - INFO - Epoch(train)  [5][40/63]  lr: 1.000000e-04  eta: 0:19:20  time: 0.689183  data_time: 0.056104  memory: 14775  loss: 0.000660  loss_kpt: 0.000660  acc_pose: 0.906970
+11/06 08:16:13 - mmengine - INFO - Epoch(train)  [5][50/63]  lr: 1.000000e-04  eta: 0:19:10  time: 0.691973  data_time: 0.059110  memory: 14775  loss: 0.000659  loss_kpt: 0.000659  acc_pose: 0.911933
+11/06 08:16:20 - mmengine - INFO - Epoch(train)  [5][60/63]  lr: 1.000000e-04  eta: 0:18:59  time: 0.678844  data_time: 0.047467  memory: 14775  loss: 0.000659  loss_kpt: 0.000659  acc_pose: 0.903758
+11/06 08:16:22 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:16:22 - mmengine - INFO - Saving checkpoint at 5 epochs
+11/06 08:16:32 - mmengine - INFO - Epoch(val)  [5][10/13]    eta: 0:00:01  time: 0.308258  data_time: 0.035624  memory: 14775  
+11/06 08:16:33 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.05s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.905
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.959
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.905
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.920
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.920
+11/06 08:16:33 - mmengine - INFO - Epoch(val) [5][13/13]    coco/AP: 0.905168  coco/AP .5: 0.989074  coco/AP .75: 0.958715  coco/AP (M): -1.000000  coco/AP (L): 0.905168  coco/AR: 0.919899  coco/AR .5: 0.994962  coco/AR .75: 0.969773  coco/AR (M): -1.000000  coco/AR (L): 0.919899  data_time: 0.059840  time: 0.318766
+11/06 08:16:34 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_4.pth is removed
+11/06 08:16:37 - mmengine - INFO - The best checkpoint with 0.9052 coco/AP at 5 epoch is saved to best_coco_AP_epoch_5.pth.
+11/06 08:16:51 - mmengine - INFO - Epoch(train)  [6][10/63]  lr: 1.000000e-04  eta: 0:18:42  time: 0.650788  data_time: 0.057914  memory: 14775  loss: 0.000655  loss_kpt: 0.000655  acc_pose: 0.886439
+11/06 08:16:57 - mmengine - INFO - Epoch(train)  [6][20/63]  lr: 1.000000e-04  eta: 0:18:32  time: 0.648577  data_time: 0.061249  memory: 14775  loss: 0.000641  loss_kpt: 0.000641  acc_pose: 0.905747
+11/06 08:17:04 - mmengine - INFO - Epoch(train)  [6][30/63]  lr: 1.000000e-04  eta: 0:18:23  time: 0.648888  data_time: 0.066791  memory: 14775  loss: 0.000649  loss_kpt: 0.000649  acc_pose: 0.841899
+11/06 08:17:11 - mmengine - INFO - Epoch(train)  [6][40/63]  lr: 1.000000e-04  eta: 0:18:14  time: 0.653987  data_time: 0.069722  memory: 14775  loss: 0.000655  loss_kpt: 0.000655  acc_pose: 0.899772
+11/06 08:17:18 - mmengine - INFO - Epoch(train)  [6][50/63]  lr: 1.000000e-04  eta: 0:18:06  time: 0.656803  data_time: 0.069805  memory: 14775  loss: 0.000646  loss_kpt: 0.000646  acc_pose: 0.899624
+11/06 08:17:24 - mmengine - INFO - Epoch(train)  [6][60/63]  lr: 1.000000e-04  eta: 0:17:56  time: 0.669077  data_time: 0.067168  memory: 14775  loss: 0.000644  loss_kpt: 0.000644  acc_pose: 0.848255
+11/06 08:17:27 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:17:30 - mmengine - INFO - Epoch(val)  [6][10/13]    eta: 0:00:00  time: 0.316337  data_time: 0.035872  memory: 14775  
+11/06 08:17:31 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.909
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.909
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.921
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.962
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.921
+11/06 08:17:31 - mmengine - INFO - Epoch(val) [6][13/13]    coco/AP: 0.908910  coco/AP .5: 0.989099  coco/AP .75: 0.957597  coco/AP (M): -1.000000  coco/AP (L): 0.908910  coco/AR: 0.920907  coco/AR .5: 0.994962  coco/AR .75: 0.962217  coco/AR (M): -1.000000  coco/AR (L): 0.920907  data_time: 0.024442  time: 0.297541
+11/06 08:17:32 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_5.pth is removed
+11/06 08:17:36 - mmengine - INFO - The best checkpoint with 0.9089 coco/AP at 6 epoch is saved to best_coco_AP_epoch_6.pth.
+11/06 08:17:51 - mmengine - INFO - Epoch(train)  [7][10/63]  lr: 1.000000e-04  eta: 0:17:48  time: 0.669924  data_time: 0.068059  memory: 14775  loss: 0.000646  loss_kpt: 0.000646  acc_pose: 0.890858
+11/06 08:17:58 - mmengine - INFO - Epoch(train)  [7][20/63]  lr: 1.000000e-04  eta: 0:17:40  time: 0.676804  data_time: 0.069203  memory: 14775  loss: 0.000644  loss_kpt: 0.000644  acc_pose: 0.870757
+11/06 08:18:05 - mmengine - INFO - Epoch(train)  [7][30/63]  lr: 1.000000e-04  eta: 0:17:34  time: 0.690904  data_time: 0.072990  memory: 14775  loss: 0.000630  loss_kpt: 0.000630  acc_pose: 0.897130
+11/06 08:18:11 - mmengine - INFO - Epoch(train)  [7][40/63]  lr: 1.000000e-04  eta: 0:17:24  time: 0.680986  data_time: 0.068705  memory: 14775  loss: 0.000627  loss_kpt: 0.000627  acc_pose: 0.890097
+11/06 08:18:16 - mmengine - INFO - Epoch(train)  [7][50/63]  lr: 1.000000e-04  eta: 0:17:09  time: 0.643707  data_time: 0.060183  memory: 14775  loss: 0.000637  loss_kpt: 0.000637  acc_pose: 0.917672
+11/06 08:18:21 - mmengine - INFO - Epoch(train)  [7][60/63]  lr: 1.000000e-04  eta: 0:16:54  time: 0.598152  data_time: 0.072483  memory: 14775  loss: 0.000639  loss_kpt: 0.000639  acc_pose: 0.895559
+11/06 08:18:22 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:18:27 - mmengine - INFO - Epoch(val)  [7][10/13]    eta: 0:00:01  time: 0.332059  data_time: 0.061296  memory: 14775  
+11/06 08:18:27 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.908
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.959
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.908
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.921
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.921
+11/06 08:18:27 - mmengine - INFO - Epoch(val) [7][13/13]    coco/AP: 0.907515  coco/AP .5: 0.989024  coco/AP .75: 0.958785  coco/AP (M): -1.000000  coco/AP (L): 0.907515  coco/AR: 0.921159  coco/AR .5: 0.994962  coco/AR .75: 0.969773  coco/AR (M): -1.000000  coco/AR (L): 0.921159  data_time: 0.114063  time: 0.360546
+11/06 08:18:34 - mmengine - INFO - Epoch(train)  [8][10/63]  lr: 1.000000e-04  eta: 0:16:42  time: 0.563798  data_time: 0.071807  memory: 14775  loss: 0.000630  loss_kpt: 0.000630  acc_pose: 0.904204
+11/06 08:18:42 - mmengine - INFO - Epoch(train)  [8][20/63]  lr: 1.000000e-04  eta: 0:16:35  time: 0.569082  data_time: 0.078206  memory: 14775  loss: 0.000630  loss_kpt: 0.000630  acc_pose: 0.892515
+11/06 08:18:49 - mmengine - INFO - Epoch(train)  [8][30/63]  lr: 1.000000e-04  eta: 0:16:28  time: 0.582812  data_time: 0.075461  memory: 14775  loss: 0.000625  loss_kpt: 0.000625  acc_pose: 0.845467
+11/06 08:18:56 - mmengine - INFO - Epoch(train)  [8][40/63]  lr: 1.000000e-04  eta: 0:16:21  time: 0.631501  data_time: 0.064975  memory: 14775  loss: 0.000630  loss_kpt: 0.000630  acc_pose: 0.869850
+11/06 08:19:03 - mmengine - INFO - Epoch(train)  [8][50/63]  lr: 1.000000e-04  eta: 0:16:14  time: 0.692136  data_time: 0.062248  memory: 14775  loss: 0.000633  loss_kpt: 0.000633  acc_pose: 0.892630
+11/06 08:19:09 - mmengine - INFO - Epoch(train)  [8][60/63]  lr: 1.000000e-04  eta: 0:16:06  time: 0.689864  data_time: 0.060837  memory: 14775  loss: 0.000629  loss_kpt: 0.000629  acc_pose: 0.889655
+11/06 08:19:11 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:19:13 - mmengine - INFO - Epoch(val)  [8][10/13]    eta: 0:00:00  time: 0.312733  data_time: 0.061047  memory: 14775  
+11/06 08:19:14 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.07s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.909
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.909
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.923
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.967
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.923
+11/06 08:19:14 - mmengine - INFO - Epoch(val) [8][13/13]    coco/AP: 0.909312  coco/AP .5: 0.988874  coco/AP .75: 0.958358  coco/AP (M): -1.000000  coco/AP (L): 0.909312  coco/AR: 0.922922  coco/AR .5: 0.994962  coco/AR .75: 0.967254  coco/AR (M): -1.000000  coco/AR (L): 0.922922  data_time: 0.021927  time: 0.208492
+11/06 08:19:15 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_6.pth is removed
+11/06 08:19:19 - mmengine - INFO - The best checkpoint with 0.9093 coco/AP at 8 epoch is saved to best_coco_AP_epoch_8.pth.
+11/06 08:19:38 - mmengine - INFO - Epoch(train)  [9][10/63]  lr: 1.000000e-04  eta: 0:15:55  time: 0.659997  data_time: 0.059067  memory: 14775  loss: 0.000618  loss_kpt: 0.000618  acc_pose: 0.897254
+11/06 08:19:45 - mmengine - INFO - Epoch(train)  [9][20/63]  lr: 1.000000e-04  eta: 0:15:47  time: 0.653011  data_time: 0.058293  memory: 14775  loss: 0.000612  loss_kpt: 0.000612  acc_pose: 0.880223
+11/06 08:19:51 - mmengine - INFO - Epoch(train)  [9][30/63]  lr: 1.000000e-04  eta: 0:15:40  time: 0.651498  data_time: 0.053704  memory: 14775  loss: 0.000604  loss_kpt: 0.000604  acc_pose: 0.891204
+11/06 08:19:59 - mmengine - INFO - Epoch(train)  [9][40/63]  lr: 1.000000e-04  eta: 0:15:34  time: 0.663662  data_time: 0.066031  memory: 14775  loss: 0.000597  loss_kpt: 0.000597  acc_pose: 0.887690
+11/06 08:20:06 - mmengine - INFO - Epoch(train)  [9][50/63]  lr: 1.000000e-04  eta: 0:15:27  time: 0.682470  data_time: 0.071147  memory: 14775  loss: 0.000590  loss_kpt: 0.000590  acc_pose: 0.904936
+11/06 08:20:13 - mmengine - INFO - Epoch(train)  [9][60/63]  lr: 1.000000e-04  eta: 0:15:21  time: 0.697339  data_time: 0.079607  memory: 14775  loss: 0.000598  loss_kpt: 0.000598  acc_pose: 0.888159
+11/06 08:20:15 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:20:18 - mmengine - INFO - Epoch(val)  [9][10/13]    eta: 0:00:00  time: 0.294727  data_time: 0.051530  memory: 14775  
+11/06 08:20:19 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.910
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.959
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.910
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.924
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.924
+11/06 08:20:19 - mmengine - INFO - Epoch(val) [9][13/13]    coco/AP: 0.910352  coco/AP .5: 0.988874  coco/AP .75: 0.958666  coco/AP (M): -1.000000  coco/AP (L): 0.910352  coco/AR: 0.924433  coco/AR .5: 0.994962  coco/AR .75: 0.969773  coco/AR (M): -1.000000  coco/AR (L): 0.924433  data_time: 0.025160  time: 0.248229
+11/06 08:20:19 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_8.pth is removed
+11/06 08:20:24 - mmengine - INFO - The best checkpoint with 0.9104 coco/AP at 9 epoch is saved to best_coco_AP_epoch_9.pth.
+11/06 08:20:39 - mmengine - INFO - Epoch(train) [10][10/63]  lr: 1.000000e-04  eta: 0:15:11  time: 0.698796  data_time: 0.082894  memory: 14775  loss: 0.000590  loss_kpt: 0.000590  acc_pose: 0.911224
+11/06 08:20:46 - mmengine - INFO - Epoch(train) [10][20/63]  lr: 1.000000e-04  eta: 0:15:03  time: 0.676831  data_time: 0.068853  memory: 14775  loss: 0.000587  loss_kpt: 0.000587  acc_pose: 0.926265
+11/06 08:20:53 - mmengine - INFO - Epoch(train) [10][30/63]  lr: 1.000000e-04  eta: 0:14:56  time: 0.673059  data_time: 0.068323  memory: 14775  loss: 0.000591  loss_kpt: 0.000591  acc_pose: 0.926852
+11/06 08:21:00 - mmengine - INFO - Epoch(train) [10][40/63]  lr: 1.000000e-04  eta: 0:14:50  time: 0.669025  data_time: 0.069936  memory: 14775  loss: 0.000597  loss_kpt: 0.000597  acc_pose: 0.904920
+11/06 08:21:07 - mmengine - INFO - Epoch(train) [10][50/63]  lr: 1.000000e-04  eta: 0:14:42  time: 0.678345  data_time: 0.062573  memory: 14775  loss: 0.000580  loss_kpt: 0.000580  acc_pose: 0.944686
+11/06 08:21:14 - mmengine - INFO - Epoch(train) [10][60/63]  lr: 1.000000e-04  eta: 0:14:36  time: 0.690833  data_time: 0.067298  memory: 14775  loss: 0.000582  loss_kpt: 0.000582  acc_pose: 0.899600
+11/06 08:21:16 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:21:16 - mmengine - INFO - Saving checkpoint at 10 epochs
+11/06 08:21:31 - mmengine - INFO - Epoch(val) [10][10/13]    eta: 0:00:01  time: 0.295191  data_time: 0.052144  memory: 14775  
+11/06 08:21:32 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.05s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.913
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.913
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.927
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.927
+11/06 08:21:32 - mmengine - INFO - Epoch(val) [10][13/13]    coco/AP: 0.913072  coco/AP .5: 0.988799  coco/AP .75: 0.958271  coco/AP (M): -1.000000  coco/AP (L): 0.913072  coco/AR: 0.926700  coco/AR .5: 0.994962  coco/AR .75: 0.969773  coco/AR (M): -1.000000  coco/AR (L): 0.926700  data_time: 0.027030  time: 0.292398
+11/06 08:21:33 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_9.pth is removed
+11/06 08:21:38 - mmengine - INFO - The best checkpoint with 0.9131 coco/AP at 10 epoch is saved to best_coco_AP_epoch_10.pth.
+11/06 08:22:07 - mmengine - INFO - Epoch(train) [11][10/63]  lr: 1.000000e-04  eta: 0:14:30  time: 0.711699  data_time: 0.124356  memory: 14775  loss: 0.000586  loss_kpt: 0.000586  acc_pose: 0.853798
+11/06 08:22:14 - mmengine - INFO - Epoch(train) [11][20/63]  lr: 1.000000e-04  eta: 0:14:22  time: 0.702333  data_time: 0.119381  memory: 14775  loss: 0.000580  loss_kpt: 0.000580  acc_pose: 0.926251
+11/06 08:22:21 - mmengine - INFO - Epoch(train) [11][30/63]  lr: 1.000000e-04  eta: 0:14:15  time: 0.714425  data_time: 0.128395  memory: 14775  loss: 0.000571  loss_kpt: 0.000571  acc_pose: 0.925638
+11/06 08:22:28 - mmengine - INFO - Epoch(train) [11][40/63]  lr: 1.000000e-04  eta: 0:14:08  time: 0.707940  data_time: 0.130471  memory: 14775  loss: 0.000572  loss_kpt: 0.000572  acc_pose: 0.908313
+11/06 08:22:35 - mmengine - INFO - Epoch(train) [11][50/63]  lr: 1.000000e-04  eta: 0:14:02  time: 0.729919  data_time: 0.131933  memory: 14775  loss: 0.000566  loss_kpt: 0.000566  acc_pose: 0.909981
+11/06 08:22:42 - mmengine - INFO - Epoch(train) [11][60/63]  lr: 1.000000e-04  eta: 0:13:55  time: 0.697471  data_time: 0.085080  memory: 14775  loss: 0.000556  loss_kpt: 0.000556  acc_pose: 0.913018
+11/06 08:22:44 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:22:47 - mmengine - INFO - Epoch(val) [11][10/13]    eta: 0:00:00  time: 0.264981  data_time: 0.026901  memory: 14775  
+11/06 08:22:48 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.05s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.910
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.910
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.923
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.923
+11/06 08:22:48 - mmengine - INFO - Epoch(val) [11][13/13]    coco/AP: 0.909584  coco/AP .5: 0.988749  coco/AP .75: 0.958285  coco/AP (M): -1.000000  coco/AP (L): 0.909584  coco/AR: 0.923174  coco/AR .5: 0.994962  coco/AR .75: 0.969773  coco/AR (M): -1.000000  coco/AR (L): 0.923174  data_time: 0.023538  time: 0.273636
+11/06 08:22:55 - mmengine - INFO - Epoch(train) [12][10/63]  lr: 1.000000e-04  eta: 0:13:45  time: 0.673537  data_time: 0.066971  memory: 14775  loss: 0.000563  loss_kpt: 0.000563  acc_pose: 0.912211
+11/06 08:23:02 - mmengine - INFO - Epoch(train) [12][20/63]  lr: 1.000000e-04  eta: 0:13:37  time: 0.668129  data_time: 0.066256  memory: 14775  loss: 0.000562  loss_kpt: 0.000562  acc_pose: 0.928562
+11/06 08:23:08 - mmengine - INFO - Epoch(train) [12][30/63]  lr: 1.000000e-04  eta: 0:13:30  time: 0.655370  data_time: 0.070761  memory: 14775  loss: 0.000571  loss_kpt: 0.000571  acc_pose: 0.837841
+11/06 08:23:15 - mmengine - INFO - Epoch(train) [12][40/63]  lr: 1.000000e-04  eta: 0:13:22  time: 0.644140  data_time: 0.073108  memory: 14775  loss: 0.000575  loss_kpt: 0.000575  acc_pose: 0.880479
+11/06 08:23:22 - mmengine - INFO - Epoch(train) [12][50/63]  lr: 1.000000e-04  eta: 0:13:16  time: 0.669677  data_time: 0.089220  memory: 14775  loss: 0.000575  loss_kpt: 0.000575  acc_pose: 0.869962
+11/06 08:23:29 - mmengine - INFO - Epoch(train) [12][60/63]  lr: 1.000000e-04  eta: 0:13:09  time: 0.678648  data_time: 0.099131  memory: 14775  loss: 0.000572  loss_kpt: 0.000572  acc_pose: 0.843531
+11/06 08:23:31 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:23:34 - mmengine - INFO - Epoch(val) [12][10/13]    eta: 0:00:00  time: 0.283419  data_time: 0.026701  memory: 14775  
+11/06 08:23:35 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.911
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.957
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.911
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.924
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.965
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.924
+11/06 08:23:35 - mmengine - INFO - Epoch(val) [12][13/13]    coco/AP: 0.910679  coco/AP .5: 0.988699  coco/AP .75: 0.957320  coco/AP (M): -1.000000  coco/AP (L): 0.910679  coco/AR: 0.924181  coco/AR .5: 0.994962  coco/AR .75: 0.964736  coco/AR (M): -1.000000  coco/AR (L): 0.924181  data_time: 0.021983  time: 0.277920
+11/06 08:23:42 - mmengine - INFO - Epoch(train) [13][10/63]  lr: 1.000000e-04  eta: 0:13:00  time: 0.662711  data_time: 0.086585  memory: 14775  loss: 0.000574  loss_kpt: 0.000574  acc_pose: 0.911412
+11/06 08:23:49 - mmengine - INFO - Epoch(train) [13][20/63]  lr: 1.000000e-04  eta: 0:12:53  time: 0.674358  data_time: 0.081315  memory: 14775  loss: 0.000569  loss_kpt: 0.000569  acc_pose: 0.925361
+11/06 08:23:56 - mmengine - INFO - Epoch(train) [13][30/63]  lr: 1.000000e-04  eta: 0:12:45  time: 0.668108  data_time: 0.067392  memory: 14775  loss: 0.000568  loss_kpt: 0.000568  acc_pose: 0.896096
+11/06 08:24:03 - mmengine - INFO - Epoch(train) [13][40/63]  lr: 1.000000e-04  eta: 0:12:38  time: 0.663169  data_time: 0.058027  memory: 14775  loss: 0.000567  loss_kpt: 0.000567  acc_pose: 0.867902
+11/06 08:24:09 - mmengine - INFO - Epoch(train) [13][50/63]  lr: 1.000000e-04  eta: 0:12:31  time: 0.674342  data_time: 0.053253  memory: 14775  loss: 0.000566  loss_kpt: 0.000566  acc_pose: 0.866385
+11/06 08:24:16 - mmengine - INFO - Epoch(train) [13][60/63]  lr: 1.000000e-04  eta: 0:12:23  time: 0.668420  data_time: 0.055626  memory: 14775  loss: 0.000560  loss_kpt: 0.000560  acc_pose: 0.924932
+11/06 08:24:18 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:24:22 - mmengine - INFO - Epoch(val) [13][10/13]    eta: 0:00:01  time: 0.307937  data_time: 0.046598  memory: 14775  
+11/06 08:24:22 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.912
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.959
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.912
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.925
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.925
+11/06 08:24:22 - mmengine - INFO - Epoch(val) [13][13/13]    coco/AP: 0.912076  coco/AP .5: 0.988749  coco/AP .75: 0.958644  coco/AP (M): -1.000000  coco/AP (L): 0.912076  coco/AR: 0.925441  coco/AR .5: 0.994962  coco/AR .75: 0.969773  coco/AR (M): -1.000000  coco/AR (L): 0.925441  data_time: 0.095470  time: 0.316993
+11/06 08:24:27 - mmengine - INFO - Epoch(train) [14][10/63]  lr: 1.000000e-04  eta: 0:12:11  time: 0.605797  data_time: 0.064303  memory: 14775  loss: 0.000541  loss_kpt: 0.000541  acc_pose: 0.923265
+11/06 08:24:31 - mmengine - INFO - Epoch(train) [14][20/63]  lr: 1.000000e-04  eta: 0:12:01  time: 0.557335  data_time: 0.067243  memory: 14775  loss: 0.000547  loss_kpt: 0.000547  acc_pose: 0.912921
+11/06 08:24:38 - mmengine - INFO - Epoch(train) [14][30/63]  lr: 1.000000e-04  eta: 0:11:54  time: 0.556254  data_time: 0.067529  memory: 14775  loss: 0.000545  loss_kpt: 0.000545  acc_pose: 0.948212
+11/06 08:24:45 - mmengine - INFO - Epoch(train) [14][40/63]  lr: 1.000000e-04  eta: 0:11:47  time: 0.554714  data_time: 0.062095  memory: 14775  loss: 0.000543  loss_kpt: 0.000543  acc_pose: 0.917698
+11/06 08:24:52 - mmengine - INFO - Epoch(train) [14][50/63]  lr: 1.000000e-04  eta: 0:11:40  time: 0.582148  data_time: 0.058120  memory: 14775  loss: 0.000546  loss_kpt: 0.000546  acc_pose: 0.917728
+11/06 08:24:58 - mmengine - INFO - Epoch(train) [14][60/63]  lr: 1.000000e-04  eta: 0:11:33  time: 0.632771  data_time: 0.049061  memory: 14775  loss: 0.000553  loss_kpt: 0.000553  acc_pose: 0.943616
+11/06 08:25:00 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:25:04 - mmengine - INFO - Epoch(val) [14][10/13]    eta: 0:00:01  time: 0.310448  data_time: 0.045393  memory: 14775  
+11/06 08:25:05 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.07s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.913
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.957
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.913
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.925
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.965
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.925
+11/06 08:25:05 - mmengine - INFO - Epoch(val) [14][13/13]    coco/AP: 0.912565  coco/AP .5: 0.988824  coco/AP .75: 0.957442  coco/AP (M): -1.000000  coco/AP (L): 0.912565  coco/AR: 0.925189  coco/AR .5: 0.994962  coco/AR .75: 0.964736  coco/AR (M): -1.000000  coco/AR (L): 0.925189  data_time: 0.023096  time: 0.320501
+11/06 08:25:12 - mmengine - INFO - Epoch(train) [15][10/63]  lr: 1.000000e-04  eta: 0:11:24  time: 0.670913  data_time: 0.046751  memory: 14775  loss: 0.000542  loss_kpt: 0.000542  acc_pose: 0.905809
+11/06 08:25:17 - mmengine - INFO - Epoch(train) [15][20/63]  lr: 1.000000e-04  eta: 0:11:15  time: 0.642111  data_time: 0.049503  memory: 14775  loss: 0.000548  loss_kpt: 0.000548  acc_pose: 0.903955
+11/06 08:25:22 - mmengine - INFO - Epoch(train) [15][30/63]  lr: 1.000000e-04  eta: 0:11:06  time: 0.597589  data_time: 0.052576  memory: 14775  loss: 0.000541  loss_kpt: 0.000541  acc_pose: 0.913730
+11/06 08:25:26 - mmengine - INFO - Epoch(train) [15][40/63]  lr: 1.000000e-04  eta: 0:10:56  time: 0.535918  data_time: 0.058183  memory: 14775  loss: 0.000529  loss_kpt: 0.000529  acc_pose: 0.903011
+11/06 08:25:30 - mmengine - INFO - Epoch(train) [15][50/63]  lr: 1.000000e-04  eta: 0:10:47  time: 0.497009  data_time: 0.066802  memory: 14775  loss: 0.000521  loss_kpt: 0.000521  acc_pose: 0.929112
+11/06 08:25:34 - mmengine - INFO - Epoch(train) [15][60/63]  lr: 1.000000e-04  eta: 0:10:37  time: 0.438578  data_time: 0.068952  memory: 14775  loss: 0.000532  loss_kpt: 0.000532  acc_pose: 0.919118
+11/06 08:25:36 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:25:36 - mmengine - INFO - Saving checkpoint at 15 epochs
+11/06 08:25:55 - mmengine - INFO - Epoch(val) [15][10/13]    eta: 0:00:01  time: 0.350606  data_time: 0.068643  memory: 14775  
+11/06 08:25:55 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.913
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.957
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.913
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.925
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.965
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.925
+11/06 08:25:56 - mmengine - INFO - Epoch(val) [15][13/13]    coco/AP: 0.912555  coco/AP .5: 0.988699  coco/AP .75: 0.957028  coco/AP (M): -1.000000  coco/AP (L): 0.912555  coco/AR: 0.924685  coco/AR .5: 0.994962  coco/AR .75: 0.964736  coco/AR (M): -1.000000  coco/AR (L): 0.924685  data_time: 0.106224  time: 0.395296
+11/06 08:26:03 - mmengine - INFO - Epoch(train) [16][10/63]  lr: 1.000000e-04  eta: 0:10:28  time: 0.455037  data_time: 0.079848  memory: 14775  loss: 0.000523  loss_kpt: 0.000523  acc_pose: 0.917502
+11/06 08:26:10 - mmengine - INFO - Epoch(train) [16][20/63]  lr: 1.000000e-04  eta: 0:10:22  time: 0.513057  data_time: 0.083412  memory: 14775  loss: 0.000535  loss_kpt: 0.000535  acc_pose: 0.908329
+11/06 08:26:17 - mmengine - INFO - Epoch(train) [16][30/63]  lr: 1.000000e-04  eta: 0:10:15  time: 0.566580  data_time: 0.079463  memory: 14775  loss: 0.000535  loss_kpt: 0.000535  acc_pose: 0.934390
+11/06 08:26:24 - mmengine - INFO - Epoch(train) [16][40/63]  lr: 1.000000e-04  eta: 0:10:08  time: 0.615499  data_time: 0.082262  memory: 14775  loss: 0.000543  loss_kpt: 0.000543  acc_pose: 0.941003
+11/06 08:26:27 - mmengine - INFO - Epoch(train) [16][50/63]  lr: 1.000000e-04  eta: 0:09:59  time: 0.609817  data_time: 0.072972  memory: 14775  loss: 0.000535  loss_kpt: 0.000535  acc_pose: 0.899261
+11/06 08:26:30 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:26:32 - mmengine - INFO - Epoch(train) [16][60/63]  lr: 1.000000e-04  eta: 0:09:50  time: 0.569439  data_time: 0.071941  memory: 14775  loss: 0.000542  loss_kpt: 0.000542  acc_pose: 0.858595
+11/06 08:26:34 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:26:37 - mmengine - INFO - Epoch(val) [16][10/13]    eta: 0:00:00  time: 0.340686  data_time: 0.069327  memory: 14775  
+11/06 08:26:37 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.917
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.957
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.917
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.928
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.967
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.928
+11/06 08:26:38 - mmengine - INFO - Epoch(val) [16][13/13]    coco/AP: 0.917021  coco/AP .5: 0.988724  coco/AP .75: 0.957486  coco/AP (M): -1.000000  coco/AP (L): 0.917021  coco/AR: 0.928212  coco/AR .5: 0.994962  coco/AR .75: 0.967254  coco/AR (M): -1.000000  coco/AR (L): 0.928212  data_time: 0.024800  time: 0.263526
+11/06 08:26:38 - mmengine - INFO - The previous best checkpoint /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_10.pth is removed
+11/06 08:26:42 - mmengine - INFO - The best checkpoint with 0.9170 coco/AP at 16 epoch is saved to best_coco_AP_epoch_16.pth.
+11/06 08:27:00 - mmengine - INFO - Epoch(train) [17][10/63]  lr: 1.000000e-04  eta: 0:09:43  time: 0.581101  data_time: 0.099522  memory: 14775  loss: 0.000545  loss_kpt: 0.000545  acc_pose: 0.920370
+11/06 08:27:07 - mmengine - INFO - Epoch(train) [17][20/63]  lr: 1.000000e-04  eta: 0:09:36  time: 0.586681  data_time: 0.107012  memory: 14775  loss: 0.000539  loss_kpt: 0.000539  acc_pose: 0.858429
+11/06 08:27:13 - mmengine - INFO - Epoch(train) [17][30/63]  lr: 1.000000e-04  eta: 0:09:29  time: 0.608880  data_time: 0.112159  memory: 14775  loss: 0.000538  loss_kpt: 0.000538  acc_pose: 0.924438
+11/06 08:27:17 - mmengine - INFO - Epoch(train) [17][40/63]  lr: 1.000000e-04  eta: 0:09:20  time: 0.609183  data_time: 0.112313  memory: 14775  loss: 0.000529  loss_kpt: 0.000529  acc_pose: 0.881120
+11/06 08:27:21 - mmengine - INFO - Epoch(train) [17][50/63]  lr: 1.000000e-04  eta: 0:09:11  time: 0.586284  data_time: 0.109111  memory: 14775  loss: 0.000523  loss_kpt: 0.000523  acc_pose: 0.922830
+11/06 08:27:28 - mmengine - INFO - Epoch(train) [17][60/63]  lr: 1.000000e-04  eta: 0:09:05  time: 0.565293  data_time: 0.070475  memory: 14775  loss: 0.000517  loss_kpt: 0.000517  acc_pose: 0.920653
+11/06 08:27:31 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:27:37 - mmengine - INFO - Epoch(val) [17][10/13]    eta: 0:00:01  time: 0.397048  data_time: 0.106164  memory: 14775  
+11/06 08:27:38 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.914
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.959
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.914
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.927
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.927
+11/06 08:27:38 - mmengine - INFO - Epoch(val) [17][13/13]    coco/AP: 0.913764  coco/AP .5: 0.988699  coco/AP .75: 0.958576  coco/AP (M): -1.000000  coco/AP (L): 0.913764  coco/AR: 0.926952  coco/AR .5: 0.994962  coco/AR .75: 0.969773  coco/AR (M): -1.000000  coco/AR (L): 0.926952  data_time: 0.226971  time: 0.521645
+11/06 08:27:46 - mmengine - INFO - Epoch(train) [18][10/63]  lr: 1.000000e-04  eta: 0:08:58  time: 0.570686  data_time: 0.074076  memory: 14775  loss: 0.000517  loss_kpt: 0.000517  acc_pose: 0.921539
+11/06 08:27:53 - mmengine - INFO - Epoch(train) [18][20/63]  lr: 1.000000e-04  eta: 0:08:51  time: 0.604959  data_time: 0.071342  memory: 14775  loss: 0.000520  loss_kpt: 0.000520  acc_pose: 0.909782
+11/06 08:28:00 - mmengine - INFO - Epoch(train) [18][30/63]  lr: 1.000000e-04  eta: 0:08:45  time: 0.666076  data_time: 0.071602  memory: 14775  loss: 0.000517  loss_kpt: 0.000517  acc_pose: 0.948549
+11/06 08:28:06 - mmengine - INFO - Epoch(train) [18][40/63]  lr: 1.000000e-04  eta: 0:08:37  time: 0.690226  data_time: 0.069724  memory: 14775  loss: 0.000517  loss_kpt: 0.000517  acc_pose: 0.914803
+11/06 08:28:13 - mmengine - INFO - Epoch(train) [18][50/63]  lr: 1.000000e-04  eta: 0:08:31  time: 0.687551  data_time: 0.062081  memory: 14775  loss: 0.000511  loss_kpt: 0.000511  acc_pose: 0.926728
+11/06 08:28:20 - mmengine - INFO - Epoch(train) [18][60/63]  lr: 1.000000e-04  eta: 0:08:25  time: 0.674443  data_time: 0.041007  memory: 14775  loss: 0.000511  loss_kpt: 0.000511  acc_pose: 0.912177
+11/06 08:28:22 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:28:26 - mmengine - INFO - Epoch(val) [18][10/13]    eta: 0:00:01  time: 0.399929  data_time: 0.106055  memory: 14775  
+11/06 08:28:27 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.07s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.915
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.915
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.927
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.967
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.927
+11/06 08:28:27 - mmengine - INFO - Epoch(val) [18][13/13]    coco/AP: 0.915341  coco/AP .5: 0.988799  coco/AP .75: 0.958443  coco/AP (M): -1.000000  coco/AP (L): 0.915341  coco/AR: 0.926952  coco/AR .5: 0.994962  coco/AR .75: 0.967254  coco/AR (M): -1.000000  coco/AR (L): 0.926952  data_time: 0.023073  time: 0.311591
+11/06 08:28:34 - mmengine - INFO - Epoch(train) [19][10/63]  lr: 1.000000e-04  eta: 0:08:16  time: 0.673719  data_time: 0.049609  memory: 14775  loss: 0.000509  loss_kpt: 0.000509  acc_pose: 0.946759
+11/06 08:28:41 - mmengine - INFO - Epoch(train) [19][20/63]  lr: 1.000000e-04  eta: 0:08:10  time: 0.679751  data_time: 0.049850  memory: 14775  loss: 0.000512  loss_kpt: 0.000512  acc_pose: 0.927661
+11/06 08:28:48 - mmengine - INFO - Epoch(train) [19][30/63]  lr: 1.000000e-04  eta: 0:08:03  time: 0.684119  data_time: 0.053079  memory: 14775  loss: 0.000520  loss_kpt: 0.000520  acc_pose: 0.930624
+11/06 08:28:54 - mmengine - INFO - Epoch(train) [19][40/63]  lr: 1.000000e-04  eta: 0:07:56  time: 0.669325  data_time: 0.064116  memory: 14775  loss: 0.000526  loss_kpt: 0.000526  acc_pose: 0.915675
+11/06 08:29:01 - mmengine - INFO - Epoch(train) [19][50/63]  lr: 1.000000e-04  eta: 0:07:50  time: 0.667101  data_time: 0.064461  memory: 14775  loss: 0.000523  loss_kpt: 0.000523  acc_pose: 0.923084
+11/06 08:29:08 - mmengine - INFO - Epoch(train) [19][60/63]  lr: 1.000000e-04  eta: 0:07:43  time: 0.670531  data_time: 0.068250  memory: 14775  loss: 0.000521  loss_kpt: 0.000521  acc_pose: 0.953560
+11/06 08:29:10 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:29:13 - mmengine - INFO - Epoch(val) [19][10/13]    eta: 0:00:01  time: 0.372088  data_time: 0.083332  memory: 14775  
+11/06 08:29:14 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.915
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.959
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.915
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.928
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.928
+11/06 08:29:14 - mmengine - INFO - Epoch(val) [19][13/13]    coco/AP: 0.914657  coco/AP .5: 0.988749  coco/AP .75: 0.958508  coco/AP (M): -1.000000  coco/AP (L): 0.914657  coco/AR: 0.927708  coco/AR .5: 0.994962  coco/AR .75: 0.969773  coco/AR (M): -1.000000  coco/AR (L): 0.927708  data_time: 0.024933  time: 0.296432
+11/06 08:29:21 - mmengine - INFO - Epoch(train) [20][10/63]  lr: 1.000000e-04  eta: 0:07:35  time: 0.661456  data_time: 0.067974  memory: 14775  loss: 0.000530  loss_kpt: 0.000530  acc_pose: 0.923042
+11/06 08:29:29 - mmengine - INFO - Epoch(train) [20][20/63]  lr: 1.000000e-04  eta: 0:07:28  time: 0.667145  data_time: 0.074140  memory: 14775  loss: 0.000517  loss_kpt: 0.000517  acc_pose: 0.910172
+11/06 08:29:35 - mmengine - INFO - Epoch(train) [20][30/63]  lr: 1.000000e-04  eta: 0:07:22  time: 0.676200  data_time: 0.074737  memory: 14775  loss: 0.000509  loss_kpt: 0.000509  acc_pose: 0.951120
+11/06 08:29:41 - mmengine - INFO - Epoch(train) [20][40/63]  lr: 1.000000e-04  eta: 0:07:15  time: 0.659198  data_time: 0.072120  memory: 14775  loss: 0.000505  loss_kpt: 0.000505  acc_pose: 0.893854
+11/06 08:29:48 - mmengine - INFO - Epoch(train) [20][50/63]  lr: 1.000000e-04  eta: 0:07:08  time: 0.661433  data_time: 0.074345  memory: 14775  loss: 0.000510  loss_kpt: 0.000510  acc_pose: 0.897783
+11/06 08:29:55 - mmengine - INFO - Epoch(train) [20][60/63]  lr: 1.000000e-04  eta: 0:07:01  time: 0.664378  data_time: 0.075667  memory: 14775  loss: 0.000499  loss_kpt: 0.000499  acc_pose: 0.933027
+11/06 08:29:57 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:29:57 - mmengine - INFO - Saving checkpoint at 20 epochs
+11/06 08:30:14 - mmengine - INFO - Epoch(val) [20][10/13]    eta: 0:00:01  time: 0.388684  data_time: 0.085316  memory: 14775  
+11/06 08:30:14 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.912
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.957
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.912
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.925
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.962
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.925
+11/06 08:30:15 - mmengine - INFO - Epoch(val) [20][13/13]    coco/AP: 0.912302  coco/AP .5: 0.988720  coco/AP .75: 0.957030  coco/AP (M): -1.000000  coco/AP (L): 0.912302  coco/AR: 0.925441  coco/AR .5: 0.994962  coco/AR .75: 0.962217  coco/AR (M): -1.000000  coco/AR (L): 0.925441  data_time: 0.031779  time: 0.335805
+11/06 08:30:20 - mmengine - INFO - Epoch(train) [21][10/63]  lr: 1.000000e-04  eta: 0:06:52  time: 0.612002  data_time: 0.069472  memory: 14775  loss: 0.000506  loss_kpt: 0.000506  acc_pose: 0.902901
+11/06 08:30:24 - mmengine - INFO - Epoch(train) [21][20/63]  lr: 1.000000e-04  eta: 0:06:44  time: 0.567046  data_time: 0.073760  memory: 14775  loss: 0.000512  loss_kpt: 0.000512  acc_pose: 0.958645
+11/06 08:30:30 - mmengine - INFO - Epoch(train) [21][30/63]  lr: 1.000000e-04  eta: 0:06:37  time: 0.564582  data_time: 0.083011  memory: 14775  loss: 0.000506  loss_kpt: 0.000506  acc_pose: 0.922285
+11/06 08:30:37 - mmengine - INFO - Epoch(train) [21][40/63]  lr: 1.000000e-04  eta: 0:06:31  time: 0.568844  data_time: 0.089738  memory: 14775  loss: 0.000505  loss_kpt: 0.000505  acc_pose: 0.931120
+11/06 08:30:44 - mmengine - INFO - Epoch(train) [21][50/63]  lr: 1.000000e-04  eta: 0:06:24  time: 0.576062  data_time: 0.088600  memory: 14775  loss: 0.000501  loss_kpt: 0.000501  acc_pose: 0.930069
+11/06 08:30:51 - mmengine - INFO - Epoch(train) [21][60/63]  lr: 1.000000e-04  eta: 0:06:18  time: 0.626308  data_time: 0.100963  memory: 14775  loss: 0.000497  loss_kpt: 0.000497  acc_pose: 0.899726
+11/06 08:30:54 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:31:00 - mmengine - INFO - Epoch(val) [21][10/13]    eta: 0:00:02  time: 0.396491  data_time: 0.094836  memory: 14775  
+11/06 08:31:01 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.915
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.968
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.915
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.927
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.972
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.927
+11/06 08:31:02 - mmengine - INFO - Epoch(val) [21][13/13]    coco/AP: 0.915102  coco/AP .5: 0.988674  coco/AP .75: 0.968162  coco/AP (M): -1.000000  coco/AP (L): 0.915102  coco/AR: 0.926700  coco/AR .5: 0.994962  coco/AR .75: 0.972292  coco/AR (M): -1.000000  coco/AR (L): 0.926700  data_time: 0.264827  time: 0.566749
+11/06 08:31:11 - mmengine - INFO - Epoch(train) [22][10/63]  lr: 1.000000e-04  eta: 0:06:10  time: 0.714854  data_time: 0.121968  memory: 14775  loss: 0.000491  loss_kpt: 0.000491  acc_pose: 0.919396
+11/06 08:31:15 - mmengine - INFO - Epoch(train) [22][20/63]  lr: 1.000000e-04  eta: 0:06:03  time: 0.687785  data_time: 0.117789  memory: 14775  loss: 0.000501  loss_kpt: 0.000501  acc_pose: 0.931963
+11/06 08:31:21 - mmengine - INFO - Epoch(train) [22][30/63]  lr: 1.000000e-04  eta: 0:05:55  time: 0.645981  data_time: 0.114973  memory: 14775  loss: 0.000499  loss_kpt: 0.000499  acc_pose: 0.924268
+11/06 08:31:27 - mmengine - INFO - Epoch(train) [22][40/63]  lr: 1.000000e-04  eta: 0:05:49  time: 0.626394  data_time: 0.116176  memory: 14775  loss: 0.000508  loss_kpt: 0.000508  acc_pose: 0.912472
+11/06 08:31:33 - mmengine - INFO - Epoch(train) [22][50/63]  lr: 1.000000e-04  eta: 0:05:42  time: 0.618593  data_time: 0.105466  memory: 14775  loss: 0.000504  loss_kpt: 0.000504  acc_pose: 0.878860
+11/06 08:31:39 - mmengine - INFO - Epoch(train) [22][60/63]  lr: 1.000000e-04  eta: 0:05:35  time: 0.569860  data_time: 0.078325  memory: 14775  loss: 0.000500  loss_kpt: 0.000500  acc_pose: 0.919920
+11/06 08:31:42 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:31:51 - mmengine - INFO - Epoch(val) [22][10/13]    eta: 0:00:02  time: 0.505080  data_time: 0.193219  memory: 14775  
+11/06 08:31:51 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.911
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.911
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.924
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.965
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.924
+11/06 08:31:52 - mmengine - INFO - Epoch(val) [22][13/13]    coco/AP: 0.911403  coco/AP .5: 0.988874  coco/AP .75: 0.958308  coco/AP (M): -1.000000  coco/AP (L): 0.911403  coco/AR: 0.924433  coco/AR .5: 0.994962  coco/AR .75: 0.964736  coco/AR (M): -1.000000  coco/AR (L): 0.924433  data_time: 0.369911  time: 0.684835
+11/06 08:31:58 - mmengine - INFO - Epoch(train) [23][10/63]  lr: 1.000000e-04  eta: 0:05:27  time: 0.613136  data_time: 0.073500  memory: 14775  loss: 0.000495  loss_kpt: 0.000495  acc_pose: 0.929969
+11/06 08:32:05 - mmengine - INFO - Epoch(train) [23][20/63]  lr: 1.000000e-04  eta: 0:05:20  time: 0.637628  data_time: 0.071470  memory: 14775  loss: 0.000491  loss_kpt: 0.000491  acc_pose: 0.950267
+11/06 08:32:11 - mmengine - INFO - Epoch(train) [23][30/63]  lr: 1.000000e-04  eta: 0:05:13  time: 0.626564  data_time: 0.081061  memory: 14775  loss: 0.000487  loss_kpt: 0.000487  acc_pose: 0.945392
+11/06 08:32:19 - mmengine - INFO - Epoch(train) [23][40/63]  lr: 1.000000e-04  eta: 0:05:07  time: 0.652129  data_time: 0.088056  memory: 14775  loss: 0.000489  loss_kpt: 0.000489  acc_pose: 0.956178
+11/06 08:32:26 - mmengine - INFO - Epoch(train) [23][50/63]  lr: 1.000000e-04  eta: 0:05:01  time: 0.682540  data_time: 0.081639  memory: 14775  loss: 0.000494  loss_kpt: 0.000494  acc_pose: 0.899956
+11/06 08:32:34 - mmengine - INFO - Epoch(train) [23][60/63]  lr: 1.000000e-04  eta: 0:04:54  time: 0.707754  data_time: 0.088190  memory: 14775  loss: 0.000496  loss_kpt: 0.000496  acc_pose: 0.940974
+11/06 08:32:36 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:32:40 - mmengine - INFO - Epoch(val) [23][10/13]    eta: 0:00:01  time: 0.521767  data_time: 0.207988  memory: 14775  
+11/06 08:32:41 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.05s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.913
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.957
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.913
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.926
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.965
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.926
+11/06 08:32:41 - mmengine - INFO - Epoch(val) [23][13/13]    coco/AP: 0.913341  coco/AP .5: 0.988699  coco/AP .75: 0.957083  coco/AP (M): -1.000000  coco/AP (L): 0.913341  coco/AR: 0.926448  coco/AR .5: 0.994962  coco/AR .75: 0.964736  coco/AR (M): -1.000000  coco/AR (L): 0.926448  data_time: 0.078477  time: 0.362118
+11/06 08:32:49 - mmengine - INFO - Epoch(train) [24][10/63]  lr: 1.000000e-04  eta: 0:04:46  time: 0.702432  data_time: 0.081041  memory: 14775  loss: 0.000484  loss_kpt: 0.000484  acc_pose: 0.914310
+11/06 08:32:55 - mmengine - INFO - Epoch(train) [24][20/63]  lr: 1.000000e-04  eta: 0:04:39  time: 0.721389  data_time: 0.069656  memory: 14775  loss: 0.000490  loss_kpt: 0.000490  acc_pose: 0.930385
+11/06 08:33:01 - mmengine - INFO - Epoch(train) [24][30/63]  lr: 1.000000e-04  eta: 0:04:32  time: 0.686462  data_time: 0.066602  memory: 14775  loss: 0.000488  loss_kpt: 0.000488  acc_pose: 0.952247
+11/06 08:33:08 - mmengine - INFO - Epoch(train) [24][40/63]  lr: 1.000000e-04  eta: 0:04:26  time: 0.664793  data_time: 0.062897  memory: 14775  loss: 0.000484  loss_kpt: 0.000484  acc_pose: 0.885582
+11/06 08:33:15 - mmengine - INFO - Epoch(train) [24][50/63]  lr: 1.000000e-04  eta: 0:04:19  time: 0.652968  data_time: 0.055391  memory: 14775  loss: 0.000490  loss_kpt: 0.000490  acc_pose: 0.916736
+11/06 08:33:21 - mmengine - INFO - Epoch(train) [24][60/63]  lr: 1.000000e-04  eta: 0:04:12  time: 0.651426  data_time: 0.054685  memory: 14775  loss: 0.000491  loss_kpt: 0.000491  acc_pose: 0.938462
+11/06 08:33:24 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:33:28 - mmengine - INFO - Epoch(val) [24][10/13]    eta: 0:00:01  time: 0.519661  data_time: 0.206349  memory: 14775  
+11/06 08:33:28 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.911
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.957
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.911
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.926
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.926
+11/06 08:33:28 - mmengine - INFO - Epoch(val) [24][13/13]    coco/AP: 0.910977  coco/AP .5: 0.988699  coco/AP .75: 0.957326  coco/AP (M): -1.000000  coco/AP (L): 0.910977  coco/AR: 0.925693  coco/AR .5: 0.994962  coco/AR .75: 0.969773  coco/AR (M): -1.000000  coco/AR (L): 0.925693  data_time: 0.025709  time: 0.313689
+11/06 08:33:36 - mmengine - INFO - Epoch(train) [25][10/63]  lr: 1.000000e-05  eta: 0:04:04  time: 0.656212  data_time: 0.064474  memory: 14775  loss: 0.000478  loss_kpt: 0.000478  acc_pose: 0.864449
+11/06 08:33:43 - mmengine - INFO - Epoch(train) [25][20/63]  lr: 1.000000e-05  eta: 0:03:57  time: 0.678256  data_time: 0.068403  memory: 14775  loss: 0.000481  loss_kpt: 0.000481  acc_pose: 0.932674
+11/06 08:33:49 - mmengine - INFO - Epoch(train) [25][30/63]  lr: 1.000000e-05  eta: 0:03:51  time: 0.664929  data_time: 0.064792  memory: 14775  loss: 0.000475  loss_kpt: 0.000475  acc_pose: 0.930655
+11/06 08:33:55 - mmengine - INFO - Epoch(train) [25][40/63]  lr: 1.000000e-05  eta: 0:03:44  time: 0.663193  data_time: 0.064101  memory: 14775  loss: 0.000472  loss_kpt: 0.000472  acc_pose: 0.929431
+11/06 08:34:02 - mmengine - INFO - Epoch(train) [25][50/63]  lr: 1.000000e-05  eta: 0:03:37  time: 0.661712  data_time: 0.055851  memory: 14775  loss: 0.000469  loss_kpt: 0.000469  acc_pose: 0.936358
+11/06 08:34:09 - mmengine - INFO - Epoch(train) [25][60/63]  lr: 1.000000e-05  eta: 0:03:31  time: 0.661835  data_time: 0.057467  memory: 14775  loss: 0.000472  loss_kpt: 0.000472  acc_pose: 0.934002
+11/06 08:34:11 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:34:11 - mmengine - INFO - Saving checkpoint at 25 epochs
+11/06 08:34:22 - mmengine - INFO - Epoch(val) [25][10/13]    eta: 0:00:01  time: 0.453145  data_time: 0.139073  memory: 14775  
+11/06 08:34:23 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.05s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.913
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.968
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.913
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.927
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.972
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.927
+11/06 08:34:23 - mmengine - INFO - Epoch(val) [25][13/13]    coco/AP: 0.912993  coco/AP .5: 0.988699  coco/AP .75: 0.968237  coco/AP (M): -1.000000  coco/AP (L): 0.912993  coco/AR: 0.926952  coco/AR .5: 0.994962  coco/AR .75: 0.972292  coco/AR (M): -1.000000  coco/AR (L): 0.926952  data_time: 0.024552  time: 0.342972
+11/06 08:34:28 - mmengine - INFO - Epoch(train) [26][10/63]  lr: 1.000000e-05  eta: 0:03:22  time: 0.605201  data_time: 0.060135  memory: 14775  loss: 0.000468  loss_kpt: 0.000468  acc_pose: 0.885502
+11/06 08:34:33 - mmengine - INFO - Epoch(train) [26][20/63]  lr: 1.000000e-05  eta: 0:03:15  time: 0.577656  data_time: 0.069237  memory: 14775  loss: 0.000477  loss_kpt: 0.000477  acc_pose: 0.905677
+11/06 08:34:39 - mmengine - INFO - Epoch(train) [26][30/63]  lr: 1.000000e-05  eta: 0:03:08  time: 0.567904  data_time: 0.075842  memory: 14775  loss: 0.000474  loss_kpt: 0.000474  acc_pose: 0.936026
+11/06 08:34:46 - mmengine - INFO - Epoch(train) [26][40/63]  lr: 1.000000e-05  eta: 0:03:02  time: 0.569267  data_time: 0.078599  memory: 14775  loss: 0.000474  loss_kpt: 0.000474  acc_pose: 0.930563
+11/06 08:34:53 - mmengine - INFO - Epoch(train) [26][50/63]  lr: 1.000000e-05  eta: 0:02:55  time: 0.586887  data_time: 0.079018  memory: 14775  loss: 0.000482  loss_kpt: 0.000482  acc_pose: 0.851518
+11/06 08:35:00 - mmengine - INFO - Epoch(train) [26][60/63]  lr: 1.000000e-05  eta: 0:02:48  time: 0.644210  data_time: 0.078698  memory: 14775  loss: 0.000486  loss_kpt: 0.000486  acc_pose: 0.935499
+11/06 08:35:03 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:35:06 - mmengine - INFO - Epoch(val) [26][10/13]    eta: 0:00:01  time: 0.347627  data_time: 0.043262  memory: 14775  
+11/06 08:35:07 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.05s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.912
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.958
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.912
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.926
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.926
+11/06 08:35:07 - mmengine - INFO - Epoch(val) [26][13/13]    coco/AP: 0.912174  coco/AP .5: 0.988699  coco/AP .75: 0.958334  coco/AP (M): -1.000000  coco/AP (L): 0.912174  coco/AR: 0.926196  coco/AR .5: 0.994962  coco/AR .75: 0.969773  coco/AR (M): -1.000000  coco/AR (L): 0.926196  data_time: 0.027725  time: 0.308574
+11/06 08:35:15 - mmengine - INFO - Epoch(train) [27][10/63]  lr: 1.000000e-05  eta: 0:02:40  time: 0.681796  data_time: 0.067955  memory: 14775  loss: 0.000486  loss_kpt: 0.000486  acc_pose: 0.920452
+11/06 08:35:21 - mmengine - INFO - Epoch(train) [27][20/63]  lr: 1.000000e-05  eta: 0:02:33  time: 0.679467  data_time: 0.065031  memory: 14775  loss: 0.000488  loss_kpt: 0.000488  acc_pose: 0.953763
+11/06 08:35:27 - mmengine - INFO - Epoch(train) [27][30/63]  lr: 1.000000e-05  eta: 0:02:27  time: 0.664701  data_time: 0.059119  memory: 14775  loss: 0.000488  loss_kpt: 0.000488  acc_pose: 0.925036
+11/06 08:35:34 - mmengine - INFO - Epoch(train) [27][40/63]  lr: 1.000000e-05  eta: 0:02:20  time: 0.658570  data_time: 0.059976  memory: 14775  loss: 0.000485  loss_kpt: 0.000485  acc_pose: 0.878147
+11/06 08:35:41 - mmengine - INFO - Epoch(train) [27][50/63]  lr: 1.000000e-05  eta: 0:02:13  time: 0.662597  data_time: 0.056381  memory: 14775  loss: 0.000479  loss_kpt: 0.000479  acc_pose: 0.951907
+11/06 08:35:48 - mmengine - INFO - Epoch(train) [27][60/63]  lr: 1.000000e-05  eta: 0:02:07  time: 0.660230  data_time: 0.059588  memory: 14775  loss: 0.000476  loss_kpt: 0.000476  acc_pose: 0.920714
+11/06 08:35:50 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:35:53 - mmengine - INFO - Epoch(val) [27][10/13]    eta: 0:00:01  time: 0.337936  data_time: 0.027635  memory: 14775  
+11/06 08:35:54 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.911
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.957
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.911
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.926
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.967
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.926
+11/06 08:35:54 - mmengine - INFO - Epoch(val) [27][13/13]    coco/AP: 0.911073  coco/AP .5: 0.988649  coco/AP .75: 0.957143  coco/AP (M): -1.000000  coco/AP (L): 0.911073  coco/AR: 0.925945  coco/AR .5: 0.994962  coco/AR .75: 0.967254  coco/AR (M): -1.000000  coco/AR (L): 0.925945  data_time: 0.022658  time: 0.327398
+11/06 08:36:02 - mmengine - INFO - Epoch(train) [28][10/63]  lr: 1.000000e-05  eta: 0:01:58  time: 0.683610  data_time: 0.057488  memory: 14775  loss: 0.000479  loss_kpt: 0.000479  acc_pose: 0.938281
+11/06 08:36:08 - mmengine - INFO - Epoch(train) [28][20/63]  lr: 1.000000e-05  eta: 0:01:51  time: 0.670090  data_time: 0.058949  memory: 14775  loss: 0.000477  loss_kpt: 0.000477  acc_pose: 0.921978
+11/06 08:36:14 - mmengine - INFO - Epoch(train) [28][30/63]  lr: 1.000000e-05  eta: 0:01:45  time: 0.659760  data_time: 0.062859  memory: 14775  loss: 0.000470  loss_kpt: 0.000470  acc_pose: 0.944309
+11/06 08:36:21 - mmengine - INFO - Epoch(train) [28][40/63]  lr: 1.000000e-05  eta: 0:01:38  time: 0.658037  data_time: 0.065280  memory: 14775  loss: 0.000473  loss_kpt: 0.000473  acc_pose: 0.914687
+11/06 08:36:28 - mmengine - INFO - Epoch(train) [28][50/63]  lr: 1.000000e-05  eta: 0:01:32  time: 0.661313  data_time: 0.077938  memory: 14775  loss: 0.000470  loss_kpt: 0.000470  acc_pose: 0.939396
+11/06 08:36:35 - mmengine - INFO - Epoch(train) [28][60/63]  lr: 1.000000e-05  eta: 0:01:25  time: 0.660072  data_time: 0.079907  memory: 14775  loss: 0.000471  loss_kpt: 0.000471  acc_pose: 0.935973
+11/06 08:36:37 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:36:42 - mmengine - INFO - Epoch(val) [28][10/13]    eta: 0:00:01  time: 0.364476  data_time: 0.049440  memory: 14775  
+11/06 08:36:43 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.913
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.968
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.913
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.926
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.972
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.926
+11/06 08:36:43 - mmengine - INFO - Epoch(val) [28][13/13]    coco/AP: 0.913130  coco/AP .5: 0.988674  coco/AP .75: 0.968175  coco/AP (M): -1.000000  coco/AP (L): 0.913130  coco/AR: 0.926448  coco/AR .5: 0.994962  coco/AR .75: 0.972292  coco/AR (M): -1.000000  coco/AR (L): 0.926448  data_time: 0.103615  time: 0.411560
+11/06 08:36:50 - mmengine - INFO - Epoch(train) [29][10/63]  lr: 1.000000e-05  eta: 0:01:16  time: 0.687300  data_time: 0.074962  memory: 14775  loss: 0.000472  loss_kpt: 0.000472  acc_pose: 0.909870
+11/06 08:36:57 - mmengine - INFO - Epoch(train) [29][20/63]  lr: 1.000000e-05  eta: 0:01:10  time: 0.673216  data_time: 0.065134  memory: 14775  loss: 0.000477  loss_kpt: 0.000477  acc_pose: 0.905839
+11/06 08:37:03 - mmengine - INFO - Epoch(train) [29][30/63]  lr: 1.000000e-05  eta: 0:01:03  time: 0.674319  data_time: 0.050679  memory: 14775  loss: 0.000471  loss_kpt: 0.000471  acc_pose: 0.953654
+11/06 08:37:10 - mmengine - INFO - Epoch(train) [29][40/63]  lr: 1.000000e-05  eta: 0:00:57  time: 0.672592  data_time: 0.044086  memory: 14775  loss: 0.000473  loss_kpt: 0.000473  acc_pose: 0.895120
+11/06 08:37:17 - mmengine - INFO - Epoch(train) [29][50/63]  lr: 1.000000e-05  eta: 0:00:50  time: 0.678988  data_time: 0.039619  memory: 14775  loss: 0.000472  loss_kpt: 0.000472  acc_pose: 0.940131
+11/06 08:37:24 - mmengine - INFO - Epoch(train) [29][60/63]  lr: 1.000000e-05  eta: 0:00:43  time: 0.678292  data_time: 0.041757  memory: 14775  loss: 0.000472  loss_kpt: 0.000472  acc_pose: 0.916447
+11/06 08:37:26 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:37:30 - mmengine - INFO - Epoch(val) [29][10/13]    eta: 0:00:01  time: 0.361355  data_time: 0.049736  memory: 14775  
+11/06 08:37:31 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.913
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.968
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.913
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.927
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.972
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.927
+11/06 08:37:31 - mmengine - INFO - Epoch(val) [29][13/13]    coco/AP: 0.913157  coco/AP .5: 0.988649  coco/AP .75: 0.968180  coco/AP (M): -1.000000  coco/AP (L): 0.913157  coco/AR: 0.927204  coco/AR .5: 0.994962  coco/AR .75: 0.972292  coco/AR (M): -1.000000  coco/AR (L): 0.927204  data_time: 0.025609  time: 0.329791
+11/06 08:37:39 - mmengine - INFO - Epoch(train) [30][10/63]  lr: 1.000000e-06  eta: 0:00:35  time: 0.697797  data_time: 0.055234  memory: 14775  loss: 0.000466  loss_kpt: 0.000466  acc_pose: 0.925947
+11/06 08:37:45 - mmengine - INFO - Epoch(train) [30][20/63]  lr: 1.000000e-06  eta: 0:00:28  time: 0.682408  data_time: 0.060166  memory: 14775  loss: 0.000476  loss_kpt: 0.000476  acc_pose: 0.929359
+11/06 08:37:51 - mmengine - INFO - Epoch(train) [30][30/63]  lr: 1.000000e-06  eta: 0:00:21  time: 0.679742  data_time: 0.062834  memory: 14775  loss: 0.000481  loss_kpt: 0.000481  acc_pose: 0.909404
+11/06 08:37:59 - mmengine - INFO - Epoch(train) [30][40/63]  lr: 1.000000e-06  eta: 0:00:15  time: 0.680469  data_time: 0.060847  memory: 14775  loss: 0.000478  loss_kpt: 0.000478  acc_pose: 0.918204
+11/06 08:38:05 - mmengine - INFO - Epoch(train) [30][50/63]  lr: 1.000000e-06  eta: 0:00:08  time: 0.674872  data_time: 0.056808  memory: 14775  loss: 0.000476  loss_kpt: 0.000476  acc_pose: 0.912615
+11/06 08:38:12 - mmengine - INFO - Epoch(train) [30][60/63]  lr: 1.000000e-06  eta: 0:00:01  time: 0.668465  data_time: 0.053045  memory: 14775  loss: 0.000477  loss_kpt: 0.000477  acc_pose: 0.901666
+11/06 08:38:14 - mmengine - INFO - Exp name: syrip_hrnet-w48_dark-384x288_20261106_081135
+11/06 08:38:14 - mmengine - INFO - Saving checkpoint at 30 epochs
+11/06 08:38:24 - mmengine - INFO - Epoch(val) [30][10/13]    eta: 0:00:00  time: 0.340142  data_time: 0.049409  memory: 14775  
+11/06 08:38:25 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.912
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.957
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.912
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.927
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.970
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.927
+11/06 08:38:25 - mmengine - INFO - Epoch(val) [30][13/13]    coco/AP: 0.912147  coco/AP .5: 0.988649  coco/AP .75: 0.957422  coco/AP (M): -1.000000  coco/AP (L): 0.912147  coco/AR: 0.927204  coco/AR .5: 0.994962  coco/AR .75: 0.969773  coco/AR (M): -1.000000  coco/AR (L): 0.927204  data_time: 0.026558  time: 0.210628
+selected (best Val400 AP): /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_16.pth
+11/06 08:39:13 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.10.22 | packaged by conda-forge | (main, Oct  6 2026, 23:02:24) [GCC 14.4.0]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 4
+    GPU 0: NVIDIA L40S
+    CUDA_HOME: /shared/EL9/explorer/cuda/12.1.1
+    NVCC: Cuda compilation tools, release 12.1, V12.1.105
+    GCC: gcc (GCC) 11.4.1 20230605 (Red Hat 11.4.1-2)
+    PyTorch: 2.1.2+cu121
+    PyTorch compiling details: PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2022.2-Product Build 20220804 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX512
+  - CUDA Runtime 12.1
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 8.9.2
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.1, CUDNN_VERSION=8.9.2, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-invalid-partial-specialization -Wno-unused-private-field -Wno-aligned-allocation-unavailable -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Werror=cast-function-type -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=ON, TORCH_VERSION=2.1.2, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=1, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.2+cu121
+    OpenCV: 4.11.0
+    MMEngine: 0.10.7
+
+Runtime environment:
+    cudnn_benchmark: False
+    dist_cfg: {'backend': 'nccl'}
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    deterministic: False
+    seed: 4
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+11/06 08:39:14 - mmengine - INFO - Config:
+ann_real200 = '/scratch/purohitham.v/fidip/mmpose_data/splits/train_real200.json'
+ann_syn1000 = '/scratch/purohitham.v/fidip/mmpose_data/splits/train_syn1000.json'
+ann_test100 = 'splits/test100.json'
+ann_val400 = 'splits/val400.json'
+backend_args = dict(backend='local')
+coco_metainfo = dict(
+    from_file=
+    '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py')
+codec = dict(
+    heatmap_size=(
+        72,
+        96,
+    ),
+    input_size=(
+        288,
+        384,
+    ),
+    sigma=3,
+    type='MSRAHeatmap',
+    unbiased=True)
+custom_hooks = [
+    dict(type='SyncBuffersHook'),
+]
+data_mode = 'topdown'
+data_root = '/scratch/purohitham.v/fidip/data/'
+dataset_type = 'CocoDataset'
+default_hooks = dict(
+    badcase=dict(
+        badcase_thr=5,
+        enable=False,
+        metric_type='loss',
+        out_dir='badcase',
+        type='BadCaseAnalysisHook'),
+    checkpoint=dict(
+        interval=5,
+        max_keep_ckpts=1,
+        rule='greater',
+        save_best='coco/AP',
+        type='CheckpointHook'),
+    logger=dict(interval=10, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(enable=False, type='PoseVisualizationHook'))
+default_scope = 'mmpose'
+derived_root = '/scratch/purohitham.v/fidip/mmpose_data/'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+img_test100 = 'syrip/images/test100/'
+img_train = 'syrip/images/train_infant/'
+img_val400 = 'syrip/images/val400/'
+launcher = 'none'
+load_from = '/scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_16.pth'
+log_level = 'INFO'
+log_processor = dict(
+    by_epoch=True, num_digits=6, type='LogProcessor', window_size=50)
+model = dict(
+    backbone=dict(
+        extra=dict(
+            stage1=dict(
+                block='BOTTLENECK',
+                num_blocks=(4, ),
+                num_branches=1,
+                num_channels=(64, ),
+                num_modules=1),
+            stage2=dict(
+                block='BASIC',
+                num_blocks=(
+                    4,
+                    4,
+                ),
+                num_branches=2,
+                num_channels=(
+                    48,
+                    96,
+                ),
+                num_modules=1),
+            stage3=dict(
+                block='BASIC',
+                num_blocks=(
+                    4,
+                    4,
+                    4,
+                ),
+                num_branches=3,
+                num_channels=(
+                    48,
+                    96,
+                    192,
+                ),
+                num_modules=4),
+            stage4=dict(
+                block='BASIC',
+                num_blocks=(
+                    4,
+                    4,
+                    4,
+                    4,
+                ),
+                num_branches=4,
+                num_channels=(
+                    48,
+                    96,
+                    192,
+                    384,
+                ),
+                num_modules=3)),
+        in_channels=3,
+        type='HRNet'),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        std=[
+            58.395,
+            57.12,
+            57.375,
+        ],
+        type='PoseDataPreprocessor'),
+    head=dict(
+        decoder=dict(
+            heatmap_size=(
+                72,
+                96,
+            ),
+            input_size=(
+                288,
+                384,
+            ),
+            sigma=3,
+            type='MSRAHeatmap',
+            unbiased=True),
+        deconv_out_channels=None,
+        in_channels=48,
+        loss=dict(type='KeypointMSELoss', use_target_weight=True),
+        out_channels=17,
+        type='HeatmapHead'),
+    test_cfg=dict(flip_mode='heatmap', flip_test=True, shift_heatmap=True),
+    type='TopdownPoseEstimator')
+optim_wrapper = dict(optimizer=dict(lr=0.0001, type='Adam'))
+param_scheduler = [
+    dict(
+        begin=0,
+        by_epoch=True,
+        convert_to_iter_based=True,
+        end=1,
+        start_factor=0.001,
+        type='LinearLR'),
+    dict(
+        begin=0,
+        by_epoch=True,
+        end=30,
+        gamma=0.1,
+        milestones=[
+            24,
+            29,
+        ],
+        type='MultiStepLR'),
+]
+randomness = dict(deterministic=False, seed=4)
+resume = False
+test_cfg = dict()
+test_dataloader = dict(
+    batch_size=32,
+    dataset=dict(
+        ann_file='splits/val400.json',
+        data_mode='topdown',
+        data_prefix=dict(img='syrip/images/val400/'),
+        data_root='/scratch/purohitham.v/fidip/data/',
+        metainfo=dict(
+            from_file=
+            '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+        ),
+        pipeline=[
+            dict(type='LoadImage'),
+            dict(type='GetBBoxCenterScale'),
+            dict(input_size=(
+                288,
+                384,
+            ), type='TopdownAffine'),
+            dict(type='PackPoseInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(round_up=False, shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file='/scratch/purohitham.v/fidip/data/splits/val400.json',
+    outfile_prefix=
+    '/scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/mmpose_val400',
+    type='CocoMetric')
+train_cfg = dict(by_epoch=True, max_epochs=30, val_interval=1)
+train_dataloader = dict(
+    batch_size=32,
+    dataset=dict(
+        datasets=[
+            dict(
+                ann_file=
+                '/scratch/purohitham.v/fidip/mmpose_data/splits/train_real200.json',
+                data_mode='topdown',
+                data_prefix=dict(img='syrip/images/train_infant/'),
+                data_root='/scratch/purohitham.v/fidip/data/',
+                metainfo=dict(
+                    from_file=
+                    '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+                ),
+                pipeline=[],
+                type='CocoDataset'),
+            dict(
+                ann_file=
+                '/scratch/purohitham.v/fidip/mmpose_data/splits/train_syn1000.json',
+                data_mode='topdown',
+                data_prefix=dict(img='syrip/images/train_infant/'),
+                data_root='/scratch/purohitham.v/fidip/data/',
+                metainfo=dict(
+                    from_file=
+                    '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+                ),
+                pipeline=[],
+                type='CocoDataset'),
+        ],
+        metainfo=dict(
+            from_file=
+            '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+        ),
+        pipeline=[
+            dict(type='LoadImage'),
+            dict(type='GetBBoxCenterScale'),
+            dict(direction='horizontal', type='RandomFlip'),
+            dict(type='RandomHalfBody'),
+            dict(type='RandomBBoxTransform'),
+            dict(input_size=(
+                288,
+                384,
+            ), type='TopdownAffine'),
+            dict(
+                encoder=dict(
+                    heatmap_size=(
+                        72,
+                        96,
+                    ),
+                    input_size=(
+                        288,
+                        384,
+                    ),
+                    sigma=3,
+                    type='MSRAHeatmap',
+                    unbiased=True),
+                type='GenerateTarget'),
+            dict(type='PackPoseInputs'),
+        ],
+        sample_ratio_factor=[
+            5.0,
+            1.0,
+        ],
+        type='CombinedDataset'),
+    num_workers=6,
+    persistent_workers=True,
+    pin_memory=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline = [
+    dict(type='LoadImage'),
+    dict(type='GetBBoxCenterScale'),
+    dict(direction='horizontal', type='RandomFlip'),
+    dict(type='RandomHalfBody'),
+    dict(type='RandomBBoxTransform'),
+    dict(input_size=(
+        288,
+        384,
+    ), type='TopdownAffine'),
+    dict(
+        encoder=dict(
+            heatmap_size=(
+                72,
+                96,
+            ),
+            input_size=(
+                288,
+                384,
+            ),
+            sigma=3,
+            type='MSRAHeatmap',
+            unbiased=True),
+        type='GenerateTarget'),
+    dict(type='PackPoseInputs'),
+]
+val_cfg = dict()
+val_dataloader = dict(
+    batch_size=32,
+    dataset=dict(
+        ann_file='splits/val400.json',
+        data_mode='topdown',
+        data_prefix=dict(img='syrip/images/val400/'),
+        data_root='/scratch/purohitham.v/fidip/data/',
+        metainfo=dict(
+            from_file=
+            '/scratch/purohitham.v/fidip/mmpose/configs/_base_/datasets/coco.py'
+        ),
+        pipeline=[
+            dict(type='LoadImage'),
+            dict(type='GetBBoxCenterScale'),
+            dict(input_size=(
+                288,
+                384,
+            ), type='TopdownAffine'),
+            dict(type='PackPoseInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(round_up=False, shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file='/scratch/purohitham.v/fidip/data/splits/val400.json',
+    type='CocoMetric')
+val_pipeline = [
+    dict(type='LoadImage'),
+    dict(type='GetBBoxCenterScale'),
+    dict(input_size=(
+        288,
+        384,
+    ), type='TopdownAffine'),
+    dict(type='PackPoseInputs'),
+]
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='PoseLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = '/scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/eval_val400'
+
+11/06 08:39:16 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+11/06 08:39:16 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SyncBuffersHook                    
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SyncBuffersHook                    
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) PoseVisualizationHook              
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) BadCaseAnalysisHook                
+(NORMAL      ) PoseVisualizationHook              
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) BadCaseAnalysisHook                
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+loading annotations into memory...
+Done (t=0.01s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=0.01s)
+creating index...
+index created!
+Loads checkpoint by local backend from path: /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_16.pth
+11/06 08:39:22 - mmengine - INFO - Load checkpoint from /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_16.pth
+11/06 08:39:26 - mmengine - INFO - Epoch(test) [10/13]    eta: 0:00:01  time: 0.415747  data_time: 0.072667  memory: 1066  
+11/06 08:39:28 - mmengine - INFO - Evaluating CocoMetric...
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *keypoints*
+DONE (t=0.06s).
+Accumulating evaluation results...
+DONE (t=0.00s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.917
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.989
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.957
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.917
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ] =  0.928
+ Average Recall     (AR) @[ IoU=0.50      | area=   all | maxDets= 20 ] =  0.995
+ Average Recall     (AR) @[ IoU=0.75      | area=   all | maxDets= 20 ] =  0.967
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ] =  0.928
+11/06 08:39:28 - mmengine - INFO - Epoch(test) [13/13]    coco/AP: 0.917021  coco/AP .5: 0.988724  coco/AP .75: 0.957486  coco/AP (M): -1.000000  coco/AP (L): 0.917021  coco/AR: 0.928212  coco/AR .5: 0.994962  coco/AR .75: 0.967254  coco/AR (M): -1.000000  coco/AR (L): 0.928212  data_time: 0.057053  time: 0.382185
+{
+ "note": "MMPose CocoMetric (xtcocotools, no id-0 artifact). Bookkeeping only; reported numbers come from eval/eval_coco.py on preds_val400.json",
+ "run_id": "R133_mmp-hrnetw48_conf_s4",
+ "split": "val400",
+ "ann_file": "/scratch/purohitham.v/fidip/data/splits/val400.json",
+ "checkpoint": "/scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_16.pth",
+ "config": "/scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/config.py",
+ "flip_test": true,
+ "cfg_options": null,
+ "seconds": 22.7,
+ "metrics": {
+  "coco/AP": 0.9170207922250204,
+  "coco/AP .5": 0.988723872387239,
+  "coco/AP .75": 0.9574858023932,
+  "coco/AP (M)": -1.0,
+  "coco/AP (L)": 0.9170207922250204,
+  "coco/AR": 0.9282115869017631,
+  "coco/AR .5": 0.9949622166246851,
+  "coco/AR .75": 0.9672544080604534,
+  "coco/AR (M)": -1.0,
+  "coco/AR (L)": 0.9282115869017631
+ }
+}
+[eval_coco] run=R133_mmp-hrnetw48_conf_s4 split=val400 n_img=397 n_det=397 scoring=rescored
+  paper : AP= 91.7 AP50= 98.9 AP75= 95.7 AR= 92.8 AR50= 99.5 AR75= 96.7
+  fixed : AP= 91.7 AP50= 98.9 AP75= 95.7 AR= 92.8 AR50= 99.5 AR75= 96.7
+  metrics_original_scores: AP= 91.7 AP50= 98.9 AP75= 95.7 AR= 92.8 AR50= 99.5 AR75= 96.7
+  metrics_original_scores_fixed: AP= 91.7 AP50= 98.9 AP75= 95.7 AR= 92.8 AR50= 99.5 AR75= 96.7
+  AP@OKS 0.50:98.9 0.55:98.9 0.60:98.9 0.65:98.9 0.70:97.8 0.75:95.7 0.80:94.7 0.85:90.6 0.90:84.1 0.95:58.6  | AP_80_95=82.0
+  mean OKS=0.9411  kpt err/sqrt(bbox)=0.0326  PCK@0.05=0.842 @0.1=0.943 @0.2=0.980
+  -> /scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/metrics_val400.json
+{
+ "run_id": "R133_mmp-hrnetw48_conf_s4",
+ "stream": "improve",
+ "status": "done",
+ "slurm_job_id": "11671553",
+ "partition": "sharing",
+ "node": "d4047",
+ "gpu": "NVIDIA L40S",
+ "seed": 4,
+ "tf32_cublas_override": "1",
+ "pythonnousersite": "1",
+ "config": "mmpose_exps/configs/syrip_hrnet-w48_dark-384x288.py",
+ "config_src": "/scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/config_src.py",
+ "config_src_sha256": "9c22a171a55d504ca7544186a0bf7c0ac56f168233ce20c01f0e37896a4b7474",
+ "config_resolved": "/scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/config.py",
+ "config_resolved_sha256": "1d204f2648c067b427910665d4ed2452bf4c6a0a3d66c787f4a05cae7a8a8398",
+ "git_head": "9fd6939946d98b7296b6b79389eeb7026fa1b3a7",
+ "git_tree": "bb5e166d5ba5e093b5aef8d09eedffbad585f15a",
+ "git_dirty": false,
+ "git_dirty_files": [],
+ "git_synced_at": "2026-11-06T07:52:53-0500",
+ "code_snapshot": "/scratch/purohitham.v/fidip/snapshots/11671553",
+ "job_history": [
+  "2026-11-06T08:11:21-05:00 job=11671553 node=d4047 gpu=NVIDIA_L40S resume=no"
+ ],
+ "note_job_fields": "slurm_job_id/partition/node/gpu = the job that ran finalize; see job_history for every job that touched this run (training included)",
+ "init_checkpoint": "/scratch/purohitham.v/fidip/models/mmpose/td-hm_hrnet-w48_dark-8xb32-210e_coco-384x288-39c3c381_20220916.pth",
+ "init_checkpoint_sha256": "39c3c3816ec3f6cd180e27fb79435d9cbd878acd37317bbbd942a97ddbb36ec8",
+ "max_epochs": 30,
+ "batch_size": 32,
+ "lr": 0.0001,
+ "optimizer": "Adam",
+ "selection_rule": "best Val400 coco/AP epoch (MMPose CocoMetric, checked every epoch)",
+ "best_epoch": 16,
+ "checkpoint": "/scratch/purohitham.v/fidip/runs/R133_mmp-hrnetw48_conf_s4/best_coco_AP_epoch_16.pth",
+ "checkpoint_sha256": "a79f3695b4e73bd177d7992236861c3e7b20eb59629cf7f556e238348b871f73",
+ "val400_mmpose_best": {
+  "epoch": 16,
+  "coco/AP": 0.9170207922250204,
+  "coco/AP .5": 0.988723872387239,
+  "coco/AP .75": 0.9574858023932,
+  "coco/AP (M)": -1.0,
+  "coco/AP (L)": 0.9170207922250204,
+  "coco/AR": 0.9282115869017631,
+  "coco/AR .5": 0.9949622166246851,
+  "coco/AR .75": 0.9672544080604534,
+  "coco/AR (M)": -1.0,
+  "coco/AR (L)": 0.9282115869017631
+ },
+ "throughput": {
+  "train_s_per_iter_median": 0.6684,
+  "data_s_per_iter_median": 0.0674,
+  "max_memory_MB": 14775,
+  "n_logged_iters": 180
+ },
+ "val400_eval_coco": {
+  "AP": 0.9170207922250204,
+  "AP50": 0.988723872387239,
+  "AP75": 0.9574858023932,
+  "AR": 0.9282115869017631,
+  "AP_80_95": 0.8199424292918852
+ },
+ "started": "2026-11-06T08:11:21-05:00",
+ "finished": "2026-11-06T08:39:33-0500"
+}
+done R133_mmp-hrnetw48_conf_s4 2026-11-06T08:39:34-05:00

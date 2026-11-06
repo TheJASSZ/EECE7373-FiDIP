@@ -1,0 +1,1 @@
+R190_mmp-hrnetw48_smoke_s1,11659557,improve,mmp-hrnetw48,smoke,1,mmpose_exps/configs/syrip_hrnet-w48_dark-384x288.py,220492ff0757/tree:bc76972919d9+dirty,sharing,NVIDIA L40S,done,89.85,,/scratch/purohitham.v/fidip/runs/R190_mmp-hrnetw48_smoke_s1/best_coco_AP_epoch_2.pth,e578ff9aed3083b4b20b91ef253b77115993108b3d4b982cc5c3019b4f804df2,

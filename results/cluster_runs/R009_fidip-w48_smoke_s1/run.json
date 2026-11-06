@@ -1,0 +1,61 @@
+{
+ "best_val400_epoch_and_AP": "1 0.8810755533633695",
+ "cfg": "experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml",
+ "checkpoints": {
+  "best_val400": {
+   "path": "/scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/model_best.pth",
+   "sha256": "475015832cfd41c22e097e12714ff0fff2cefc4f412f059fe271d19c633dc41e"
+  },
+  "eval_best": {
+   "path": "/scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/model_best.pth",
+   "sha256": "475015832cfd41c22e097e12714ff0fff2cefc4f412f059fe271d19c633dc41e"
+  },
+  "eval_final": {
+   "path": "/scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth",
+   "sha256": "3c3f5a6e2d153145814bad8a6741b00571d3ca262e48f1e32dd6821e2088a0a4"
+  },
+  "final": {
+   "path": "/scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth",
+   "sha256": "3c3f5a6e2d153145814bad8a6741b00571d3ca262e48f1e32dd6821e2088a0a4"
+  },
+  "init_coco": {
+   "path": "/scratch/purohitham.v/fidip/models/coco/w48_384x288.pth",
+   "sha256": "c730334eef7c47f051f694949ad2f213526723e46a7781178deb0fc90a93635c"
+  }
+ },
+ "commands": [
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/train_adaptive_model_hrnet.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TRAIN.CHECKPOINT /scratch/purohitham.v/fidip/models/coco/w48_384x288.pth TRAIN.PRE_EPOCH 10 TRAIN.LAMBDA 0.0005 DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TRAIN_SET train_infant DATASET.TRAIN_PRE_SET train_pre_infant DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output LOG_DIR /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/log WORKERS 8 DEBUG.DEBUG False SEED 1 TRAIN.END_EPOCH 1 TRAIN.PRE_EPOCH 1",
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/model_best.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/upstream_eval/val400_best/output LOG_DIR /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/upstream_eval/val400_best/log",
+  "cd /scratch/purohitham.v/fidip/repo/third_party/Infant-Pose-Estimation && /scratch/purohitham.v/fidip/envs/fidip/bin/python tools/test_adaptive_model.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml TEST.MODEL_FILE /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/output/syrip/adaptive_pose_hrnet/w48_384x288_adam_lr1e-3_infant/final_state.pth TEST.USE_GT_BBOX True WORKERS 8 DEBUG.DEBUG False DATASET.ROOT /scratch/purohitham.v/fidip/data/syrip/ DATASET.TEST_SET val400 OUTPUT_DIR /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/upstream_eval/val400_final/output LOG_DIR /scratch/purohitham.v/fidip/runs/R009_fidip-w48_smoke_s1/upstream_eval/val400_final/log"
+ ],
+ "eval_seconds_val400_best": 16,
+ "eval_seconds_val400_final": 15,
+ "git_pushed": {
+  "dirty_any": true,
+  "dirty_repro_paths": [
+   "?? scripts/analysis/sensitivity_extra.py"
+  ],
+  "head": "7e68cfe385a9a59e24dbc3fada3b4d091c181e38",
+  "pushed_at": "2026-11-06T01:10:15-0500",
+  "tree": "660d19205730be12a7b1d73ce2f62fd765a74fcd"
+ },
+ "gpu": [
+  "NVIDIA H200, 143771 MiB, 570.86.15"
+ ],
+ "lambda": 0.0005,
+ "run_id": "R009_fidip-w48_smoke_s1",
+ "seed": 1,
+ "selection": "model_best.pth = best Val400 AP (DATASET.TEST_SET val400); final_state.pth = last epoch",
+ "slurm": {
+  "gpus": "0",
+  "job_id": "11664893",
+  "job_name": "rp_smoke",
+  "node": "d4053",
+  "partition": "gpu"
+ },
+ "time_end": "2026-11-06T01:14:42-0500",
+ "time_start": "2026-11-06T01:14:27-0500",
+ "train_exit_code": 0,
+ "train_seconds": 56,
+ "upstream_code_sha256": "bba6ef0751f3dbc7a662f1f4840c25bf1b07f9bcb563d0671919156a2d802857"
+}

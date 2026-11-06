@@ -1,0 +1,8 @@
+[eval_coco] run=R019_fidip-w48_paperrecipe_s1 split=val400 n_img=397 n_det=397 scoring=rescored
+  paper : AP= 90.7 AP50= 98.9 AP75= 96.8 AR= 92.0 AR50= 99.7 AR75= 97.2
+  fixed : AP= 90.7 AP50= 98.9 AP75= 96.8 AR= 92.0 AR50= 99.7 AR75= 97.2
+  metrics_original_scores: AP= 90.7 AP50= 98.9 AP75= 96.8 AR= 92.0 AR50= 99.7 AR75= 97.2
+  metrics_original_scores_fixed: AP= 90.7 AP50= 98.9 AP75= 96.8 AR= 92.0 AR50= 99.7 AR75= 97.2
+  AP@OKS 0.50:98.9 0.55:98.9 0.60:97.9 0.65:97.8 0.70:96.8 0.75:96.8 0.80:94.8 0.85:88.6 0.90:79.3 0.95:57.7  | AP_80_95=80.1
+  mean OKS=0.9358  kpt err/sqrt(bbox)=0.0347  PCK@0.05=0.833 @0.1=0.936 @0.2=0.975
+  -> /scratch/purohitham.v/fidip/runs/R019_fidip-w48_paperrecipe_s1/metrics_val400_best.json
