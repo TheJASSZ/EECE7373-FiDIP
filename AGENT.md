@@ -493,3 +493,16 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - A helper submits the remaining runs' one-shot evals as each finalizes, keeping a submitted list.
   - The sbatch still enforces the gate, the checkpoint SHA256 and once-only per run, so streaming doesn't change the protocol.
 - **Analysis:** refresh 11672198 done; reproduction contrasts 11672199 running.
+
+### 2026-11-06 08:17 EST — Human approved restarting R136/R137 on L40S; final pipeline pre-staged
+- **V100s too slow:** about 3 min per epoch, so R136/R137 would have finished around 09:25–09:30, leaving too little buffer before the human's 10:00 deadline.
+- **Human approved** cancelling the V100 jobs 11672130 and 11672131 (both about 15 min in).
+  - Cancelled. The partial run dirs are archived, not deleted, at `runs/_failed/R13{6,7}_*_v100cancelled_0812`.
+  - Restarted from scratch on sharing/L40S: **R136 → 11672666**, **R137 → 11672734**. The second needed retries because the sharing submit cap was full.
+  - Each confirmatory run therefore trains entirely on one GPU type.
+- **Expected:** R133/R134 about 08:30, R138 about 08:38, R136 about 08:55, R137 about 09:03.
+- **Final pipeline pre-staged** (`scratchpad/final_pipeline.sh`, background). It runs: all ten Test100 preds → R141 ensemble → C1–C4 + supplementary contrasts + figure refresh → pull → `collect_results.py` → `fill_final_keys.py` (computed keys and the H1 verdict, no hand-typed numbers) → `report/build.sh`. It stops before commit/push so the numbers get reviewed.
+- **Done on the side:**
+  - **R003**, the COCO-only DarkPose released checkpoint (paper row 88.5), evaluated on Test100 under the exception clause, to complete the DarkPose block.
+  - **R021–R023 numbers filled:** Test100 93.7 ± 0.2, Val400 90.9 ± 0.2.
+  - Paired bootstrap, FiDIP vs plain fine-tune: ΔAP −0.15 [−0.43, +0.15]. FiDIP vs λ = 0: −0.04 [−0.34, +0.20].
