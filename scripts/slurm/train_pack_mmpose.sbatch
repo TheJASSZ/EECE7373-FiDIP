@@ -1,8 +1,8 @@
 #!/bin/bash
 # IMPROVE stream: SEVERAL fine-tuning runs packed concurrently on ONE GPU (D14 budget policy).
 # Each run is an independent process (scripts/run_one_mmpose.sh) with its own seed, run dir and log
-# ($R/runs/<RUN_ID>/job_stdout.log). Per-process GPU memory and GPU utilisation are sampled every
-# 60 s into $R/logs/pack/<jobid>_gpu.csv; each run dir gets pack_info.json naming its co-runners.
+# ($R/runs/<RUN_ID>/job_stdout_<jobid>.log). Per-process GPU memory and GPU utilisation are sampled every
+# 60 s into $R/logs/pack/<jobid>_gpu.csv; each run dir gets pack_info_<jobid>.json naming its co-runners.
 # Required env: RUNS="RUN_ID|CONFIG|SEED|CFG_OPTS;RUN_ID|CONFIG|SEED|CFG_OPTS;..." (CFG_OPTS may be
 # empty and may contain spaces, but no ';' or '|').
 # Memory per process (batch 32, measured): HRNet-W48 384x288 ~14.5 GB, ViT-L 256x192 ~12 GB,
@@ -46,9 +46,9 @@ for spec in "${SPECS[@]}"; do
   IFS='|' read -r RUN_ID CONFIG SEED CFG_OPTS <<< "$spec"
   mkdir -p $R/runs/$RUN_ID
   printf '{"pack_job": "%s", "node": "%s", "co_runs": "%s", "gpu_monitor": "%s"}\n' \
-    "${SLURM_JOB_ID:-}" "$(hostname)" "${NAMES[*]}" "$MON" > $R/runs/$RUN_ID/pack_info.json
+    "${SLURM_JOB_ID:-}" "$(hostname)" "${NAMES[*]}" "$MON" > $R/runs/$RUN_ID/pack_info_${SLURM_JOB_ID}.json
   bash $REPO/scripts/run_one_mmpose.sh "$RUN_ID" "$CONFIG" "${SEED:-1}" "${CFG_OPTS:-}" \
-    > $R/runs/$RUN_ID/job_stdout.log 2>&1 &
+    > $R/runs/$RUN_ID/job_stdout_${SLURM_JOB_ID}.log 2>&1 &
   PIDS+=($!)
   echo "started $RUN_ID pid=$! ($(date -Is))"
   sleep 20   # stagger start-up (checkpoint loading, dataset init)
@@ -56,7 +56,7 @@ done
 RC=0
 for i in "${!PIDS[@]}"; do
   wait ${PIDS[$i]}; rc=$?
-  echo "finished ${NAMES[$i]} rc=$rc ($(date -Is))"; tail -2 $R/runs/${NAMES[$i]}/job_stdout.log
+  echo "finished ${NAMES[$i]} rc=$rc ($(date -Is))"; tail -2 $R/runs/${NAMES[$i]}/job_stdout_${SLURM_JOB_ID}.log
   [ $rc -ne 0 ] && RC=$rc
 done
 kill $MONPID 2>/dev/null

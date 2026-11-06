@@ -17,6 +17,7 @@ STARTED=$(date -Is)
 echo "run=$RUN_ID config=$CONFIG seed=$SEED cfg_opts='$CFG_OPTS' job=${SLURM_JOB_ID:-} node=$(hostname) start=$STARTED"
 test -f $RUN_DIR/run.json && { echo "REFUSING: $RUN_DIR already finalized"; exit 1; }
 mkdir -p $RUN_DIR
+echo "$(date -Is) job=${SLURM_JOB_ID:-} node=$(hostname) gpu=$(nvidia-smi --query-gpu=name --format=csv,noheader | head -1 | tr ' ' '_') resume=$([ -f $RUN_DIR/last_checkpoint ] && echo yes || echo no)" >> $RUN_DIR/job_history.log
 # freeze the inputs of this run (the repo copy may be re-synced while the job runs)
 [ -f $RUN_DIR/config_src.py ] || cp $REPO/$CONFIG $RUN_DIR/config_src.py
 [ -f $RUN_DIR/git_info.json ] || cp $REPO/GIT_INFO_mmpose.json $RUN_DIR/git_info.json

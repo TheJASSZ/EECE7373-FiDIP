@@ -243,3 +243,31 @@ Newest entries at the bottom. Timestamps in EST.
 - MMPose-printed Val400 AP at the selected epoch: R103 0.9277 (ep 30), R104 0.9276 (ep 13), R105 0.9242 (ep 14), R107 0.9153 (ep 25).
 - Measured per-process peaks (nvidia-smi): R104 46.2 GB, R105 24.7 GB, R103 27.9 GB, R107 16.8 GB, R120/R121 14.8 GB each.
 - **Fix:** `im_pack_finScreen` **11670941** (sharing L40S) resumes the same four RUN_IDs at epoch 30 (no-op), then runs pred dump, eval_coco and finalize. These jobs now run from D19 snapshots, so they are immune to syncs.
+
+### 2026-11-06 07:04 EST — Screening complete (Val400, eval_coco, seed 1); recommendation sent
+- Finalize pack 11670941 (L40S, ~4 min) produced preds/metrics/run.json for R103/R104/R105/R107.
+- **Provenance fix:** run.json of runs completed by a later job had `slurm_job_id/node/gpu` of the *finalize* job. Added `job_history` + `training_*` fields (reconstructed from the slurm pack logs; script `mmpose_exps/tools/patch_job_history_20261106.py`).
+  - Going forward, `run_one_mmpose.sh` appends `job_history.log`, and packs write `job_stdout_<job>.log` / `pack_info_<job>.json`, so nothing is overwritten.
+  - Note that ViT-H peaks early (best epoch 13-14), so epoch-30 MMPose values understate it (92.76/92.42). The selected checkpoints score 93.27/93.17.
+- **Val400 (397 imgs; paper = fixed protocol):**
+  | run | config | AP | AP.80-.95 | AR | flip-off AP | sel. ep | train job / GPU | peak mem |
+  |---|---|---|---|---|---|---|---|---|
+  | R101 | HRNet-W48 DARK 384, lr 1e-4 (**control**) | 91.52 | 81.57 | 92.75 | 90.94 | 29 | 11659888 L40S | 14.8 GB |
+  | R106 | HRNet lr 2e-4 | 91.43 | 81.85 | 92.59 | | 28 | 11659885 A100-40 | 14.8 |
+  | R107 | HRNet lr 5e-5 | 91.69 | 81.73 | 92.82 | | 25 | 11664862 L40S | 14.8 |
+  | R102 | ViTPose-L 256, lr 1e-4 | 92.81 | 84.82 | 94.13 | 92.26 | 16 | 11659888 L40S | 13.3 |
+  | R108 | ViTPose-L 256 lr 2e-4 | 92.58 | 84.70 | 93.85 | | 5 | 11664863 L40S | 13.3 |
+  | R109 | ViTPose-L 256 lr 5e-5 | 92.60 | 84.32 | 93.95 | | 17 | 11664863 L40S | 13.3 |
+  | R103 | ViTPose-L 384 | 92.77 | 84.78 | 94.16 | pending | 30 | 11664862 L40S | 25.4 |
+  | R105 | ViTPose-H 256 | 93.17 | 85.26 | 94.51 | pending | 14 | 11664861 A100-80 | 23.3 |
+  | R104 | ViTPose-H 384 | **93.27** | **85.81** | **94.69** | pending | 13 | 11664861 A100-80 | 43.2 |
+  | R120 | L-256 **real-only** (abl. a) | 92.24 | 83.44 | 93.78 | | 8 | 11664928 A100-80 | 13.3 |
+  | R121 | L-256 **rot ±180** (abl. b) | 92.58 | 84.29 | 94.01 | | 30 | 11664928 A100-80 | 13.3 |
+- **Zero-shot (no fine-tune):** HRNet 86.46; L-256 88.21; L-384 86.30; H-256 88.81; H-384 87.44.
+- **Readout:**
+  - Every fine-tuned ViTPose beats the HRNet-W48 control by +1.1 to +1.8 AP (AP.80-.95 +2.8 to +4.2).
+  - The MMPose control itself beats the FiDIP retrains on Val400 (91.5 vs 90.4-90.6).
+  - LR is flat in [5e-5, 2e-4] for both families, a spread of about 0.15-0.25 AP. That is the single-seed noise scale.
+  - ViT-H beats ViT-L by +0.4-0.5 AP. Resolution 384 vs 256: H +0.10, L −0.04 (AP.80-.95: H +0.55).
+  - On ViT-L-256: real-only −0.57, so the synthetic data helps. Rotation ±180 gives −0.23, which is noise-level. Flip-TTA adds +0.55 (ViT) and +0.58 (HRNet).
+- **Launched for ablations on the ViT-H family:** `im_eval_noflip2` 11671160 (flip-off for R103/R104/R105) and R122 ViT-H-256 real-only, job 11671163 (sharing). R123 ViT-H-256 rot180 follows.

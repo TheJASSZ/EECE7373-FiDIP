@@ -132,6 +132,10 @@ def main():
         git_head=git.get('git_head'), git_tree=git.get('git_tree'), git_dirty=git.get('dirty'),
         git_dirty_files=git.get('dirty_files'), git_synced_at=git.get('synced_at'),
         code_snapshot=os.environ.get('REPO'),
+        job_history=(open(osp.join(rd, 'job_history.log')).read().splitlines()
+                     if osp.isfile(osp.join(rd, 'job_history.log')) else None),
+        note_job_fields=('slurm_job_id/partition/node/gpu = the job that ran finalize; '
+                         'see job_history for every job that touched this run (training included)'),
         init_checkpoint=cfg.get('load_from'),
         init_checkpoint_sha256=sha256(cfg.load_from) if cfg.get('load_from') else None,
         max_epochs=cfg.train_cfg.get('max_epochs'), batch_size=cfg.train_dataloader.batch_size,
