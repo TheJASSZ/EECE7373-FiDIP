@@ -256,3 +256,9 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
 - Caveat: our λ = 0 control keeps the PRE_EPOCH stage, which runs the pose net in train mode on adult COCO+SURREAL crops, so its BN statistics drift before fine-tuning. The paper's 92.7 "Finetune" row may have used a plain fine-tune (shipped yaml, PRE_EPOCH 0). That would be a separate control (proposed, not run: it needs a preregistration decision).
 - Note: R013's standalone re-eval of `model_best.pth` gives Val400 91.02 vs 91.09 in-training. cuDNN benchmark mode is nondeterministic, so differences of ≤ 0.07 AP are expected; R010 matched exactly. The registry uses eval_coco values.
 - Archived: `~/fidip_artifacts/runs/<RUN_ID>/` holds the best and final checkpoints (SHA256 verified against run.json, 22 files), run.json, epochs.csv, metrics, preds and logs, 5.3 GB (archive jobs 11671234, 11671596).
+
+### 2026-11-06 07:35 EST — repro stream status
+- All tasks are done: data/splits, env, checkpoints, patches, R001/R002, R010–R015, the λ sweep R016–R018, R019, R020, and the demo (CLI, Streamlit verified headless, gpu_test). Rows are in `results/registry.csv`; persistent copies are in `~/fidip_artifacts/`.
+- Open decisions, passed to the orchestrator:
+  - (a) a plain fine-tune control (shipped yaml: PRE_EPOCH 0, λ 0.0, + COCO init; 3 seeds) as the faithful counterpart of the paper's 92.7 row;
+  - (b) more seeds for λ = 1e-4 / λ = 0 if the report wants a DA-vs-no-DA claim on Val400.
