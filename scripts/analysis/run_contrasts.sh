@@ -1,15 +1,24 @@
 #!/usr/bin/env bash
 # Run a declared contrast spec on Test100 and Test100-clean (both protocols each; Holm per protocol).
+# Contrasts whose prediction files are missing are skipped and listed; rerun once they exist, so Holm
+# covers the full declared family.
 #   sbatch scripts/slurm/analysis.sbatch script scripts/analysis/run_contrasts.sh results/contrasts/<spec>.json
 set -euo pipefail
 export R=${R:-/scratch/purohitham.v/fidip}
-SPEC=$1; NAME=$(basename "$SPEC" .json)
-for f in $(python - "$SPEC" <<'PY'
+SPEC=$1; NAME=$(basename "$SPEC" .json); RUNSPEC=$R/analysis/bootstrap/${NAME}.runnable.json
+mkdir -p $R/analysis/bootstrap
+python - "$SPEC" "$RUNSPEC" <<'PY'
 import json, os, sys
-for c in json.load(open(sys.argv[1]))["contrasts"]:
-    for p in (c["a"] if isinstance(c["a"], list) else [c["a"]]) + (c["b"] if isinstance(c["b"], list) else [c["b"]]):
-        print(os.path.expandvars(p))
+spec = json.load(open(sys.argv[1]))
+keep, skip = [], []
+for c in spec["contrasts"]:
+    files = [os.path.expandvars(p) for k in ("a", "b") for p in (c[k] if isinstance(c[k], list) else [c[k]])]
+    (keep if all(os.path.exists(f) for f in files) else skip).append(c)
+spec["contrasts"] = keep
+spec["skipped_missing_inputs"] = [c["name"] for c in skip]
+json.dump(spec, open(sys.argv[2], "w"), indent=1)
+print("run:", [c["name"] for c in keep], "| skipped (missing preds):", [c["name"] for c in skip])
+sys.exit(0 if keep else 3)
 PY
-); do test -f "$f" || { echo "MISSING $f -- contrast not run"; exit 3; }; done
-python scripts/analysis_pipeline.py bootstrap --spec "$SPEC" --gt test100 --out "${NAME}_test100"
-python scripts/analysis_pipeline.py bootstrap --spec "$SPEC" --gt test100_clean --out "${NAME}_test100_clean"
+python scripts/analysis_pipeline.py bootstrap --spec "$RUNSPEC" --gt test100 --out "${NAME}_test100"
+python scripts/analysis_pipeline.py bootstrap --spec "$RUNSPEC" --gt test100_clean --out "${NAME}_test100_clean"
