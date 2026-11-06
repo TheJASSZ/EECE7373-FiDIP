@@ -22,6 +22,7 @@ SNAP=$R/analysis/snapshots/${SLURM_JOB_ID:-manual_$$}
 mkdir -p $SNAP/results
 cp -r $R/repo/eval $R/repo/scripts $SNAP/
 cp $R/repo/results/*.md $R/repo/results/*.csv $R/repo/results/*.json $SNAP/results/ 2>/dev/null || true
+cp -r $R/repo/results/contrasts $SNAP/results/ 2>/dev/null || true
 cp $R/repo/.git_tree_analysis $SNAP/ 2>/dev/null || true
 cd $SNAP
 echo "host=$(hostname) job=${SLURM_JOB_ID:-none} start=$(date -Is) snapshot=$SNAP tree=$(cat .git_tree_analysis 2>/dev/null || echo n/a)"
