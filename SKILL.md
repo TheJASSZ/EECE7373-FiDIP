@@ -47,8 +47,8 @@ Request a GPU with `--gres=gpu:h200:1` (or `a100:1`, `v100-sxm2:1`). Templates: 
 
 ## Common operations
 ```bash
-# sync code to the cluster (from the local repo root)
-rsync -az --delete --exclude-from=.rsyncignore ./ explorer:/scratch/purohitham.v/fidip/repo/
+# sync code to the cluster (from the local repo root). NEVER --delete: compiled libs (nms *.so) live only on the cluster copy
+rsync -az --exclude-from=.rsyncignore ./ explorer:/scratch/purohitham.v/fidip/repo/
 # submit
 ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch scripts/slurm/<job>.sbatch'
 # chain short jobs
