@@ -197,3 +197,26 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
 - **Memorisation check** (D16): `analyze.py models` with `leak_ids` in the manifest (build_manifests / run_released.sh fill it from the derived-split README) writes `leak_effect_<split>.csv` and a figure. The figure shows the 5 leaked images as diamonds against a box and strip of the other 95, per model; the CSV gives mean OKS for leaked vs rest with a bootstrap CI on the difference.
 - **Env leak:** `~/.local/lib/python3.12/site-packages` holds only transformers, datasets, accelerate, peft, bitsandbytes, tokenizers, absl, rouge_score and rarfile. None of the packages my code imports (numpy, pycocotools, matplotlib, pandas, scipy, PIL, cv2) are there. The analysis-env test job (11659381) reported exactly the pinned numpy 1.26.4 / pycocotools 2.0.8, so nothing was shadowed. All analysis sbatch scripts now export `PYTHONNOUSERSITE=1` regardless.
 - **To do when R001 lands:** quantify the AP impact of syrip_for_train's defective `validate_infant/test11.jpg` (bytes of test24, wrong size) by scoring R001's upstream-layout predictions against the same Test100 GT.
+
+### 2026-11-06 01:31 EST: released checkpoints (R001/R002), the upstream cross-check, sensitivities, and the report interface
+**Cross-check against upstream** (`scripts/analysis/crosscheck_upstream.py` → `$R/analysis/tables/crosscheck_upstream.csv`):
+- All 9 run/split pairs match upstream's printed summary on all 10 stats (max |Δ| ≤ 0.0005, i.e. within its 3-decimal rounding).
+- R001 Test100: eval_coco 0.93605 vs printed 0.936. AP50/AP75 = 98.5/98.5, AR 94.6, AR50/AR75 = 99.0/99.0: **an exact match with the published table**.
+- R002 Test100: 0.79137 vs printed 0.791 (published 79.2).
+**R001 (hrnet_fidip.pth) on Test100**, in AP points unless noted:
+- AP_80_95 86.2; the paper's implied value is 86.25.
+- `fixed` AP 95.0 (+1.4). test0's detection ranks 51/100. Moving test0 through all 100 ranks swings paper AP from 92.98 to 94.07, and the fixed−paper gap ranges 0.9–2.0 (`id0_rank_sensitivity_R001…`).
+- Bootstrap 95% CI of AP: [89.8, 96.3] on Test100, [88.7, 92.1] on Val400 (B = 10000). With 100 images, Test100 resolves only differences of several AP.
+**Sensitivities for R001** (`tab_sensitivity`):
+- Test100-clean (95 images): paper 92.8 (−0.8) but fixed 94.9 (−0.1).
+  - Removing the 5 memorised images barely changes the fixed AP.
+  - The paper-protocol drop is mostly the id-0 artefact weighing more in a 95-image set: 1/95 vs 1/100 of recall, and the false-positive rank moves.
+  - So under `fixed`, the leak's effect on the released model is about 0.1 AP.
+- syrip_for_train images (defective test11): 92.1. test11's OKS falls from 0.985 to 0.091, about a −1.5 AP hit from one corrupt file, so the paper evidently used the correct image.
+- validate500 boxes and GT on the same 100 images: 92.0 vs 93.6. v500 boxes are a median 12% smaller (v100/v500 area ratio range [0.90, 1.42]), and the tighter boxes cost about 1.6 AP. This explains part of why Val400 (v500-style boxes) scores below Test100.
+- Val400 with the shipped constant area: 98.9 vs 90.4 with area = w·h. The placeholder inflates AP by 8.5 points (D8).
+- MMPose CocoMetric (xtcocotools) on the same Test100 predictions: 94.989 = eval_coco `fixed` exactly, i.e. +1.4 over the paper protocol.
+- Val400 vs Test100: R001 90.4 vs 93.6, R002 68.2 vs 79.1.
+**Report interface:** `scripts/report_interface.py` (called by `collect_results.py`) fills `report/generated/numbers.tex` (33/85 keys set so far; the rest are `\tbd` pending retrains and finalists), 9 `tab_*.tex` tabulars, `results/tables/provenance.csv`, and `report/figures/generated/{oks_thresholds, per_keypoint, qual_success, qual_failure, val_vs_test}`.
+**Infra bug found and fixed:** two analysis jobs ended silently mid-script with exit 0, at different points. Cause: other streams' `sync_to_cluster.sh` re-extracts `$R/repo` while jobs run, and bash reads scripts incrementally. Every analysis job now runs from a private snapshot (`$R/analysis/snapshots/<jobid>/`), which also pins one code version per job.
+**Pre-registration parser:** a shared `scripts/prereg.py` expands "R010-R012" ranges and skips rows marked "no Test100". So R010–R015 are registered and R016–R020 are Val400-only, as written; the earlier naive parser would have allowed R016–R020.
