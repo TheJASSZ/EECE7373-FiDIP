@@ -16,6 +16,9 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 | D5 | 11-05 20:00 | **Reproduce FiDIP with `TRAIN.CHECKPOINT` = COCO DarkPose weights and `TRAIN.LAMBDA 0.0005`.** Also run the same recipe with λ = 0 (the paper's "DarkPose + Finetune" row) as the domain-adaptation ablation. 3 seeds each; per-epoch validation on Val400. | Code audit: the README command trains from **random init** with **λ = 0**. Only the `_custom.yaml` turns adaptation on (λ = 5e-4, PRE_EPOCH 10). Running the README literally would not be FiDIP. |
 | D6 | 11-05 20:00 | **Build the FiDIP env pip-only** (py3.12, torch 2.3.1 cu121, numpy 1.26.4…) instead of `conda env create -f fidip_env.yml`. | The yml's pip stage pins `grpcio==1.48.2` (no cp312 wheel) and `mkl-*` packages that have no wheels. The packages the code actually imports are pinned to the yml's versions. |
 | D7 | 11-05 20:00 | **Domain-classifier pre-stage:** if `train_pre_infant` (1904 COCO + 2000 SURREAL adults) isn't in `syrip_for_train.zip`, pre-train the classifier on SyRIP train (infant real vs synthetic) instead, and document the deviation. | The adult set is "available on request" and nothing in the repo builds it. The SURREAL license blocks rebuilding it quickly. |
+| D8 | 11-05 20:12 | **Recompute `area = w×h` for val400/validate500** (and the neutral train JSON). Keep Test100 = validate100 as shipped. | validate500 ships a constant placeholder area (2443298.48), which makes OKS meaningless. validate100 uses w×h. |
+| D9 | 11-05 20:18 | **Add a single-seed λ sweep {1e-4, 2e-3, 1e-2}** (Val400 only), plus the guide's demo CLI/Streamlit/gpu_test and per-epoch loss/AP CSVs. | STUDENT_GUIDE lists DA tweaks, demos and over/underfitting monitoring, and asks for the accuracy of every attempt. |
+| D10 | 11-05 20:30 | **Keep annotation ids as shipped.** Headline = `paper` protocol; also report a `fixed` protocol (ids shifted off 0) as a sensitivity check. | Test100 has annotation id 0. pycocotools' accumulate treats matched GT id 0 as unmatched, so AR ≤ 0.99 and AP drops ~1 pt. The published numbers carry this (AR50 = 99.0 across the table). |
 
 ---
 
@@ -136,3 +139,10 @@ The literature-scan Explore agent is still running. Its findings will be forward
   - add `.env` to `.gitignore` before creating it;
   - pass secrets via stdin/env vars, not CLI args.
 - This applies to every Claude Code project on this machine. The project-level `CLAUDE.md` already has the same rule.
+
+### 2026-11-05 20:30 EST — pycocotools id-0 artifact on Test100 (D10)
+- **Analysis worker:** validate100 annotation ids equal image ids, so `test0.jpg` has annotation id 0. COCOeval's `evaluateImg` stores matched GT ids in `dtMatches`, and `accumulate` treats 0 as "unmatched". So the image-0 infant is never a TP, and its detection counts as an FP.
+- **Toy check** (pycocotools 2.0.8, 10 perfect predictions): AP 0.811 / AR 0.900 with ids starting at 0, vs 1.000 / 1.000 with ids starting at 1.
+- **Fingerprint in the paper:** AR50 = 99.0 for essentially every published model.
+- **Decision D10:** don't renumber ids. Headline metrics use the `paper` protocol, comparable with 93.6. `fixed` (ids shifted) is reported as a sensitivity check. The two are identical on Val400, which has no id 0.
+- Relayed to the repro worker (no id renumbering, plus an assertion) and to the report worker (evaluator section + comparable-conditions box).
