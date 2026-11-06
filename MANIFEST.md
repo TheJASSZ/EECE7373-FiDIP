@@ -13,8 +13,8 @@ Cluster root: `R=/scratch/purohitham.v/fidip`. Persistent copies: `explorer:~/fi
 ## 2. Environments
 | Name | Path | Python / PyTorch / CUDA | Spec file |
 |---|---|---|---|
-| fidip | `$R/envs/fidip` | py 3.12.4 / torch 2.3.1+cu121 / numpy 1.26.4 (pip-only route, D6). Conda env var `PYTHONNOUSERSITE=1`. | `envs/fidip.yml`, `envs/fidip-pip-freeze.txt` |
-| mmpose | `$R/envs/mmpose` | _TBD_ | `envs/mmpose.yml`, `envs/mmpose-pip-freeze.txt` |
+| fidip | `$R/envs/fidip` | py 3.12.4 / torch 2.3.1+cu121 / cuDNN 8902 / numpy 1.26.4 / pyarrow 17.0.0 (pip-only route, D6; built by `scripts/slurm/build_env_fidip.sbatch`). Conda env var `PYTHONNOUSERSITE=1`. | `envs/fidip.yml`, `envs/fidip-pip-freeze.txt` |
+| mmpose | `$R/envs/mmpose` | py 3.10 / torch 2.1.2+cu121 / mmcv 2.1.0 / mmengine 0.10.7 / mmpose 1.3.2 / mmpretrain 1.2.0 / mmdet 3.3.0 (imported unconditionally by mmpose) / numpy 1.26.4. mmpose source: `$R/mmpose`, tag v1.3.2 (5408bc76). mmcv has **no sm_90 kernels**, so MMPose runs use A100/L40S. `PYTHONNOUSERSITE=1`. | `envs/mmpose.yml`, `envs/mmpose-pip-freeze.txt` |
 
 ## 3. Datasets
 | Name | Source URL | Size | SHA256 | Cluster path |
@@ -48,22 +48,49 @@ Downloaded 2026-11-05 19:52–19:53 EST to `$R/data/downloads/`. The checksums a
 ## 4. Pretrained checkpoints (downloaded)
 | File | Source | SHA256 | Path |
 |---|---|---|---|
-| `hrnet_fidip.pth` (released DarkPose+FiDIP HRNet-W48) | FiDIP_models Google Drive folder `108P-1SnTqaj3xNtjYZ1o7T8z6UvUYuiC` | `bfbf9df225674614652d5dbdd066daf71c9b9d7f3c31976b7ed33bb96af55d07` | `$R/models/hrnet_fidip.pth` |
-| `mobile_fidip.pth` (released Pose-MobileNet+FiDIP) | same folder | `bd0b7548b1f1158f0a8a97d022305547343c835e7d4027727a978d2d7a4cbca1` | `$R/models/mobile_fidip.pth` |
-| `w48_384x288.pth` (COCO DarkPose HRNet-W48, FiDIP init) | TGA_models Google Drive folder `14kAA1zXuKODYgrRiQmKnVcipbY7RedVV` | `c730334eef7c47f051f694949ad2f213526723e46a7781178deb0fc90a93635c` | `$R/models/coco/w48_384x288.pth` |
-| MMPose COCO checkpoints (ViTPose-L/H, HRNet-W48 DARK 384×288) | download.openmmlab.com (URLs in `notebook/improve.md`) | _TBD (improve worker)_ | `$R/models/mmpose/` |
+| `hrnet_fidip.pth`: released DarkPose+FiDIP HRNet-W48 | FiDIP_models Google Drive folder `108P-1SnTqaj3xNtjYZ1o7T8z6UvUYuiC`, file id `19tBMoVS8wTza7VqVfPc6KBQ_POPAEIqb` | `bfbf9df225674614652d5dbdd066daf71c9b9d7f3c31976b7ed33bb96af55d07` | `$R/models/hrnet_fidip.pth` |
+| `mobile_fidip.pth`: released Pose-MobileNet+FiDIP | same folder, file id `1aHaBwO3XBYtFXI7cDMRIzMWRffIJzrQU` | `bd0b7548b1f1158f0a8a97d022305547343c835e7d4027727a978d2d7a4cbca1` | `$R/models/mobile_fidip.pth` |
+| `w48_384x288.pth`: COCO DarkPose HRNet-W48, the FiDIP init | TGA_models Google Drive folder `14kAA1zXuKODYgrRiQmKnVcipbY7RedVV` (file `coco/w48_384×288.pth`, id `1TKvk0R_qrWV3UeSTawUYM5Burp-lOmss`) | `c730334eef7c47f051f694949ad2f213526723e46a7781178deb0fc90a93635c` | `$R/models/coco/w48_384x288.pth` |
+| MMPose HRNet-W48 DARK 384×288 (COCO AP 77.2) | `https://download.openmmlab.com/mmpose/v1/body_2d_keypoint/topdown_heatmap/coco/td-hm_hrnet-w48_dark-8xb32-210e_coco-384x288-39c3c381_20220916.pth` | `39c3c3816ec3f6cd180e27fb79435d9cbd878acd37317bbbd942a97ddbb36ec8` | `$R/models/mmpose/` |
+| MMPose HRNet-W48 UDP 384×288 (COCO AP 77.3) | `…/td-hm_hrnet-w48_udp-8xb32-210e_coco-384x288-70d7ab01_20220913.pth` | `70d7ab0196e40b61e4508f08e547576dee9ec90f069ec5a8520f6126b8b3b4a1` | `$R/models/mmpose/` |
+| MMPose ViTPose-L 256×192 (COCO AP 78.2) | `…/td-hm_ViTPose-large_8xb64-210e_coco-256x192-53609f55_20230314.pth` | `53609f55473dd4d26aa2e509911fc092a3e4d438e9eb75126be6f905b693c475` | `$R/models/mmpose/` |
+| MMPose ViTPose-H 256×192 (COCO AP 78.8) | `…/td-hm_ViTPose-huge_8xb64-210e_coco-256x192-e32adcd4_20230314.pth` | `e32adcd41ab0b0ef0b5bf3d167ddae7cdbd45fcf45e7f6a834815ef04d641f2b` | `$R/models/mmpose/` |
+| ViTPose-L with pos-embed resized to 24×18 (for 384×288) | derived by `mmpose_exps/tools/resize_vit_pos_embed.py` | `627f26a2c948b301dc012114145f834b9dddf41ce3aa639f7cb509727eb6ab6f` | `$R/models/mmpose/derived/` |
+| ViTPose-H with pos-embed resized to 24×18 | derived, same script | `f8c4b2df396ec054a7857f497289913176cd00e919fd992266a97e0f72a0e712` | `$R/models/mmpose/derived/` |
 
-All three Drive checkpoints load with `strict=True`; none has a `module.` prefix (repro worker, 21:0x).
+All three Drive checkpoints load with `strict=True`; none has missing/unexpected keys or a `module.` prefix.
 
 ## 5. Trained checkpoints (ours)
-| RUN_ID | Checkpoint path | SHA256 | Epoch / selection rule |
-|---|---|---|---|
-| _none yet_ | | | |
+- **Per-run checkpoint:** every run's selected checkpoint and its SHA256 are recorded in `$R/runs/<RUN_ID>/run.json`. That file also holds the git head and tree, the dirty flag, the Slurm job, node, GPU and seed.
+  - FiDIP retrains keep both `ckpt_best_val400.pth` and `ckpt_final.pth`.
+  - MMPose runs keep `best_coco_AP_epoch_<e>.pth`.
+- **Persistent copies:** `explorer:~/fidip_artifacts/runs/` (home, backed up), SHA-verified. For FiDIP R010–R015 that is 5.3 GB.
+- **Final table:** generated from the run.json files when results are final (§8).
 
 ## 6. Configs and patches
-| File | Purpose |
-|---|---|
-| _TBD_ | |
+**Upstream patches.** Each one is a separate commit touching `third_party/Infant-Pose-Estimation` and marked `[EECE7373 patch Pn]`.
+
+| Patch | Commit | Change | Why |
+|---|---|---|---|
+| P1 | 7168b1e | compiled-nms imports made optional | only the pure-Python OKS-NMS is used, so `make`/nvcc is unnecessary |
+| P3 | 4f3f869 | `torch.load(map_location, weights_only=False)`; strict loading at test time | stops a silent `strict=False` mis-load |
+| P4 | 7ec379a | build the train_pre loader only if `PRE_EPOCH > 0` | the shipped code always needed its JSON |
+| P5 | 67fde20 | `is '*'` → `== '*'` | SyntaxWarning, Python 3.12 |
+| P6 | 763a36f | `mkdir(parents=True, exist_ok=True)` | nested OUTPUT_DIR |
+| P7 | 25cb420 | loss `.npy` files go into the run dir; no `add_graph` | the cwd was being polluted; the slow CPU trace is removed |
+| P8 | 44dcb09 | per-epoch `epochs.csv` (train MSE, Val400 loss, AP/AR) | over/underfitting monitoring (STUDENT_GUIDE Part 4.5) |
+| P10 | fe6d81c | any split name (test100, val400, validate500), plus eval of labelled `test*` splits | upstream hard-codes split names |
+| P11 | 596fb7b | `SEED` option | repeatable seeds |
+| demo | 7e68cfe | added `tools/demo.py`, `tools/streamlit_demo.py`, `gpu_test.py` | STUDENT_GUIDE Parts 1.3 and 6; these files are not in upstream |
+
+**Configs:**
+- **FiDIP:** the upstream infant yaml `experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml`, with command-line overrides from `scripts/train_fidip.sh`: `TRAIN.CHECKPOINT` COCO init, `TRAIN.PRE_EPOCH 10` (0 for R021–R023), `TRAIN.LAMBDA`, `DATASET.TEST_SET val400`, `SEED`.
+- **MMPose:**
+  - Base: `mmpose_exps/configs/_base_/syrip_base.py`.
+  - Arm A: `syrip_hrnet-w48_dark-384x288.py`. Arm B: `syrip_vitpose-h_udp-256x192.py`.
+  - Screening: `syrip_vitpose-{l,h}_udp-{256x192,384x288}.py`.
+  - Ablation variants: `_realonly`, `_rot180`, `_cosine`, `_da`.
+- **Derived train subsets** (1:1 real:synthetic mixing), in `$R/mmpose_data/splits/`: real200 `081b5664…c879` and syn1000 `ee0c5b3b…9210`, both from `train_infant.json` (`3bdcce0b…`).
 
 ## 7. Runs
 See `results/registry.csv` (one row per run: run ID, Slurm job ID, config, seed, GPU, git SHA, Val400 AP, Test100 AP, checkpoint).
@@ -82,3 +109,29 @@ See `results/registry.csv` (one row per run: run ID, Slurm job ID, config, seed,
 | Build the PDF (`report/FiDIP_Report.pdf`) | `bash report/build.sh` (Tectonic) |
 | Re-verify citations (31 entries; the 22 DOIs are checked against Crossref) | `python3 report/check_bib.py` |
 | Regenerate results tables, numbers and provenance | `python3 scripts/collect_results.py` |
+
+## 10. Reproduce everything (from the local repo root; cluster = `ssh explorer`)
+```bash
+# 0. push code (tar-over-ssh with atomic per-file rename) and record git provenance on the cluster
+bash scripts/push_mmpose.sh
+# 1. data, environment, checkpoints  (then verify $R/data/SPLITS_READY and $R/data/splits/VERIFY.txt)
+ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch scripts/slurm/get_data.sbatch && sbatch scripts/slurm/build_env_fidip.sbatch && sbatch scripts/slurm/get_models.sbatch'
+# 2. released checkpoints: R001 (HRNet), R002 (MobileNet) on test100 / val400 / validate500 / validate_infant
+ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch scripts/slurm/eval_released.sbatch'
+# 3. FiDIP retrains, 3 seeds per pack on one H200 (spec = "RUN_ID SEED LAMBDA [EVAL_SETS] [yacs opts]")
+#    NOTE: lambda must be written as a float (0.0, not 0), or yacs raises a type mismatch
+ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch -p gpu --gres=gpu:h200:1 -t 02:00:00 -J rp_R010-R012 scripts/slurm/train_fidip_pack.sbatch "R010_fidip-w48_lambda5e-4_s1 1 0.0005" "R011_fidip-w48_lambda5e-4_s2 2 0.0005" "R012_fidip-w48_lambda5e-4_s3 3 0.0005"'
+ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch -p gpu --gres=gpu:h200:1 -t 02:00:00 -J rp_R013-R015 scripts/slurm/train_fidip_pack.sbatch "R013_fidip-w48_lambda0_s1 1 0.0" "R014_fidip-w48_lambda0_s2 2 0.0" "R015_fidip-w48_lambda0_s3 3 0.0"'
+ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch -p gpu --gres=gpu:h200:1 -t 01:30:00 -J rp_R021-R023 scripts/slurm/train_fidip_pack.sbatch "R021_fidip-w48_ft-noprestage_s1 1 0.0 test100,val400 TRAIN.PRE_EPOCH 0" "R022_fidip-w48_ft-noprestage_s2 2 0.0 test100,val400 TRAIN.PRE_EPOCH 0" "R023_fidip-w48_ft-noprestage_s3 3 0.0 test100,val400 TRAIN.PRE_EPOCH 0"'
+# 4. MMPose runs: one run = launch_mmpose.sh RUN_ID CONFIG SEED "CFG_OPTS" [sbatch args]
+bash scripts/launch_mmpose.sh R136_mmp-vitpose-h256_conf_s2 mmpose_exps/configs/syrip_vitpose-h_udp-256x192.py 2 "" -p sharing --gres=gpu:l40s:1 -t 00:58:00
+# 5. pre-registered one-shot Test100 eval (gated by results/PREREGISTRATION.md, checkpoint SHA256 verified), then the ensemble
+ssh explorer 'cd /scratch/purohitham.v/fidip/repo && RUN_IDS="R101_mmp-hrnetw48_base_s1 R105_mmp-vitpose-h256_base_s1 R131_… R140_…" sbatch --export=ALL scripts/slurm/final_test_eval_mmpose.sbatch'
+ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch scripts/slurm/ensemble_mmpose.sbatch'
+# 6. analysis: evaluate every gated run, contrasts C1–C4, pull results, regenerate the report tables and numbers
+ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch scripts/slurm/analysis.sbatch script scripts/analysis/job_refresh.sh --no-released && sbatch scripts/slurm/analysis.sbatch script scripts/analysis/run_contrasts.sh results/contrasts/final_C1_C4.json'
+bash scripts/pull_analysis.sh && python3 scripts/collect_results.py && bash report/build.sh
+# demo (STUDENT_GUIDE Part 6), in the fidip env
+python tools/demo.py --cfg experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml --model $R/models/hrnet_fidip.pth --image <img|dir> --output <out> [--gt-json $R/data/splits/test100.json] [--conf-threshold 0.3] [--output-size 512,512] [--video in.mp4]
+FIDIP_MODEL=$R/models/hrnet_fidip.pth streamlit run tools/streamlit_demo.py
+```
