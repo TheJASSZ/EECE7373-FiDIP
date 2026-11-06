@@ -21,6 +21,7 @@ Claude Code (model: Claude Opus 5.5) keeps this notebook live, working alongside
 | D10 | 11-05 20:11 | **Keep annotation ids as shipped.** Headline = `paper` protocol; also report a `fixed` protocol (ids shifted off 0) as a sensitivity check. | Test100 has annotation id 0. pycocotools' accumulate treats matched GT id 0 as unmatched, so AR ≤ 0.99 and AP drops ~1 pt. The published numbers carry this (AR50 = 99.0 across the table). |
 | D11 | 11-05 20:12 | **Improvement strategy:** ViTPose-L/H tested at 384×288 as well as 256×192 (resolution arm). HRNet-W48+DARK 384×288 in MMPose as the control. 1:1 real:synthetic mixing as in FiDIP. Recipe knobs (rotation ±180°, cosine/EMA) chosen on Val400. 5 seeds for the finalists if runs are short. A seed/cross-architecture coordinate ensemble as a secondary, pre-registered claim, always shown next to single-model numbers. | Literature: no published result beats 93.6 under this protocol. AP50 = AP75 = 98.5, so the headroom is at strict OKS (0.80–0.95), i.e. precise localization. Resolution and backbone are the levers. ViT-B lost to HRNet on another infant set (NeoPose), so B is skipped. RTMPose/Sapiens are excluded because of their extra pretraining data. |
 | D12 | 11-05 20:12 | **Add one paper-recipe attempt** (Adam 1e-3, 100 epochs, batch 64, λ = 5e-4) next to the yaml recipe. | The paper (arXiv v5) and the released yaml disagree: lr 1e-3/100 ep/batch 64/λ 5e-4 vs 1e-4/20 ep/batch 20/λ 0. |
+| D13 | 11-05 20:52 | **An improvement claim counts only if it holds under both evaluation protocols.** The headline uses `paper`, comparable with 93.6. The paired-bootstrap CI must exclude 0 under both `paper` and `fixed`. Report test0's score rank for every model. | Verified on the real Test100 GT: at realistic accuracy, `paper` vs `fixed` differ by 0.8–2.1 AP depending only on where test0's confidence ranks. A one-image artifact is about as large as the gains we expect. |
 
 ---
 
@@ -214,3 +215,9 @@ The literature-scan Explore agent is still running. Its findings will be forward
 - **Possible data tampering:** the repro log notes that `raw/SyRIP/SyRIP` was "flattened" at 20:08 by an unknown actor. The analysis worker says it only reads there.
   - Asked repro to verify integrity against `unzip -l` and member md5s before SPLITS_READY.
   - Asked improve whether it touched the directory, and made `$R/data` read-only for it. The repro worker owns the data; other layouts go in symlink trees.
+
+### 2026-11-05 20:52 EST — id-0 artifact verified on real Test100; claims must hold under both protocols (D13)
+- **Analysis job 11659551:** over 12 noisy-prediction cases, our `paper` protocol is bit-identical to raw pycocotools 2.0.11, and `fixed` is bit-identical to raw xtcocotools 1.14.3 (MMPose).
+- **Perfect predictions:** `paper` AP is 98.02 (test0 ranked first) to 99.01 (ranked last). `fixed` is 100.
+- **Realistic predictions** (AP ≈ 93.6): the two protocols differ by **0.8–2.1 AP**, depending on test0's rank.
+- **Decision D13:** improvement claims must survive both protocols. We report test0's score rank per model, and the report gets a figure explaining the sensitivity.
