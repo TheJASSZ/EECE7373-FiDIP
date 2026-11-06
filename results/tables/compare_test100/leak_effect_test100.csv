@@ -1,3 +1,5 @@
 model,key,run_ids,n_leak,n_rest,mean_oks_leak,mean_oks_rest,diff,diff_ci_lo,diff_ci_hi,leak_ids,per_image_oks_leak
 FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,5,95,0.940772,0.954069,-0.0132975,-0.0344426,0.00910341,7;20;42;46;50,0.9766;0.9086;0.9516;0.9278;0.9392
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,5,95,0.946271,0.895382,0.0508882,0.0268883,0.0768504,7;20;42;46;50,0.969;0.9358;0.9722;0.935;0.9194
+"FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,5,95,0.943752,0.955185,-0.0114325,-0.0390345,0.0157187,7;20;42;46;50,0.9769;0.9294;0.9783;0.8983;0.9358
+"Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,5,95,0.950221,0.955974,-0.00575299,-0.0253987,0.0140564,7;20;42;46;50,0.9762;0.9288;0.9746;0.9345;0.9371

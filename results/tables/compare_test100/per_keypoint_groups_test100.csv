@@ -15,3 +15,19 @@ FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Hips
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Knees,200,3.58118,64,81.5
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,Ankles,200,4.23413,58.5,81
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,All,1700,2.82297,70.9412,87.2941
+"FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,"Head (nose, eyes, ears)",500,0.853035,95.8,98.2
+"FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,Shoulders,200,2.14126,91.5,100
+"FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,Elbows,200,1.76148,81,94
+"FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,Wrists,200,1.31055,87.5,93
+"FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,Hips,200,3.63048,67.5,92.5
+"FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,Knees,200,2.28085,82.5,93
+"FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,Ankles,200,2.41287,78.5,90.5
+"FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,All,1700,1.76912,85.6471,95.1176
+"Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,"Head (nose, eyes, ears)",500,0.802349,96,98.2
+"Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,Shoulders,200,2.10077,91.5,100
+"Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,Elbows,200,1.76547,81,94.5
+"Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,Wrists,200,1.25151,88,93.5
+"Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,Hips,200,3.63415,66,93.5
+"Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,Knees,200,2.18656,82.5,94.5
+"Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,Ankles,200,2.34112,77,91
+"Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,All,1700,1.72611,85.4118,95.5882

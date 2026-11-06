@@ -30,22 +30,55 @@
         "role": "released"
       },
       {
-        "key": "mmp_hrnet_base",
-        "label": "HRNet-W48 DARK 384 (MMPose control)",
-        "slot": 3,
+        "key": "rt_fidip",
+        "label": "FiDIP retrain, lambda 5e-4",
+        "slot": 4,
         "runs": [
           {
-            "run_id": "R101_mmp-hrnetw48_base_s1",
-            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R101_mmp-hrnetw48_base_s1/per_image_val400.json",
-            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R101_mmp-hrnetw48_base_s1/metrics_val400.json"
+            "run_id": "R010_fidip-w48_lambda5e-4_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R010_fidip-w48_lambda5e-4_s1/per_image_val400_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R010_fidip-w48_lambda5e-4_s1/metrics_val400_best.json"
+          },
+          {
+            "run_id": "R011_fidip-w48_lambda5e-4_s2",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R011_fidip-w48_lambda5e-4_s2/per_image_val400_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R011_fidip-w48_lambda5e-4_s2/metrics_val400_best.json"
+          },
+          {
+            "run_id": "R012_fidip-w48_lambda5e-4_s3",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R012_fidip-w48_lambda5e-4_s3/per_image_val400_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R012_fidip-w48_lambda5e-4_s3/metrics_val400_best.json"
           }
         ],
-        "role": "control"
+        "role": "retrain"
+      },
+      {
+        "key": "rt_ft",
+        "label": "Fine-tune retrain, lambda 0",
+        "slot": 5,
+        "runs": [
+          {
+            "run_id": "R013_fidip-w48_lambda0_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R013_fidip-w48_lambda0_s1/per_image_val400_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R013_fidip-w48_lambda0_s1/metrics_val400_best.json"
+          },
+          {
+            "run_id": "R014_fidip-w48_lambda0_s2",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R014_fidip-w48_lambda0_s2/per_image_val400_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R014_fidip-w48_lambda0_s2/metrics_val400_best.json"
+          },
+          {
+            "run_id": "R015_fidip-w48_lambda0_s3",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R015_fidip-w48_lambda0_s3/per_image_val400_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R015_fidip-w48_lambda0_s3/metrics_val400_best.json"
+          }
+        ],
+        "role": "retrain"
       },
       {
         "key": "mmp_vitl256_base",
         "label": "ViTPose-L 256 (MMPose)",
-        "slot": 2,
+        "slot": 0,
         "runs": [
           {
             "run_id": "R102_mmp-vitpose-l256_base_s1",
@@ -54,6 +87,71 @@
           }
         ],
         "role": "candidate"
+      },
+      {
+        "key": "mmp_vith256_base",
+        "label": "ViTPose-H 256 (MMPose)",
+        "slot": 0,
+        "runs": [
+          {
+            "run_id": "R105_mmp-vitpose-h256_base_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R105_mmp-vitpose-h256_base_s1/per_image_val400.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R105_mmp-vitpose-h256_base_s1/metrics_val400.json"
+          }
+        ],
+        "role": "candidate"
+      },
+      {
+        "key": "mmp_vith384_base",
+        "label": "ViTPose-H 384 (MMPose)",
+        "slot": 0,
+        "runs": [
+          {
+            "run_id": "R104_mmp-vitpose-h384_base_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R104_mmp-vitpose-h384_base_s1/per_image_val400.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R104_mmp-vitpose-h384_base_s1/metrics_val400.json"
+          }
+        ],
+        "role": "candidate"
+      },
+      {
+        "key": "mmp_vitl384_base",
+        "label": "ViTPose-L 384 (MMPose)",
+        "slot": 0,
+        "runs": [
+          {
+            "run_id": "R103_mmp-vitpose-l384_base_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R103_mmp-vitpose-l384_base_s1/per_image_val400.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R103_mmp-vitpose-l384_base_s1/metrics_val400.json"
+          }
+        ],
+        "role": "candidate"
+      },
+      {
+        "key": "arm_b",
+        "label": "ViTPose-H 256 (arm B)",
+        "slot": 2,
+        "runs": [
+          {
+            "run_id": "R140_mmp-vitpose-h256_conf_s6",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R140_mmp-vitpose-h256_conf_s6/per_image_val400.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R140_mmp-vitpose-h256_conf_s6/metrics_val400.json"
+          }
+        ],
+        "role": "final"
+      },
+      {
+        "key": "mmp_hrnet_base",
+        "label": "HRNet-W48 DARK 384 (MMPose control)",
+        "slot": 0,
+        "runs": [
+          {
+            "run_id": "R101_mmp-hrnetw48_base_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R101_mmp-hrnetw48_base_s1/per_image_val400.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R101_mmp-hrnetw48_base_s1/metrics_val400.json"
+          }
+        ],
+        "role": "screen_control"
       },
       {
         "key": "mmp_hrnet_lr2e4",
@@ -158,21 +256,118 @@
           }
         ],
         "role": "hparam"
+      },
+      {
+        "key": "rt_lam1e4",
+        "label": "FiDIP retrain, lambda 1e-4",
+        "slot": 0,
+        "runs": [
+          {
+            "run_id": "R016_fidip-w48_lambda1e-4_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R016_fidip-w48_lambda1e-4_s1/per_image_val400_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R016_fidip-w48_lambda1e-4_s1/metrics_val400_best.json"
+          }
+        ],
+        "role": "ablation"
+      },
+      {
+        "key": "rt_lam2e3",
+        "label": "FiDIP retrain, lambda 2e-3",
+        "slot": 0,
+        "runs": [
+          {
+            "run_id": "R017_fidip-w48_lambda2e-3_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R017_fidip-w48_lambda2e-3_s1/per_image_val400_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R017_fidip-w48_lambda2e-3_s1/metrics_val400_best.json"
+          }
+        ],
+        "role": "ablation"
+      },
+      {
+        "key": "rt_lam1e2",
+        "label": "FiDIP retrain, lambda 1e-2",
+        "slot": 0,
+        "runs": [
+          {
+            "run_id": "R018_fidip-w48_lambda1e-2_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R018_fidip-w48_lambda1e-2_s1/per_image_val400_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R018_fidip-w48_lambda1e-2_s1/metrics_val400_best.json"
+          }
+        ],
+        "role": "ablation"
+      },
+      {
+        "key": "mmp_hrnet_lr5e5",
+        "label": "HRNet-W48 DARK 384, LR 5e-5",
+        "slot": 0,
+        "runs": [
+          {
+            "run_id": "R107_mmp-hrnetw48_lr5e-5_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R107_mmp-hrnetw48_lr5e-5_s1/per_image_val400.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R107_mmp-hrnetw48_lr5e-5_s1/metrics_val400.json"
+          }
+        ],
+        "role": "hparam"
+      },
+      {
+        "key": "mmp_vitl256_realonly",
+        "label": "ViTPose-L 256, real only",
+        "slot": 0,
+        "runs": [
+          {
+            "run_id": "R120_mmp-vitpose-l256_realonly_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R120_mmp-vitpose-l256_realonly_s1/per_image_val400.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R120_mmp-vitpose-l256_realonly_s1/metrics_val400.json"
+          }
+        ],
+        "role": "ablation"
+      },
+      {
+        "key": "mmp_vitl256_rot180",
+        "label": "ViTPose-L 256, rotation +-180 deg",
+        "slot": 0,
+        "runs": [
+          {
+            "run_id": "R121_mmp-vitpose-l256_rot180_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R121_mmp-vitpose-l256_rot180_s1/per_image_val400.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R121_mmp-vitpose-l256_rot180_s1/metrics_val400.json"
+          }
+        ],
+        "role": "ablation"
       }
     ],
     "focus": [
       "rel_fidip_w48",
-      "mmp_vitl256_base",
-      "mmp_hrnet_base"
+      "mmp_vitl256_base"
     ],
     "pairs": [
       [
         "rel_fidip_w48",
-        "mmp_hrnet_base"
+        "rt_fidip"
+      ],
+      [
+        "rel_fidip_w48",
+        "rt_ft"
       ],
       [
         "rel_fidip_w48",
         "mmp_vitl256_base"
+      ],
+      [
+        "rel_fidip_w48",
+        "mmp_vith256_base"
+      ],
+      [
+        "rel_fidip_w48",
+        "mmp_vith384_base"
+      ],
+      [
+        "rel_fidip_w48",
+        "mmp_vitl384_base"
+      ],
+      [
+        "rel_fidip_w48",
+        "arm_b"
       ]
     ],
     "published": {
@@ -196,10 +391,20 @@
     "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/error_vs_orientation_val400.png",
     "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/score_vs_oks_val400.pdf",
     "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/score_vs_oks_val400.png",
-    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_mmp_hrnet_base_val400.pdf",
-    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_mmp_hrnet_base_val400.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_rt_fidip_val400.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_rt_fidip_val400.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_rt_ft_val400.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_rt_ft_val400.png",
     "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_mmp_vitl256_base_val400.pdf",
-    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_mmp_vitl256_base_val400.png"
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_mmp_vitl256_base_val400.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_mmp_vith256_base_val400.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_mmp_vith256_base_val400.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_mmp_vith384_base_val400.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_mmp_vith384_base_val400.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_mmp_vitl384_base_val400.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_mmp_vitl384_base_val400.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_arm_b_val400.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_val400/oks_scatter_rel_fidip_w48_vs_arm_b_val400.png"
   ],
   "scale_tertiles_sqrt_area_px": [
     340.3938894868708,

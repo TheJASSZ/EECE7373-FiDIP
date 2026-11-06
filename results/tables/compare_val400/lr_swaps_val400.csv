@@ -1,8 +1,14 @@
 model,key,run_ids,n_images_with_swap,images,n_eyes,n_ears,n_shoulders,n_elbows,n_wrists,n_hips,n_knees,n_ankles
 FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,4,test142.jpg;test160.jpg;test322.jpg;test360.jpg,1,3,0,0,0,0,0,0
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,16,test107.jpg;test142.jpg;test150.jpg;test177.jpg;test182.jpg;test184.jpg;test223.jpg;test254.jpg;test273.jpg;test276.jpg;test308.jpg;test322.jpg;test336.jpg;test360.jpg;test447.jpg;test497.jpg,1,5,3,2,1,1,6,6
-HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,5,test138.jpg;test142.jpg;test160.jpg;test322.jpg;test360.jpg,1,3,0,0,1,0,0,0
+"FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,5,test142.jpg;test160.jpg;test177.jpg;test322.jpg;test360.jpg;test366.jpg,1.66667,3,0,0.333333,0.333333,0,0,0.666667
+"Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,4.66667,test142.jpg;test160.jpg;test177.jpg;test254.jpg;test322.jpg;test360.jpg,1.33333,2.66667,0,0.333333,0,0,0.666667,0
 ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,6,test138.jpg;test142.jpg;test160.jpg;test177.jpg;test322.jpg;test360.jpg,2,3,0,1,1,1,1,1
+ViTPose-H 256 (MMPose),mmp_vith256_base,R105_mmp-vitpose-h256_base_s1,5,test142.jpg;test160.jpg;test177.jpg;test322.jpg;test360.jpg,2,3,0,1,1,0,0,0
+ViTPose-H 384 (MMPose),mmp_vith384_base,R104_mmp-vitpose-h384_base_s1,5,test142.jpg;test160.jpg;test177.jpg;test322.jpg;test360.jpg,2,3,0,1,1,0,0,0
+ViTPose-L 384 (MMPose),mmp_vitl384_base,R103_mmp-vitpose-l384_base_s1,7,test138.jpg;test142.jpg;test160.jpg;test177.jpg;test304.jpg;test322.jpg;test360.jpg,2,3,0,1,1,1,2,2
+ViTPose-H 256 (arm B),arm_b,R140_mmp-vitpose-h256_conf_s6,5,test142.jpg;test160.jpg;test177.jpg;test322.jpg;test360.jpg,2,3,0,1,1,0,0,0
+HRNet-W48 DARK 384 (MMPose control),mmp_hrnet_base,R101_mmp-hrnetw48_base_s1,5,test138.jpg;test142.jpg;test160.jpg;test322.jpg;test360.jpg,1,3,0,0,1,0,0,0
 "HRNet-W48 DARK 384, LR 2e-4",mmp_hrnet_lr2e4,R106_mmp-hrnetw48_lr2e-4_s1,7,test121.jpg;test138.jpg;test142.jpg;test160.jpg;test304.jpg;test322.jpg;test360.jpg,2,3,0,0,0,0,3,2
 "ViTPose-L 256, LR 2e-4",mmp_vitl256_lr2e4,R108_mmp-vitpose-l256_lr2e-4_s1,7,test138.jpg;test142.jpg;test160.jpg;test177.jpg;test304.jpg;test322.jpg;test360.jpg,2,3,0,1,1,1,2,2
 "HRNet-W48 COCO, zero-shot",zs_hrnet,R181_mmp-hrnetw48_zeroshot_s0,5,test142.jpg;test160.jpg;test177.jpg;test322.jpg;test360.jpg,2,3,0,1,1,0,0,0
@@ -11,3 +17,9 @@ ViTPose-L 256 (MMPose),mmp_vitl256_base,R102_mmp-vitpose-l256_base_s1,6,test138.
 "ViTPose-H 256 COCO, zero-shot",zs_vith256,R184_mmp-vitpose-h256_zeroshot_s0,7,test142.jpg;test160.jpg;test177.jpg;test304.jpg;test322.jpg;test360.jpg;test393.jpg,2,3,0,1,2,0,0,1
 "ViTPose-H 384 COCO, zero-shot",zs_vith384,R185_mmp-vitpose-h384_zeroshot_s0,7,test138.jpg;test142.jpg;test160.jpg;test177.jpg;test304.jpg;test322.jpg;test360.jpg,2,3,0,1,1,2,1,1
 "ViTPose-L 256, LR 5e-5",mmp_vitl256_lr5e5,R109_mmp-vitpose-l256_lr5e-5_s1,6,test138.jpg;test142.jpg;test160.jpg;test177.jpg;test322.jpg;test360.jpg,2,3,0,1,1,1,1,1
+"FiDIP retrain, lambda 1e-4",rt_lam1e4,R016_fidip-w48_lambda1e-4_s1,5,test142.jpg;test160.jpg;test322.jpg;test360.jpg;test366.jpg,2,3,0,0,0,0,0,1
+"FiDIP retrain, lambda 2e-3",rt_lam2e3,R017_fidip-w48_lambda2e-3_s1,4,test142.jpg;test160.jpg;test322.jpg;test360.jpg,1,3,0,0,0,0,0,0
+"FiDIP retrain, lambda 1e-2",rt_lam1e2,R018_fidip-w48_lambda1e-2_s1,7,test142.jpg;test160.jpg;test177.jpg;test229.jpg;test304.jpg;test322.jpg;test360.jpg,1,3,0,1,1,0,1,1
+"HRNet-W48 DARK 384, LR 5e-5",mmp_hrnet_lr5e5,R107_mmp-hrnetw48_lr5e-5_s1,6,test138.jpg;test142.jpg;test160.jpg;test177.jpg;test322.jpg;test360.jpg,1,3,0,2,0,0,1,1
+"ViTPose-L 256, real only",mmp_vitl256_realonly,R120_mmp-vitpose-l256_realonly_s1,6,test138.jpg;test142.jpg;test160.jpg;test177.jpg;test322.jpg;test360.jpg,2,3,0,1,1,1,1,1
+"ViTPose-L 256, rotation +-180 deg",mmp_vitl256_rot180,R121_mmp-vitpose-l256_rot180_s1,6,test138.jpg;test142.jpg;test160.jpg;test177.jpg;test322.jpg;test360.jpg,2,3,0,2,2,1,1,1

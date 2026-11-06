@@ -1,3 +1,5 @@
 model,key,run_ids,n_images_with_swap,images,n_eyes,n_ears,n_shoulders,n_elbows,n_wrists,n_hips,n_knees,n_ankles
 FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,1,test41.jpg,0,0,0,0,0,0,1,1
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,5,test5.jpg;test10.jpg;test41.jpg;test49.jpg;test53.jpg,0,1,1,0,0,0,2,4
+"FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,1,test41.jpg,0,0,0,0,0,0,1,1
+"Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,1,test41.jpg,0,0,0,0,0,0,1,1

@@ -1,3 +1,9 @@
 model,key,run_id,spearman_score_oks,AP_oracle_paper,AP_paper,ranking_loss_paper,AP_oracle_fixed,AP_fixed,ranking_loss_fixed
 FiDIP HRNet-W48 (released),rel_fidip_w48,R001_fidip-w48_released,0.658926,0.943134,0.93605,0.0070839,0.955446,0.949891,0.00555413
 FiDIP MobileNetV2 (released),rel_fidip_mobile,R002_fidip-mobilenet_released,0.206529,0.840908,0.791367,0.0495406,0.849505,0.798414,0.0510907
+"FiDIP retrain, lambda 5e-4",rt_fidip,R010_fidip-w48_lambda5e-4_s1,0.654749,0.946588,0.938525,0.00806366,0.959406,0.953345,0.0060612
+"FiDIP retrain, lambda 5e-4",rt_fidip,R011_fidip-w48_lambda5e-4_s2,0.686769,0.945513,0.937372,0.00814093,0.959406,0.954158,0.00524783
+"FiDIP retrain, lambda 5e-4",rt_fidip,R012_fidip-w48_lambda5e-4_s3,0.720252,0.937566,0.930678,0.00688808,0.950495,0.945753,0.00474242
+"Fine-tune retrain, lambda 0",rt_ft,R013_fidip-w48_lambda0_s1,0.67994,0.941485,0.934785,0.00669978,0.954455,0.948936,0.00551989
+"Fine-tune retrain, lambda 0",rt_ft,R014_fidip-w48_lambda0_s2,0.646133,0.94593,0.937362,0.00856815,0.959406,0.953311,0.00609478
+"Fine-tune retrain, lambda 0",rt_ft,R015_fidip-w48_lambda0_s3,0.711419,0.942885,0.935536,0.00734915,0.954455,0.95003,0.00442575

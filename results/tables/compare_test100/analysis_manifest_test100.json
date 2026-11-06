@@ -28,12 +28,67 @@
           }
         ],
         "role": "released"
+      },
+      {
+        "key": "rt_fidip",
+        "label": "FiDIP retrain, lambda 5e-4",
+        "slot": 4,
+        "runs": [
+          {
+            "run_id": "R010_fidip-w48_lambda5e-4_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R010_fidip-w48_lambda5e-4_s1/per_image_test100_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R010_fidip-w48_lambda5e-4_s1/metrics_test100_best.json"
+          },
+          {
+            "run_id": "R011_fidip-w48_lambda5e-4_s2",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R011_fidip-w48_lambda5e-4_s2/per_image_test100_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R011_fidip-w48_lambda5e-4_s2/metrics_test100_best.json"
+          },
+          {
+            "run_id": "R012_fidip-w48_lambda5e-4_s3",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R012_fidip-w48_lambda5e-4_s3/per_image_test100_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R012_fidip-w48_lambda5e-4_s3/metrics_test100_best.json"
+          }
+        ],
+        "role": "retrain"
+      },
+      {
+        "key": "rt_ft",
+        "label": "Fine-tune retrain, lambda 0",
+        "slot": 5,
+        "runs": [
+          {
+            "run_id": "R013_fidip-w48_lambda0_s1",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R013_fidip-w48_lambda0_s1/per_image_test100_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R013_fidip-w48_lambda0_s1/metrics_test100_best.json"
+          },
+          {
+            "run_id": "R014_fidip-w48_lambda0_s2",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R014_fidip-w48_lambda0_s2/per_image_test100_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R014_fidip-w48_lambda0_s2/metrics_test100_best.json"
+          },
+          {
+            "run_id": "R015_fidip-w48_lambda0_s3",
+            "per_image": "/scratch/purohitham.v/fidip/analysis/eval/R015_fidip-w48_lambda0_s3/per_image_test100_best.json",
+            "metrics": "/scratch/purohitham.v/fidip/analysis/eval/R015_fidip-w48_lambda0_s3/metrics_test100_best.json"
+          }
+        ],
+        "role": "retrain"
       }
     ],
     "focus": [
       "rel_fidip_w48"
     ],
-    "pairs": [],
+    "pairs": [
+      [
+        "rel_fidip_w48",
+        "rt_fidip"
+      ],
+      [
+        "rel_fidip_w48",
+        "rt_ft"
+      ]
+    ],
     "published": {
       "label": "FiDIP (paper)",
       "AP": 0.936,
@@ -64,7 +119,11 @@
     "/scratch/purohitham.v/fidip/analysis/figures/compare_test100/score_vs_oks_test100.pdf",
     "/scratch/purohitham.v/fidip/analysis/figures/compare_test100/score_vs_oks_test100.png",
     "/scratch/purohitham.v/fidip/analysis/figures/compare_test100/leak_effect_test100.pdf",
-    "/scratch/purohitham.v/fidip/analysis/figures/compare_test100/leak_effect_test100.png"
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_test100/leak_effect_test100.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_test100/oks_scatter_rel_fidip_w48_vs_rt_fidip_test100.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_test100/oks_scatter_rel_fidip_w48_vs_rt_fidip_test100.png",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_test100/oks_scatter_rel_fidip_w48_vs_rt_ft_test100.pdf",
+    "/scratch/purohitham.v/fidip/analysis/figures/compare_test100/oks_scatter_rel_fidip_w48_vs_rt_ft_test100.png"
   ],
   "scale_tertiles_sqrt_area_px": [
     406.86677120587194,

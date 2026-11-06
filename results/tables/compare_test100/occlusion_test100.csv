@@ -3,3 +3,7 @@ FiDIP HRNet-W48 (released),rel_fidip_w48,v=1 (occluded),13,0.0673512,0.0491197,0
 FiDIP HRNet-W48 (released),rel_fidip_w48,v=2 (visible),1687,0.0306356,0.0287775,0.0325991,0.834618,0.944873
 FiDIP MobileNetV2 (released),rel_fidip_mobile,v=1 (occluded),13,0.130157,0.0692479,0.224072,0.153846,0.538462
 FiDIP MobileNetV2 (released),rel_fidip_mobile,v=2 (visible),1687,0.0534656,0.0495281,0.0576142,0.713693,0.875519
+"FiDIP retrain, lambda 5e-4",rt_fidip,v=1 (occluded),13,0.0904529,0.0574257,0.132315,0.307692,0.615385
+"FiDIP retrain, lambda 5e-4",rt_fidip,v=2 (visible),1687,0.0292431,0.0274697,0.0311321,0.860699,0.953764
+"Fine-tune retrain, lambda 0",rt_ft,v=1 (occluded),13,0.0839962,0.0551801,0.11607,0.307692,0.692308
+"Fine-tune retrain, lambda 0",rt_ft,v=2 (visible),1687,0.0287024,0.0268937,0.0305838,0.858328,0.957913

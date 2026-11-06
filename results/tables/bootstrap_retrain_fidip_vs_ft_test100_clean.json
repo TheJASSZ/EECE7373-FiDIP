@@ -5,9 +5,402 @@
   "B": 10000,
   "seed": 0,
   "alpha": 0.05,
-  "n_contrasts": 1,
+  "n_contrasts": 3,
   "correction": "Holm step-down over the declared contrasts",
   "contrasts": [
+    {
+      "mode": "multiseed",
+      "protocol": "paper",
+      "gt": "/scratch/purohitham.v/fidip/analysis/splits_derived/test100_clean.json",
+      "n_images": 95,
+      "B": 10000,
+      "seed": 0,
+      "metric": "AP",
+      "a": {
+        "label": "FiDIP lambda 5e-4",
+        "n_runs": 3,
+        "files": [
+          "/scratch/purohitham.v/fidip/runs/R010_fidip-w48_lambda5e-4_s1/preds_test100_best.json",
+          "/scratch/purohitham.v/fidip/runs/R011_fidip-w48_lambda5e-4_s2/preds_test100_best.json",
+          "/scratch/purohitham.v/fidip/runs/R012_fidip-w48_lambda5e-4_s3/preds_test100_best.json"
+        ],
+        "run_ids": [
+          "R010_fidip-w48_lambda5e-4_s1",
+          "R011_fidip-w48_lambda5e-4_s2",
+          "R012_fidip-w48_lambda5e-4_s3"
+        ],
+        "mean": {
+          "AP": 0.9282543327330605,
+          "AP50": 0.9746048289039431,
+          "AP75": 0.9746048289039431,
+          "AP_80_95": 0.8587285884767363,
+          "AR": 0.9466666666666667,
+          "AR50": 0.9894736842105263,
+          "AR75": 0.9894736842105263
+        },
+        "std_across_runs": {
+          "AP": 0.0039992514151320924,
+          "AP50": 0.0005926253989658973,
+          "AP75": 0.0005926253989658973,
+          "AP_80_95": 0.010241447591018726,
+          "AR": 0.00486189700370214,
+          "AR50": 0.0,
+          "AR75": 0.0
+        },
+        "per_run_AP": [
+          0.9306503262578744,
+          0.9304751695660809,
+          0.923637502375226
+        ],
+        "boot_ci95": {
+          "AP": [
+            0.8895516364888917,
+            0.9622216881643318
+          ],
+          "AP50": [
+            0.9421573736321,
+            1.0
+          ],
+          "AP75": [
+            0.9421573736321,
+            1.0
+          ],
+          "AP_80_95": [
+            0.8052820528959224,
+            0.9071364429356421
+          ],
+          "AR": [
+            0.9185877192982456,
+            0.968421052631579
+          ],
+          "AR50": [
+            0.968421052631579,
+            1.0
+          ],
+          "AR75": [
+            0.968421052631579,
+            1.0
+          ]
+        },
+        "self_check": [
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          }
+        ]
+      },
+      "b": {
+        "label": "fine-tune lambda 0",
+        "n_runs": 3,
+        "files": [
+          "/scratch/purohitham.v/fidip/runs/R013_fidip-w48_lambda0_s1/preds_test100_best.json",
+          "/scratch/purohitham.v/fidip/runs/R014_fidip-w48_lambda0_s2/preds_test100_best.json",
+          "/scratch/purohitham.v/fidip/runs/R015_fidip-w48_lambda0_s3/preds_test100_best.json"
+        ],
+        "run_ids": [
+          "R013_fidip-w48_lambda0_s1",
+          "R014_fidip-w48_lambda0_s2",
+          "R015_fidip-w48_lambda0_s3"
+        ],
+        "mean": {
+          "AP": 0.9282747565814621,
+          "AP50": 0.9749174917491751,
+          "AP75": 0.9749174917491751,
+          "AP_80_95": 0.8583106538298928,
+          "AR": 0.9463157894736841,
+          "AR50": 0.9894736842105263,
+          "AR75": 0.9894736842105263
+        },
+        "std_across_runs": {
+          "AP": 0.0011229937688945486,
+          "AP50": 0.0005348203688844438,
+          "AP75": 0.0005348203688844438,
+          "AP_80_95": 0.003093913996435681,
+          "AR": 0.0018232113763882462,
+          "AR50": 0.0,
+          "AR75": 0.0
+        },
+        "per_run_AP": [
+          0.9276179199648118,
+          0.9295714409943507,
+          0.9276349087852238
+        ],
+        "boot_ci95": {
+          "AP": [
+            0.8900302781694513,
+            0.9621591801943745
+          ],
+          "AP50": [
+            0.9429885356956749,
+            1.0
+          ],
+          "AP75": [
+            0.9429885356956749,
+            1.0
+          ],
+          "AP_80_95": [
+            0.804798110174287,
+            0.9071780156595733
+          ],
+          "AR": [
+            0.9182456140350878,
+            0.9680701754385965
+          ],
+          "AR50": [
+            0.968421052631579,
+            1.0
+          ],
+          "AR75": [
+            0.968421052631579,
+            1.0
+          ]
+        },
+        "self_check": [
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          }
+        ]
+      },
+      "delta": {
+        "AP": {
+          "observed": -2.0423848401618372e-05,
+          "boot_mean": -1.3415616191605717e-05,
+          "boot_se": 0.0012376817622446014,
+          "ci95": [
+            -0.002502053382825125,
+            0.002389982780162122
+          ],
+          "frac_boot_a_gt_b": 0.499
+        },
+        "AP50": {
+          "observed": -0.0003126628452320146,
+          "boot_mean": -0.000284339065485489,
+          "boot_se": 0.0003879998139889707,
+          "ci95": [
+            -0.0013548723293379556,
+            6.948063227374401e-05
+          ],
+          "frac_boot_a_gt_b": 0.0381
+        },
+        "AP75": {
+          "observed": -0.0003126628452320146,
+          "boot_mean": -0.000284339065485489,
+          "boot_se": 0.0003879998139889707,
+          "ci95": [
+            -0.0013548723293379556,
+            6.948063227374401e-05
+          ],
+          "frac_boot_a_gt_b": 0.0381
+        },
+        "AP_80_95": {
+          "observed": 0.00041793464684347637,
+          "boot_mean": 0.0003929695577492197,
+          "boot_se": 0.0028908825653867743,
+          "ci95": [
+            -0.005232278562404279,
+            0.006145905176114232
+          ],
+          "frac_boot_a_gt_b": 0.5508
+        },
+        "AR": {
+          "observed": 0.00035087719298254605,
+          "boot_mean": 0.0003371578947368422,
+          "boot_se": 0.001161921110969533,
+          "ci95": [
+            -0.0017543859649123972,
+            0.0028070175438595912
+          ],
+          "frac_boot_a_gt_b": 0.5649
+        },
+        "AR50": {
+          "observed": 0.0,
+          "boot_mean": 0.0,
+          "boot_se": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0
+        },
+        "AR75": {
+          "observed": 0.0,
+          "boot_mean": 0.0,
+          "boot_se": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0
+        }
+      },
+      "p_one_sided_a_gt_b": 0.5010498950104989,
+      "p_one_sided_b_gt_a": 0.49905009499050096,
+      "p_two_sided": 0.9981001899810019,
+      "seed_pairs_a_gt_b": 0.6666666666666666,
+      "all_a_runs_gt_all_b_runs": false,
+      "per_image_consistency": {
+        "n_images": 95,
+        "wins": 24,
+        "ties": 0,
+        "losses": 71,
+        "mean_delta_oks": -0.0007890666284500356,
+        "median_delta_oks": -0.0006833652006839053,
+        "sign_test_p_two_sided": 1.4640982465812786e-06,
+        "wilcoxon_p_two_sided": 2.0672312906202927e-05
+      },
+      "sensitivity": {
+        "protocol": "fixed",
+        "delta": {
+          "AP": {
+            "observed": 0.0003690568538328165,
+            "boot_mean": 0.00033841183193909845,
+            "boot_se": 0.0011306203394437582,
+            "ci95": [
+              -0.0018257643640819468,
+              0.0026108518973815133
+            ],
+            "frac_boot_a_gt_b": 0.6187
+          },
+          "AP50": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AP75": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AP_80_95": {
+            "observed": 0.0009226421345820413,
+            "boot_mean": 0.0008460295798477455,
+            "boot_se": 0.0028265508486093925,
+            "ci95": [
+              -0.0045644109102053595,
+              0.006527129743453899
+            ],
+            "frac_boot_a_gt_b": 0.6187
+          },
+          "AR": {
+            "observed": 0.00035087719298254605,
+            "boot_mean": 0.0003371578947368401,
+            "boot_se": 0.0011619211109695326,
+            "ci95": [
+              -0.0017543859649123972,
+              0.0028070175438595912
+            ],
+            "frac_boot_a_gt_b": 0.5628
+          },
+          "AR50": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AR75": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          }
+        },
+        "p_one_sided_a_gt_b": 0.38136186381361864,
+        "p_one_sided_b_gt_a": 0.6187381261873812,
+        "p_two_sided": 0.7627237276272373,
+        "a_mean": {
+          "AP": 0.9497701267604538,
+          "AP50": 1.0,
+          "AP75": 1.0,
+          "AP_80_95": 0.8744253169011346,
+          "AR": 0.9571929824561404,
+          "AR50": 1.0,
+          "AR75": 1.0
+        },
+        "b_mean": {
+          "AP": 0.949401069906621,
+          "AP50": 1.0,
+          "AP75": 1.0,
+          "AP_80_95": 0.8735026747665525,
+          "AR": 0.9568421052631578,
+          "AR50": 1.0,
+          "AR75": 1.0
+        },
+        "self_check": [
+          [
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            }
+          ],
+          [
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            }
+          ]
+        ],
+        "p_holm": 1.0,
+        "reject_h0_holm": false
+      },
+      "a_gt_b_robust_both_protocols": false,
+      "ci_excludes_zero_both_protocols": false,
+      "name": "FiDIP retrain vs fine-tune",
+      "hypothesis": "domain adaptation (lambda 5e-4) improves over plain fine-tuning (paper: 93.6 vs 92.7)",
+      "p_holm": 1.0,
+      "reject_h0_holm": false,
+      "robust_claim": false
+    },
     {
       "mode": "multiseed",
       "protocol": "paper",
@@ -368,14 +761,407 @@
             }
           ]
         ],
-        "p_holm": 0.41575842415758424,
+        "p_holm": 1.0,
         "reject_h0_holm": false
       },
       "a_gt_b_robust_both_protocols": false,
       "ci_excludes_zero_both_protocols": false,
       "name": "FiDIP retrain vs released",
       "hypothesis": "our Val400-selected retrain is not worse than the released checkpoint",
-      "p_holm": 0.4821517848215178,
+      "p_holm": 1.0,
+      "reject_h0_holm": false,
+      "robust_claim": false
+    },
+    {
+      "mode": "multiseed",
+      "protocol": "paper",
+      "gt": "/scratch/purohitham.v/fidip/analysis/splits_derived/test100_clean.json",
+      "n_images": 95,
+      "B": 10000,
+      "seed": 0,
+      "metric": "AP",
+      "a": {
+        "label": "FiDIP lambda 5e-4",
+        "n_runs": 3,
+        "files": [
+          "/scratch/purohitham.v/fidip/runs/R010_fidip-w48_lambda5e-4_s1/preds_test100_best.json",
+          "/scratch/purohitham.v/fidip/runs/R011_fidip-w48_lambda5e-4_s2/preds_test100_best.json",
+          "/scratch/purohitham.v/fidip/runs/R012_fidip-w48_lambda5e-4_s3/preds_test100_best.json"
+        ],
+        "run_ids": [
+          "R010_fidip-w48_lambda5e-4_s1",
+          "R011_fidip-w48_lambda5e-4_s2",
+          "R012_fidip-w48_lambda5e-4_s3"
+        ],
+        "mean": {
+          "AP": 0.9282543327330605,
+          "AP50": 0.9746048289039431,
+          "AP75": 0.9746048289039431,
+          "AP_80_95": 0.8587285884767363,
+          "AR": 0.9466666666666667,
+          "AR50": 0.9894736842105263,
+          "AR75": 0.9894736842105263
+        },
+        "std_across_runs": {
+          "AP": 0.0039992514151320924,
+          "AP50": 0.0005926253989658973,
+          "AP75": 0.0005926253989658973,
+          "AP_80_95": 0.010241447591018726,
+          "AR": 0.00486189700370214,
+          "AR50": 0.0,
+          "AR75": 0.0
+        },
+        "per_run_AP": [
+          0.9306503262578744,
+          0.9304751695660809,
+          0.923637502375226
+        ],
+        "boot_ci95": {
+          "AP": [
+            0.8895516364888917,
+            0.9622216881643318
+          ],
+          "AP50": [
+            0.9421573736321,
+            1.0
+          ],
+          "AP75": [
+            0.9421573736321,
+            1.0
+          ],
+          "AP_80_95": [
+            0.8052820528959224,
+            0.9071364429356421
+          ],
+          "AR": [
+            0.9185877192982456,
+            0.968421052631579
+          ],
+          "AR50": [
+            0.968421052631579,
+            1.0
+          ],
+          "AR75": [
+            0.968421052631579,
+            1.0
+          ]
+        },
+        "self_check": [
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          }
+        ]
+      },
+      "b": {
+        "label": "plain fine-tune (PRE_EPOCH 0, lambda 0)",
+        "n_runs": 3,
+        "files": [
+          "/scratch/purohitham.v/fidip/runs/R021_fidip-w48_ft-noprestage_s1/preds_test100_best.json",
+          "/scratch/purohitham.v/fidip/runs/R022_fidip-w48_ft-noprestage_s2/preds_test100_best.json",
+          "/scratch/purohitham.v/fidip/runs/R023_fidip-w48_ft-noprestage_s3/preds_test100_best.json"
+        ],
+        "run_ids": [
+          "R021_fidip-w48_ft-noprestage_s1",
+          "R022_fidip-w48_ft-noprestage_s2",
+          "R023_fidip-w48_ft-noprestage_s3"
+        ],
+        "mean": {
+          "AP": 0.9293732010026649,
+          "AP50": 0.9748827514330382,
+          "AP75": 0.9748827514330382,
+          "AP_80_95": 0.8611088753571048,
+          "AR": 0.9473684210526315,
+          "AR50": 0.9894736842105263,
+          "AR75": 0.9894736842105263
+        },
+        "std_across_runs": {
+          "AP": 0.0021568958301952977,
+          "AP50": 0.0,
+          "AP75": 0.0,
+          "AP_80_95": 0.005392239575488191,
+          "AR": 0.0031578947368421373,
+          "AR50": 0.0,
+          "AR75": 0.0
+        },
+        "per_run_AP": [
+          0.9292336466737686,
+          0.9315964853215656,
+          0.9272894710126603
+        ],
+        "boot_ci95": {
+          "AP": [
+            0.8913935828039472,
+            0.9628608111063253
+          ],
+          "AP50": [
+            0.9428869202709745,
+            1.0
+          ],
+          "AP75": [
+            0.9428869202709745,
+            1.0
+          ],
+          "AP_80_95": [
+            0.8086232798973875,
+            0.9094325569161212
+          ],
+          "AR": [
+            0.9192894736842104,
+            0.9691228070175438
+          ],
+          "AR50": [
+            0.968421052631579,
+            1.0
+          ],
+          "AR75": [
+            0.968421052631579,
+            1.0
+          ]
+        },
+        "self_check": [
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          },
+          {
+            "max_abs_diff_vs_cocoeval": 0.0,
+            "passed": true
+          }
+        ]
+      },
+      "delta": {
+        "AP": {
+          "observed": -0.0011188682696043895,
+          "boot_mean": -0.0011345213851971646,
+          "boot_se": 0.0014189545426688968,
+          "ci95": [
+            -0.0038384041147570326,
+            0.0017259537310639658
+          ],
+          "frac_boot_a_gt_b": 0.2104
+        },
+        "AP50": {
+          "observed": -0.0002779225290950871,
+          "boot_mean": -0.00025252388396733997,
+          "boot_se": 0.00036780004609186003,
+          "ci95": [
+            -0.0012506513809276143,
+            0.00010422094841067153
+          ],
+          "frac_boot_a_gt_b": 0.0536
+        },
+        "AP75": {
+          "observed": -0.0002779225290950871,
+          "boot_mean": -0.00025252388396733997,
+          "boot_se": 0.00036780004609186003,
+          "ci95": [
+            -0.0012506513809276143,
+            0.00010422094841067153
+          ],
+          "frac_boot_a_gt_b": 0.0536
+        },
+        "AP_80_95": {
+          "observed": -0.0023802868803685096,
+          "boot_mean": -0.0024575176370419003,
+          "boot_se": 0.0034298793674616833,
+          "ci95": [
+            -0.008841870956136985,
+            0.004555950134020829
+          ],
+          "frac_boot_a_gt_b": 0.2334
+        },
+        "AR": {
+          "observed": -0.00070175438596487,
+          "boot_mean": -0.0007302807017543825,
+          "boot_se": 0.0014100944333380213,
+          "ci95": [
+            -0.0035087719298243503,
+            0.002105263157894832
+          ],
+          "frac_boot_a_gt_b": 0.2681
+        },
+        "AR50": {
+          "observed": 0.0,
+          "boot_mean": 0.0,
+          "boot_se": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0
+        },
+        "AR75": {
+          "observed": 0.0,
+          "boot_mean": 0.0,
+          "boot_se": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "frac_boot_a_gt_b": 0.0
+        }
+      },
+      "p_one_sided_a_gt_b": 0.7896210378962104,
+      "p_one_sided_b_gt_a": 0.2104789521047895,
+      "p_two_sided": 0.420957904209579,
+      "seed_pairs_a_gt_b": 0.4444444444444444,
+      "all_a_runs_gt_all_b_runs": false,
+      "per_image_consistency": {
+        "n_images": 95,
+        "wins": 25,
+        "ties": 0,
+        "losses": 70,
+        "mean_delta_oks": -0.0005174290024724319,
+        "median_delta_oks": -0.0008119084706251778,
+        "sign_test_p_two_sided": 4.271012269463367e-06,
+        "wilcoxon_p_two_sided": 3.6658870397730473e-05
+      },
+      "sensitivity": {
+        "protocol": "fixed",
+        "delta": {
+          "AP": {
+            "observed": 0.00015458242609556194,
+            "boot_mean": 0.00011546675436051142,
+            "boot_se": 0.0016634742213087143,
+            "ci95": [
+              -0.0029772792530066896,
+              0.003608167259474956
+            ],
+            "frac_boot_a_gt_b": 0.5155
+          },
+          "AP50": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AP75": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AP_80_95": {
+            "observed": 0.0003864560652386828,
+            "boot_mean": 0.00028866688590127565,
+            "boot_se": 0.004158685553271781,
+            "ci95": [
+              -0.007443198132516936,
+              0.009020418148687122
+            ],
+            "frac_boot_a_gt_b": 0.5155
+          },
+          "AR": {
+            "observed": 2.220446049250313e-16,
+            "boot_mean": -3.5894736842102245e-05,
+            "boot_se": 0.0015770848639051049,
+            "ci95": [
+              -0.0028070175438598133,
+              0.0031578947368421373
+            ],
+            "frac_boot_a_gt_b": 0.4496
+          },
+          "AR50": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          },
+          "AR75": {
+            "observed": 0.0,
+            "boot_mean": 0.0,
+            "boot_se": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "frac_boot_a_gt_b": 0.0
+          }
+        },
+        "p_one_sided_a_gt_b": 0.48455154484551544,
+        "p_one_sided_b_gt_a": 0.5155484451554845,
+        "p_two_sided": 0.9691030896910309,
+        "a_mean": {
+          "AP": 0.9497701267604538,
+          "AP50": 1.0,
+          "AP75": 1.0,
+          "AP_80_95": 0.8744253169011346,
+          "AR": 0.9571929824561404,
+          "AR50": 1.0,
+          "AR75": 1.0
+        },
+        "b_mean": {
+          "AP": 0.9496155443343582,
+          "AP50": 1.0,
+          "AP75": 1.0,
+          "AP_80_95": 0.8740388608358959,
+          "AR": 0.9571929824561402,
+          "AR50": 1.0,
+          "AR75": 1.0
+        },
+        "self_check": [
+          [
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            }
+          ],
+          [
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            },
+            {
+              "max_abs_diff_vs_cocoeval": 0.0,
+              "passed": true
+            }
+          ]
+        ],
+        "p_holm": 1.0,
+        "reject_h0_holm": false
+      },
+      "a_gt_b_robust_both_protocols": false,
+      "ci_excludes_zero_both_protocols": false,
+      "name": "FiDIP retrain vs plain fine-tune (no pre-stage)",
+      "hypothesis": "domain adaptation improves over plain fine-tuning without the classifier pre-stage (paper's DarkPose+Finetune row: 93.6 vs 92.7)",
+      "p_holm": 1.0,
       "reject_h0_holm": false,
       "robust_claim": false
     }

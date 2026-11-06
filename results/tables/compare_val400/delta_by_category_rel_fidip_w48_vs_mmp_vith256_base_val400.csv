@@ -1,0 +1,13 @@
+a,b,factor,category,n,mean_delta_oks,ci_lo,ci_hi,share_of_total_gain
+rel_fidip_w48,mmp_vith256_base,inplane,upright,198,0.0186181,0.0122873,0.0252991,0.612284
+rel_fidip_w48,mmp_vith256_base,inplane,sideways,190,0.012356,0.00634838,0.0186376,0.389927
+rel_fidip_w48,mmp_vith256_base,inplane,inverted,9,-0.00147904,-0.03171,0.022793,-0.00221094
+rel_fidip_w48,mmp_vith256_base,view,front,246,0.0156212,0.0106938,0.0216321,0.638266
+rel_fidip_w48,mmp_vith256_base,view,back,116,0.0156684,0.00691329,0.0249796,0.301881
+rel_fidip_w48,mmp_vith256_base,view,profile,35,0.0102959,0.000401701,0.0214253,0.0598529
+rel_fidip_w48,mmp_vith256_base,occ_bin,0,281,0.0106449,0.00702864,0.0146896,0.496821
+rel_fidip_w48,mmp_vith256_base,occ_bin,1,31,0.0153779,0.00321194,0.0281819,0.0791794
+rel_fidip_w48,mmp_vith256_base,occ_bin,≥2,85,0.0300327,0.0146086,0.045946,0.424
+rel_fidip_w48,mmp_vith256_base,scale_bin,small,133,0.0193312,0.010959,0.028616,0.427035
+rel_fidip_w48,mmp_vith256_base,scale_bin,medium,132,0.0151975,0.00788418,0.0226691,0.333195
+rel_fidip_w48,mmp_vith256_base,scale_bin,large,132,0.0109362,0.00487064,0.0178305,0.23977

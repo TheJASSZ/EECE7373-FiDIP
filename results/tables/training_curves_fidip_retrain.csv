@@ -2,3 +2,6 @@ group,run,run_id,source,n_epochs,best_epoch,best_val_AP,final_epoch,final_val_AP
 FiDIP lambda=5e-4,FiDIP lambda=5e-4@4#s1,R010_fidip-w48_lambda5e-4_s1,epochs.csv,20,20,0.906323,20,0.906323,val400,train_mse,0.000101495,0.000453494,0.000280682,16
 FiDIP lambda=5e-4,FiDIP lambda=5e-4@4#s2,R011_fidip-w48_lambda5e-4_s2,epochs.csv,20,19,0.903763,20,0.900477,val400,train_mse,9.77295e-05,0.000454516,0.00028089,13
 FiDIP lambda=5e-4,FiDIP lambda=5e-4@4#s3,R012_fidip-w48_lambda5e-4_s3,epochs.csv,20,18,0.905286,20,0.90476,val400,train_mse,0.000102273,0.000445389,0.000276578,10
+Fine-tune lambda=0,Fine-tune lambda=0@5#s1,R013_fidip-w48_lambda0_s1,epochs.csv,20,16,0.910871,20,0.906809,val400,train_mse,0.000118016,0.000424405,0.000253604,14
+Fine-tune lambda=0,Fine-tune lambda=0@5#s2,R014_fidip-w48_lambda0_s2,epochs.csv,20,20,0.906062,20,0.906062,val400,train_mse,0.000114244,0.000427774,0.000255462,18
+Fine-tune lambda=0,Fine-tune lambda=0@5#s3,R015_fidip-w48_lambda0_s3,epochs.csv,20,20,0.90771,20,0.90771,val400,train_mse,0.000118005,0.000423523,0.000252377,19
