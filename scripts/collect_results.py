@@ -146,7 +146,9 @@ class Collector:
             if rid in assigned:
                 continue
             k = group_key(row)
-            g = self.groups.setdefault(k, {"key": k, "label": k, "run_ids": [], "role": row.get("stream") or "other",
+            smoke = "smoke" in (row.get("variant") or "").lower() or "smoke" in rid.lower()
+            g = self.groups.setdefault(k, {"key": k, "label": k, "run_ids": [],
+                                           "role": "smoke" if smoke else (row.get("stream") or "other"),
                                            "what_changed": row.get("variant", ""), "hypothesis": row.get("notes", "")})
             g["run_ids"].append(rid)
         self.single_ci = {}      # (run_id, split) -> (lo, hi) in percent, from bootstrap_ci.py single
@@ -478,11 +480,14 @@ def latex(c, tables, a):
           rows, "lrrrrrrrr")
     rows = []
     for r in tables["attempts"]:
+        if r["role"] == "smoke":            # pipeline checks, not attempts (kept, flagged, in attempts.csv)
+            continue
         rows.append([str(r["attempt"]), tex_escape(r["label"] or r["config"]), tex_escape(r["what_changed"] or ""),
                      str(r["n_runs"]), pm(r["val400_AP"], r["val400_AP_std"]),
                      pm(r["test100_AP"], r["test100_AP_std"]) if r["test100_reported"] else "withheld"])
     table("Every attempt and its accuracy. Val400 AP drives every decision. Test100 is shown only for "
-          "reproduction targets and pre-registered finalists (``withheld'' otherwise).", "tab:attempts",
+          "reproduction targets and pre-registered finalists (``withheld'' otherwise). Smoke runs (pipeline "
+          "checks) are listed in results/tables/attempts.csv only.", "tab:attempts",
           ["\\#", "Configuration", "What changed", "runs", "Val400 AP", "Test100 AP"], rows, "rllrrr")
     if tables["bootstrap_summary"]:
         rows = []
