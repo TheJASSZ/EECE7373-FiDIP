@@ -158,6 +158,33 @@
 | `\RtFiDIPTestCleanNRuns` | 3 | test100_clean paper: R010_fidip-w48_lambda5e-4_s1,R011_fidip-w48_lambda5e-4_s2,R012_fidip-w48_lambda5e-4_s3 |
 | `\RtFiDIPTestCleanAPFixed` | 95.0 | test100_clean fixed: R010_fidip-w48_lambda5e-4_s1,R011_fidip-w48_lambda5e-4_s2,R012_fidip-w48_lambda5e-4_s3 |
 | `\RtFiDIPTestCleanAPStrictFixed` | 87.4 | test100_clean fixed: R010_fidip-w48_lambda5e-4_s1,R011_fidip-w48_lambda5e-4_s2,R012_fidip-w48_lambda5e-4_s3 |
+| `\RtFTTestAP` | 93.6 | test100 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestAPStrict` | 86.2 | test100 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestAPFifty` | 98.5 | test100 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestAPSeventyfive` | 98.5 | test100 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestAR` | 94.6 | test100 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestAPStd` | 0.13 | test100 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestNRuns` | 3 | test100 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestAPFixed` | 95.1 | test100 fixed: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestAPStrictFixed` | 87.7 | test100 fixed: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTValAP` | 90.8 | val400 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTValAPStrict` | 80.2 | val400 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTValAPFifty` | 98.8 | val400 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTValAPSeventyfive` | 96.1 | val400 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTValAR` | 92.2 | val400 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTValAPStd` | 0.21 | val400 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTValNRuns` | 3 | val400 paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTValAPFixed` | 90.8 | val400 fixed: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTValAPStrictFixed` | 80.2 | val400 fixed: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestCleanAP` | 92.8 | test100_clean paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestCleanAPStrict` | 85.8 | test100_clean paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestCleanAPFifty` | 97.5 | test100_clean paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestCleanAPSeventyfive` | 97.5 | test100_clean paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestCleanAR` | 94.6 | test100_clean paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestCleanAPStd` | 0.11 | test100_clean paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestCleanNRuns` | 3 | test100_clean paper: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestCleanAPFixed` | 94.9 | test100_clean fixed: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
+| `\RtFTTestCleanAPStrictFixed` | 87.4 | test100_clean fixed: R013_fidip-w48_lambda0_s1,R014_fidip-w48_lambda0_s2,R015_fidip-w48_lambda0_s3 |
 | `\MmpVitLLrFiveValAP` | 92.6 | val400 paper: R109_mmp-vitpose-l256_lr5e-5_s1 |
 | `\MmpVitLLrFiveValAPStrict` | 84.3 | val400 paper: R109_mmp-vitpose-l256_lr5e-5_s1 |
 | `\MmpVitLLrFiveValAPFifty` | 98.8 | val400 paper: R109_mmp-vitpose-l256_lr5e-5_s1 |
@@ -235,6 +262,61 @@
 | `\MmpVitLRotValAR` | 94.0 | val400 paper: R121_mmp-vitpose-l256_rot180_s1 |
 | `\MmpVitLRotValAPFixed` | 92.6 | val400 fixed: R121_mmp-vitpose-l256_rot180_s1 |
 | `\MmpVitLRotValAPStrictFixed` | 84.3 | val400 fixed: R121_mmp-vitpose-l256_rot180_s1 |
+| `\ArmBValAP` | 92.9 | val400 paper: R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAPStrict` | 84.7 | val400 paper: R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAPFifty` | 98.9 | val400 paper: R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAPSeventyfive` | 96.7 | val400 paper: R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAR` | 94.4 | val400 paper: R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAPFixed` | 92.9 | val400 fixed: R140_mmp-vitpose-h256_conf_s6 |
+| `\ArmBValAPStrictFixed` | 84.7 | val400 fixed: R140_mmp-vitpose-h256_conf_s6 |
+| `\RtFTnpTestAP` | 93.7 | test100 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestAPStrict` | 86.5 | test100 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestAPFifty` | 98.5 | test100 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestAPSeventyfive` | 98.5 | test100 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestAR` | 94.7 | test100 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestAPStd` | 0.22 | test100 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestNRuns` | 3 | test100 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestAPFixed` | 95.1 | test100 fixed: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestAPStrictFixed` | 87.7 | test100 fixed: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpValAP` | 90.9 | val400 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpValAPStrict` | 80.4 | val400 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpValAPFifty` | 98.9 | val400 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpValAPSeventyfive` | 96.1 | val400 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpValAR` | 92.3 | val400 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpValAPStd` | 0.25 | val400 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpValNRuns` | 3 | val400 paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpValAPFixed` | 90.9 | val400 fixed: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpValAPStrictFixed` | 80.4 | val400 fixed: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestCleanAP` | 92.9 | test100_clean paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestCleanAPStrict` | 86.1 | test100_clean paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestCleanAPFifty` | 97.5 | test100_clean paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestCleanAPSeventyfive` | 97.5 | test100_clean paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestCleanAR` | 94.7 | test100_clean paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestCleanAPStd` | 0.22 | test100_clean paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestCleanNRuns` | 3 | test100_clean paper: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestCleanAPFixed` | 95.0 | test100_clean fixed: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\RtFTnpTestCleanAPStrictFixed` | 87.4 | test100_clean fixed: R021_fidip-w48_ft-noprestage_s1,R022_fidip-w48_ft-noprestage_s2,R023_fidip-w48_ft-noprestage_s3 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAP` | 90.7 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAPStrict` | 80.1 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAPFifty` | 98.9 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAPSeventyfive` | 96.8 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAR` | 92.0 | val400 paper: R019_fidip-w48_paperrecipe_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAPFixed` | 90.7 | val400 fixed: R019_fidip-w48_paperrecipe_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightPaperrecipeValAPStrictFixed` | 80.1 | val400 fixed: R019_fidip-w48_paperrecipe_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAP` | 89.3 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAPStrict` | 76.6 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAPFifty` | 98.8 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAPSeventyfive` | 95.8 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAR` | 91.1 | val400 paper: R020_fidip-w48_readme-literal-labels_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAPFixed` | 89.3 | val400 fixed: R020_fidip-w48_readme-literal-labels_s1 |
+| `\DarkPoseFiDIPHRNetWFourEightThreeEightFourxTwoEightEightRetrainFidipWFourEightReadmeLiteralLabelsValAPStrictFixed` | 76.6 | val400 fixed: R020_fidip-w48_readme-literal-labels_s1 |
+| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAP` | 92.8 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
+| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAPStrict` | 84.7 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
+| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAPFifty` | 98.9 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
+| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAPSeventyfive` | 96.7 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
+| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAR` | 94.2 | val400 paper: R122_mmp-vitpose-h256_realonly_s1 |
+| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAPFixed` | 92.8 | val400 fixed: R122_mmp-vitpose-h256_realonly_s1 |
+| `\ROneTwoTwoMmpVitposeHTwoFiveSixRealonlySOneValAPStrictFixed` | 84.7 | val400 fixed: R122_mmp-vitpose-h256_realonly_s1 |
 | `\RelFiDIPTestAPCiLo` | 89.8 | test100 bootstrap: R001_fidip-w48_released |
 | `\RelFiDIPTestAPCiHi` | 96.3 | test100 bootstrap: R001_fidip-w48_released |
 | `\RelFiDIPValAPCiLo` | 88.7 | val400 bootstrap: R001_fidip-w48_released |
@@ -243,21 +325,57 @@
 | `\RelMobileTestAPCiHi` | 83.8 | test100 bootstrap: R002_fidip-mobilenet_released |
 | `\RelMobileValAPCiLo` | 65.1 | val400 bootstrap: R002_fidip-mobilenet_released |
 | `\RelMobileValAPCiHi` | 71.6 | val400 bootstrap: R002_fidip-mobilenet_released |
+| `\BootFiDIPRetrainVsFineTuneDelta` | -0.04 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsFineTuneCiLo` | -0.34 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsFineTuneCiHi` | 0.20 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsFineTuneP` | 0.6807 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsFineTunePHolm` | 1.0000 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsFineTuneFixedDelta` | 0.03 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsFineTuneFixedCiLo` | -0.27 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsFineTuneFixedCiHi` | 0.22 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsFineTuneRobust` | no | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
 | `\BootFiDIPRetrainVsReleasedDelta` | -0.05 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
 | `\BootFiDIPRetrainVsReleasedCiLo` | -0.67 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
 | `\BootFiDIPRetrainVsReleasedCiHi` | 0.65 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
 | `\BootFiDIPRetrainVsReleasedP` | 0.5322 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
-| `\BootFiDIPRetrainVsReleasedPHolm` | 0.5322 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsReleasedPHolm` | 1.0000 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
 | `\BootFiDIPRetrainVsReleasedFixedDelta` | 0.12 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
 | `\BootFiDIPRetrainVsReleasedFixedCiLo` | -0.61 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
 | `\BootFiDIPRetrainVsReleasedFixedCiHi` | 0.72 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
 | `\BootFiDIPRetrainVsReleasedRobust` | no | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageDelta` | -0.15 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageCiLo` | -0.43 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageCiHi` | 0.15 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageP` | 0.8419 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStagePHolm` | 1.0000 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageFixedDelta` | 0.03 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageFixedCiLo` | -0.33 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageFixedCiHi` | 0.32 | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageRobust` | no | results/tables/bootstrap_retrain_fidip_vs_ft_test100.json |
+| `\BootFiDIPRetrainVsFineTuneTestOneZeroZeroCleanDelta` | -0.00 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsFineTuneTestOneZeroZeroCleanCiLo` | -0.25 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsFineTuneTestOneZeroZeroCleanCiHi` | 0.24 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsFineTuneTestOneZeroZeroCleanP` | 0.5010 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsFineTuneTestOneZeroZeroCleanPHolm` | 1.0000 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsFineTuneTestOneZeroZeroCleanFixedDelta` | 0.04 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsFineTuneTestOneZeroZeroCleanFixedCiLo` | -0.18 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsFineTuneTestOneZeroZeroCleanFixedCiHi` | 0.26 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsFineTuneTestOneZeroZeroCleanRobust` | no | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
 | `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanDelta` | 0.01 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
 | `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanCiLo` | -0.66 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
 | `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanCiHi` | 0.73 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
 | `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanP` | 0.4822 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
-| `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanPHolm` | 0.4822 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanPHolm` | 1.0000 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
 | `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanFixedDelta` | 0.09 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
 | `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanFixedCiLo` | -0.59 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
 | `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanFixedCiHi` | 0.79 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
 | `\BootFiDIPRetrainVsReleasedTestOneZeroZeroCleanRobust` | no | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageTestOneZeroZeroCleanDelta` | -0.11 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageTestOneZeroZeroCleanCiLo` | -0.38 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageTestOneZeroZeroCleanCiHi` | 0.17 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageTestOneZeroZeroCleanP` | 0.7896 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageTestOneZeroZeroCleanPHolm` | 1.0000 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageTestOneZeroZeroCleanFixedDelta` | 0.02 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageTestOneZeroZeroCleanFixedCiLo` | -0.30 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageTestOneZeroZeroCleanFixedCiHi` | 0.36 | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |
+| `\BootFiDIPRetrainVsPlainFineTuneNoPreStageTestOneZeroZeroCleanRobust` | no | results/tables/bootstrap_retrain_fidip_vs_ft_test100_clean.json |

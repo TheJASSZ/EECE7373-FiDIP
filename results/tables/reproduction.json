@@ -122,6 +122,31 @@
   "row": "Fine-tune retrain, lambda 0",
   "source": "eval/eval_coco.py",
   "protocol": "paper",
+  "n_runs": 3,
+  "run_ids": [
+   "R013_fidip-w48_lambda0_s1",
+   "R014_fidip-w48_lambda0_s2",
+   "R015_fidip-w48_lambda0_s3"
+  ],
+  "AP": 93.58942489745033,
+  "AP50": 98.5049504950495,
+  "AP75": 98.5049504950495,
+  "AR": 94.63333333333331,
+  "AR50": 98.99999999999999,
+  "AR75": 98.99999999999999,
+  "AP_80_95": 86.21613650105155,
+  "AP_std": 0.132534249066059,
+  "AP_ci_lo": null,
+  "AP_ci_hi": null,
+  "test100_AP_fixed": 95.07588001292395,
+  "test100_clean_AP": 92.82747565814621,
+  "val400_AP": 90.79903314486589,
+  "val400_AP_std": 0.20805711162870233
+ },
+ {
+  "row": "DarkPose HRNet-W48 (COCO only, released)",
+  "source": "eval/eval_coco.py",
+  "protocol": "paper",
   "n_runs": 0,
   "run_ids": [],
   "AP": null,
@@ -138,5 +163,30 @@
   "test100_clean_AP": null,
   "val400_AP": null,
   "val400_AP_std": null
+ },
+ {
+  "row": "Plain fine-tune retrain (no pre-stage, lambda 0)",
+  "source": "eval/eval_coco.py",
+  "protocol": "paper",
+  "n_runs": 3,
+  "run_ids": [
+   "R021_fidip-w48_ft-noprestage_s1",
+   "R022_fidip-w48_ft-noprestage_s2",
+   "R023_fidip-w48_ft-noprestage_s3"
+  ],
+  "AP": 93.70091000871493,
+  "AP50": 98.50495049504948,
+  "AP75": 98.50495049504948,
+  "AR": 94.69999999999999,
+  "AR50": 98.99999999999999,
+  "AR75": 98.99999999999999,
+  "AP_80_95": 86.49484927921304,
+  "AP_std": 0.2182107250499171,
+  "AP_ci_lo": null,
+  "AP_ci_hi": null,
+  "test100_AP_fixed": 95.07869975007549,
+  "test100_clean_AP": 92.93732010026649,
+  "val400_AP": 90.91246723967589,
+  "val400_AP_std": 0.24934413769665728
  }
 ]

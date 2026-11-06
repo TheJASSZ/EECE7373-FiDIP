@@ -96,7 +96,7 @@ All three Drive checkpoints load with `strict=True`; none has missing/unexpected
 See `results/registry.csv` (one row per run: run ID, Slurm job ID, config, seed, GPU, git SHA, Val400 AP, Test100 AP, checkpoint).
 
 ## 8. Reported numbers → provenance
-- Every number in the report enters through `report/generated/numbers.tex` (`\setres{key}{value}`) and `report/generated/tab_*.tex`. Both are written by `scripts/collect_results.py` from `eval/eval_coco.py` and `eval/bootstrap_ci.py` outputs. Published baselines are the only hand-typed numbers, and they are cited.
+- Every number in the report enters through `report/generated/numbers.tex` (`\setres{key}{value}`) and `report/generated/tab_*.tex`. Both are written by `scripts/collect_results.py` from `eval/eval_coco.py` and `eval/bootstrap_ci.py` outputs. Published baselines (cited) are typed directly. A few values without a generated key are transcribed into `report/generated/manual_numbers.tex`, each with its source file or log entry noted (mirrored in `results/tables/provenance_manual.csv`). The final computed keys and the H1 verdict come from `scripts/fill_final_keys.py` (`results/tables/provenance_final_keys.csv`).
 - `results/tables/provenance.csv` maps each report key to its value, RUN_ID(s), metrics file, protocol (`paper`/`fixed`) and split. The table below is generated from it once results are final.
 
 | Report key | Value | RUN_ID(s) | Metrics file | Protocol / split |
@@ -123,7 +123,18 @@ ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch scripts/slurm/eval_r
 ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch -p gpu --gres=gpu:h200:1 -t 02:00:00 -J rp_R010-R012 scripts/slurm/train_fidip_pack.sbatch "R010_fidip-w48_lambda5e-4_s1 1 0.0005" "R011_fidip-w48_lambda5e-4_s2 2 0.0005" "R012_fidip-w48_lambda5e-4_s3 3 0.0005"'
 ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch -p gpu --gres=gpu:h200:1 -t 02:00:00 -J rp_R013-R015 scripts/slurm/train_fidip_pack.sbatch "R013_fidip-w48_lambda0_s1 1 0.0" "R014_fidip-w48_lambda0_s2 2 0.0" "R015_fidip-w48_lambda0_s3 3 0.0"'
 ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch -p gpu --gres=gpu:h200:1 -t 01:30:00 -J rp_R021-R023 scripts/slurm/train_fidip_pack.sbatch "R021_fidip-w48_ft-noprestage_s1 1 0.0 test100,val400 TRAIN.PRE_EPOCH 0" "R022_fidip-w48_ft-noprestage_s2 2 0.0 test100,val400 TRAIN.PRE_EPOCH 0" "R023_fidip-w48_ft-noprestage_s3 3 0.0 test100,val400 TRAIN.PRE_EPOCH 0"'
-# 4. MMPose runs: one run = launch_mmpose.sh RUN_ID CONFIG SEED "CFG_OPTS" [sbatch args]
+# 4. MMPose: env, checkpoints, data (once)
+ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch scripts/slurm/build_env_mmpose.sbatch && sbatch scripts/slurm/get_ckpts_mmpose.sbatch && sbatch scripts/slurm/prep_ckpts_mmpose.sbatch && sbatch scripts/slurm/prep_data_mmpose.sbatch'
+#    zero-shot COCO models R181–R185 (Val400 only)
+ssh explorer 'cd /scratch/purohitham.v/fidip/repo && sbatch scripts/slurm/zeroshot_mmpose.sbatch'
+#    screening and ablations (seed 1, Val400 only): R101 HRNet, R102 ViT-L 256, R103 ViT-L 384, R104 ViT-H 384, R105 ViT-H 256,
+#    R106–R109 LR variants, R120/R122 real-only, R121 rot180. Configs in mmpose_exps/configs/ (names in notebook/improve.md)
+#    confirmatory arms (pre-registered imp-1/imp-2; fresh seeds 2–6):
+#      arm A: R131–R135  mmpose_exps/configs/syrip_hrnet-w48_dark-384x288.py   seeds 2..6
+#      arm B: R136–R140  mmpose_exps/configs/syrip_vitpose-h_udp-256x192.py    seeds 2..6
+# 3b. λ sweep and recipe variants (Val400 only): R016–R018 λ ∈ {1e-4, 2e-3, 1e-2}; R019 paper recipe (TRAIN.LR 1e-3 END_EPOCH 100 BATCH 64);
+#     R020 README-literal labels. Same train_fidip_pack.sbatch spec format as step 3, with EVAL_SETS=val400
+# one MMPose run = launch_mmpose.sh RUN_ID CONFIG SEED "CFG_OPTS" [sbatch args]
 bash scripts/launch_mmpose.sh R136_mmp-vitpose-h256_conf_s2 mmpose_exps/configs/syrip_vitpose-h_udp-256x192.py 2 "" -p sharing --gres=gpu:l40s:1 -t 00:58:00
 # 5. pre-registered one-shot Test100 eval (gated by results/PREREGISTRATION.md, checkpoint SHA256 verified), then the ensemble
 ssh explorer 'cd /scratch/purohitham.v/fidip/repo && RUN_IDS="R101_mmp-hrnetw48_base_s1 R105_mmp-vitpose-h256_base_s1 R131_… R140_…" sbatch --export=ALL scripts/slurm/final_test_eval_mmpose.sbatch'

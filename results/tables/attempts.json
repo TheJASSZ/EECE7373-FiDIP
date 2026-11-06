@@ -288,15 +288,15 @@
    "R014_fidip-w48_lambda0_s2",
    "R015_fidip-w48_lambda0_s3"
   ],
-  "val400_AP": null,
-  "val400_AP_std": null,
-  "val400_AP_80_95": null,
-  "test100_AP": null,
-  "test100_AP_std": null,
-  "test100_AP_fixed": null,
-  "test100_reported": false,
+  "val400_AP": 90.79903314486589,
+  "val400_AP_std": 0.20805711162870233,
+  "val400_AP_80_95": 80.18243286271904,
+  "test100_AP": 93.58942489745033,
+  "test100_AP_std": 0.132534249066059,
+  "test100_AP_fixed": 95.07588001292395,
+  "test100_reported": true,
   "test100_rule": "released/retrain (reproduction target)",
-  "status": ""
+  "status": "done"
  },
  {
   "attempt": 15,
@@ -401,7 +401,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 20,
@@ -422,7 +422,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 21,
@@ -443,7 +443,7 @@
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": "unregistered"
+  "status": "done"
  },
  {
   "attempt": 22,
@@ -576,17 +576,19 @@
   "role": "final",
   "what_changed": "pre-registered treatment: backbone ViTPose-H 256x192, same recipe as arm A, 5 fresh seeds s2-s6",
   "hypothesis": "H1: Test100 AP > 93.6 and C1 CI excludes 0 under both protocols",
-  "n_runs": 0,
-  "run_ids": [],
-  "val400_AP": null,
+  "n_runs": 1,
+  "run_ids": [
+   "R140_mmp-vitpose-h256_conf_s6"
+  ],
+  "val400_AP": 92.86594806597128,
   "val400_AP_std": null,
-  "val400_AP_80_95": null,
+  "val400_AP_80_95": 84.70891243163081,
   "test100_AP": null,
   "test100_AP_std": null,
   "test100_AP_fixed": null,
   "test100_reported": false,
   "test100_rule": "withheld: selection on Val400 only",
-  "status": ""
+  "status": "unregistered"
  },
  {
   "attempt": 29,
@@ -609,6 +611,113 @@
  },
  {
   "attempt": 30,
+  "config": "zs_darkpose",
+  "label": "DarkPose HRNet-W48 (COCO only, released)",
+  "role": "released",
+  "what_changed": "upstream TGA_models coco/w48_384x288.pth, no SyRIP fine-tuning (upstream test code)",
+  "hypothesis": "reproduces the published DarkPose 88.5 on Test100",
+  "n_runs": 1,
+  "run_ids": [
+   "R003_darkpose-w48-coco_released"
+  ],
+  "val400_AP": null,
+  "val400_AP_std": null,
+  "val400_AP_80_95": null,
+  "test100_AP": null,
+  "test100_AP_std": null,
+  "test100_AP_fixed": null,
+  "test100_reported": false,
+  "test100_rule": "released/retrain (reproduction target)",
+  "status": ""
+ },
+ {
+  "attempt": 31,
+  "config": "rt_ftnp",
+  "label": "Plain fine-tune retrain (no pre-stage, lambda 0)",
+  "role": "retrain",
+  "what_changed": "PRE_EPOCH 0 and lambda 0.0: no classifier pre-stage, no adversarial term (repro-3)",
+  "hypothesis": "faithful counterpart of the paper's DarkPose+Finetune 92.7 row; FiDIP > plain fine-tune",
+  "n_runs": 3,
+  "run_ids": [
+   "R021_fidip-w48_ft-noprestage_s1",
+   "R022_fidip-w48_ft-noprestage_s2",
+   "R023_fidip-w48_ft-noprestage_s3"
+  ],
+  "val400_AP": 90.91246723967589,
+  "val400_AP_std": 0.24934413769665728,
+  "val400_AP_80_95": 80.36562476133473,
+  "test100_AP": 93.70091000871493,
+  "test100_AP_std": 0.2182107250499171,
+  "test100_AP_fixed": 95.07869975007549,
+  "test100_reported": true,
+  "test100_rule": "released/retrain (reproduction target)",
+  "status": "unregistered"
+ },
+ {
+  "attempt": 32,
+  "config": "DarkPose_FiDIP_HRNet_W48_384x288_retrain_fidip_w48_paperrecipe",
+  "label": "DarkPose_FiDIP_HRNet_W48_384x288_retrain_fidip_w48_paperrecipe",
+  "role": "repro",
+  "what_changed": "fidip-w48_paperrecipe",
+  "hypothesis": "eval_coco paper protocol (upstream-printed in parentheses); lambda=0.0005 seed=1; best Val400 epoch 10, final epoch 100: Val400 AP 89.80 (89.80); Test100 final n/a (Val400-only run) (); Test100 fixed protocol best/final /; train 1895s on NVIDIA H200",
+  "n_runs": 1,
+  "run_ids": [
+   "R019_fidip-w48_paperrecipe_s1"
+  ],
+  "val400_AP": 90.74450778250143,
+  "val400_AP_std": null,
+  "val400_AP_80_95": 80.07022979484711,
+  "test100_AP": null,
+  "test100_AP_std": null,
+  "test100_AP_fixed": null,
+  "test100_reported": false,
+  "test100_rule": "withheld: selection on Val400 only",
+  "status": "done"
+ },
+ {
+  "attempt": 33,
+  "config": "DarkPose_FiDIP_HRNet_W48_384x288_retrain_fidip_w48_readme_literal_labels",
+  "label": "DarkPose_FiDIP_HRNet_W48_384x288_retrain_fidip_w48_readme_literal_labels",
+  "role": "repro",
+  "what_changed": "fidip-w48_readme-literal-labels",
+  "hypothesis": "eval_coco paper protocol (upstream-printed in parentheses); lambda=0.0005 seed=1; best Val400 epoch 12, final epoch 20: Val400 AP 89.16 (89.16); Test100 final n/a (Val400-only run) (); Test100 fixed protocol best/final /; train 741s on NVIDIA H200",
+  "n_runs": 1,
+  "run_ids": [
+   "R020_fidip-w48_readme-literal-labels_s1"
+  ],
+  "val400_AP": 89.32713658291823,
+  "val400_AP_std": null,
+  "val400_AP_80_95": 76.5983791615206,
+  "test100_AP": null,
+  "test100_AP_std": null,
+  "test100_AP_fixed": null,
+  "test100_reported": false,
+  "test100_rule": "withheld: selection on Val400 only",
+  "status": "done"
+ },
+ {
+  "attempt": 34,
+  "config": "R122_mmp-vitpose-h256_realonly_s1",
+  "label": "R122_mmp-vitpose-h256_realonly_s1",
+  "role": "other",
+  "what_changed": "",
+  "hypothesis": "metrics found; no registry row",
+  "n_runs": 1,
+  "run_ids": [
+   "R122_mmp-vitpose-h256_realonly_s1"
+  ],
+  "val400_AP": 92.75871627139509,
+  "val400_AP_std": null,
+  "val400_AP_80_95": 84.65896534271677,
+  "test100_AP": null,
+  "test100_AP_std": null,
+  "test100_AP_fixed": null,
+  "test100_reported": false,
+  "test100_rule": "withheld: selection on Val400 only",
+  "status": "unregistered"
+ },
+ {
+  "attempt": 35,
   "config": "mmp_hrnet_base_noflip",
   "label": "HRNet-W48 DARK 384 (MMPose control) [noflip]",
   "role": "test-time ablation",
@@ -629,7 +738,7 @@
   "status": "done"
  },
  {
-  "attempt": 31,
+  "attempt": 36,
   "config": "mmp_vitl256_base_noflip",
   "label": "ViTPose-L 256 (MMPose) [noflip]",
   "role": "test-time ablation",
@@ -642,6 +751,69 @@
   "val400_AP": 92.26297508764878,
   "val400_AP_std": null,
   "val400_AP_80_95": 83.52609874601133,
+  "test100_AP": null,
+  "test100_AP_std": null,
+  "test100_AP_fixed": null,
+  "test100_reported": false,
+  "test100_rule": "withheld: test-time ablation (Val400 only)",
+  "status": "done"
+ },
+ {
+  "attempt": 37,
+  "config": "mmp_vith256_base_noflip",
+  "label": "ViTPose-H 256 (MMPose) [noflip]",
+  "role": "test-time ablation",
+  "what_changed": "test-time: noflip",
+  "hypothesis": "a larger ViT prior helps further",
+  "n_runs": 1,
+  "run_ids": [
+   "R105_mmp-vitpose-h256_base_s1"
+  ],
+  "val400_AP": 92.48291852636636,
+  "val400_AP_std": null,
+  "val400_AP_80_95": 83.55510671910731,
+  "test100_AP": null,
+  "test100_AP_std": null,
+  "test100_AP_fixed": null,
+  "test100_reported": false,
+  "test100_rule": "withheld: test-time ablation (Val400 only)",
+  "status": "done"
+ },
+ {
+  "attempt": 38,
+  "config": "mmp_vith384_base_noflip",
+  "label": "ViTPose-H 384 (MMPose) [noflip]",
+  "role": "test-time ablation",
+  "what_changed": "test-time: noflip",
+  "hypothesis": "higher input resolution helps the strict OKS thresholds",
+  "n_runs": 1,
+  "run_ids": [
+   "R104_mmp-vitpose-h384_base_s1"
+  ],
+  "val400_AP": 93.02577057097805,
+  "val400_AP_std": null,
+  "val400_AP_80_95": 85.39613113895179,
+  "test100_AP": null,
+  "test100_AP_std": null,
+  "test100_AP_fixed": null,
+  "test100_reported": false,
+  "test100_rule": "withheld: test-time ablation (Val400 only)",
+  "status": "done"
+ },
+ {
+  "attempt": 39,
+  "config": "mmp_vitl384_base_noflip",
+  "label": "ViTPose-L 384 (MMPose) [noflip]",
+  "role": "test-time ablation",
+  "what_changed": "test-time: noflip",
+  "hypothesis": "higher input resolution helps the strict OKS thresholds",
+  "n_runs": 1,
+  "run_ids": [
+   "R103_mmp-vitpose-l384_base_s1"
+  ],
+  "val400_AP": 92.32989328079093,
+  "val400_AP_std": null,
+  "val400_AP_80_95": 83.66696901919465,
   "test100_AP": null,
   "test100_AP_std": null,
   "test100_AP_fixed": null,

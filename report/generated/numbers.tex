@@ -44,14 +44,14 @@
 \setres{rt.fidip.test.ap.sd}{0.4}                  % ... sample std over seeds
 \setres{rt.fidip.val.ap.mean}{90.5}                % ... Val400 AP mean
 \setres{rt.fidip.val.ap.sd}{0.1}                   % ... Val400 AP std
-\setres{rt.ft.test.ap.mean}{\tbd}                  % plain fine-tune (lambda = 0): Test100 AP mean
-\setres{rt.ft.test.ap.sd}{\tbd}
-\setres{rt.ft.val.ap.mean}{\tbd}
-\setres{rt.ft.val.ap.sd}{\tbd}
-\setres{rt.delta.test.ap}{\tbd}                    % FiDIP - fine-tune, seed-averaged Test100 AP, signed
-\setres{rt.delta.test.ci.lo}{\tbd}                 % 95% CI (bootstrap_ci.py multiseed), signed
-\setres{rt.delta.test.ci.hi}{\tbd}
-\setres{rt.delta.test.p}{\tbd}                     % one-sided p (H1: FiDIP > fine-tune)
+\setres{rt.ft.test.ap.mean}{93.6}                  % plain fine-tune (lambda = 0): Test100 AP mean
+\setres{rt.ft.test.ap.sd}{0.1}
+\setres{rt.ft.val.ap.mean}{90.8}
+\setres{rt.ft.val.ap.sd}{0.2}
+\setres{rt.delta.test.ap}{$-0.0$}                  % FiDIP - fine-tune, seed-averaged Test100 AP, signed
+\setres{rt.delta.test.ci.lo}{$-0.3$}               % 95% CI (bootstrap_ci.py multiseed), signed
+\setres{rt.delta.test.ci.hi}{$+0.2$}
+\setres{rt.delta.test.p}{1.000}                    % one-sided p (H1: FiDIP > fine-tune)
 \setres{rt.fidip.bestepoch}{\tbd}                  % median Val400-selected epoch, FiDIP arm (e.g. "14 of 20")
 \setres{rt.ft.bestepoch}{\tbd}                     % same, fine-tune arm
 
@@ -65,7 +65,7 @@
 \setres{best.ckptrule}{best Val400 coco/AP epoch per seed} % checkpoint rule, e.g. "best Val400 AP epoch"
 \setres{best.seeds}{\tbd}                          % number of seeds evaluated on Test100
 \setres{best.prereg.commit}{\texttt{72f9449}}      % commit that registered it in results/PREREGISTRATION.md
-\setres{best.val.ap.mean}{\tbd}                    % Val400 AP mean over seeds
+\setres{best.val.ap.mean}{92.9}                    % Val400 AP mean over seeds
 \setres{best.val.ap.sd}{\tbd}
 \setres{best.test.ap.mean}{\tbd}                   % Test100 AP mean over seeds (paper protocol)  <- headline
 \setres{best.test.ap.sd}{\tbd}
@@ -91,7 +91,7 @@
 \setres{ens.test.ap}{\tbd}
 \setres{ens.delta.ci.lo}{\tbd}
 \setres{ens.delta.ci.hi}{\tbd}
-\setres{att.n}{29}                                 % number of rows in tab_attempts
+\setres{att.n}{37}                                 % number of rows in tab_attempts
 \setres{att.nbetter}{\tbd}                         % attempts whose Val400 AP beats the control's mean
 
 % ---- Evaluation-condition sensitivity (D8, D10) ---------------------------------------------
@@ -107,9 +107,9 @@
 \setres{data.boxratio.pct}{12}                     % median % by which validate100 boxes exceed validate500 boxes (e.g. 12)
 
 % ---- Val400 vs Test100 -------------------------------------------------------------------------
-\setres{vt.n}{5}                                   % runs with both Val400 and Test100 metrics
-\setres{vt.spearman}{0.70}                         % Spearman rank correlation of Val400 AP vs Test100 AP
-\setres{vt.gap.mean}{$+4.7$}                       % mean (Test100 AP - Val400 AP), signed
+\setres{vt.n}{11}                                  % runs with both Val400 and Test100 metrics
+\setres{vt.spearman}{0.11}                         % Spearman rank correlation of Val400 AP vs Test100 AP
+\setres{vt.gap.mean}{$+3.6$}                       % mean (Test100 AP - Val400 AP), signed
 
 % ---- Compute -------------------------------------------------------------------------------------
 \setres{comp.gpuh}{\tbd}                           % total GPU-hours (sacct elapsed x GPUs), all streams
@@ -118,3 +118,6 @@
 % ---- values computed by collect_results.py for keys not (yet) in the documented interface ----
 \setres{rt.fidip.test.ap.final.mean}{93.4}
 \setres{rt.fidip.test.ap.final.sd}{0.5}
+% ---- values computed by collect_results.py for keys not (yet) in the documented interface ----
+\setres{rt.ft.test.ap.final.mean}{93.7}
+\setres{rt.ft.test.ap.final.sd}{0.1}

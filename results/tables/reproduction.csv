@@ -5,4 +5,6 @@ DarkPose + Finetune (paper),"github.com/ostadabbas/Infant-Pose-Estimation README
 FiDIP HRNet-W48 (released),eval/eval_coco.py,paper,1,R001_fidip-w48_released,93.6050,98.5248,98.5248,94.6000,99.0000,99.0000,86.2254,94.9891,90.3648,,89.7672,96.2693,92.8115,
 FiDIP MobileNetV2 (released),eval/eval_coco.py,paper,1,R002_fidip-mobilenet_released,79.1367,98.9604,89.3352,84.1000,99.0000,92.0000,54.7062,79.8414,68.1793,,74.2631,83.8169,77.8507,
 "FiDIP retrain, lambda 5e-4",eval/eval_coco.py,paper,3,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,93.5525,98.4719,98.4719,94.6000,99.0000,99.0000,86.1733,95.1085,90.5120,0.4237,,,92.8254,0.1279
-"Fine-tune retrain, lambda 0",eval/eval_coco.py,paper,0,,,,,,,,,,,,,,,
+"Fine-tune retrain, lambda 0",eval/eval_coco.py,paper,3,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,93.5894,98.5050,98.5050,94.6333,99.0000,99.0000,86.2161,95.0759,90.7990,0.1325,,,92.8275,0.2081
+"DarkPose HRNet-W48 (COCO only, released)",eval/eval_coco.py,paper,0,,,,,,,,,,,,,,,
+"Plain fine-tune retrain (no pre-stage, lambda 0)",eval/eval_coco.py,paper,3,R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,93.7009,98.5050,98.5050,94.7000,99.0000,99.0000,86.4948,95.0787,90.9125,0.2182,,,92.9373,0.2493

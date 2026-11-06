@@ -20,14 +20,25 @@ rt.fidip.val.ap.sd,0.1,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2
 rt.fidip.test.ap.final.mean,93.4,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,metrics_test100_final.json,paper,test100
 rt.fidip.test.ap.final.sd,0.5,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,metrics_test100_final.json,paper,test100
 rt.seeds,3,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,results/analysis_eval,,
+rt.ft.test.ap.mean,93.6,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,,paper,test100
+rt.ft.test.ap.sd,0.1,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,,paper,test100
+rt.ft.val.ap.mean,90.8,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,,paper,val400
+rt.ft.val.ap.sd,0.2,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,,paper,val400
+rt.ft.test.ap.final.mean,93.7,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,metrics_test100_final.json,paper,test100
+rt.ft.test.ap.final.sd,0.1,R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,metrics_test100_final.json,paper,test100
+rt.delta.test.ap,$-0.0$,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3;R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,results/tables/bootstrap_retrain_fidip_vs_ft_test100.json,paper,test100
+rt.delta.test.ci.lo,$-0.3$,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3;R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,results/tables/bootstrap_retrain_fidip_vs_ft_test100.json,paper,test100
+rt.delta.test.ci.hi,$+0.2$,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3;R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,results/tables/bootstrap_retrain_fidip_vs_ft_test100.json,paper,test100
+rt.delta.test.p,1.000,R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3;R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3,results/tables/bootstrap_retrain_fidip_vs_ft_test100.json,paper,test100
 imp.control.name,HRNet-W48 DARK 384 (arm A),,results/configs.json,,
-best.name,ViTPose-H 256 (arm B),,results/configs.json,,
-best.input,256$\times$192,,results/configs.json,,
-best.flip,yes,,results/configs.json,,
-best.ckptrule,best Val400 coco/AP epoch per seed,,results/configs.json,,
-best.prereg.commit,\texttt{72f9449},,results/PREREGISTRATION.md,,
+best.name,ViTPose-H 256 (arm B),R140_mmp-vitpose-h256_conf_s6,results/configs.json,,
+best.input,256$\times$192,R140_mmp-vitpose-h256_conf_s6,results/configs.json,,
+best.flip,yes,R140_mmp-vitpose-h256_conf_s6,results/configs.json,,
+best.ckptrule,best Val400 coco/AP epoch per seed,R140_mmp-vitpose-h256_conf_s6,results/configs.json,,
+best.prereg.commit,\texttt{72f9449},R140_mmp-vitpose-h256_conf_s6,results/PREREGISTRATION.md,,
+best.val.ap.mean,92.9,R140_mmp-vitpose-h256_conf_s6,,paper,val400
 boot.n,10000,,results/tables/bootstrap_*.json,,
-att.n,29,,results/tables/attempts.csv,,
+att.n,37,,results/tables/attempts.csv,,
 sens.id0.delta,$+1.4$,R001_fidip-w48_released,results/analysis_eval/R001_fidip-w48_released/metrics_test100.json,fixed-paper,test100
 sens.id0.min,0.9,R001_fidip-w48_released,results/tables/R001_fidip-w48_released_test100/id0_rank_sensitivity_R001_fidip-w48_released.csv,fixed-paper over test0 ranks,test100
 sens.id0.max,2.0,R001_fidip-w48_released,results/tables/R001_fidip-w48_released_test100/id0_rank_sensitivity_R001_fidip-w48_released.csv,fixed-paper over test0 ranks,test100
@@ -38,38 +49,6 @@ sens.box.v500.ap,92.0,R001_fidip-w48_released,results/tables/R001_fidip-w48_rele
 data.boxratio.pct,12,,results/tables/R001_fidip-w48_released_gtbox/gtbox_v100_vs_v500.csv,,test100 ids
 sens.area.const.ap,98.9,R001_fidip-w48_released,results/tables/sensitivity_extra_R001_fidip-w48_released.json,paper,val400 (constant area)
 sens.xtcoco.delta,$+1.4$,R001_fidip-w48_released,results/tables/sensitivity_extra_R001_fidip-w48_released.json,xtcocotools - paper,test100
-vt.n,5,R001_fidip-w48_released;R002_fidip-mobilenet_released;R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,results/tables/per_run.csv,paper,val400+test100
-vt.gap.mean,$+4.7$,R001_fidip-w48_released;R002_fidip-mobilenet_released;R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,results/tables/per_run.csv,paper,test100-val400
-vt.spearman,0.70,R001_fidip-w48_released;R002_fidip-mobilenet_released;R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3,results/tables/per_run.csv,paper,
-rt.epochs,20,,experiments/coco/hrnet/w48_384x288_adam_lr1e-3_infant.yaml: TRAIN.END_EPOCH,manual (report stream),
-rt.fidip.bestepoch,18--20,,results/registry.csv notes R010-R012 (best Val400 epochs); AGENT.md 2026-11-06 07:16,manual (report stream),
-rt.ft.bestepoch,16--20,,"results/registry.csv notes R013-R015 (best Val400 epochs 16, 20, 20)",manual (report stream),
-rt.ft.test.ap.final.mean,93.7,,notebook/repro.md (R013-R015 final-epoch Test100 AP 93.66 +- 0.10); AGENT.md 07:30,manual (report stream),
-rt.ft.test.ap.final.sd,0.1,,same source,manual (report stream),
-rt.sweep.l1e2.final,83.8,,results/registry.csv notes R018 (final-epoch Val400 AP 83.84),manual (report stream),
-rt.paper.val.best,90.7,,"results/registry.csv R019 val400_AP (90.74, best epoch 10)",manual (report stream),
-rt.paper.bestepoch,10,,results/registry.csv notes R019,manual (report stream),
-rt.paper.val.final,89.8,,results/registry.csv notes R019 (final epoch 100: 89.80),manual (report stream),
-rt.readme.val.ap,89.3,,results/registry.csv R020 val400_AP (89.33),manual (report stream),
-rt.readme.delta,-1.2,,AGENT.md 2026-11-06 07:30 (R020 89.33 vs FiDIP retrain mean 90.51),manual (report stream),
-imp.flip.lo,0.2,,AGENT.md 2026-11-06 07:11 (flip-TTA adds +0.24 to +0.69 on every model); results/tables/improve_val400.md,manual (report stream),
-imp.flip.hi,0.7,,same source,manual (report stream),
-imp.noise,0.2,,results/PREREGISTRATION.md selection evidence (single-seed noise about +-0.2),manual (report stream),
-best.seeds,5,,"results/PREREGISTRATION.md imp-2 (5 fresh seeds s2-s6, R136-R140)",manual (report stream),
-fail.sideways.n,65,,AGENT.md 2026-11-06 07:16 (analysis: 65/100 infants sideways),manual (report stream),
-fail.sideways.deficit,5.5,,"same source (mean OKS deficit, %, sideways)",manual (report stream),
-fail.upright.deficit,3.0,,"same source (mean OKS deficit, %, upright)",manual (report stream),
-fail.lrswap.n,1,,"same source (left/right swap: 1 image, a back view)",manual (report stream),
-fail.occl.n,4,,same source (heavy-occlusion images),manual (report stream),
-fail.inverted.n,2,,same source (inverted torso),manual (report stream),
-test.resolution,0.7,,"AGENT.md 2026-11-06 07:16 (smallest Test100 difference resolvable, about +-0.7 AP)",manual (report stream),
-val.single.ci,1.7,,same source (single-seed Val400 AP bootstrap CI about +-1.7),manual (report stream),
-tests.n,69,,AGENT.md 2026-11-06 07:16 (69 pytest tests pass locally and on the cluster),manual (report stream),
-xcheck.pairs,21,,notebook/analysis.md (eval-all jobs 11670953/11671005: all 21 run/split pairs match upstream),manual (report stream),
-xcheck.maxdiff,0.0005,,"AGENT.md 2026-11-06 07:16 (max diff 0.00048 AP, 3-decimal rounding)",manual (report stream),
-test11.delta,-1.5,,AGENT.md 2026-11-06 07:16 (syrip_for_train test11 defect costs 1.5 AP; OKS 0.985 -> 0.091),manual (report stream),
-id0.rank.lo,92.98,,AGENT.md 2026-11-06 07:16 (moving test0's rank swings paper AP of R001 from 92.98 ...),manual (report stream),
-id0.rank.hi,94.07,,AGENT.md 2026-11-06 07:16 (upper end of the id-0 rank swing),manual (report stream),
-demo.conf.det,0.46,,notebook/repro.md (test0 mean keypoint confidence with the detector box),manual (report stream),
-demo.conf.gt,0.87,,notebook/repro.md (same image with the GT box),manual (report stream),
-fit.valloss.flat,6,,AGENT.md 2026-11-06 07:16 (R010-R012 curves: Val400 loss flattens after about epoch 6),manual (report stream),
+vt.n,11,R001_fidip-w48_released;R002_fidip-mobilenet_released;R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3;R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3;R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,results/tables/per_run.csv,paper,val400+test100
+vt.gap.mean,$+3.6$,R001_fidip-w48_released;R002_fidip-mobilenet_released;R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3;R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3;R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,results/tables/per_run.csv,paper,test100-val400
+vt.spearman,0.11,R001_fidip-w48_released;R002_fidip-mobilenet_released;R010_fidip-w48_lambda5e-4_s1;R011_fidip-w48_lambda5e-4_s2;R012_fidip-w48_lambda5e-4_s3;R013_fidip-w48_lambda0_s1;R014_fidip-w48_lambda0_s2;R015_fidip-w48_lambda0_s3;R021_fidip-w48_ft-noprestage_s1;R022_fidip-w48_ft-noprestage_s2;R023_fidip-w48_ft-noprestage_s3,results/tables/per_run.csv,paper,

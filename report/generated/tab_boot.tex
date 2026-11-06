@@ -4,7 +4,11 @@
 \toprule
 Contrast & $\Delta$AP & 95\% CI & $p$ & $p_{\mathrm{Holm}}$ & fixed: $\Delta$ [CI] & robust & W/T/L\\
 \midrule
-FiDIP retrain vs released & $-0.1$ & [$-0.7$, $+0.6$] & 0.532 & 0.532 & $+0.1$ [$-0.6$, $+0.7$] & no & 61/0/39\\
-FiDIP retrain vs released (Test100-clean) & $+0.0$ & [$-0.7$, $+0.7$] & 0.482 & 0.482 & $+0.1$ [$-0.6$, $+0.8$] & no & 58/0/37\\
+FiDIP retrain vs fine-tune & $-0.0$ & [$-0.3$, $+0.2$] & 0.681 & 1.000 & $+0.0$ [$-0.3$, $+0.2$] & no & 27/0/73\\
+FiDIP retrain vs released & $-0.1$ & [$-0.7$, $+0.6$] & 0.532 & 1.000 & $+0.1$ [$-0.6$, $+0.7$] & no & 61/0/39\\
+FiDIP retrain vs plain fine-tune (no pre-stage) & $-0.1$ & [$-0.4$, $+0.1$] & 0.842 & 1.000 & $+0.0$ [$-0.3$, $+0.3$] & no & 27/0/73\\
+FiDIP retrain vs fine-tune (Test100-clean) & $-0.0$ & [$-0.3$, $+0.2$] & 0.501 & 1.000 & $+0.0$ [$-0.2$, $+0.3$] & no & 24/0/71\\
+FiDIP retrain vs released (Test100-clean) & $+0.0$ & [$-0.7$, $+0.7$] & 0.482 & 1.000 & $+0.1$ [$-0.6$, $+0.8$] & no & 58/0/37\\
+FiDIP retrain vs plain fine-tune (no pre-stage) (Test100-clean) & $-0.1$ & [$-0.4$, $+0.2$] & 0.790 & 1.000 & $+0.0$ [$-0.3$, $+0.4$] & no & 25/0/70\\
 \bottomrule
 \end{tabular}
