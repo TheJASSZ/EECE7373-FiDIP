@@ -127,3 +127,20 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
 - It also writes `view_proxy_vs_posture_<split>.csv`, which validates the proxy on Test100 so it can be trusted on Val400 (no labels there).
 
 **Waiting on:** `$R/data/SPLITS_READY`, the fidip env (job 11659313), the released checkpoints, and R001 predictions.
+
+### 2026-11-05 20:58 EST: pipeline hardening while waiting for R001, plus a contamination check to run
+- `analysis_pipeline.py` changes:
+  - **validate500 is now gated exactly like Test100**, because it contains Test100. Without this, a validate500 evaluation of an unregistered model would leak Test100 numbers.
+  - Tagged prediction files (`preds_val400_noflip.json`, improve's test-time ablations) are parsed as split + tag.
+- `analyze.py curves` reads repro's P8 `epochs.csv`:
+  - It plots `train_mse` against `val_loss`, both the pose-heatmap MSE without the −λ·BCE term, so the comparison is like-for-like.
+  - It plots Val400 AP/AR and marks the `is_best` epoch.
+  - It warns if `val_set` looks like Test100 (`validate_infant` is upstream's name for it).
+- `collect_results.py` carries single-model bootstrap CIs. A smoke test covers Test100 withholding, provenance comments and unique macros. 61 tests pass.
+- For the record: the analysis stream never moved or deleted anything under `$R/data`. All my data access was read-only (`json.load` of annotation files on the login node, under 1 MB each). The 20:08 flatten of `raw/SyRIP/SyRIP` that repro notes was done by someone else.
+- **Contamination check to run on R001.**
+  - Upstream released two HRNet FiDIP checkpoints. One is "new FiDIP model trained on the expanded SyRIP dataset", whose +400 real training images are probably validate500 \ validate100 = our Val400 (REQUIREMENTS_CHECKLIST note).
+  - If R001 is that checkpoint, its Val400 numbers are contaminated: the Test100-vs-Val400 difficulty comparison would be invalid and only Test100 counts.
+  - Signature to look for: Val400 OKS much tighter and higher than Test100, with a near-zero per-keypoint error floor.
+  - I will report which checkpoint R001 is, by file name and SHA from `run.json`, next to any Val400 number for it.
+- Improve notes that `make_splits.py` currently fails an assert on Val400×Test100 md5 overlap, i.e. duplicate images. Repro is checking (`fidip_neardup`). Until `SPLITS_READY` appears, every Val400 number is provisional.
