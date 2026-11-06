@@ -67,6 +67,7 @@ class SYRIPDataset(JointsDataset):
         self.pixel_std = 200
 
         self.syrip = COCO(self._get_ann_file_keypoint())
+        self._path2id = {}  # [EECE7373 patch P10] image path -> image id for non-upstream splits
 
         # deal with class names
         cats = [cat['name']
@@ -114,6 +115,11 @@ class SYRIPDataset(JointsDataset):
         """ self.root / annotations / person_keypoints_train_infant.json """
         prefix = 'person_keypoints' \
             if 'test' not in self.image_set else 'image_info'
+        # [EECE7373 patch P10] labelled splits whose name contains 'test' (e.g. test100) ship
+        # person_keypoints_<set>.json; upstream would look for image_info_<set>.json and skip eval.
+        if prefix == 'image_info' and os.path.exists(os.path.join(
+                self.root, 'annotations', 'person_keypoints_' + self.image_set + '.json')):
+            prefix = 'person_keypoints'
         return os.path.join(
             self.root,
             'annotations',
@@ -251,9 +257,16 @@ class SYRIPDataset(JointsDataset):
         elif self.image_set == 'train_pre_infant' or self.image_set == 'train_infant':
             data_name = self.image_set
             file_name = 'train' + '%05d.jpg' % index
+        else:
+            # [EECE7373 patch P10] any other split (val400, test100, validate500, ...): images/<split>/
+            # <file_name from the COCO json>; upstream raised UnboundLocalError here.
+            data_name = self.image_set
+            file_name = self.syrip.loadImgs(index)[0]['file_name']
 
         image_path = os.path.join(
             self.root, 'images', data_name, file_name)
+        if self.image_set not in ('validate_infant', 'train_pre_infant', 'train_infant'):
+            self._path2id[image_path] = index
 
         return image_path
 
@@ -323,6 +336,8 @@ class SYRIPDataset(JointsDataset):
                 _img = int(img_path[idx].split('/')[-1][4:-4])
             elif self.image_set == 'train_pre_infant' or self.image_set == 'train_infant':
                 _img = int(img_path[idx].split('/')[-1][5:-4])
+            elif img_path[idx] in self._path2id:  # [EECE7373 patch P10]
+                _img = self._path2id[img_path[idx]]
             else:
                 _img = int(img_path[idx][-16:-4])
             #print(_img)
@@ -378,7 +393,8 @@ class SYRIPDataset(JointsDataset):
 
         self._write_syrip_keypoint_results(
             oks_nmsed_kpts, res_file)
-        if 'test' not in self.image_set:
+        # [EECE7373 patch P10] evaluate whenever keypoint GT exists (upstream: only if 'test' not in the name)
+        if os.path.basename(self._get_ann_file_keypoint()).startswith('person_keypoints'):
             info_str = self._do_python_keypoint_eval(
                 res_file, res_folder)
             name_value = OrderedDict(info_str)
