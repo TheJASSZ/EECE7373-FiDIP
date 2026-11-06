@@ -144,3 +144,14 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
   - Signature to look for: Val400 OKS much tighter and higher than Test100, with a near-zero per-keypoint error floor.
   - I will report which checkpoint R001 is, by file name and SHA from `run.json`, next to any Val400 number for it.
 - Improve notes that `make_splits.py` currently fails an assert on Val400×Test100 md5 overlap, i.e. duplicate images. Repro is checking (`fidip_neardup`). Until `SPLITS_READY` appears, every Val400 number is provisional.
+
+### 2026-11-05 20:55 EST: id-0 claim verified empirically on the real Test100 GT (job 11659551)
+- `scripts/analysis/crosscheck_cocoeval_impls.py` ran in `$R/envs/mmpose` (pycocotools 2.0.11, xtcocotools 1.14.3, numpy 1.26.4). It scores noisy GT-derived predictions on `$R/data/splits/test100.json` with three implementations: my `eval_coco.py`, raw pycocotools COCOeval, and raw xtcocotools COCOeval (MMPose 1.3.2's CocoMetric backend).
+- Settings: 4 noise levels × 3 score orders (by confidence, test0 first, test0 last), 12 cases.
+- **In all 12 cases pycocotools equals our `paper` protocol and xtcocotools equals our `fixed` protocol, bit-identical** (max |Δ| = 0.0 over AP, AP50, AP75, AR, AR50, AR75).
+- Ceilings with perfect predictions on the real GT:
+  - `paper` AP = 98.02 when test0 is ranked first, 99.01 when it is ranked last, and 99.00 for the confidence order;
+  - `fixed` AP = 100.00 in all three.
+  - This is exactly (r + 0.99(100−r))/101.
+- Size of the artefact at realistic accuracy: at noise 0.02·sqrt(area), paper AP is 93.56 vs fixed 94.53 (Δ 0.97). Across score orders Δ ranges from 0.76 to 2.06 AP, depending on where test0's detection ranks. That is the same order as the gaps people report between FiDIP-style models, so a cross-framework comparison that mixes protocols would be meaningless.
+- Output: `$R/analysis/tables/crosscheck_cocoeval_impls.json`.
