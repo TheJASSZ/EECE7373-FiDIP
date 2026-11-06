@@ -231,3 +231,10 @@ Recipe quirks left as-is for faithfulness (to discuss in the report):
 - Val400 AP per epoch 85.1 → 89.3 (best, epoch 12) → 89.2 (final); upstream-printed best 89.3 / final 89.2.
 - **vs R010 s1 (official labels, same seed): −1.3 AP; vs the 3-seed mean: −1.2 AP (about 9 sd).**
 - Hypothesis confirmed: following the README literally costs about 1.2 AP on Val400. The damage is bounded because the 200 real images (oversampled to half of every batch) keep correct labels. Val400 only, as preregistered.
+
+### 2026-11-06 07:20 EST — R019 outcome (paper recipe; job 11665030, H200 d4053, 1895 s train, 48.1 GB GPU)
+- Settings: Adam lr 1e-3, 100 epochs, batch 64, λ 5e-4; everything else as R010. LR_STEP [40, 200] from the yaml plus the upstream scheduler-at-epoch-start quirk → 39 epochs at 1e-3, then 61 at 1e-4.
+- Val400 AP: 87.7 (epoch 1) → **90.74 best at epoch 10** → 90.0 (30) → 89.9 (50) → **89.80 final (100)**.
+- Train MSE 1.53e-4 (vs ~3.3e-4 after the yaml's 20 epochs), while val loss rises to 4.09e-4: **overfitting after ~10 epochs** on 1200 images.
+- vs R010–R012 (90.51 ± 0.13): +0.23 at the best epoch (below the 0.5 AP "tell the orchestrator" threshold), −0.7 at the final epoch.
+- Hypothesis outcome: the paper recipe does not explain any gap. The shipped yaml (lr 1e-4, 20 epochs) already reproduces 93.6 on Test100. The 10× LR only reaches the same Val400 level faster, then overfits. No Test100 (preregistered Val400-only).
