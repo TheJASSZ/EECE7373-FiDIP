@@ -43,3 +43,44 @@ I inspected the raw annotation JSONs on the cluster (`$R/data/raw/SyRIP/annotati
 - Quantify the v100-vs-v500 GT effect on the 100 shared images with the released FiDIP model. The 2×2 needs predictions made with v500 boxes on those 100 images, i.e. preds on validate500.
 - Over/underfitting curves from `epochs.csv`.
 - An attempts table (`results/tables/attempts.csv` + LaTeX).
+
+### 2026-11-05 20:40 EST: `eval/eval_coco.py` v1.0 built and committed (c6eb701), plus the id-0 artifact pinned down
+**What I built.** `eval/eval_coco.py`, 24 pytest tests (`eval/tests/`), and `eval/README.md`. The pipeline:
+- GT checks, including a guard that refuses constant areas.
+- Robust prediction loading across 12 encodings.
+- Upstream rescoring, `mean(conf>0.2) × 1`.
+- A verbatim port of upstream OKS-NMS 0.9.
+- pycocotools COCOeval under both protocols.
+- Per-threshold AP/AR and `AP_80_95`.
+- Per-image OKS and per-keypoint error/PCK normalised by sqrt(bbox w·h).
+
+**How I verified it** (local venv with pycocotools 2.0.8 and numpy 2.4.4; all 24 pass in 0.8 s):
+- GT-as-prediction gives AP = AR = 1.
+- Monotone AP/OKS/PCK degradation over 7 noise levels with common random numbers.
+- The 12 prediction encodings give bit-identical metrics.
+- Rescoring invariances (same rule, junk file scores, monotone transforms, confidence scaling).
+- Per-image OKS equals COCOeval's `E.ious`.
+- Exact per-keypoint error and PCK on a constructed 0.15·sqrt(area) shift.
+- OKS-NMS keep lists equal upstream `nms.py`'s `oks_nms` on 60 random instance sets. Upstream's functions are exec'd from the vendored file via `ast`, which avoids its compiled `.so` imports.
+
+**The id-0 artifact, for the report** (decision D10):
+- Toy reproduction (`scratchpad/probe/annid0.py`): a 10-image GT with perfect predictions gives AP 0.811 / AR 0.900 when annotation ids start at 0, and 1.000 / 1.000 when they start at 1.
+- Responsible lines, pycocotools 2.0.8 `cocoeval.py`:
+  - `evaluateImg` (def at l.235) initialises `dtm = np.zeros((T,D))`.
+  - l.295 stores `dtm[tind,dind] = gt[m]['id']`, which is 0 for test0.
+  - `accumulate` (def at l.315), l.369, concatenates `dtMatches`.
+  - l.375–376: `tps = np.logical_and(dtm, ~dtIg)`, `fps = np.logical_and(~dtm, ~dtIg)`. So a match to GT id 0 counts as an FP, and the GT stays unmatched.
+- pycocotools 2.0.11 (in `$R/envs/mmpose`) has the identical code (l.269, l.295, l.375).
+- **Ceiling on Test100 under `paper`:**
+  - AR (and AR50, AR75) ≤ 0.99.
+  - For a perfect model, every per-threshold AP equals **(r + 0.99·(100 − r))/101**, where r is the score rank of test0's detection among the 100. For r = 1 it is 0.99·100/101.
+  - So AP50 ∈ [0.9802, 0.9901], and AP for a perfect model lies in the same band. This is unit-tested for r ∈ {1, 2, 49, 100}.
+  - The published AP50 = AP75 = 98.5 needs r ≈ 44–54. So on the 99 matchable images, DarkPose+FiDIP (and Finetune 92.7, and pretrained DarkPose 88.5) are already perfect at OKS 0.5 and 0.75. All their headroom sits at OKS ≥ 0.8. From the published numbers, FiDIP's AP_80_95 ≈ 86.3.
+- **MMPose is different:** MMPose 1.3.2 `CocoMetric` uses `xtcocotools` 1.14.3. Its `cocoeval.py` initialises `gtm/dtm = -1` (l.428–429) and tests `dtm >= 0` (l.537–538, citing cocoapi PR #332).
+  - So **MMPose's own printed Test100 AP is the `fixed` protocol**, about 1 AP above upstream-comparable numbers for identical predictions.
+  - Only `eval_coco.py` numbers may be compared across frameworks. Message sent to the orchestrator.
+  - Val400 has no id 0, so MMPose's printed Val400 AP is unaffected by this; other xtcocotools differences may remain.
+
+**Surprises.**
+- A clean mock "Test100" with noise σ = 0.025·sqrt(area) already reproduces the published pattern exactly: AP50 = AP75 = 98.2 and AR50 = AR75 = 99.0 under `paper`, against 100/100 under `fixed`.
+- xtcocotools has silently fixed what pycocotools still gets wrong.
